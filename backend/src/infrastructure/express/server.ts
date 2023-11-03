@@ -3,7 +3,6 @@ import { setUpApp } from './setup/setup-app';
 import { setupGlobalMiddlewares } from './setup/setup-global-middlewares';
 import { setupRoutes } from './setup/setup-routes';
 import { setUpAsyncErrors } from './setup/setup-async-error';
-
 export const app = express();
 setUpApp(app);
 setupGlobalMiddlewares(app);
