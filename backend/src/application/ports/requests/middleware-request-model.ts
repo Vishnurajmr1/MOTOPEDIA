@@ -1,5 +1,5 @@
 import { RequestModel } from "./request-model";
 
-export interface middlewareRequestModel extends RequestModel{
+export interface MiddlewareRequestModel extends RequestModel{
     method?:string
 }
