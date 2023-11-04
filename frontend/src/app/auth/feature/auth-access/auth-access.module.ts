@@ -1,16 +1,15 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FooterComponent } from './footer.component';
+import { AuthAccessComponent } from './auth-access.component';
 
 
 
 @NgModule({
   declarations: [
-    FooterComponent
+    AuthAccessComponent
   ],
   imports: [
     CommonModule
-  ],
-  exports:[FooterComponent]
+  ]
 })
-export class FooterModule { }
+export class AuthAccessModule { }

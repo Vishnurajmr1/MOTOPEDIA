@@ -5,6 +5,13 @@ import { NotFoundComponent } from './shared/ui/not-found/not-found.component';
 const routes: Routes = [
   {
     path: '',
+    redirectTo:'',
+    pathMatch:'full'
+  },
+  {
+    path:'auth',
+    loadChildren:()=>
+    import('./auth/feature/auth-shell/auth-shell.module').then(m=>m.AuthShellModule)
   },
   {
     path: '**',
