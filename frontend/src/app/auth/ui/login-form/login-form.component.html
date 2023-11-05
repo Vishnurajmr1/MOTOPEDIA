@@ -1,1 +1,46 @@
-<p>login-form works!</p>
+<form
+  class="flex flex-col items-center gap-2 mt-5"
+  [formGroup]="loginForm"
+  (ngSubmit)="onSumbit()"
+>
+  <input
+    type="email"
+    placeholder="email"
+    formControlName="email"
+    name="email"
+    class="form-input md:w-96 w-64 ps-3 py-1 my-3 mt-4 border-none bg-primary rounded-md text-lg text-gray-900 focus:outline-orange-100"
+  />
+  <p
+    *ngIf="(loginForm.touched) && loginForm.get('email')?.hasError('required')"
+    class="text-red-500"
+  >
+    email is required
+  </p>
+  <p
+    *ngIf="loginForm.touched && loginForm.get('email')?.hasError('email')"
+    class="text-red-500"
+  >
+    Please enter a valid email address
+  </p>
+
+  <input
+    formControlName="password"
+    type="password"
+    placeholder="Password@123"
+    name="password"
+    class="form-input md:w-96 w-64 ps-3 py-1 my-3 border-none bg-primary rounded-md text-lg text-gray-900 focus:outline-orange-100"
+  />
+  <p
+    class="text-red-500"
+    *ngIf="loginForm.touched && loginForm.get('password')?.hasError('required')"
+  >
+    Password is required
+  </p>
+
+  <button 
+  type="submit"
+  class="submit_btn shadow-2xl drop-shadow-lg border border-transparent hover:border-gray-400 text-black font-extrabold uppercase rounded-lg md:w-80 w-64 py-3 mt-4 ml-4"
+  [disabled]="!loginForm.valid">
+  Submit
+  </button>
+</form>

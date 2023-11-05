@@ -1,2 +1,14 @@
 
-<p class="bg-red-500">auth-access works!</p>
+<app-tab-container 
+[currentTab]="currentTab"
+(tabSelected)="selectedTab($event)" 
+>
+ <app-login-form 
+ (submitLoginForm)="loginFormSubmit($event)"
+*ngIf="currentTab===TabType.Login"
+ ></app-login-form>
+ <app-signup-form
+
+*ngIf="currentTab===TabType.Signup"
+ ></app-signup-form>
+</app-tab-container>
