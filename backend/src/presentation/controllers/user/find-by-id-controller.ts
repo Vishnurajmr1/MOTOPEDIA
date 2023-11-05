@@ -1,9 +1,9 @@
-import { RequestValidationError } from 'application/errors/request-validation-error';
-import { Controller } from 'application/ports/controllers/controller';
-import { RequestModel } from 'application/ports/requests/request-model';
-import { ResponseHandler } from 'application/ports/responses/response-handler';
-import { User } from 'domain/models/user/user';
-import { FindUserByIdUseCase } from 'domain/use-cases/user/find-user-by-id-use-case';
+import { RequestValidationError } from '~/application/errors/request-validation-error';
+import { Controller } from '~/application/ports/controllers/controller';
+import { RequestModel } from '~/application/ports/requests/request-model';
+import { ResponseHandler } from '~/application/ports/responses/response-handler';
+import { User } from '~/domain/models/user/user';
+import { FindUserByIdUseCase } from '~/domain/use-cases/user/find-user-by-id-use-case';
 
 export class FindUserByIdController implements Controller<User | never> {
     constructor(

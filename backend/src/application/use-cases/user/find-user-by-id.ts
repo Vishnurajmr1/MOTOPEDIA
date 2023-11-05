@@ -1,8 +1,8 @@
-import { NotFoundError } from "application/errors/not-found-error";
-import { FindUserByIdRepository } from "application/ports/repositories/user/find-user-by-id-repository";
-import { ValidationComposite } from "application/ports/validation/validation-composite";
-import { User } from "domain/models/user/user";
-import { FindUserByIdUseCase } from "domain/use-cases/user/find-user-by-id-use-case";
+import { NotFoundError } from "~/application/errors/not-found-error";
+import { FindUserByIdRepository } from "~/application/ports/repositories/user/find-user-by-id-repository";
+import { ValidationComposite } from "~/application/ports/validation/validation-composite";
+import { User } from "~/domain/models/user/user";
+import { FindUserByIdUseCase } from "~/domain/use-cases/user/find-user-by-id-use-case";
 
 export class FindUserById implements FindUserByIdUseCase{
     constructor(

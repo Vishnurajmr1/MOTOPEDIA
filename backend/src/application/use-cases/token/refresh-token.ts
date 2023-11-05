@@ -1,11 +1,11 @@
-import { RequestValidationError } from "application/errors/request-validation-error";
-import { UnauthorizedError } from "application/errors/unauthorized-error";
-import { CreateTokenRepository } from "application/ports/repositories/token/create-token-repository";
-import { FindTokenByTokenRepository } from "application/ports/repositories/token/find-token-by-token-repository";
-import { JwtToken } from "application/ports/security/jwt-token";
-import { formateDateTime } from "common/helpers/date/format-date-time";
-import { SignInResponseModel } from "domain/models/sign-in/sign-in-response-model";
-import { refreshTokenUseCase } from "domain/use-cases/token/refresh-token-use-case";
+import { RequestValidationError } from "~/application/errors/request-validation-error";
+import { UnauthorizedError } from "~/application/errors/unauthorized-error";
+import { CreateTokenRepository } from "~/application/ports/repositories/token/create-token-repository";
+import { FindTokenByTokenRepository } from "~/application/ports/repositories/token/find-token-by-token-repository";
+import { JwtToken } from "~/application/ports/security/jwt-token";
+import { formateDateTime } from "~/common/helpers/date/format-date-time";
+import { SignInResponseModel } from "~/domain/models/sign-in/sign-in-response-model";
+import { refreshTokenUseCase } from "~/domain/use-cases/token/refresh-token-use-case";
 
 export class RefreshToken implements refreshTokenUseCase{
     constructor(

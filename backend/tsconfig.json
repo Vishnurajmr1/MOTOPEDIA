@@ -5,11 +5,16 @@
     /* Modules */
     "module": "commonjs",                                /* Specify what module code is generated. */
     "sourceMap": true,                                   /* Create source map files for emitted JavaScript files. */
-    "outDir": "./build",                                   /* Specify an output folder for all emitted files. */
-    "rootDir": "./src",                                  /* Specify the root folder within your source files. */
+    "outDir": "dist",                                   /* Specify an output folder for all emitted files. */
+    "rootDir": "src",                                  /* Specify the root folder within your source files. */
     /*Module Resolution Options*/
     "moduleResolution": "Node",
-    "baseUrl": "./src",                                  /* Specify the base directory to resolve non-relative module names. */
+    "baseUrl": ".",                                  /* Specify the base directory to resolve non-relative module names. */
+    "paths": {
+      "~/*":[
+        "src/*"
+      ]
+    },
 
     /* Interop Constraints */
     "esModuleInterop": true,                             /* Emit additional JavaScript to ease support for importing CommonJS modules. This enables 'allowSyntheticDefaultImports' for type compatibility. */
@@ -24,6 +29,6 @@
     "skipLibCheck": true                                 /* Skip type checking all .d.ts files. */
   },
   "lib": ["ES2016"],
-  "include": ["src/**/*"],
+  "include": ["src"],
   "exclude": ["node_modules","build"]
 }

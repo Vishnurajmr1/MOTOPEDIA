@@ -1,6 +1,6 @@
-import { RequestValidationError } from "application/errors/request-validation-error";
-import { FindAllUsersRequestModel } from "domain/use-cases/user/find-all-users-use-case";
-import { ValidationComposite } from "application/ports/validation/validation-composite";
+import { RequestValidationError } from "~/application/errors/request-validation-error";
+import { FindAllUsersRequestModel } from "~/domain/use-cases/user/find-all-users-use-case";
+import { ValidationComposite } from "~/application/ports/validation/validation-composite";
 
 export class FindAllUsersValidation extends ValidationComposite<FindAllUsersRequestModel>{
     async validate(request?: FindAllUsersRequestModel): Promise<void>|never {

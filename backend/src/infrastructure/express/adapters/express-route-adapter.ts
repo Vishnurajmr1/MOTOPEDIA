@@ -1,5 +1,5 @@
-import { DefaultApplicationError } from "application/errors/default-application-error";
-import { Controller } from "application/ports/controllers/controller";
+import { DefaultApplicationError } from "~/application/errors/default-application-error";
+import { Controller } from "~/application/ports/controllers/controller";
 import { NextFunction,Request,Response, request } from "express";
 
 export const expressRouteAdapter=<T>(controller:Controller<T>)=>{
