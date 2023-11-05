@@ -1,5 +1,5 @@
-import { middlewareRequestModel } from "../requests/middleware-request-model";
+import { MiddlewareRequestModel } from "../requests/middleware-request-model";
 
 export interface Middleware{
-    handleRequest(requestModel:middlewareRequestModel):Promise<void>| never;
+    handleRequest(requestModel:MiddlewareRequestModel):Promise<void>| never;
 }

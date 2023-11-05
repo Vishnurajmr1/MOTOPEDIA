@@ -1,9 +1,9 @@
-import { UnauthorizedError } from "application/errors/unauthorized-error";
-import { Middleware } from "application/ports/middlewares/middleware";
-import { MiddlewareRequestModel } from "application/ports/requests/middleware-request-model";
-import { genericStringSanitizerSingleton } from "common/adapters/generic/generic_string_adapter";
-import { JwtTokenAdapter } from "common/adapters/security/jwt-token-adpater";
-import { objectKeyExists } from "common/helpers/objects/object-key-exists";
+import { UnauthorizedError } from "~/application/errors/unauthorized-error";
+import { Middleware } from "~/application/ports/middlewares/middleware";
+import { MiddlewareRequestModel } from "~/application/ports/requests/middleware-request-model";
+import { genericStringSanitizerSingleton } from "~/common/adapters/generic/generic_string_adapter";
+import { JwtTokenAdapter } from "~/common/adapters/security/jwt-token-adpater";
+import { objectKeyExists } from "~/common/helpers/objects/object-key-exists";
 
 export class IsAuthenticatedMiddleware implements Middleware{
     constructor(

@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import sanitizeHtml from 'sanitize-html';
-import { SanitizerError } from 'application/errors/sanitizer-error';
-import { Sanitizer } from 'application/ports/sanitizers/sanitizer';
+import { SanitizerError } from '~/application/errors/sanitizer-error';
+import { Sanitizer } from '~/application/ports/sanitizers/sanitizer';
 
 export class GenericStringSanitizerAdapter implements Sanitizer<any, string> {
   sanitize(value: any) {

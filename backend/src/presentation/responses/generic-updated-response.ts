@@ -1,5 +1,5 @@
-import { ResponseHandler } from 'application/ports/responses/response-handler';
-import { ResponseModel } from 'application/ports/responses/response-model';
+import { ResponseHandler } from '~/application/ports/responses/response-handler';
+import { ResponseModel } from '~/application/ports/responses/response-model';
 
 export class GenericUpdatedResponse implements ResponseHandler<void> {
     async response(body: void): Promise<ResponseModel<void>> {

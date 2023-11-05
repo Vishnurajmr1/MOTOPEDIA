@@ -1,8 +1,6 @@
 import { Express,Request,Response,NextFunction } from "express";
-import express from 'express';
-import { DefaultApplicationError } from "application/errors/default-application-error";
-
-export const setUpAsyncErrors=(app:any):void=>{
+import { DefaultApplicationError } from "../../../application/errors/default-application-error";
+export const setUpAsyncErrors=(app:Express):void=>{
     app.use((error:Error,req:Request,res:Response,next:NextFunction)=>{
         if(!error){
             return next();
@@ -22,7 +20,7 @@ export const setUpAsyncErrors=(app:any):void=>{
             error: error.name,
             message: error.message,
             statusCode: error.statusCode,
-            messages: error.messages,
+            messages: error.message,
           });
     })
 }

@@ -1,14 +1,14 @@
-import { EmailValidationError } from 'application/errors/email-validation-error';
-import { NotFoundError } from 'application/errors/not-found-error';
-import { RepositoryError } from 'application/errors/repository-error';
-import { FindUserByEmailRepository } from 'application/ports/repositories/user/find-user-by-email-repository';
-import { FindUserByIdRepository } from 'application/ports/repositories/user/find-user-by-id-repository';
-import { UpdateUserRepository } from 'application/ports/repositories/user/update-user-repository';
-import { PasswordHashing } from 'application/ports/security/password-hashing';
-import { ValidationComposite } from 'application/ports/validation/validation-composite';
-import { UserRequestPartialFields } from 'domain/models/user/user-request-partial-fields';
-import { UserRequestWithPasswordString } from 'domain/models/user/user-request-required-fields';
-import { UpdateUserUseCase } from 'domain/use-cases/user/update-user-use-case';
+import { EmailValidationError } from '~/application/errors/email-validation-error';
+import { NotFoundError } from '~/application/errors/not-found-error';
+import { RepositoryError } from '~/application/errors/repository-error';
+import { FindUserByEmailRepository } from '~/application/ports/repositories/user/find-user-by-email-repository';
+import { FindUserByIdRepository } from '~/application/ports/repositories/user/find-user-by-id-repository';
+import { UpdateUserRepository } from '~/application/ports/repositories/user/update-user-repository';
+import { PasswordHashing } from '~/application/ports/security/password-hashing';
+import { ValidationComposite } from '~/application/ports/validation/validation-composite';
+import { UserRequestPartialFields } from '~/domain/models/user/user-request-partial-fields';
+import { UserRequestWithPasswordString } from '~/domain/models/user/user-request-required-fields';
+import { UpdateUserUseCase } from '~/domain/use-cases/user/update-user-use-case';
 
 export class UpdateUser implements UpdateUserUseCase {
     constructor(

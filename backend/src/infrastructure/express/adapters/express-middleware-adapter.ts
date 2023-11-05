@@ -1,5 +1,5 @@
-import { DefaultApplicationError } from 'application/errors/default-application-error'
-import { Middleware } from 'application/ports/middlewares/middleware'
+import { DefaultApplicationError } from '~/application/errors/default-application-error'
+import { Middleware } from '~/application/ports/middlewares/middleware'
 import {NextFunction,Request,Response}from 'express'
 
 export const expressMiddlewareAdapter=(middleware:Middleware)=>{

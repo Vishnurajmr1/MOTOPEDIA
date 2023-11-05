@@ -1,4 +1,4 @@
-import { SignedToken } from "domain/models/token/signed-token";
+import { SignedToken } from "~/domain/models/token/signed-token";
 
 export interface JwtToken {
   signAccessToken(userId: string): SignedToken;

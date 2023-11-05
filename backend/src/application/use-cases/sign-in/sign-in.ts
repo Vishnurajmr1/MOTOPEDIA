@@ -1,17 +1,17 @@
-import { InternalServerError } from 'application/errors/internal-server-error';
-import { NotFoundError } from 'application/errors/not-found-error';
-import { UnauthorizedError } from 'application/errors/unauthorized-error';
-import { FindUserByEmailRepository } from 'application/ports/repositories/user/find-user-by-email-repository';
-import { JwtToken } from 'application/ports/security/jwt-token';
-import { PasswordHashing } from 'application/ports/security/password-hashing';
-import { SignInUseCase } from 'domain/use-cases/sign-in/sign-in-use-case';
-import { ValidationComposite } from 'application/ports/validation/validation-composite';
-import { SignInRequestModel } from 'domain/models/sign-in/sign-in-request-model';
-import { SignInResponseModel } from 'domain/models/sign-in/sign-in-response-model';
-import { User } from 'domain/models/user/user';
-import { CreateTokenRepository } from 'application/ports/repositories/token/create-token-repository';
-import { formateDateTime } from 'common/helpers/date/format-date-time';
-import { SignedToken } from 'domain/models/token/signed-token';
+import { InternalServerError } from '~/application/errors/internal-server-error';
+import { NotFoundError } from '~/application/errors/not-found-error';
+import { UnauthorizedError } from '~/application/errors/unauthorized-error';
+import { FindUserByEmailRepository } from '~/application/ports/repositories/user/find-user-by-email-repository';
+import { JwtToken } from '~/application/ports/security/jwt-token';
+import { PasswordHashing } from '~/application/ports/security/password-hashing';
+import { SignInUseCase } from '~/domain/use-cases/sign-in/sign-in-use-case';
+import { ValidationComposite } from '~/application/ports/validation/validation-composite';
+import { SignInRequestModel } from '~/domain/models/sign-in/sign-in-request-model';
+import { SignInResponseModel } from '~/domain/models/sign-in/sign-in-response-model';
+import { User } from '~/domain/models/user/user';
+import { CreateTokenRepository } from '~/application/ports/repositories/token/create-token-repository';
+import { formateDateTime } from '~/common/helpers/date/format-date-time';
+import { SignedToken } from '~/domain/models/token/signed-token';
 
 type SaveFreshTokenParams = {
   refreshTokenData: SignedToken;

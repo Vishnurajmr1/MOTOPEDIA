@@ -1,12 +1,12 @@
-import { RequestValidationError } from 'application/errors/request-validation-error';
-import { Controller } from 'application/ports/controllers/controller';
-import { RequestModel } from 'application/ports/requests/request-model';
-import { ResponseHandler } from 'application/ports/responses/response-handler';
-import { genericStringSanitizerSingleton } from 'common/adapters/generic/generic_string_adapter';
-import { objectKeyExists } from 'common/helpers/objects/object-key-exists';
-import { User } from 'domain/models/user/user';
-import { UserRequestWithPasswordString } from 'domain/models/user/user-request-required-fields';
-import { CreateUserUseCase } from 'domain/use-cases/user/create-user-use-case';
+import { RequestValidationError } from '~/application/errors/request-validation-error';
+import { Controller } from '~/application/ports/controllers/controller';
+import { RequestModel } from '~/application/ports/requests/request-model';
+import { ResponseHandler } from '~/application/ports/responses/response-handler';
+import { genericStringSanitizerSingleton } from '~/common/adapters/generic/generic_string_adapter';
+import { objectKeyExists } from '~/common/helpers/objects/object-key-exists';
+import { User } from '~/domain/models/user/user';
+import { UserRequestWithPasswordString } from '~/domain/models/user/user-request-required-fields';
+import { CreateUserUseCase } from '~/domain/use-cases/user/create-user-use-case';
 
 type RequestOptionalBody = RequestModel<UserRequestWithPasswordString>;
 

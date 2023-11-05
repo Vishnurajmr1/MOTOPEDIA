@@ -1,13 +1,13 @@
-import { RequestValidationError } from 'application/errors/request-validation-error';
-import { Controller } from 'application/ports/controllers/controller';
-import { RequestModel } from 'application/ports/requests/request-model';
-import { ResponseHandler } from 'application/ports/responses/response-handler';
-import { ResponseModel } from 'application/ports/responses/response-model';
-import { genericStringSanitizerSingleton } from 'common/adapters/generic/generic_string_adapter';
-import { objectKeyExists } from 'common/helpers/objects/object-key-exists';
-import { removeObjectEmptyKeys } from 'common/helpers/objects/remove-object-empty-keys';
-import { UpdateUserRequestModelParams, UserRequestPartialFields } from 'domain/models/user/user-request-partial-fields';
-import { UpdateUserUseCase } from 'domain/use-cases/user/update-user-use-case';
+import { RequestValidationError } from '~/application/errors/request-validation-error';
+import { Controller } from '~/application/ports/controllers/controller';
+import { RequestModel } from '~/application/ports/requests/request-model';
+import { ResponseHandler } from '~/application/ports/responses/response-handler';
+import { ResponseModel } from '~/application/ports/responses/response-model';
+import { genericStringSanitizerSingleton } from '~/common/adapters/generic/generic_string_adapter';
+import { objectKeyExists } from '~/common/helpers/objects/object-key-exists';
+import { removeObjectEmptyKeys } from '~/common/helpers/objects/remove-object-empty-keys';
+import { UpdateUserRequestModelParams, UserRequestPartialFields } from '~/domain/models/user/user-request-partial-fields';
+import { UpdateUserUseCase } from '~/domain/use-cases/user/update-user-use-case';
 
 type RequestType = RequestModel<UserRequestPartialFields, UpdateUserRequestModelParams>;
 

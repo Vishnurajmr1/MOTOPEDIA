@@ -1,7 +1,7 @@
-import { FindAllUsersRepository } from 'application/ports/repositories/user/find-all-users-repository';
-import { ValidationComposite } from 'application/ports/validation/validation-composite';
-import { User } from 'domain/models/user/user';
-import { FindAllUsersRequestModel, FindAllUsersUseCase } from 'domain/use-cases/user/find-all-users-use-case';
+import { FindAllUsersRepository } from '~/application/ports/repositories/user/find-all-users-repository';
+import { ValidationComposite } from '~/application/ports/validation/validation-composite';
+import { User } from '~/domain/models/user/user';
+import { FindAllUsersRequestModel, FindAllUsersUseCase } from '~/domain/use-cases/user/find-all-users-use-case';
 
 export class FindAllUsers implements FindAllUsersUseCase {
     constructor(
