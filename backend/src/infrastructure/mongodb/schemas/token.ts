@@ -11,7 +11,7 @@ const tokenSchema=new mongoose.Schema({
         required:true
     },
     expires_in:{
-        type:Date,
+        type:String,
         required:true
     },
     createdAt:{
@@ -24,6 +24,7 @@ const tokenSchema=new mongoose.Schema({
     }
 })
 
-const Token=mongoose.model('Token',tokenSchema);
+const TokenModel=mongoose.model('Token',tokenSchema);
 
-export default Token;
+
+export  default TokenModel;
