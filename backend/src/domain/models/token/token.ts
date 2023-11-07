@@ -1,6 +1,6 @@
 export interface Token{
-    id:string;
+    id?:string;
     token:string;
     user_id:string;
-    expires_in:string;
+    expires_in:Date;
 }
