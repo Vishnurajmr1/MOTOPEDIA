@@ -27,6 +27,7 @@
     "@types/jsonwebtoken": "^9.0.4",
     "@types/mime": "^3.0.3",
     "@types/morgan": "^1.9.9",
+    "@types/multer": "^1.4.10",
     "@types/node": "^20.8.10",
     "@types/nodemailer": "^6.4.14",
     "@types/sanitize-html": "^2.9.3",
@@ -64,6 +65,7 @@
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.0.0",
     "morgan": "^1.10.0",
+    "multer": "^1.4.5-lts.1",
     "nodemailer": "^6.9.7",
     "sanitize-html": "^2.11.0",
     "validator": "^13.11.0"
