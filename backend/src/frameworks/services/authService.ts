@@ -36,24 +36,23 @@ export const authService = () => {
         return decodedToken;
     };
 
-    const decondedTokenAndReturnExpireDate = (token: string): number => {
+    const decodedTokenAndReturnExpireDate = (token: string): number => {
         const decodedToken: any = jwt.decode(token);
         let exiprationTimeStamp: number;
         if (decodedToken && decodedToken.exp) {
-            exiprationTimeStamp = decodedToken * 1000;
+            exiprationTimeStamp = decodedToken.exp * 1000;
         } else {
             exiprationTimeStamp = 0;
         }
         return exiprationTimeStamp;
     };
-
     return {
         comparePassword,
         generateToken,
         generateRefreshToken,
         hashPassword,
         verifyToken,
-        decondedTokenAndReturnExpireDate,
+        decodedTokenAndReturnExpireDate,
         decodeToken,
     };
 };

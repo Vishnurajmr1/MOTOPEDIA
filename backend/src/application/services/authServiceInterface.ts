@@ -1,5 +1,5 @@
-import { AuthServiceReturn } from '@src/frameworks/services/authService';
-import { JwtPayload } from '@src/types/common';
+import { AuthServiceReturn } from '../../frameworks/services/authService';
+import { JwtPayload } from '../../types/common';
 
 export const authServiceInterface = (service: AuthServiceReturn) => {
     const hashPassword = (password: string) => service.hashPassword(password);
@@ -17,11 +17,11 @@ export const authServiceInterface = (service: AuthServiceReturn) => {
         service.generateRefreshToken(payload);
     };
 
-    const decondedTokenAndReturnExpireDate = (token: string) => {
-        service.decondedTokenAndReturnExpireDate(token);
+    const decodedTokenAndReturnExpireDate=(token: string) => {
+        service.decodedTokenAndReturnExpireDate(token);
     };
 
-    const decodedToken = (token: string) => {
+    const decodeToken = (token: string) => {
         service.decodeToken(token);
     };
     return {
@@ -30,8 +30,8 @@ export const authServiceInterface = (service: AuthServiceReturn) => {
         verifyPassword,
         generateToken,
         generateRefreshToken,
-        decondedTokenAndReturnExpireDate,
-        decodedToken,
+        decodedTokenAndReturnExpireDate,
+        decodeToken,
     };
 };
 export type AuthServiceInterface = typeof authServiceInterface;
