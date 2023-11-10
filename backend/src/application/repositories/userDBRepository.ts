@@ -1,33 +1,29 @@
-import { UserRepositoryMongoDB } from "@src/frameworks/database/mongodb/repositories/UserRepoMongoDb";
-import { UserUpdateInfo } from "@src/types/userInterface";
-import { UserRegisterInterface } from "@src/types/userRegisterInterface";
+import { UserRepositoryMongoDB } from '@src/frameworks/database/mongodb/repositories/UserRepoMongoDb';
+import { UserUpdateInfo } from '@src/types/userInterface';
+import { UserRegisterInterface } from '@src/types/userRegisterInterface';
 
+export const userDbRepository = (repository: ReturnType<UserRepositoryMongoDB>) => {
+    const addUser = async (user: UserRegisterInterface) => await repository.addUser(user);
 
-export  const userRepositoryMongodb=(
-    repository:ReturnType<UserRepositoryMongoDB>
-)=>{
+    const getUserByEmail = async (email: string) => await repository.getUserByEmail(email);
 
-    const addUser=async(user:UserRegisterInterface)=>await repository.addUser(user)
+    const getUserById = async (id: string) => await repository.getUserById(id);
 
-    const getUserByEmail=async(email:string)=>await repository.getUserByEmail(email)
+    const changePassword = async (id: string, password: string) => await repository.changePassword(id, password);
 
-    const getUserById=async(id:string)=>await repository.getUserById(id);
+    const updateProfile = async (id: string, userInfo: UserUpdateInfo) => await repository.updateProfile(id, userInfo);
 
-    const changePassword=async(id:string,password:string)=>await repository.changePassword(id,password)
+    const getAllUsers = async () => await repository.getAllUsers();
 
-    const updateProfile=async(id:string,userInfo:UserUpdateInfo)=>await repository.updateProfile(id,userInfo)
+    const blockUser = async (id: string, reason: string) => await repository.blockUser(id, reason);
 
-    const getAllUsers=async()=>await repository.getAllUsers()
+    const unblockUser = async (id: string) => await repository.unblockUser(id);
 
-    const blockUser=async(id:string,reason:string)=>await repository.blockUser(id,reason)
+    const getAllBlockedUsers = async () => await repository.getAllBlockedUsers();
 
-    const unblockUser=async(id:string)=>await repository.unblockUser(id)
+    const getTotalNumberofUsers = async () => await repository.getTotalNumberofUsers();
 
-    const getAllBlockedUsers=async()=>await repository.getAllBlockedUsers()
-
-    const getTotalNumberofUsers=async()=>await repository.getTotalNumberofUsers();
-
-    return{
+    return {
         addUser,
         getUserByEmail,
         getUserById,
@@ -37,8 +33,8 @@ export  const userRepositoryMongodb=(
         blockUser,
         unblockUser,
         getAllBlockedUsers,
-        getTotalNumberofUsers
-    }
-}
+        getTotalNumberofUsers,
+    };
+};
 
-export type usersDbInterface=typeof userRepositoryMongodb;
+export type usersDbInterface = typeof userDbRepository;

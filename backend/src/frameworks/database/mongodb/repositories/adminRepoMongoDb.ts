@@ -1,5 +1,5 @@
-import { AdminSavedDbInterface } from "@src/types/adminAuthInterface"
 import Admin from "../models/admin"
+import { AdminSavedDbInterface } from "@src/types/adminAuthInterface"
 
 export const adminRepoMongodb=()=>{
     const getAdminByEmail=async(email:string)=>{
@@ -12,4 +12,4 @@ export const adminRepoMongodb=()=>{
     }
 }
 
-export type AdminRepoMongodb=typeof adminRepoMongodb;   
+export type AdminRepositoryMongoDb=typeof adminRepoMongodb;   
