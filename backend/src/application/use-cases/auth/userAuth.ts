@@ -1,17 +1,21 @@
 import { RefreshTokenDbInterface } from '@src/application/repositories/refreshTokenDBRepository';
 import { usersDbInterface } from '@src/application/repositories/userDBRepository';
 import { AuthServiceInterface } from '@src/application/services/authServicesInterface';
+import { SendEmailServiceInterface } from '@src/application/services/sendEmailInterface';
 import HttpStatusCodes from '@src/constants/HttpStatusCodes';
 import { JwtPayload } from '@src/types/common';
 import { UserInterface } from '@src/types/userInterface';
 import { UserRegisterInterface } from '@src/types/userRegisterInterface';
 import AppError from '@src/utils/appError';
+import generateOtp from '@src/utils/generateOtp';
+import { verifyEmailTemplate } from '@src/utils/templates/verifyEmail';
 
 export const userRegister = async (
     user: UserRegisterInterface,
     userRepository: ReturnType<usersDbInterface>,
     refreshTokenRepository: ReturnType<RefreshTokenDbInterface>,
     authService: ReturnType<AuthServiceInterface>,
+    sendEmailService: ReturnType<SendEmailServiceInterface>,
 ) => {
     user.email = user?.email?.toLowerCase();
 
@@ -23,17 +27,31 @@ export const userRegister = async (
     if (user.password) {
         user.password = await authService.hashPassword(user.password);
     }
-    const { _id: userId, email } = await userRepository.addUser(user);
-    const payload = {
-        Id: userId,
-        email,
-        role: 'user',
-    };
-    const accessToken = authService.generateToken(payload);
-    const refreshToken = authService.generateRefreshToken(payload);
-    const expiratonDate = authService.decodedTokenAndReturnExpireDate(refreshToken);
-    await refreshTokenRepository.saveRefreshToken(userId, refreshToken, expiratonDate);
-    return { accessToken, refreshToken };
+    // const payload = {
+    //     Id: userId,
+    //     email,
+    //     role: 'user',
+    // };
+    const otp: string = generateOtp();
+    const emailTempalte = verifyEmailTemplate(otp);
+    const result= await sendEmailService.sendEmail({
+        to: user.email,
+        subject:'Motopedia-verification',
+        text:emailTempalte.text,
+        html: emailTempalte.html
+    });
+    if (!result) {
+        throw new AppError('OOps something went wrong!Please try again later!', HttpStatusCodes.BAD_REQUEST);
+    }
+    user.isEmailVerified = false;
+    user.otp = otp;
+    const userData = await userRepository.addUser(user);
+    return {userData};
+    // const accessToken = authService.generateToken(payload);
+    // const refreshToken = authService.generateRefreshToken(payload);
+    // const expiratonDate = authService.decodedTokenAndReturnExpireDate(refreshToken);
+    // await refreshTokenRepository.saveRefreshToken(userId, refreshToken, expiratonDate);
+    // return { accessToken, refreshToken };
 };
 
 export const userLogin = async (

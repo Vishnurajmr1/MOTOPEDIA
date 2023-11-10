@@ -8,6 +8,8 @@ export interface UserRegisterInterface {
         url?: string;
     };
     mobile?: string;
+    otp?:string;
     password?: string;
     isGoogleUser: boolean;
+    isEmailVerified:boolean;
 }
