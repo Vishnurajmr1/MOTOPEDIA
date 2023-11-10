@@ -22,7 +22,7 @@ export const userDbRepository = (repository: ReturnType<UserRepositoryMongoDB>) 
     const getAllBlockedUsers = async () => await repository.getAllBlockedUsers();
 
     const getTotalNumberofUsers = async () => await repository.getTotalNumberofUsers();
-
+    const verifyUserEmail=async(email:string)=>await repository.verifyUserByEmail(email);
     return {
         addUser,
         getUserByEmail,

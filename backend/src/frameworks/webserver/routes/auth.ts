@@ -3,10 +3,12 @@ import { adminDbRepostiory } from '@src/application/repositories/adminDBReposito
 import { refreshTokenDbRepository } from '@src/application/repositories/refreshTokenDBRepository';
 import { userDbRepository } from '@src/application/repositories/userDBRepository';
 import { authServiceInterface } from '@src/application/services/authServicesInterface';
+import { sendEmailServiceInterface } from '@src/application/services/sendEmailInterface';
 import { userRepositoryMongoDB } from '@src/frameworks/database/mongodb/repositories/UserRepoMongoDb';
 import { adminRepoMongodb } from '@src/frameworks/database/mongodb/repositories/adminRepoMongoDb';
 import { refreshTokenRepositoryMongoDB } from '@src/frameworks/database/mongodb/repositories/refreshTokenRepoMongoDb';
 import { authService } from '@src/frameworks/services/authService';
+import { sendEmailService } from '@src/frameworks/services/sendEmailService';
 import express from 'express';
 
 const authRouter = () => {
@@ -20,10 +22,12 @@ const authRouter = () => {
         adminRepoMongodb,
         refreshTokenDbRepository,
         refreshTokenRepositoryMongoDB,
+        sendEmailServiceInterface,
+        sendEmailService
     );
 
     //* User
-    router.post('/user-register',controller.registerUser);
+    router.post('/signup',controller.registerUser);
     router.post('/user-login',controller.loginUser)
     //*Admin
     router.post('/admin-login',controller.loginAdmin);

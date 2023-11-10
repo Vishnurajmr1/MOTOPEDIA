@@ -8,8 +8,8 @@ const configKeys = {
     JWT_SECRET: process.env.JWT_SECRET as string,
     JWT_REFRESH_SECRET: process.env.JWT_REFRESH_SECRET as string,
     NODE_ENV: process.env.NODE_ENV as string,
-    EMAIL_NODE_MAILER: process.env.EMAIL_USERNAME as string,
-    PASSWORD_NODE_MAILER: process.env.EMAIL_PASSWORD as string,
+    EMAIL_NODE_MAILER: process.env.EMAIL_USERNAME,
+    APP_PASSWORD:process.env.EMAIL_PASSWORD,
     FROM_EMAIL_NODE_MAILER: process.env.FROM_EMAIL as string,
     JWT_SECRET_EXPIRTATION: process.env.JWT_SECRET_EXPIRATION_HOUR as string,
 };

@@ -1,96 +1,99 @@
-import mongoose,{Schema,Document,model} from "mongoose";
+import mongoose, { Schema, Document, model } from 'mongoose';
 
-interface ProfilePic{
-    name:string;
-    key?:string;
-    url?:string;
+interface ProfilePic {
+    name: string;
+    key?: string;
+    url?: string;
 }
 
-interface IUser extends Document{
-    firstName:string;
-    lastName:string;
-    email:string;
-    profilePic:ProfilePic;
-    mobile?:string;
-    password:string;
-    dateJoined:Date,
-    isGoogleUser:boolean;
-    isBlocked:boolean;
-    blockedReason:string;
+interface IUser extends Document {
+    firstName: string;
+    lastName: string;
+    email: string;
+    profilePic: ProfilePic;
+    mobile?: string;
+    password: string;
+    dateJoined: Date;
+    isGoogleUser: boolean;
+    isBlocked: boolean;
+    blockedReason: string;
+    isVerifiedEmail: boolean;
 }
 
-const ProfileSchema=new Schema<ProfilePic>({
-    name:{
-        type:String,
-        requried:true
+const ProfileSchema = new Schema<ProfilePic>({
+    name: {
+        type: String,
+        requried: true,
     },
-    key:{
-        type:String
+    key: {
+        type: String,
     },
-    url:{
-        type:String
-    }
-})
+    url: {
+        type: String,
+    },
+});
 
-const UserScheam=new Schema<IUser>({
-    firstName:{
-        type:String,
-        required:true,
-        trim:true
+const UserScheam = new Schema<IUser>({
+    firstName: {
+        type: String,
+        required: true,
+        trim: true,
     },
-    lastName:{
-        type:String,
-        required:true,
-        trim:true
+    lastName: {
+        type: String,
+        required: true,
+        trim: true,
     },
-    email:{
-        type:String,
-        required:true,
-        trim:true,
-        unique:true,
-        lowercase:true,
-        match:[ /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/,
-        'Please enter a valid email'
-        ]
+    email: {
+        type: String,
+        required: true,
+        trim: true,
+        unique: true,
+        lowercase: true,
+        match: [/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/, 'Please enter a valid email'],
     },
-    profilePic:{
-        type:ProfileSchema,
-        required:false
+    profilePic: {
+        type: ProfileSchema,
+        required: false,
     },
-    mobile:{
-        type:String,
-        required:function(this:IUser){
+    mobile: {
+        type: String,
+        required: function (this: IUser) {
             return !this.isGoogleUser;
         },
-        trim:true,
-        sparse:true,
-        match:[/^[0-9]{10}$/,'Please enter a valid 10-digit mobile number']
+        trim: true,
+        sparse: true,
+        match: [/^[0-9]{10}$/, 'Please enter a valid 10-digit mobile number'],
     },
-    password:{
-        type:String,
-        required:function(this:IUser){
-            return !this.isGoogleUser
+    password: {
+        type: String,
+        required: function (this: IUser) {
+            return !this.isGoogleUser;
         },
-        minlength:8
+        minlength: 8,
     },
-    dateJoined:{
-        type:Date,
-        default:Date.now
+    dateJoined: {
+        type: Date,
+        default: Date.now,
     },
-    isGoogleUser:{
-        type:Boolean,
-        default:false
+    isGoogleUser: {
+        type: Boolean,
+        default: false,
     },
-    isBlocked:{
-        type:Boolean,
-        default:false
+    isBlocked: {
+        type: Boolean,
+        default: false,
     },
-    blockedReason:{
-        type:String,
-        default:''
-    }
-})
+    blockedReason: {
+        type: String,
+        default: '',
+    },
+    isVerifiedEmail: {
+        type: Boolean,
+        default: false,
+    },
+});
 
-const User=model<IUser>('User',UserScheam,'user');
+const User = model<IUser>('User', UserScheam, 'user');
 
 export default User;

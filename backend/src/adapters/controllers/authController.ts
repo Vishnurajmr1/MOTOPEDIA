@@ -11,6 +11,8 @@ import { RefreshTokenDbInterface } from '@src/application/repositories/refreshTo
 import { RefreshTokenRepositoryMongoDB } from '@src/frameworks/database/mongodb/repositories/refreshTokenRepoMongoDb';
 import { UserRegisterInterface } from '@src/types/userRegisterInterface';
 import { adminLogin } from '@src/application/use-cases/auth/adminAuth';
+import { SendEmailServiceInterface } from '@src/application/services/sendEmailInterface';
+import { SendEmailService } from '@src/frameworks/services/sendEmailService';
 const authController = (
     authServiceInterface: AuthServiceInterface,
     authServiceImplementation: AuthService,
@@ -20,25 +22,27 @@ const authController = (
     adminDbRepositoryImplementation: AdminRepositoryMongoDb,
     refreshTokenDbRepository: RefreshTokenDbInterface,
     refreshTokenDbRepositoryImplementation: RefreshTokenRepositoryMongoDB,
+    sendEmailInterface:SendEmailServiceInterface,
+    sendEmailImplementation:SendEmailService
 ) => {
     const dbRepositoryUser = userDbRepository(userDbRepositoryImplementation());
     const dbRepositoryAdmin = adminDbRepository(adminDbRepositoryImplementation());
     const dbRepositoryRefreshToken = refreshTokenDbRepository(refreshTokenDbRepositoryImplementation());
     const authService = authServiceInterface(authServiceImplementation());
-
+    const emailService=sendEmailInterface(sendEmailImplementation());
     const registerUser = asyncHandler(async (req: Request, res: Response) => {
         const user: UserRegisterInterface = req.body;
-        const { accessToken, refreshToken } = await userRegister(
+        const { userData } = await userRegister(
             user,
             dbRepositoryUser,
             dbRepositoryRefreshToken,
             authService,
+            emailService
         );
         res.status(200).json({
             status: 'success',
-            message: 'Successfully registerd the user',
-            accessToken,
-            refreshToken,
+            message: `Email verification otp send successfully to ${userData.email}`,
+            userData
         });
     });
 

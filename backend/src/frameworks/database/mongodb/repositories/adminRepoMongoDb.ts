@@ -6,7 +6,6 @@ export const adminRepoMongodb=()=>{
         const admin:AdminSavedDbInterface|null=await Admin.findOne({email});
         return admin
     }
-
     return {
         getAdminByEmail
     }

@@ -21,7 +21,6 @@ export const adminLogin=async(
     if(!isPasswordCorrect){
         throw new AppError('Sorry,your password is incorrect,Please try again',HttpStatusCodes.UNAUTHORIZED);
     }
-
     const payload:JwtPayload={
         Id: admin._id,
         email: admin.email,

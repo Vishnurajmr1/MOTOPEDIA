@@ -1,8 +1,9 @@
 import { SendEmailService } from '@src/frameworks/services/sendEmailService';
+import { MailInterface } from '@src/types/mailInterface';
 
 export const sendEmailServiceInterface = (service: ReturnType<SendEmailService>) => {
-    const sendEmail = (email: string, subject: string, text: string) => {
-        service.sendEmail(email, subject, text);
+    const sendEmail = async (mailInterface:MailInterface)=> {
+           return await service.sendEmail(mailInterface);
     };
     return {
         sendEmail,

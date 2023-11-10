@@ -2,7 +2,6 @@ import { AdminRepositoryMongoDb, adminRepoMongodb } from '@src/frameworks/databa
 
 export const adminDbRepostiory = (repository: ReturnType<AdminRepositoryMongoDb>) => {
     const getAdminByEmail = async (email: string) => await repository.getAdminByEmail(email);
-
     return { getAdminByEmail };
 };
 
