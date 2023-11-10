@@ -1,6 +1,7 @@
-import jwt, { JwtPayload } from 'jsonwebtoken';
+import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
 import configKeys from '../../config';
+import { JwtPayload } from 'jsonwebtoken';
 
 export const authService = () => {
     const hashPassword = async (password: string) => {

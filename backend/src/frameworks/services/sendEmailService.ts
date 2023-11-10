@@ -1,5 +1,5 @@
 import nodemailer, { Transporter } from 'nodemailer';
-import configKeys from '~/config';
+import configKeys from '../../config';
 
 export const sendEmailService = () => {
     const transporter: Transporter = nodemailer.createTransport({

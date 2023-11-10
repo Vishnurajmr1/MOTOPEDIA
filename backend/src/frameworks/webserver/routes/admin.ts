@@ -1,10 +1,9 @@
 import express from 'express';
 
-const userRouter=()=>{
+const adminRouter=()=>{
     const router=express.Router();
-    // const controller=userController
 
     return router
 }
 
-export default userRouter;
+export default adminRouter;

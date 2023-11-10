@@ -1,6 +1,6 @@
-import { AdminRepoMongodb } from '@src/frameworks/database/mongodb/repositories/adminRepoMongoDb';
+import { AdminRepositoryMongoDb, adminRepoMongodb } from '@src/frameworks/database/mongodb/repositories/adminRepoMongoDb';
 
-export const adminDbRepostiory = (repository: ReturnType<AdminRepoMongodb>) => {
+export const adminDbRepostiory = (repository: ReturnType<AdminRepositoryMongoDb>) => {
     const getAdminByEmail = async (email: string) => await repository.getAdminByEmail(email);
 
     return { getAdminByEmail };

@@ -6,6 +6,7 @@ import AppError from './utils/appError';
 import expressConfig from './frameworks/webserver/express';
 import serverConfig from './frameworks/webserver/server';
 import errorHandlingMiddleware from './frameworks/webserver/middlewares/errorHandlingMiddleware';
+import routes from './frameworks/webserver/routes';
 
 colors?.enable();
 
@@ -13,6 +14,8 @@ const app: Application = express();
 const server = http.createServer(app);
 connectToMongodb();
 expressConfig(app);
+
+routes(app)
 
 //error handling middleware
 app.use(errorHandlingMiddleware);
