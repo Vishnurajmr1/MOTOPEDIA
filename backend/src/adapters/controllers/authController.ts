@@ -4,7 +4,7 @@ import { AuthService } from '@src/frameworks/services/authService';
 import { AuthServiceInterface } from '@src/application/services/authServicesInterface';
 import { AdminDbInterface } from '@src/application/repositories/adminDBRepository';
 import { usersDbInterface } from '@src/application/repositories/userDBRepository';
-import { userLogin, userRegister, verifyOtp } from '@src/application/use-cases/auth/userAuth';
+import { resendOtp, userLogin, userRegister, verifyOtp } from '@src/application/use-cases/auth/userAuth';
 import { UserRepositoryMongoDB } from '@src/frameworks/database/mongodb/repositories/UserRepoMongoDb';
 import { AdminRepositoryMongoDb } from '@src/frameworks/database/mongodb/repositories/adminRepoMongoDb';
 import { RefreshTokenDbInterface } from '@src/application/repositories/refreshTokenDBRepository';
@@ -78,7 +78,6 @@ const authController = (
             refreshToken,
         });
     });
-
     const verifyUserEmail=asyncHandler(async(req:Request,res:Response)=>{
         const {email,otp}:{email:string,otp:string}=req.body;
          const {accessToken,refreshToken}=await verifyOtp(
@@ -94,13 +93,26 @@ const authController = (
             accessToken,
             refreshToken,
         });
-
+    })
+    const resendOtpverify=asyncHandler(async(req:Request,res:Response)=>{
+        const {email}:{email:string}=req.body;
+        await resendOtp(
+            email,
+            authService,
+            dbRepositoryUser,
+            emailService
+        );
+        res.status(200).json({
+            status: 'success',
+            message: `Email verification otp send successfully to ${email}`,
+        });
     })
     return {
         registerUser,
         loginAdmin,
         loginUser,
-        verifyUserEmail
+        verifyUserEmail,
+        resendOtpverify
     };
 };
 

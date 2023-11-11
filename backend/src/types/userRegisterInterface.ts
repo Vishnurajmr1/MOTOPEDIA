@@ -11,5 +11,5 @@ export interface UserRegisterInterface {
     otp?:string;
     password?: string;
     isGoogleUser: boolean;
-    isEmailVerified:boolean;
+    isVerifiedEmail:boolean;
 }

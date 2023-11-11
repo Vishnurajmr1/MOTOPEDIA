@@ -53,9 +53,6 @@ export const userRepositoryMongoDB = () => {
         const total = await User.find().count();
         return total;
     };
-    const verifyUserByEmail=async(email:string):Promise<void>=>{
-        await User.updateOne({email:email},{$set:{isVerifiedEmail:true,otp:null}})
-    }
 
     return {
         addUser,
@@ -68,7 +65,6 @@ export const userRepositoryMongoDB = () => {
         updateProfile,
         getAllBlockedUsers,
         getTotalNumberofUsers,
-        verifyUserByEmail
     };
 };
 

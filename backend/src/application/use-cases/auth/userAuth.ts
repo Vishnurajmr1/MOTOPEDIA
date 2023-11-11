@@ -27,31 +27,21 @@ export const userRegister = async (
     if (user.password) {
         user.password = await authService.hashPassword(user.password);
     }
-    // const payload = {
-    //     Id: userId,
-    //     email,
-    //     role: 'user',
-    // };
     const otp: string = generateOtp();
     const emailTempalte = verifyEmailTemplate(otp);
-    const result= await sendEmailService.sendEmail({
-        to:user.email,
-        subject:'Motopedia-verification',
-        text:emailTempalte.text,
-        html: emailTempalte.html
+    const result = await sendEmailService.sendEmail({
+        to: user.email,
+        subject: 'Motopedia-verification',
+        text: emailTempalte.text,
+        html: emailTempalte.html,
     });
     if (!result) {
         throw new AppError('OOps something went wrong!Please try again later!', HttpStatusCodes.BAD_REQUEST);
     }
-    user.isEmailVerified = false;
+    user.isVerifiedEmail = false;
     user.otp = otp;
     const userData = await userRepository.addUser(user);
-    return {userData};
-    // const accessToken = authService.generateToken(payload);
-    // const refreshToken = authService.generateRefreshToken(payload);
-    // const expiratonDate = authService.decodedTokenAndReturnExpireDate(refreshToken);
-    // await refreshTokenRepository.saveRefreshToken(userId, refreshToken, expiratonDate);
-    // return { accessToken, refreshToken };
+    return { userData };
 };
 
 export const userLogin = async (
@@ -85,31 +75,62 @@ export const userLogin = async (
     return { accessToken, refreshToken };
 };
 
-export const getOtp=async()=>{
-
-}
-
-export const verifyOtp=async(
-    email:string,
-    otp:string,
-    authService:ReturnType<AuthServiceInterface>,
-    userRepository:ReturnType<usersDbInterface>,
-    refreshTokenRepository:ReturnType<RefreshTokenDbInterface>
-)=>{
+export const resendOtp = async (
+    email: string,
+    authService: ReturnType<AuthServiceInterface>,
+    userRepository: ReturnType<usersDbInterface>,
+    sendEmailService: ReturnType<SendEmailServiceInterface>,
+) => {
     const user: UserInterface | null = await userRepository.getUserByEmail(email);
-    if(!user){
-        throw new AppError('Email not registerd!Please signup',HttpStatusCodes.BAD_REQUEST)
+    if (!user) {
+        throw new AppError('Email not registered!Please signup', HttpStatusCodes.BAD_REQUEST);
+    }
+    if (user.isVerifiedEmail) {
+        throw new AppError('Email already verified', HttpStatusCodes.BAD_REQUEST);
+    }
+    const otp: string = generateOtp();
+    const emailTempalte = verifyEmailTemplate(otp);
+    const result = await sendEmailService.sendEmail({
+        to: user.email,
+        subject: 'Motopedia-verification',
+        text: emailTempalte.text,
+        html: emailTempalte.html,
+    });
+    if (!result) {
+        throw new AppError('OOps something went wrong!Please try again later!', HttpStatusCodes.BAD_REQUEST);
+    }
+    user.otp = otp;
+    await userRepository.updateProfile(user._id, {
+        otp: user.otp,
+    });
+};
+
+export const verifyOtp = async (
+    email: string,
+    otp: string,
+    authService: ReturnType<AuthServiceInterface>,
+    userRepository: ReturnType<usersDbInterface>,
+    refreshTokenRepository: ReturnType<RefreshTokenDbInterface>,
+) => {
+    const user: UserInterface | null = await userRepository.getUserByEmail(email);
+    if (!user) {
+        throw new AppError('Email not registerd!Please signup', HttpStatusCodes.BAD_REQUEST);
     }
 
-    if(user  && user.isEmailVerified){
-        throw new AppError('Email already verified',HttpStatusCodes.BAD_REQUEST)
+    if (user && user.isVerifiedEmail) {
+        throw new AppError('Email already verified', HttpStatusCodes.BAD_REQUEST);
     }
 
-    if(otp!==user.otp){
-        throw new AppError('Invalid OTP.Please check your OTP and try again.',HttpStatusCodes.BAD_REQUEST);
+    if (otp !== user.otp) {
+        throw new AppError('Invalid OTP.Please check your OTP and try again.', HttpStatusCodes.BAD_REQUEST);
     }
-    await userRepository.verifyUserEmail(email);
-     const payload :JwtPayload= {
+    user.otp = null;
+    user.isVerifiedEmail = true;
+    await userRepository.updateProfile(user._id, {
+        isVerifiedEmail: user.isVerifiedEmail,
+        otp: user.otp,
+    });
+    const payload: JwtPayload = {
         Id: user._id,
         email,
         role: 'user',
@@ -120,4 +141,4 @@ export const verifyOtp=async(
     const expiratonDate = authService.decodedTokenAndReturnExpireDate(refreshToken);
     await refreshTokenRepository.saveRefreshToken(user._id, refreshToken, expiratonDate);
     return { accessToken, refreshToken };
-}
+};

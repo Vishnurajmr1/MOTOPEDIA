@@ -7,8 +7,8 @@ export interface UserInterface {
     password: string;
     isGoogleUser: boolean;
     isBlocked: boolean;
-    isEmailVerified:boolean;
-    otp?:string;
+    isVerifiedEmail:boolean;
+    otp?:string|null;
     profileUrl: string;
     profilePic?: {
         key?: string;
@@ -28,4 +28,6 @@ export interface UserUpdateInfo {
         name: string;
         url?: string;
     };
+    isVerifiedEmail?:boolean;
+    otp?:string|null;
 }
