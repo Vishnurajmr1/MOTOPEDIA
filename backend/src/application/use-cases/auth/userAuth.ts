@@ -35,7 +35,7 @@ export const userRegister = async (
     const otp: string = generateOtp();
     const emailTempalte = verifyEmailTemplate(otp);
     const result= await sendEmailService.sendEmail({
-        to: user.email,
+        to:user.email,
         subject:'Motopedia-verification',
         text:emailTempalte.text,
         html: emailTempalte.html
@@ -84,3 +84,40 @@ export const userLogin = async (
     await refreshTokenRepository.saveRefreshToken(user._id, refreshToken, expiratonDate);
     return { accessToken, refreshToken };
 };
+
+export const getOtp=async()=>{
+
+}
+
+export const verifyOtp=async(
+    email:string,
+    otp:string,
+    authService:ReturnType<AuthServiceInterface>,
+    userRepository:ReturnType<usersDbInterface>,
+    refreshTokenRepository:ReturnType<RefreshTokenDbInterface>
+)=>{
+    const user: UserInterface | null = await userRepository.getUserByEmail(email);
+    if(!user){
+        throw new AppError('Email not registerd!Please signup',HttpStatusCodes.BAD_REQUEST)
+    }
+
+    if(user  && user.isEmailVerified){
+        throw new AppError('Email already verified',HttpStatusCodes.BAD_REQUEST)
+    }
+
+    if(otp!==user.otp){
+        throw new AppError('Invalid OTP.Please check your OTP and try again.',HttpStatusCodes.BAD_REQUEST);
+    }
+    await userRepository.verifyUserEmail(email);
+     const payload :JwtPayload= {
+        Id: user._id,
+        email,
+        role: 'user',
+    };
+    await refreshTokenRepository.deleteRefreshToken(user._id);
+    const accessToken = authService.generateToken(payload);
+    const refreshToken = authService.generateRefreshToken(payload);
+    const expiratonDate = authService.decodedTokenAndReturnExpireDate(refreshToken);
+    await refreshTokenRepository.saveRefreshToken(user._id, refreshToken, expiratonDate);
+    return { accessToken, refreshToken };
+}

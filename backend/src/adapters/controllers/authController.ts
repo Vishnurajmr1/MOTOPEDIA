@@ -1,10 +1,10 @@
-import { Request, Response } from 'express';
+import { Request, Response, response } from 'express';
 import asyncHandler from 'express-async-handler';
 import { AuthService } from '@src/frameworks/services/authService';
 import { AuthServiceInterface } from '@src/application/services/authServicesInterface';
 import { AdminDbInterface } from '@src/application/repositories/adminDBRepository';
 import { usersDbInterface } from '@src/application/repositories/userDBRepository';
-import { userLogin, userRegister } from '@src/application/use-cases/auth/userAuth';
+import { userLogin, userRegister, verifyOtp } from '@src/application/use-cases/auth/userAuth';
 import { UserRepositoryMongoDB } from '@src/frameworks/database/mongodb/repositories/UserRepoMongoDb';
 import { AdminRepositoryMongoDb } from '@src/frameworks/database/mongodb/repositories/adminRepoMongoDb';
 import { RefreshTokenDbInterface } from '@src/application/repositories/refreshTokenDBRepository';
@@ -78,10 +78,29 @@ const authController = (
             refreshToken,
         });
     });
+
+    const verifyUserEmail=asyncHandler(async(req:Request,res:Response)=>{
+        const {email,otp}:{email:string,otp:string}=req.body;
+         const {accessToken,refreshToken}=await verifyOtp(
+            email,
+            otp,
+            authService,
+            dbRepositoryUser,
+            dbRepositoryRefreshToken
+         )
+         res.status(200).json({
+            status: 'success',
+            message: 'OTP verified successfully',
+            accessToken,
+            refreshToken,
+        });
+
+    })
     return {
         registerUser,
         loginAdmin,
-        loginUser
+        loginUser,
+        verifyUserEmail
     };
 };
 

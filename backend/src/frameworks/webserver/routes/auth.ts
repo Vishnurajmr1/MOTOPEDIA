@@ -28,6 +28,7 @@ const authRouter = () => {
 
     //* User
     router.post('/signup',controller.registerUser);
+    router.post('/verify-otp',controller.verifyUserEmail);
     router.post('/user-login',controller.loginUser)
     //*Admin
     router.post('/admin-login',controller.loginAdmin);

@@ -7,12 +7,15 @@ export interface UserInterface {
     password: string;
     isGoogleUser: boolean;
     isBlocked: boolean;
+    isEmailVerified:boolean;
+    otp?:string;
     profileUrl: string;
     profilePic?: {
         key?: string;
         name: string;
         url?: string;
     };
+
 }
 
 export interface UserUpdateInfo {
