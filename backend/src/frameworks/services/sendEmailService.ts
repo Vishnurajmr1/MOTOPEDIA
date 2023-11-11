@@ -9,14 +9,14 @@ export const sendEmailService = () => {
         port: 587,
         secure:false,
         auth: {
-            user:configKeys.EMAIL_NODE_MAILER,
-            pass:configKeys.APP_PASSWORD
+            user:configKeys.EMAIL_NODE_MAILER as string,
+            pass:configKeys.PASSWORD_NODE_MAILER as string
         },
     });
     const sendEmail = async (options: MailInterface) => {
         return await transporter
             .sendMail({
-                from: configKeys.FROM_EMAIL_NODE_MAILER,
+                from: configKeys.EMAIL_NODE_MAILER,
                 to: options.to,
                 subject: options.subject,
                 text: options.text,
