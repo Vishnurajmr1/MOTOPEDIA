@@ -107,13 +107,21 @@ const authController = (
             message: `Email verification otp send successfully to ${email}`,
         });
     })
+    const logoutUser=asyncHandler(async(req:Request,res:Response)=>{
+        res.status(200).json({
+            status: 'success',
+            message: `Logout successfully`,
+        });
+    })
     return {
         registerUser,
         loginAdmin,
         loginUser,
         verifyUserEmail,
-        resendOtpverify
+        resendOtpverify,
+        logoutUser
     };
+
 };
 
 export default authController;
