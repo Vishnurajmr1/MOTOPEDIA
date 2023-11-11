@@ -54,12 +54,15 @@ export const userLogin = async (
     const user: UserInterface | null = await userRepository.getUserByEmail(email);
 
     if (!user) {
-        throw new AppError("this user doesn't exist", HttpStatusCodes.NOT_FOUND);
+        throw new AppError("This user doesn't exist", HttpStatusCodes.NOT_FOUND);
     }
-    const isPasswordCorrect = await authService.comparePassword(password, user.password);
 
+    const isPasswordCorrect = await authService.comparePassword(password, user.password);
     if (!isPasswordCorrect) {
         throw new AppError('Sorry,your password is incorrect.Please try again', HttpStatusCodes.UNAUTHORIZED);
+    }
+    if(!user.isVerifiedEmail){
+        throw new AppError('Sorry your email is not verified.Please signup and verify your email',HttpStatusCodes.UNAUTHORIZED);
     }
 
     const payload: JwtPayload = {

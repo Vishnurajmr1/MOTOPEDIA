@@ -23,16 +23,18 @@ const authRouter = () => {
         refreshTokenDbRepository,
         refreshTokenRepositoryMongoDB,
         sendEmailServiceInterface,
-        sendEmailService
+        sendEmailService,
     );
 
     //* User
-    router.post('/signup',controller.registerUser);
-    router.post('/verify-otp',controller.verifyUserEmail);
-    router.post('/resent-otp',controller.resendOtpverify);
-    router.post('/user-login',controller.loginUser)
+    router.post('/signup', controller.registerUser);
+    router.post('/verify-otp', controller.verifyUserEmail);
+    router.post('/resent-otp', controller.resendOtpverify);
+    router.post('/user-login', controller.loginUser);
+    router.post('/user-logout', controller.logoutUser);
+    router.post('forgot-password');
     //*Admin
-    router.post('/admin-login',controller.loginAdmin);
+    router.post('/admin-login', controller.loginAdmin);
     return router;
 };
 
