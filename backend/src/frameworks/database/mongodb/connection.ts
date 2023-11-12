@@ -1,15 +1,15 @@
-import mongoose from "mongoose";
-import configKeys from "../../../config";
-mongoose.set("strictQuery",true);
+import mongoose from 'mongoose';
+import configKeys from '../../../config';
+mongoose.set('strictQuery', true);
 
-const connectDB=async()=>{
+const connectDB = async () => {
     try {
-        await mongoose.connect(configKeys.MONGO_DB_URL,{
-            dbName:configKeys.DB_NAME
+        await mongoose.connect(configKeys.MONGO_DB_URL, {
+            dbName: configKeys.DB_NAME,
         });
-        console.log(`Database connected successfully`.bg_green);   
-    } catch (error:any) {
+        console.log(`Database connected successfully`.bg_green);
+    } catch (error: any) {
         process.exit(1);
     }
-}
-export default connectDB
+};
+export default connectDB;

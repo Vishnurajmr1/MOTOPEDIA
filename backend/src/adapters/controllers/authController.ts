@@ -4,7 +4,7 @@ import { AuthService } from '@src/frameworks/services/authService';
 import { AuthServiceInterface } from '@src/application/services/authServicesInterface';
 import { AdminDbInterface } from '@src/application/repositories/adminDBRepository';
 import { usersDbInterface } from '@src/application/repositories/userDBRepository';
-import { resendOtp, userLogin, userRegister, verifyOtp } from '@src/application/use-cases/auth/userAuth';
+import { resendOtp, signInWithGoogle, userLogin, userRegister, verifyOtp } from '@src/application/use-cases/auth/userAuth';
 import { UserRepositoryMongoDB } from '@src/frameworks/database/mongodb/repositories/UserRepoMongoDb';
 import { AdminRepositoryMongoDb } from '@src/frameworks/database/mongodb/repositories/adminRepoMongoDb';
 import { RefreshTokenDbInterface } from '@src/application/repositories/refreshTokenDBRepository';
@@ -13,6 +13,8 @@ import { UserRegisterInterface } from '@src/types/userRegisterInterface';
 import { adminLogin } from '@src/application/use-cases/auth/adminAuth';
 import { SendEmailServiceInterface } from '@src/application/services/sendEmailInterface';
 import { SendEmailService } from '@src/frameworks/services/sendEmailService';
+import { GoogleAuthServiceInterface } from '@src/application/services/googleAuthServicesInterface';
+import { GoogleAuthService} from '@src/frameworks/services/googleAuthService';
 const authController = (
     authServiceInterface: AuthServiceInterface,
     authServiceImplementation: AuthService,
@@ -23,13 +25,16 @@ const authController = (
     refreshTokenDbRepository: RefreshTokenDbInterface,
     refreshTokenDbRepositoryImplementation: RefreshTokenRepositoryMongoDB,
     sendEmailInterface:SendEmailServiceInterface,
-    sendEmailImplementation:SendEmailService
+    sendEmailImplementation:SendEmailService,
+    googleAuthInterface:GoogleAuthServiceInterface,
+    googleAuthImplementation:GoogleAuthService
 ) => {
     const dbRepositoryUser = userDbRepository(userDbRepositoryImplementation());
     const dbRepositoryAdmin = adminDbRepository(adminDbRepositoryImplementation());
     const dbRepositoryRefreshToken = refreshTokenDbRepository(refreshTokenDbRepositoryImplementation());
     const authService = authServiceInterface(authServiceImplementation());
     const emailService=sendEmailInterface(sendEmailImplementation());
+    const googleAuthService=googleAuthInterface(googleAuthImplementation());
     const registerUser = asyncHandler(async (req: Request, res: Response) => {
         const user: UserRegisterInterface = req.body;
         const { userData } = await userRegister(
@@ -78,6 +83,23 @@ const authController = (
             refreshToken,
         });
     });
+    const loginWithGoogle=asyncHandler(async(req:Request,res:Response)=>{
+        const {credential}:{credential:string}=req.body;
+        const {accessToken,refreshToken}=await signInWithGoogle(
+            credential,
+            googleAuthService,
+            dbRepositoryUser,
+            dbRepositoryRefreshToken,
+            authService
+        )
+        res.status(200).json({
+            status:'success',
+            message:'Successfully logged in with google',
+            accessToken,
+            refreshToken
+        })
+
+    })
     const verifyUserEmail=asyncHandler(async(req:Request,res:Response)=>{
         const {email,otp}:{email:string,otp:string}=req.body;
          const {accessToken,refreshToken}=await verifyOtp(
@@ -119,7 +141,8 @@ const authController = (
         loginUser,
         verifyUserEmail,
         resendOtpverify,
-        logoutUser
+        logoutUser,
+        loginWithGoogle
     };
 
 };

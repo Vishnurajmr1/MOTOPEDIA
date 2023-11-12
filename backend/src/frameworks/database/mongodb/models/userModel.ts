@@ -18,7 +18,7 @@ interface IUser extends Document {
     isBlocked: boolean;
     blockedReason: string;
     isVerifiedEmail: boolean;
-    otp?:string;
+    otp?: string;
 }
 
 const ProfileSchema = new Schema<ProfilePic>({
@@ -93,9 +93,9 @@ const UserSchema = new Schema<IUser>({
         type: Boolean,
         default: false,
     },
-    otp:{
-        type:String
-    }
+    otp: {
+        type: String,
+    },
 });
 
 const User = model<IUser>('User', UserSchema, 'user');

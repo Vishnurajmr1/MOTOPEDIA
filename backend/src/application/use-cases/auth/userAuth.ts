@@ -1,6 +1,7 @@
 import { RefreshTokenDbInterface } from '@src/application/repositories/refreshTokenDBRepository';
 import { usersDbInterface } from '@src/application/repositories/userDBRepository';
 import { AuthServiceInterface } from '@src/application/services/authServicesInterface';
+import { GoogleAuthServiceInterface } from '@src/application/services/googleAuthServicesInterface';
 import { SendEmailServiceInterface } from '@src/application/services/sendEmailInterface';
 import HttpStatusCodes from '@src/constants/HttpStatusCodes';
 import { JwtPayload } from '@src/types/common';
@@ -61,8 +62,11 @@ export const userLogin = async (
     if (!isPasswordCorrect) {
         throw new AppError('Sorry,your password is incorrect.Please try again', HttpStatusCodes.UNAUTHORIZED);
     }
-    if(!user.isVerifiedEmail){
-        throw new AppError('Sorry your email is not verified.Please signup and verify your email',HttpStatusCodes.UNAUTHORIZED);
+    if (!user.isVerifiedEmail) {
+        throw new AppError(
+            'Sorry your email is not verified.Please signup and verify your email',
+            HttpStatusCodes.UNAUTHORIZED,
+        );
     }
 
     const payload: JwtPayload = {
@@ -144,4 +148,37 @@ export const verifyOtp = async (
     const expiratonDate = authService.decodedTokenAndReturnExpireDate(refreshToken);
     await refreshTokenRepository.saveRefreshToken(user._id, refreshToken, expiratonDate);
     return { accessToken, refreshToken };
+};
+
+export const signInWithGoogle = async (
+    credential: string,
+    googleAuthService: ReturnType<GoogleAuthServiceInterface>,
+    userRepository: ReturnType<usersDbInterface>,
+    refreshTokenRepository: ReturnType<RefreshTokenDbInterface>,
+    authService: ReturnType<AuthServiceInterface>,
+) => {
+    const user = await googleAuthService.verify(credential);
+    const isUserExist = await userRepository.getUserByEmail(user.email);
+
+    if (isUserExist) {
+        const payload: JwtPayload = {
+            Id: isUserExist._id,
+            email: isUserExist.email,
+            role: 'user',
+        };
+        await refreshTokenRepository.deleteRefreshToken(isUserExist._id);
+        const accessToken = authService.generateToken(payload);
+        const refreshToken = authService.generateRefreshToken(payload);
+        const expiratonDate = authService.decodedTokenAndReturnExpireDate(refreshToken);
+        await refreshTokenRepository.saveRefreshToken(isUserExist._id, refreshToken, expiratonDate);
+        return { accessToken, refreshToken };
+    } else {
+        const { _id: userId, email } = await userRepository.addUser(user);
+        const payload: JwtPayload = { Id: userId, email, role: 'user' };
+        const accessToken = authService.generateToken(payload);
+        const refreshToken = authService.generateRefreshToken(payload);
+        const expiratonDate = authService.decodedTokenAndReturnExpireDate(refreshToken);
+        await refreshTokenRepository.saveRefreshToken(userId, refreshToken, expiratonDate);
+        return { accessToken, refreshToken };
+    }
 };
