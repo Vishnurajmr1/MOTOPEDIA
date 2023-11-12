@@ -37,7 +37,7 @@ const authRouter = () => {
     router.post('/user-login', controller.loginUser);
     router.post('/user-logout', controller.logoutUser);
     router.post('/login-with-google',controller.loginWithGoogle);
-    router.post('forgot-password');
+    router.post('/forgot-password',controller.forgotPassword);
     //*Admin
     router.post('/admin-login', controller.loginAdmin);
     return router;
