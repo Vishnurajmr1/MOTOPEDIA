@@ -9,6 +9,7 @@ import { UserInterface } from '@src/types/userInterface';
 import { UserRegisterInterface } from '@src/types/userRegisterInterface';
 import AppError from '@src/utils/appError';
 import generateOtp from '@src/utils/generateOtp';
+import { resetPassEmailTemplate } from '@src/utils/templates/resetPassword';
 import { verifyEmailTemplate } from '@src/utils/templates/verifyEmail';
 
 export const userRegister = async (
@@ -84,7 +85,6 @@ export const userLogin = async (
 
 export const resendOtp = async (
     email: string,
-    authService: ReturnType<AuthServiceInterface>,
     userRepository: ReturnType<usersDbInterface>,
     sendEmailService: ReturnType<SendEmailServiceInterface>,
 ) => {
@@ -96,12 +96,12 @@ export const resendOtp = async (
         throw new AppError('Email already verified', HttpStatusCodes.BAD_REQUEST);
     }
     const otp: string = generateOtp();
-    const emailTempalte = verifyEmailTemplate(otp);
+    const emailTemplate = verifyEmailTemplate(otp);
     const result = await sendEmailService.sendEmail({
         to: user.email,
         subject: 'Motopedia-verification',
-        text: emailTempalte.text,
-        html: emailTempalte.html,
+        text: emailTemplate.text,
+        html: emailTemplate.html,
     });
     if (!result) {
         throw new AppError('OOps something went wrong!Please try again later!', HttpStatusCodes.BAD_REQUEST);
@@ -181,4 +181,36 @@ export const signInWithGoogle = async (
         await refreshTokenRepository.saveRefreshToken(userId, refreshToken, expiratonDate);
         return { accessToken, refreshToken };
     }
+};
+export const resetPassword = async (
+    email: string,
+    authService: ReturnType<AuthServiceInterface>,
+    userRepository: ReturnType<usersDbInterface>,
+    refreshTokenRepository: ReturnType<RefreshTokenDbInterface>,
+    sendEmailService: ReturnType<SendEmailServiceInterface>,
+) => {
+    const user = await userRepository.getUserByEmail(email);
+    if (!user) {
+        throw new AppError('Email not registered!Please signup', HttpStatusCodes.BAD_REQUEST);
+    }
+    const payload: JwtPayload = {
+        Id: user._id,
+        email: user?.email,
+        role: 'user',
+    };
+    await refreshTokenRepository.deleteRefreshToken(user._id);
+    const accessToken = authService.generateToken(payload);
+    const refreshToken = authService.generateRefreshToken(payload);
+    const expiratonDate = authService.decodedTokenAndReturnExpireDate(refreshToken);
+    const emailTemplate = resetPassEmailTemplate(refreshToken);
+    const result = await sendEmailService.sendEmail({
+        to: user.email,
+        subject: 'Motopedia-Reset Password',
+        text: emailTemplate.text,
+        html: emailTemplate.html,
+    });
+    if (!result) {
+        throw new AppError('OOps something went wrong!Please try again later!', HttpStatusCodes.BAD_REQUEST);
+    }
+    // return { accessToken, refreshToken };
 };
