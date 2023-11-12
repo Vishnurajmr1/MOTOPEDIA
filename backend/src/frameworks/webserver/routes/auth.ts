@@ -3,11 +3,13 @@ import { adminDbRepostiory } from '@src/application/repositories/adminDBReposito
 import { refreshTokenDbRepository } from '@src/application/repositories/refreshTokenDBRepository';
 import { userDbRepository } from '@src/application/repositories/userDBRepository';
 import { authServiceInterface } from '@src/application/services/authServicesInterface';
+import { googleAuthServiceInterface } from '@src/application/services/googleAuthServicesInterface';
 import { sendEmailServiceInterface } from '@src/application/services/sendEmailInterface';
 import { userRepositoryMongoDB } from '@src/frameworks/database/mongodb/repositories/UserRepoMongoDb';
 import { adminRepoMongodb } from '@src/frameworks/database/mongodb/repositories/adminRepoMongoDb';
 import { refreshTokenRepositoryMongoDB } from '@src/frameworks/database/mongodb/repositories/refreshTokenRepoMongoDb';
 import { authService } from '@src/frameworks/services/authService';
+import { googleAuthService } from '@src/frameworks/services/googleAuthService';
 import { sendEmailService } from '@src/frameworks/services/sendEmailService';
 import express from 'express';
 
@@ -24,6 +26,8 @@ const authRouter = () => {
         refreshTokenRepositoryMongoDB,
         sendEmailServiceInterface,
         sendEmailService,
+        googleAuthServiceInterface,
+        googleAuthService
     );
 
     //* User
@@ -32,6 +36,7 @@ const authRouter = () => {
     router.post('/resent-otp', controller.resendOtpverify);
     router.post('/user-login', controller.loginUser);
     router.post('/user-logout', controller.logoutUser);
+    router.post('/login-with-google',controller.loginWithGoogle);
     router.post('forgot-password');
     //*Admin
     router.post('/admin-login', controller.loginAdmin);

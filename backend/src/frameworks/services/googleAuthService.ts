@@ -35,8 +35,9 @@ export const googleAuthService = () => {
         }
         return user;
     };
-    return verify;
+    return {
+        verify,
+    };
 };
 
-
-export type GoogleAuthService=typeof googleAuthService;
+export type GoogleAuthService = typeof googleAuthService;
