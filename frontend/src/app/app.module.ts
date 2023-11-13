@@ -12,10 +12,18 @@ import { RouterModule } from '@angular/router';
 import { FooterModule } from './shared/ui/footer/footer.module';
 import { AppRoutingModule } from './app.routing.module';
 import { NavbarModule } from './shared/ui/navbar/navbar.module';
+import { EffectsModule } from '@ngrx/effects';
 
 @NgModule({
   declarations: [AppComponent],
-  imports: [BrowserModule, AppRoutingModule, FooterModule,NavbarModule],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    FooterModule,
+    NavbarModule,
+    StoreModule.forRoot({}),
+    EffectsModule.forRoot([]),
+  ],
   providers: [],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
