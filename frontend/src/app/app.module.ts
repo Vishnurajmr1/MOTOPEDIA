@@ -13,18 +13,39 @@ import { FooterModule } from './shared/ui/footer/footer.module';
 import { AppRoutingModule } from './app.routing.module';
 import { NavbarModule } from './shared/ui/navbar/navbar.module';
 import { EffectsModule } from '@ngrx/effects';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {
+  SocialLoginModule,
+  SocialAuthServiceConfig,
+  GoogleLoginProvider,
+} from '@abacritt/angularx-social-login';
 
 @NgModule({
   declarations: [AppComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
+    SocialLoginModule,
     FooterModule,
     NavbarModule,
     StoreModule.forRoot({}),
     EffectsModule.forRoot([]),
+    BrowserAnimationsModule,
   ],
-  providers: [],
+  providers: [
+    {
+      provide: 'SocialAuthServiceConfig',
+      useValue: {
+        autoLogin: false,
+        providers: [
+          {
+            id: GoogleLoginProvider.PROVIDER_ID,
+            provider: new GoogleLoginProvider('598989226384-9lq5ksdpkj645lpvq16030911hc584rm.apps.googleusercontent.com'),
+          },
+        ],
+      } as SocialAuthServiceConfig,
+    },
+  ],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })

@@ -2,6 +2,8 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SignupFormComponent } from './signup-form.component';
 import {ReactiveFormsModule} from '@angular/forms';
+import { GoogleSigninButtonDirective, GoogleSigninButtonModule } from '@abacritt/angularx-social-login';
+import { RouterModule } from '@angular/router';
 
 
 
@@ -10,10 +12,14 @@ import {ReactiveFormsModule} from '@angular/forms';
     SignupFormComponent
   ],
   imports: [
-    CommonModule,ReactiveFormsModule
+    CommonModule,ReactiveFormsModule,
+    GoogleSigninButtonModule,RouterModule
   ],
   exports:[
     SignupFormComponent
+  ],
+  providers:[
+    GoogleSigninButtonDirective
   ]
 })
 export class SignupFormModule { }
