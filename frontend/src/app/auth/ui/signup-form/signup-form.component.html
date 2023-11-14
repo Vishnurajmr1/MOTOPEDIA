@@ -1,93 +1,171 @@
 <form
-  class="flex flex-col items-center gap-2 mt-5"
+  class="flex flex-col gap-4 mt-10"
   [formGroup]="registerForm"
   (ngSumbit)="onSumbit()"
 >
-  <input
+<div class="md:flex flex-row md:w-full gap-4">
+  <div class="md:w-1/2 w-full">
+    <label for="first name" class="font-medium">First Name:</label>
+    <input
     type="text"
     formControlName="firstname"
-    placeholder="firstname"
+    placeholder="First Name"
     name="firstname"
-    class="form-input md:w-96 w-64 ps-3 py-1 my-3 border-none bg-primary rounded-md text-lg text-gray-900 focus:outline-orange-100"
+    maxlength="20"
+    class="form-input w-full ps-3 py-1 my-3 border-none bg-primary rounded-md text-lg text-gray-900 focus:outline-orange-100"
   />
   <p
-    class="text-red-500"
+    class="text-red-500 font-light"
     *ngIf="(registerFormControl.firstname.touched) && registerFormControl.firstname.errors?.['required']"
   >
-    firstname is required
+    First name is required
   </p>
-  <input type="text" formControlName="lastname" name="lastname" placeholder="lastname"
-  class="form-input md:w-96 w-64 ps-3 py-1 my-3 border-none bg-primary rounded-md text-lg text-gray-900 focus:outline-orange-100"
-  />
-  <p
-    class="text-red-500"
-    *ngIf="(registerFormControl.lastname.touched) && registerFormControl.lastname.errors?.['required']"
-  >
-    lastname is required
-  </p>
+  </div>
+ <div class="md:w-1/2 w-full">
+  <label for="last Name" class="font-medium">Last Name:</label>
+  <input type="text" formControlName="lastname" name="lastname" placeholder="Last Name" maxlength="20"
+class="form-input w-full ps-3 py-1 my-3 border-none bg-primary rounded-md text-lg text-gray-900 focus:outline-orange-100"
+/>
+<p
+  class="text-red-500 font-light"
+  *ngIf="(registerFormControl.lastname.touched) && registerFormControl.lastname.errors?.['required']"
+>
+  Last name is required
+</p>
+ </div>
+</div>
+<div class="w-full relative">
+  <label for="email" class="font-medium">Email:</label>
+  <div class="flex items-center">
   <input
     type="email"
-    placeholder="email"
+    placeholder="sample@gmail.com"
     formControlName="email"
     name="email"
-    class="form-input md:w-96 w-64 ps-3 py-1 my-3 mt-4 border-none bg-primary rounded-md text-lg text-gray-900 focus:outline-orange-100"
+    class="form-input w-full ps-10 py-1 my-3 mt-4 border-none bg-primary rounded-md text-lg text-gray-900 focus:outline-orange-100"
   />
-  <p
+  <span class="absolute left-3 top-11 cursor-pointer">
+    <!-- Font Awesome lock icon -->
+    <i class="fa-solid fa-envelope text-gray-500"></i>
+  </span>
+</div>
+  
+    <p
     *ngIf="(registerFormControl.email.touched)&& registerFormControl.email.errors?.['required']"
-    class="text-red-500"
+    class="text-red-500 font-light"
   >
-    email is required
+    Email is required
   </p>
   <p *ngIf="registerFormControl.email.errors?.['email']" class="text-red-500">
     Please enter a valid email address
   </p>
+  </div>
+ <div class="w-full relative">
+  <label for="phone" class="font-medium">Phone:</label>
+  <div class="flex items-center">
+  <input 
+  formControlName="phone"
+  type="tel" 
+  maxlength="10"
+  pattern="[0-9]{10}"
+  name="9132834310"
+  placeholder="9132834310"
+  class="form-input w-full ps-10 py-1 my-3 border-none bg-primary rounded-md text-lg text-gray-900 focus:outline-orange-100"
+  >
+  <span class="absolute left-3 top-10 cursor-pointer">
+    <!-- Font Awesome lock icon -->
+    <i class="fa-solid fa-mobile text-gray-500"></i>
+  </span>
+</div>
+  <p
+  *ngIf="(registerFormControl.phone.touched)&& registerFormControl.phone.errors?.['required']"
+  class="text-red-500 font-light"
+>
+  Phone Number is required
+</p>
+<p *ngIf="registerFormControl.phone.errors?.['phone']" class="text-red-500">
+  Please enter a valid  phone number
+</p>
+ </div>
 
-  <input
+<div class="w-full relative">
+  <label for="password" class="font-medium">Password:</label>
+    <input
     formControlName="password"
-    type="password"
+    [type]="show ? 'text':'password'"
     placeholder="Password@123"
     name="password"
-    class="form-input md:w-96 w-64 ps-3 py-1 my-3 border-none bg-primary rounded-md text-lg text-gray-900 focus:outline-orange-100"
+    class="form-input w-full ps-3 py-1 my-3 border-none bg-primary rounded-md text-lg text-gray-900 focus:outline-orange-100"
   />
-  <p
-    class="text-red-500"
-    *ngIf="
-      (registerFormControl.password.touched) && registerFormControl.password.errors?.['required']"
-  >
-    Password is required
-  </p>
-  <p
-    class="text-red-400"
-    *ngIf="registerFormControl.password.touched  && registerFormControl.password.errors?.['invalidPassword']"
-  >
-    Password should have minimum 8 characters,at least 1 uppercase letter,1
-    lowercase letter and 1 number is required
-  </p>
-  <input
-    formControlName="confirmPassword"
-    placeholder="confirm password"
-    type="password"
-    class="form-input md:w-96 w-64 ps-3 py-1 my-3 border-none bg-primary rounded-md text-lg text-gray-900 focus:outline-orange-100"
-  />
-  <p
-    class="text-red-500"
-    *ngIf="
-    (registerFormControl.confirmPassword.touched) && registerFormControl.confirmPassword.errors?.['required']"
-  >
-    confirm password is required
-  </p>
-  <p
-    class="text-red-500"
-    *ngIf="
-    (registerFormControl.confirmPassword.touched) && registerFormControl.confirmPassword.errors?.['passwordMismatch']"
-  >
-    confirmPassword doesn't match
-  </p>
+  <span class="absolute right-4 top-10 cursor-pointer" (click)="password()">
+    <!-- Font Awesome eye icon -->
+    <i class="fa-solid text-gray-500" [ngClass]="show?'fa-eye':'fa-eye-slash'"></i>
+  </span>
+<p
+  class="text-red-500 font-light"
+  *ngIf="
+    (registerFormControl.password.touched) && registerFormControl.password.errors?.['required']"
+>
+  Password is required
+</p>
+<p
+  class="text-red-500 font-light"
+  *ngIf="registerFormControl.password.touched  && registerFormControl.password.errors?.['invalidPassword']"
+>
+  Password should have minimum 8 characters,at least 1 uppercase letter,1
+  lowercase letter and 1 number is required
+</p>
+</div>
+ <div class="relative">
+  <label for="confirm_password" class="font-medium">Confirm Password:</label>
+  <div class="flex items-center">
+    <input
+      formControlName="confirmPassword"
+      placeholder="confirm password"
+      type="password"
+      class="form-input w-full ps-10 py-1 my-3 border-none bg-primary rounded-md text-lg text-gray-900 focus:outline-orange-100 relative"
+    />
+    <span class="absolute left-3 top-10 cursor-pointer">
+      <!-- Font Awesome lock icon -->
+      <i class="fa-solid fa-lock text-gray-500"></i>
+    </span>
+  </div>
+ 
+<p
+  class="text-red-500 font-light"
+  *ngIf="
+  (registerFormControl.confirmPassword.touched) && registerFormControl.confirmPassword.errors?.['required']"
+>
+  confirm password is required
+</p>
+<p
+  class="text-red-500"
+  *ngIf="
+  (registerFormControl.confirmPassword.touched) && registerFormControl.confirmPassword.errors?.['passwordMismatch']"
+>
+  Confirm Password doesn't match
+</p>
+ </div>
+
   <button
     type="submit"
-    class="submit_btn shadow-2xl drop-shadow-lg border border-transparent hover:border-gray-400 text-black font-extrabold uppercase rounded-lg md:w-80 w-64 py-3 mt-4 ml-4"
+    class="submit_btn shadow-2xl drop-shadow-lg border border-transparent hover:border-gray-400 text-black font-extrabold uppercase rounded-lg md:w-60 w-40 py-3 ml-14"
     [disabled]="!registerForm.valid"
   >
-    Submit
+    Register Now
+    <span *ngIf="registerForm.valid" class="gap-3">
+      <i class="fa-solid fa-circle-check  text-green-800"></i>
+    </span>
   </button>
 </form>
+
+<div class="m-5">
+  <h1>---------------------- Or signup with ----------------------</h1>
+  <asl-google-signin-button
+  type="icon"
+  size="large"
+  class="mt-9"
+></asl-google-signin-button>
+<!-- <button (click)="loginWithGoogle()" mat-raised-button class="google-login-btn">Google</button> -->
+
+</div>
