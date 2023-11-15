@@ -10,6 +10,9 @@ import { VerifyEmailComponent } from './verify-email.component';
   ],
   imports: [
     CommonModule
+  ],
+  exports:[
+    VerifyEmailComponent
   ]
 })
 export class VerifyEmailModule { }

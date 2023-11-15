@@ -7,6 +7,7 @@ import {
 import { BrowserModule } from '@angular/platform-browser';
 import { AppComponent } from './app.component';
 import { StoreModule } from '@ngrx/store';
+import {StoreDevtoolsModule} from '@ngrx/store-devtools';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 import { FooterModule } from './shared/ui/footer/footer.module';
@@ -30,6 +31,11 @@ import {
     NavbarModule,
     StoreModule.forRoot({}),
     EffectsModule.forRoot([]),
+    StoreDevtoolsModule.instrument({
+      name:'MOTOPEDIA APP',
+      maxAge:25,
+      logOnly:!isDevMode()
+    }),
     BrowserAnimationsModule,
   ],
   providers: [
