@@ -5,7 +5,7 @@ import { AuthAccessRoutingModule } from './auth-access-routing.module';
 import { LoginFormModule } from '../../ui/login-form/login-form.module';
 import { SignupFormModule } from '../../ui/signup-form/signup-form.module';
 import { TabContainerModule } from '../../ui/tab-container/tab-container.module';
-
+import {StoreModule} from '@ngrx/store'
 
 
 @NgModule({
@@ -17,7 +17,8 @@ import { TabContainerModule } from '../../ui/tab-container/tab-container.module'
     AuthAccessRoutingModule,
     LoginFormModule,
     SignupFormModule,
-    TabContainerModule
+    TabContainerModule,
+    // StoreModule.forFeature('auth',auth)
   ]
 })
 export class AuthAccessModule { }
