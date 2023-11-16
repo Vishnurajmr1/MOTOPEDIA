@@ -16,6 +16,7 @@ import { ISignUp } from 'src/app/shared/interfaces/Interface';
 import { GoogleLoginProvider, SocialAuthService } from '@abacritt/angularx-social-login';
 import { Router } from '@angular/router';
 import { animate, state, style, transition, trigger } from '@angular/animations';
+import { LocalStorageService } from 'src/app/shared/data-access/global/local-storage.service';
 
 @Component({
   selector: 'app-signup-form',
@@ -40,6 +41,7 @@ export class SignupFormComponent {
   @Output() submitSignupForm: EventEmitter<ISignUp> = new EventEmitter();
   private fb = inject(FormBuilder);
   private customValidator = inject(CustomValidationService);
+  private localStorageService=inject(LocalStorageService);
   show:boolean=false;
   password(){
     this.show =!this.show;
@@ -71,11 +73,8 @@ export class SignupFormComponent {
   get registerFormControl(){
     return this.registerForm.controls;
   }
-
-  onSumbit(){
-    console.log('hiiii')
+  onSubmit(){
     if(this.registerForm.valid){
-      console.log(this.registerForm.valid+'hiii')
       this.submitSignupForm.emit(this.registerForm.value as ISignUp);
     }
   }

@@ -9,5 +9,6 @@
  ></app-login-form>
  <app-signup-form
 *ngIf="currentTab===TabType.Signup"
+(submitSignupForm)="signupFormSubmit($event)"
  ></app-signup-form>
 </app-tab-container>

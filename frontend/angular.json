@@ -59,10 +59,12 @@
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "proxyConfig": "proxy.conf.json"
+          },
           "configurations": {
             "production": {
-              "browserTarget": "frontend:build:production",
-              "proxyConfig": "src/proxy.conf.json"
+              "browserTarget": "frontend:build:production"
             },
             "development": {
               "browserTarget": "frontend:build:development"
