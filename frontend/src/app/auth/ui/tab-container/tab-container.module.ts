@@ -6,13 +6,13 @@ import { RouterModule } from '@angular/router';
 
 
 @NgModule({
-  declarations: [
-    TabContainerComponent
-  ],
-  imports: [
-    CommonModule,
-    RouterModule
-  ],
-  exports:[TabContainerComponent]
+    declarations: [
+        TabContainerComponent
+    ],
+    exports: [TabContainerComponent],
+    imports: [
+        CommonModule,
+        RouterModule,
+    ]
 })
 export class TabContainerModule { }

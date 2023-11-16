@@ -2,7 +2,13 @@ import { Component, inject } from '@angular/core';
 import { Tab } from 'src/app/shared/types';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { Subscription, filter } from 'rxjs';
-import { ILogin, ISignUp } from 'src/app/shared/interfaces/Interface';
+import { ILogin, ISignUp, UserDoc } from 'src/app/shared/interfaces/Interface';
+import { Store } from '@ngrx/store';
+import { State } from '../../data-access/state';
+import { AuthService } from '../../data-access/auth.service';
+import { SnackbarService } from 'src/app/shared/data-access/global/snackbar.service';
+import { LocalStorageService } from 'src/app/shared/data-access/global/local-storage.service';
+import { AuthPageActions } from '../../data-access/state/actions';
 @Component({
   selector: 'app-auth-access',
   templateUrl: './auth-access.component.html',
@@ -12,12 +18,21 @@ export class AuthAccessComponent {
   constructor() {
     this.setAuthTabFromRoute();
   }
-  ngOnInit() {}
+  ngOnInit() {
+    if(this.routeSubscription){
+      this.routeSubscription.unsubscribe()
+    }
+  }
   protected TabType: typeof Tab = Tab;
   currentTab: Tab = Tab.Login;
   private routeSubscription!: Subscription;
+  private socialAuthSubscription!:Subscription;
   private router = inject(Router);
   private activatedRoute = inject(ActivatedRoute);
+  private store=inject(Store<State>);
+  private authService=inject(AuthService);
+  private snackbar=inject(SnackbarService)
+  private localstorageService=inject(LocalStorageService);
 
   selectedTab(tab: Tab) {
     this.currentTab = tab;
@@ -50,8 +65,31 @@ export class AuthAccessComponent {
     } else {
       this.selectedTab(this.TabType.Login);
     }
+    this.dispatchAuthTabChange()
   }
 
-  loginFormSubmit(formData: ILogin) {}
-  signupFormSubmit(formData: ISignUp) {}
+  private dispatchAuthTabChange():void{
+    this.store.dispatch(AuthPageActions.toggleCurrentTab({currentAuthTab:this.currentTab}))
+  }
+
+  loginFormSubmit(formData: ILogin) {
+  }
+  signupFormSubmit(formData: ISignUp) {
+    console.log(formData);
+    this.authService.signup(formData).subscribe({
+      next:(res)=>{
+        console.log(res);
+        const currentUser={
+          firstName: res.user.firstName,
+          email: res.user.email,
+          lastName: res.user.lastName,
+          phone: '',
+          isEmailVerified:res.user.isEmailVerified
+        }
+        this.store.dispatch(AuthPageActions.setCurrentUser({currentUser}))
+        this.snackbar.showSuccess(res.message);
+        this.router.navigateByUrl('auth/login');
+      }
+    })
+  }
 }

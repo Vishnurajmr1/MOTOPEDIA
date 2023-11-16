@@ -13,7 +13,7 @@
     name="firstname"
     maxlength="20"
     class="form-input w-full ps-3 py-1 my-3 border-none bg-primary rounded-md text-lg text-gray-900 focus:outline-orange-100"
-  />
+    />
   <p
     class="text-red-500 font-light"
     *ngIf="(registerFormControl.firstname.touched) && registerFormControl.firstname.errors?.['required']"
@@ -94,7 +94,6 @@ class="form-input w-full ps-3 py-1 my-3 border-none bg-primary rounded-md text-l
     formControlName="password"
     [type]="show ? 'text':'password'"
     placeholder="Password@123"
-    name="password"
     class="form-input w-full ps-3 py-1 my-3 border-none bg-primary rounded-md text-lg text-gray-900 focus:outline-orange-100"
   />
   <span class="absolute right-4 top-10 cursor-pointer" (click)="password()">
@@ -141,7 +140,7 @@ class="form-input w-full ps-3 py-1 my-3 border-none bg-primary rounded-md text-l
 <p
   class="text-red-500"
   *ngIf="
-  (registerFormControl.confirmPassword.touched) && registerFormControl.confirmPassword.errors?.['passwordMismatch']"
+   registerFormControl.confirmPassword.touched && registerFormControl.confirmPassword.errors?.['passwordMismatch']"
 >
   Confirm Password doesn't match
 </p>
@@ -151,21 +150,17 @@ class="form-input w-full ps-3 py-1 my-3 border-none bg-primary rounded-md text-l
     type="submit"
     class="submit_btn shadow-2xl drop-shadow-lg border border-transparent hover:border-gray-400 text-black font-extrabold uppercase rounded-lg md:w-60 w-40 py-3 ml-14"
     [disabled]="!registerForm.valid"
+    [@buttonState]="registerForm.valid? 'valid':'invalid'"
   >
     Register Now
     <span *ngIf="registerForm.valid" class="gap-3">
-      <i class="fa-solid fa-circle-check  text-green-800"></i>
+      <i class="fa-regular fa-circle-check text-black"></i>
     </span>
   </button>
 </form>
 
-<div class="m-5">
+<!-- <div class="m-5 flex items-center flex-col">
   <h1>---------------------- Or signup with ----------------------</h1>
-  <!-- <asl-google-signin-button
-  type="icon"
-  size="large"
-  class="mt-9"
-></asl-google-signin-button> -->
-<!-- <button (click)="loginWithGoogle()" mat-raised-button class="google-login-btn">Google</button> -->
+<button (click)="loginWithGoogle()" mat-raised-button class="" ><img src="/assets/images/icons/google.png" alt="" width="50" height="50"></button>
 
-</div>
+</div> -->
