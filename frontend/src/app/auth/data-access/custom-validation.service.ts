@@ -21,7 +21,6 @@ export class CustomValidationService {
     return (formGroup: FormGroup) => {
       const passwordControl = formGroup.controls[password];
       const confirmPasswordControl = formGroup.controls[confirmPassword];
-
       if (!passwordControl || !confirmPasswordControl) {
         return {};
       }
@@ -34,7 +33,7 @@ export class CustomValidationService {
       }
 
       if (passwordControl.value !== confirmPasswordControl.value) {
-        confirmPasswordControl.setErrors({ passwordMisMatch: true });
+        confirmPasswordControl.setErrors({passwordMismatch: true });
       } else {
         confirmPasswordControl.setErrors(null);
       }

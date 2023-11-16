@@ -15,12 +15,25 @@ import { CustomValidationService } from '../../data-access/custom-validation.ser
 import { ISignUp } from 'src/app/shared/interfaces/Interface';
 import { GoogleLoginProvider, SocialAuthService } from '@abacritt/angularx-social-login';
 import { Router } from '@angular/router';
+import { animate, state, style, transition, trigger } from '@angular/animations';
 
 @Component({
   selector: 'app-signup-form',
   templateUrl: './signup-form.component.html',
   styleUrls: ['./signup-form.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  animations: [
+    trigger('buttonState', [
+      state('valid', style({
+        backgroundColor: 'green',
+        color:'white',
+        transform: 'translateY(10px)',  // Adjust the value as needed
+      })),
+      transition('* => valid', [
+        animate('0.3s'),
+      ]),
+    ]),
+  ],
 })
 export class SignupFormComponent {
   constructor(private router:Router,private socialAuthService:SocialAuthService){}
@@ -44,10 +57,10 @@ export class SignupFormComponent {
           this.customValidator.patternValidator(),
         ]),
       ],
-      confirmPassword: ['', Validators.required],
+      confirmPassword: ['', [Validators.required]],
     },
     {
-      Validator: this.customValidator.MatchPassword(
+      validators: this.customValidator.MatchPassword(
         'password',
         'confirmPassword'
       ),
@@ -60,7 +73,9 @@ export class SignupFormComponent {
   }
 
   onSumbit(){
+    console.log('hiiii')
     if(this.registerForm.valid){
+      console.log(this.registerForm.valid+'hiii')
       this.submitSignupForm.emit(this.registerForm.value as ISignUp);
     }
   }
@@ -68,4 +83,7 @@ export class SignupFormComponent {
     this.socialAuthService.signIn(GoogleLoginProvider.PROVIDER_ID)
     .then(()=>this.router.navigate(['auth']));
   }
+
+
+
 }

@@ -20,6 +20,9 @@ import {
   SocialAuthServiceConfig,
   GoogleLoginProvider,
 } from '@abacritt/angularx-social-login';
+import { AuthInterceptor } from './shared/interceptors/auth.interceptor';
+import { authReducer } from './auth/data-access/state/auth.reducer';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 @NgModule({
   declarations: [AppComponent],
@@ -29,6 +32,7 @@ import {
     SocialLoginModule,
     FooterModule,
     NavbarModule,
+    HttpClientModule,
     StoreModule.forRoot({}),
     EffectsModule.forRoot([]),
     StoreDevtoolsModule.instrument({
@@ -37,8 +41,15 @@ import {
       logOnly:!isDevMode()
     }),
     BrowserAnimationsModule,
+    MatSnackBarModule,
+    RouterModule
   ],
   providers: [
+  {
+    provide:HTTP_INTERCEPTORS,
+    useClass:AuthInterceptor,
+    multi:true
+  },
     {
       provide: 'SocialAuthServiceConfig',
       useValue: {
