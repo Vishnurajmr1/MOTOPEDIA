@@ -5,7 +5,7 @@ const routes:Routes=[
     {
       path:'',
       loadChildren:()=>
-        import('../auth-access/auth-access.module').then(m => m.AuthAccessModule)
+        import('../auth-access/auth-access.module').then((m) => m.AuthAccessModule)
     }
 ]
 

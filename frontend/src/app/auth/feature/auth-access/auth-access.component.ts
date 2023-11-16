@@ -2,7 +2,6 @@ import { Component, inject } from '@angular/core';
 import { Tab } from 'src/app/shared/types';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { Subscription, filter } from 'rxjs';
-
 import { ILogin, ISignUp } from 'src/app/shared/interfaces/Interface';
 @Component({
   selector: 'app-auth-access',
@@ -53,10 +52,6 @@ export class AuthAccessComponent {
     }
   }
 
-  loginFormSubmit(formData:ILogin){
-
-  }
-  signupFormSubmit(formData:ISignUp){
-
-  }
+  loginFormSubmit(formData: ILogin) {}
+  signupFormSubmit(formData: ISignUp) {}
 }

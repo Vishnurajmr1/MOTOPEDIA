@@ -3,7 +3,6 @@ import { AuthShellRoutingModule } from './auth-routing.module';
 
 
 @NgModule({
-  declarations: [],
   imports: [
     AuthShellRoutingModule
   ]
