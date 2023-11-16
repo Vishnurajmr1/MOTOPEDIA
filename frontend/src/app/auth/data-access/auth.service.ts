@@ -12,12 +12,12 @@ import {
   providedIn: 'root',
 })
 export class AuthService {
-  private http = inject(HttpClient);
+  private http: HttpClient = inject(HttpClient);
   sendGoogleToken(data: string): Observable<any> {
     return this.http.post('/api/auth/googleauth', { googleToken: data });
   }
   signup(signupData: ISignUp): Observable<any> {
-    console.log(signupData)
-    return this.http.post('/api/auth/signup',signupData);
+    console.log(signupData);
+    return this.http.post('/api/v1/auth/signup', signupData);
   }
 }
