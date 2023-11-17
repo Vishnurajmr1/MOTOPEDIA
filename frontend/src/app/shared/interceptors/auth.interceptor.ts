@@ -9,11 +9,13 @@ import {
 import { Observable, catchError, throwError } from 'rxjs';
 import { LocalStorageService } from '../data-access/global/local-storage.service';
 import { Router } from '@angular/router';
+import { GlobalErrorHandler } from '../data-access/global/global-error-handler.service';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
   private localStorageService = inject(LocalStorageService);
   private router = inject(Router);
+  private errorHandler=inject(GlobalErrorHandler)
 
   intercept(
     request: HttpRequest<unknown>,
@@ -35,7 +37,7 @@ export class AuthInterceptor implements HttpInterceptor {
     }
     return next.handle(request).pipe(
       catchError((error: HttpErrorResponse) => {
-        console.log('unauth-response catcher works well');
+        console.log('unauth-response catcher works well',error.message);
         if (error.status === 401) {
           this.router.navigate(['/auth/login']);
         }

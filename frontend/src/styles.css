@@ -35,3 +35,23 @@ input::-webkit-outer-spin-button,
         appearance: textfield;
         /* Firefox */
       }
+
+
+      /* snack bar custom */
+.success-snackbar.mat-mdc-snack-bar-container .mdc-snackbar__surface {
+  background: rgb(255, 255, 255);
+}
+
+.success-snackbar.mat-mdc-snack-bar-container .mdc-snackbar__surface .mat-mdc-button {
+  color: rgb(255, 166, 166) !important;
+}
+
+.success-snackbar.mat-mdc-snack-bar-container .mdc-snackbar__surface .mat-mdc-button:hover {
+  color: rgb(250, 83, 83) !important;
+}
+
+.success-snackbar.mat-mdc-snack-bar-container .mat-mdc-snack-bar-label.mdc-snackbar__label {
+  color: rgb(0, 0, 0);
+  font-weight: 500;
+  white-space: pre-wrap;
+}
