@@ -20,4 +20,16 @@ export class AuthService {
     console.log(signupData);
     return this.http.post('/api/auth/signup', signupData);
   }
+  login(loginData: ILogin): Observable<any> {
+    return this.http.post('/api/auth/login', loginData);
+  }
+  forgotPass(email: { email: string }): Observable<any> {
+    return this.http.post('/api/auth/forgot-password', email);
+  }
+  verifyOtp(otpData: IverifyOtp): Observable<any> {
+    return this.http.post('/api/auth/verify-otp', otpData);
+  }
+  adminLogin(adminData: ILogin): Observable<any> {
+    return this.http.post('/api/auth/admin-login', adminData);
+  }
 }

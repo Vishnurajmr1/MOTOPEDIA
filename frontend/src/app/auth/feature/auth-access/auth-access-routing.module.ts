@@ -1,24 +1,37 @@
-import {NgModule} from '@angular/core';
+import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AuthAccessComponent } from './auth-access.component';
 import { LoginFormComponent } from '../../ui/login-form/login-form.component';
 import { SignupFormComponent } from '../../ui/signup-form/signup-form.component';
 import { VerifyEmailComponent } from '../../ui/verify-email/verify-email.component';
+import { VerifyOtpComponent } from '../../ui/verify-otp/verify-otp.component';
+import { verifyOTPGuard } from 'src/app/shared/guard/verify-otp.guard';
+import { ForgotFormComponent } from '../../ui/forgot-form/forgot-form.component';
+import { resetPasswordGuard } from 'src/app/shared/guard/reset-password.guard';
 
-const routes:Routes=[
-    {
-        path:'',
-        component:AuthAccessComponent,
-        children:[
-            {path:'login',component:LoginFormComponent},
-            {path:'signup',component:SignupFormComponent}
-        ]
-    }
-]
+const routes: Routes = [
+  {
+    path: '',
+    component: AuthAccessComponent,
+    children: [
+      { path: 'login', component: LoginFormComponent },
+      { path: 'signup', component: SignupFormComponent },
+      { path: 'verify', component: VerifyEmailComponent },
+      {
+        path: 'verify-otp',
+        component: VerifyOtpComponent,
+        canActivate: [verifyOTPGuard],
+      },
+      {
+        path:'reset-password',component:ForgotFormComponent,
+        canActivate:[resetPasswordGuard]
+      }
+    ],
+  },
+];
 
 @NgModule({
-    imports:[RouterModule.forChild(routes)],
-    exports:[RouterModule]
+  imports: [RouterModule.forChild(routes)],
+  exports: [RouterModule],
 })
-
-export class AuthAccessRoutingModule{}
+export class AuthAccessRoutingModule {}

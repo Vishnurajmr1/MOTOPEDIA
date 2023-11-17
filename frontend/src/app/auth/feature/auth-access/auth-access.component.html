@@ -11,4 +11,13 @@
 *ngIf="currentTab===TabType.Signup"
 (submitSignupForm)="signupFormSubmit($event)"
  ></app-signup-form>
+<app-verify-email
+*ngIf="currentTab===TabType.Verify"
+(submitVerifyEmailForm)="resetPassFormSubmit($event)"
+></app-verify-email>
+<app-verify-otp
+(resendOtp)="resentOtp()"
+(submitVerifyOtpForm)="verifyOtpSubmit($event)"
+*ngIf="currentTab===TabType.verifyOtp"
+></app-verify-otp>
 </app-tab-container>
