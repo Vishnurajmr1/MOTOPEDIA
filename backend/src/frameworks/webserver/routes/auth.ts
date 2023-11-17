@@ -27,7 +27,7 @@ const authRouter = () => {
         sendEmailServiceInterface,
         sendEmailService,
         googleAuthServiceInterface,
-        googleAuthService
+        googleAuthService,
     );
 
     //* User
@@ -36,8 +36,8 @@ const authRouter = () => {
     router.post('/resent-otp', controller.resendOtpverify);
     router.post('/user-login', controller.loginUser);
     router.post('/user-logout', controller.logoutUser);
-    router.post('/login-with-google',controller.loginWithGoogle);
-    router.post('/forgot-password',controller.forgotPassword);
+    router.post('/login-with-google', controller.loginWithGoogle);
+    router.post('/forgot-password', controller.forgotPassword);
     //*Admin
     router.post('/admin-login', controller.loginAdmin);
     return router;

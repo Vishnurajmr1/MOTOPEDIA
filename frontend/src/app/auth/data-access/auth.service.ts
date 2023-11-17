@@ -18,6 +18,6 @@ export class AuthService {
   }
   signup(signupData: ISignUp): Observable<any> {
     console.log(signupData);
-    return this.http.post('/api/v1/auth/signup', signupData);
+    return this.http.post('/api/auth/signup', signupData);
   }
 }
