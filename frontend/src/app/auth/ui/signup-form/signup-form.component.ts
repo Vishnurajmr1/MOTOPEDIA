@@ -48,10 +48,10 @@ export class SignupFormComponent {
   }
   registerForm = this.fb.group(
     {
-      firstname: ['', Validators.required],
-      lastname: ['', Validators.required],
+      firstName: ['', Validators.required],
+      lastName: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
-      phone:['',[Validators.required,Validators.pattern(/^[0-9]{10}$/)]],
+      mobile:['',[Validators.required,Validators.pattern(/^[0-9]{10}$/)]],
       password: [
         '',
         Validators.compose([

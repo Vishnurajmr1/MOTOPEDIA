@@ -1,8 +1,8 @@
 export interface ISignUp{
-    first_name:string,
-    last_name:string,
+    firstName:string,
+    lastName:string,
     email:string,
-    phone:string,
+    mobile:string,
     password:string,
     confirmPassword:string
 }
@@ -27,7 +27,7 @@ export interface UserDoc {
 	firstName?: string;
 	lastName?: string;
 	email: string;
-	phone?: string;
+	mobile?: string;
 	password: string;
 	otp?: string;
 	profileImgUrl?: string;

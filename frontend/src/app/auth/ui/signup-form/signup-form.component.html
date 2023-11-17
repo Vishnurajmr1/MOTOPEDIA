@@ -8,7 +8,7 @@
     <label for="first name" class="font-medium">First Name:</label>
     <input
     type="text"
-    formControlName="firstname"
+    formControlName="firstName"
     placeholder="First Name"
     name="firstname"
     maxlength="20"
@@ -16,19 +16,19 @@
     />
   <p
     class="text-red-500 font-light"
-    *ngIf="(registerFormControl.firstname.touched) && registerFormControl.firstname.errors?.['required']"
+    *ngIf="(registerFormControl.firstName.touched) && registerFormControl.firstName.errors?.['required']"
   >
     First name is required
   </p>
   </div>
  <div class="md:w-1/2 w-full">
-  <label for="last Name" class="font-medium">Last Name:</label>
-  <input type="text" formControlName="lastname" name="lastname" placeholder="Last Name" maxlength="20"
+  <label for="lastName" class="font-medium">Last Name:</label>
+  <input type="text" formControlName="lastName" name="lastname" placeholder="Last Name" maxlength="20"
 class="form-input w-full ps-3 py-1 my-3 border-none bg-primary rounded-md text-lg text-gray-900 focus:outline-orange-100"
 />
 <p
   class="text-red-500 font-light"
-  *ngIf="(registerFormControl.lastname.touched) && registerFormControl.lastname.errors?.['required']"
+  *ngIf="(registerFormControl.lastName.touched) && registerFormControl.lastName.errors?.['required']"
 >
   Last name is required
 </p>
@@ -64,7 +64,7 @@ class="form-input w-full ps-3 py-1 my-3 border-none bg-primary rounded-md text-l
   <label for="phone" class="font-medium">Phone:</label>
   <div class="flex items-center">
   <input 
-  formControlName="phone"
+  formControlName="mobile"
   type="tel" 
   maxlength="10"
   pattern="[0-9]{10}"
@@ -78,12 +78,12 @@ class="form-input w-full ps-3 py-1 my-3 border-none bg-primary rounded-md text-l
   </span>
 </div>
   <p
-  *ngIf="(registerFormControl.phone.touched)&& registerFormControl.phone.errors?.['required']"
+  *ngIf="(registerFormControl.mobile.touched)&& registerFormControl.mobile.errors?.['required']"
   class="text-red-500 font-light"
 >
   Phone Number is required
 </p>
-<p *ngIf="registerFormControl.phone.errors?.['phone']" class="text-red-500">
+<p *ngIf="registerFormControl.mobile.errors?.['phone']" class="text-red-500">
   Please enter a valid  phone number
 </p>
  </div>
