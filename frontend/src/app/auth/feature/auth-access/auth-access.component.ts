@@ -2,13 +2,19 @@ import { Component, inject } from '@angular/core';
 import { Tab } from 'src/app/shared/types';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { Subscription, filter } from 'rxjs';
-import { ILogin, ISignUp, UserDoc } from 'src/app/shared/interfaces/Interface';
+import {
+  ILogin,
+  ISignUp,
+  IverifyOtp,
+  UserDoc,
+} from 'src/app/shared/interfaces/Interface';
 import { Store } from '@ngrx/store';
 import { State } from '../../data-access/state';
 import { AuthService } from '../../data-access/auth.service';
 import { SnackbarService } from 'src/app/shared/data-access/global/snackbar.service';
 import { LocalStorageService } from 'src/app/shared/data-access/global/local-storage.service';
 import { AuthPageActions } from '../../data-access/state/actions';
+import { ICurrentUser } from '../../data-access/state/auth.reducer';
 @Component({
   selector: 'app-auth-access',
   templateUrl: './auth-access.component.html',
@@ -19,20 +25,20 @@ export class AuthAccessComponent {
     this.setAuthTabFromRoute();
   }
   ngOnInit() {
-    if(this.routeSubscription){
-      this.routeSubscription.unsubscribe()
+    if (this.routeSubscription) {
+      this.routeSubscription.unsubscribe();
     }
   }
   protected TabType: typeof Tab = Tab;
   currentTab: Tab = Tab.Login;
   private routeSubscription!: Subscription;
-  private socialAuthSubscription!:Subscription;
+  private socialAuthSubscription!: Subscription;
   private router = inject(Router);
   private activatedRoute = inject(ActivatedRoute);
-  private store=inject(Store<State>);
-  private authService=inject(AuthService);
-  private snackbar=inject(SnackbarService)
-  private localstorageService=inject(LocalStorageService);
+  private store = inject(Store<State>);
+  private authService = inject(AuthService);
+  private snackbar = inject(SnackbarService);
+  private localstorageService = inject(LocalStorageService);
 
   selectedTab(tab: Tab) {
     this.currentTab = tab;
@@ -65,33 +71,104 @@ export class AuthAccessComponent {
     } else {
       this.selectedTab(this.TabType.Login);
     }
-    this.dispatchAuthTabChange()
+    this.dispatchAuthTabChange();
   }
 
-  private dispatchAuthTabChange():void{
-    this.store.dispatch(AuthPageActions.toggleCurrentTab({currentAuthTab:this.currentTab}))
+  private dispatchAuthTabChange(): void {
+    this.store.dispatch(
+      AuthPageActions.toggleCurrentTab({ currentAuthTab: this.currentTab })
+    );
   }
 
   loginFormSubmit(formData: ILogin) {
+    this.authService.login(formData).subscribe({
+      next: (res) => {
+        console.log(res);
+        this.snackbar.showSuccess('Login Successfull');
+
+        let currentUser: ICurrentUser = {
+          firstName: '',
+          lastName: '',
+          email: '',
+          isVerifiedEmail: res.user.isEmailVerified,
+          mobile: '',
+          isBlocked: false,
+        };
+
+        this.store.dispatch(
+          AuthPageActions.setAccessToken({
+            accessToken: res.accessToken,
+            tokenType: 'access_token',
+          })
+        );
+        this.store.dispatch(AuthPageActions.setCurrentUser({ currentUser }));
+      },
+    });
   }
   signupFormSubmit(formData: ISignUp) {
-    console.log(formData);
     this.authService.signup(formData).subscribe({
-      next:(res)=>{
+      next: (res) => {
         console.log(res);
-        const currentUser={
-          firstName:res.userData.firstName,
+        const currentUser = {
+          firstName: res.userData.firstName,
           email: res.userData.email,
           lastName: res.userData.lastName,
           mobile: res.userData.mobile,
-          isVerifiedEmail:res.userData.isVerifiedEmail,
-          isBlocked:res.userData.isBlocked
-        }
-        console.log(currentUser)
-        this.store.dispatch(AuthPageActions.setCurrentUser({currentUser}))
+          isVerifiedEmail: res.userData.isVerifiedEmail,
+          isBlocked: res.userData.isBlocked,
+        };
+        console.log(currentUser);
+        this.store.dispatch(AuthPageActions.setCurrentUser({ currentUser }));
         this.snackbar.showSuccess(res.message);
-        this.router.navigateByUrl('auth/login');
-      }
-    })
+        this.router.navigateByUrl('/auth/verify-otp');
+      },
+    });
+  }
+  verifyOtpSubmit(otpSubmission: IverifyOtp) {
+    const email = this.localstorageService.get('email');
+    if (email) {
+      otpSubmission.email = email;
+    }
+    this.authService.verifyOtp(otpSubmission).subscribe({
+      next: (res) => {
+        console.log(res);
+        this.store.dispatch(
+          AuthPageActions.setAccessToken({
+            accessToken: res.accessToken,
+            tokenType: 'access_token',
+          })
+        );
+        this.snackbar.showSuccess('Login Successfully');
+        const currentUser: ICurrentUser = {
+          firstName: res.userData.firstName,
+          email: res.userData.email,
+          lastName: '',
+          isVerifiedEmail: res.userData.isVerifiedEmail,
+          mobile: '',
+          isBlocked: res.userData.isBlocked,
+        };
+        this.store.dispatch(AuthPageActions.setCurrentUser({ currentUser }));
+        this.router.navigateByUrl('/');
+      },
+    });
+  }
+
+  resentOtp() {
+    const email = this.localstorageService.get('email');
+    if (email) {
+      // this.authService.verifyOtp
+      console.log(email);
+    } else {
+      this.snackbar.showError('Oops Something went wrong!Please signup again');
+    }
+  }
+  resetPassFormSubmit(email: { email: string }) {
+    this.authService.forgotPass(email).subscribe({
+      next: (res) => {
+        console.log(res);
+        this.snackbar.showSuccess(res.message);
+        this.router.navigateByUrl('/auth/login');
+      },
+    });
   }
 }

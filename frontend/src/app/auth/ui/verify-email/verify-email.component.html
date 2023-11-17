@@ -1,1 +1,32 @@
-<p>verify-email works!</p>
+<form class="flex flex-col" [formGroup]="verifyForm" (ngSubmit)="onSubmit()">
+    <input
+      formControlName="email"
+      placeholder="email"
+      type="email"
+      class="form-input md:w-96 w-64 ps-3 py-1 my-4 border-none bg-white rounded-md text-lg text-gray-900 focus:outline-none"
+    />
+    <p
+      *ngIf="verifyForm.touched && verifyForm.get('email')?.hasError('required')"
+      class="text-red-400"
+    >
+      email is required
+    </p>
+    <p
+      class="text-red-400"
+      *ngIf="verifyForm.touched && verifyForm.get('email')?.hasError('email')"
+    >
+      Please enter a valid email address
+    </p>
+    <!-- <button
+      [disabled]="verifyForm.invalid" 
+      class="bg-black shadow-2xl shadow-indigo-300/50 border border-transparent hover:border-gray-400 text-white rounded-lg md:w-96 w-64 py-2 mt-4"
+    >
+      Submit 
+    </button> -->
+    <button
+      [disabled]="verifyForm.invalid" 
+      class="submit_btn shadow-2xl drop-shadow-lg border border-transparent hover:border-gray-400 text-black font-extrabold uppercase rounded-lg md:w-96 w-64 py-2 mt-4"
+    >
+      Submit 
+    </button>
+  </form>

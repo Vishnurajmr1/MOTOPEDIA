@@ -1,0 +1,44 @@
+<form class="px-4 pt-6" (ngSubmit)="onSubmit()">
+    <div class="pb-3 md:w-96 w-64 text-gray-500 text-sm">
+      <p>
+        Please check your email for the OTP and enter it below. You have 10
+        minutes to complete this process.
+      </p>
+    </div>
+  
+    <div class="flex justify-center gap-2 mb-6">
+      <input
+        *ngFor="let input of inputs; let i = index"
+        #otpInput
+        class="md:w-14 md:h-12 w-9 h-8 text-center border rounded-md shadow-sm text-black"
+        type="text"
+        maxlength="1"
+        pattern="[0-9]"
+        (input)="onInput(i)"
+        (keydown)="onKeyDown($event, i)"
+        [attr.id]="'input-' + i"
+      />
+    </div>
+    <p class="text-red-400" *ngIf="otp.length < 5 && submitted">
+      Please enter a valid OTP
+    </p>
+    <div class="flex flex-col items-center justify-center">
+        <button
+       type="submit"
+        class="submit_btn shadow-2xl drop-shadow-lg border border-transparent hover:border-gray-400 text-black font-extrabold uppercase rounded-lg md:w-96 w-64 py-2 mt-4"
+      >
+        Verify 
+      </button>
+      <div class="flex flex-row mt-4 gap-1 items-baseline">
+        <p class="text-gray-700">Didn't receive code?</p>
+        <button (click)="resend()" type="reset"
+          class="cursor-pointer text-blue-600 font-mono p-0 m-0 disabled:opacity-50" [disabled]="display != ''"
+        >
+          Resend
+      </button>
+      </div>
+      <p class="cursor-pointer text-cyan-200" *ngIf="display !== ''">
+        {{ display }}
+      </p>
+    </div>
+  </form>
