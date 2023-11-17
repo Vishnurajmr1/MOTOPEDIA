@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { AuthAccessComponent } from './auth-access.component';
 import { LoginFormComponent } from '../../ui/login-form/login-form.component';
 import { SignupFormComponent } from '../../ui/signup-form/signup-form.component';
+import { VerifyEmailComponent } from '../../ui/verify-email/verify-email.component';
 
 const routes:Routes=[
     {
@@ -10,7 +11,7 @@ const routes:Routes=[
         component:AuthAccessComponent,
         children:[
             {path:'login',component:LoginFormComponent},
-            {path:'signup',component:SignupFormComponent},
+            {path:'signup',component:SignupFormComponent}
         ]
     }
 ]

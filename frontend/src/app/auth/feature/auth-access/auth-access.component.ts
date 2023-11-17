@@ -80,12 +80,14 @@ export class AuthAccessComponent {
       next:(res)=>{
         console.log(res);
         const currentUser={
-          firstName: res.user.firstName,
-          email: res.user.email,
-          lastName: res.user.lastName,
-          phone: '',
-          isEmailVerified:res.user.isEmailVerified
+          firstName:res.userData.firstName,
+          email: res.userData.email,
+          lastName: res.userData.lastName,
+          mobile: res.userData.mobile,
+          isVerifiedEmail:res.userData.isVerifiedEmail,
+          isBlocked:res.userData.isBlocked
         }
+        console.log(currentUser)
         this.store.dispatch(AuthPageActions.setCurrentUser({currentUser}))
         this.snackbar.showSuccess(res.message);
         this.router.navigateByUrl('auth/login');

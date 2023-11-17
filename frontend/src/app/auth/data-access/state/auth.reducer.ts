@@ -13,8 +13,9 @@ export interface ICurrentUser {
   firstName: string;
   lastName: string;
   email: string;
-  isEmailVerified: boolean;
-  phone: string;
+  isVerifiedEmail: boolean;
+  mobile: string;
+  isBlocked:boolean;
 }
 
 export interface AuthState {
@@ -29,8 +30,9 @@ export const initialState: AuthState = {
     firstName: '',
     lastName: '',
     email: '',
-    isEmailVerified: false,
-    phone: '',
+    isVerifiedEmail: false,
+    isBlocked:false,
+    mobile: '',
   },
 };
 
@@ -46,7 +48,7 @@ export const authReducer = createReducer(
     return {
       ...state,
       currentUser: action.currentUser,
-      isUserLoggedIn: action.currentUser.isEmailVerified,
+      isUserLoggedIn: action.currentUser.isVerifiedEmail,
     };
   }),
   on(unSetCurrentUser, (state, action): AuthState => {
@@ -56,8 +58,9 @@ export const authReducer = createReducer(
         firstName: '',
         lastName: '',
         email: '',
-        isEmailVerified: false,
-        phone: '',
+        isVerifiedEmail: false,
+        isBlocked:false,
+        mobile: '',
       },
       isUserLoggedIn: false,
     };
@@ -81,8 +84,9 @@ export const authReducer = createReducer(
         firstName: action.currentUser.firstName,
         lastName: action.currentUser.lastName,
         email: action.currentUser.email,
-        isEmailVerified: action.currentUser.isEmailVerified,
-        phone: action.currentUser.phone,
+        isVerifiedEmail: action.currentUser.isVerifiedEmail,
+        mobile: action.currentUser.mobile,
+        isBlocked:action.currentUser.isBlocked
       },
     };
   })
