@@ -24,11 +24,11 @@ export class AuthAccessComponent {
   constructor() {
     this.setAuthTabFromRoute();
   }
-  ngOnInit() {
-    if (this.routeSubscription) {
-      this.routeSubscription.unsubscribe();
-    }
-  }
+  // ngOnInit() {
+  //   if (this.routeSubscription) {
+  //     this.routeSubscription.unsubscribe();
+  //   }
+  // }
   protected TabType: typeof Tab = Tab;
   currentTab: Tab = Tab.Login;
   private routeSubscription!: Subscription;
@@ -67,6 +67,15 @@ export class AuthAccessComponent {
         case this.TabType.Signup:
           this.currentTab = this.TabType.Signup;
           break;
+        case this.TabType.VerifyOtp:
+          this.currentTab = this.TabType.VerifyOtp;
+          break;
+        case this.TabType.Verify:
+          this.currentTab = this.TabType.Verify;
+          break;
+        case this.TabType.Reset:
+          this.currentTab = this.TabType.Reset;
+          break;
       }
     } else {
       this.selectedTab(this.TabType.Login);
@@ -78,6 +87,14 @@ export class AuthAccessComponent {
     this.store.dispatch(
       AuthPageActions.toggleCurrentTab({ currentAuthTab: this.currentTab })
     );
+  }
+  ngOnDestory():void{
+    if(this.routeSubscription){
+      this.routeSubscription.unsubscribe()
+    }
+    if(this.socialAuthSubscription){
+      this.socialAuthSubscription.unsubscribe()
+    }
   }
 
   loginFormSubmit(formData: ILogin) {
@@ -108,7 +125,6 @@ export class AuthAccessComponent {
   signupFormSubmit(formData: ISignUp) {
     this.authService.signup(formData).subscribe({
       next: (res) => {
-        console.log(res);
         const currentUser = {
           firstName: res.userData.firstName,
           email: res.userData.email,
@@ -117,7 +133,6 @@ export class AuthAccessComponent {
           isVerifiedEmail: res.userData.isVerifiedEmail,
           isBlocked: res.userData.isBlocked,
         };
-        console.log(currentUser);
         this.store.dispatch(AuthPageActions.setCurrentUser({ currentUser }));
         this.snackbar.showSuccess(res.message);
         this.router.navigateByUrl('/auth/verify-otp');

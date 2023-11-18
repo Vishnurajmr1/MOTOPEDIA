@@ -7,7 +7,7 @@ import {
 import { BrowserModule } from '@angular/platform-browser';
 import { AppComponent } from './app.component';
 import { StoreModule } from '@ngrx/store';
-import {StoreDevtoolsModule} from '@ngrx/store-devtools';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 import { FooterModule } from './shared/ui/footer/footer.module';
@@ -37,25 +37,24 @@ import { GlobalErrorHandler } from './shared/data-access/global/global-error-han
     StoreModule.forRoot({}),
     EffectsModule.forRoot([]),
     StoreDevtoolsModule.instrument({
-      name:'MOTOPEDIA APP',
-      maxAge:25,
-      logOnly:!isDevMode()
+      name: 'MOTOPEDIA APP',
+      maxAge: 25,
+      logOnly: !isDevMode(),
     }),
     BrowserAnimationsModule,
     MatSnackBarModule,
-    RouterModule
+    RouterModule,
   ],
   providers: [
-  {
-    provide:HTTP_INTERCEPTORS,
-    useClass:AuthInterceptor,
-    multi:true
-  },
-  {
-
-    provide:ErrorHandler,
-    useClass:GlobalErrorHandler
-  },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true,
+    },
+    {
+      provide: ErrorHandler,
+      useClass: GlobalErrorHandler,
+    },
     {
       provide: 'SocialAuthServiceConfig',
       useValue: {
@@ -63,7 +62,9 @@ import { GlobalErrorHandler } from './shared/data-access/global/global-error-han
         providers: [
           {
             id: GoogleLoginProvider.PROVIDER_ID,
-            provider: new GoogleLoginProvider('598989226384-9lq5ksdpkj645lpvq16030911hc584rm.apps.googleusercontent.com'),
+            provider: new GoogleLoginProvider(
+              '598989226384-9lq5ksdpkj645lpvq16030911hc584rm.apps.googleusercontent.com'
+            ),
           },
         ],
       } as SocialAuthServiceConfig,
