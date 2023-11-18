@@ -23,7 +23,7 @@ const routes: Routes = [
         canActivate: [verifyOTPGuard],
       },
       {
-        path: 'reset-password',
+        path: 'reset-password/:token',
         component: ForgotFormComponent,
         canActivate: [resetPasswordGuard],
       },

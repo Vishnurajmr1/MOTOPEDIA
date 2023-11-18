@@ -18,6 +18,10 @@ const routes: Routes = [
     path:'home',
     loadChildren:()=>import('./home/feature/home.module').then(m=>m.HomeModule)
   },
+  // {
+  //   path:'admin',
+  //   loadChildren:()=>import('./auth/feature/')
+  // },
   {
     path:'not-found',
     component:NotFoundComponent
