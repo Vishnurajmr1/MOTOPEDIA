@@ -5,7 +5,7 @@ import { unauthenticatedGuard } from './shared/guard/unauthenticated.guard';
 const routes: Routes = [
   {
     path:'',
-    redirectTo:'auth',
+    redirectTo:'home',
     pathMatch:'full'
   },
   {

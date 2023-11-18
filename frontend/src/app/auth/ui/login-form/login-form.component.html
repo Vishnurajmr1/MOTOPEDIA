@@ -8,7 +8,7 @@
     placeholder="email"
     formControlName="email"
     name="email"
-    class="form-input md:w-96 w-64 ps-3 py-1 my-3 mt-4 border-none bg-primary rounded-md text-lg text-gray-900 focus:outline-orange-100"
+    class="form-input md:w-96 w-64 ps-3 py-1 my-3 mt-4 border-none bg-primary rounded-md text-lg text-gray-900 focus:border-orange-300 focus:ring-orange-300"
   />
   <p
     *ngIf="(loginFormControl.email.touched) && loginForm.get('email')?.hasError('required')"
@@ -28,7 +28,7 @@
     [type]="show?'text':'password'"
     placeholder="Password@123"
     name="password"
-    class="form-input md:w-96 w-64 ps-3 py-1 my-3 border-none bg-primary rounded-md text-lg text-gray-900 focus:outline-orange-100"
+    class="form-input md:w-96 w-64 ps-3 py-1 my-3 border-none bg-primary rounded-md text-lg text-gray-900 focus:border-orange-300 focus:ring-orange-300"
     />
     <span class="absolute right-3 top-5 cursor-pointer" (click)="password()">
       <!-- Font Awesome eye icon -->
