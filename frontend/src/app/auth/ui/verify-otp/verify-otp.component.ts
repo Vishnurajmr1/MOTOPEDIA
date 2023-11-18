@@ -21,13 +21,13 @@ export class VerifyOtpComponent {
   @Output() submitVerifyOtpForm: EventEmitter<{ otp: string }> =
     new EventEmitter();
   @Output() resendOtp: EventEmitter<void> = new EventEmitter();
-
-  display!: string;
+  display:any;
   submitted: boolean = false;
   otp: string = '';
 
   inputs: number[] = [0, 0, 0, 0, 0, 0];
   @ViewChildren('otpInput') otpInputs!: QueryList<ElementRef>;
+
   onSubmit() {
     this.submitted = true;
     const isOtpValid = this.otpInputs
@@ -55,14 +55,14 @@ export class VerifyOtpComponent {
       event.preventDefault();
       this.inputs[index] = 0;
       this.otpInputs.toArray()[index].nativeElement.value = '';
-      this.otpInputs.toArray()[index].nativeElement.focus();
+      this.otpInputs.toArray()[index-1].nativeElement.focus();
     }
   }
 
   timer(minute = 1) {
     let seconds: number = minute * 60;
-    let textSec: number | string = '0';
-    let startSec: number = 60;
+    let textSec: number|string = '0';
+    let startSec: number = seconds;
     const prefix = minute < 10 ? '0' : '';
 
     const timer = setInterval(() => {
@@ -80,7 +80,7 @@ export class VerifyOtpComponent {
         clearInterval(timer);
         this.display = '';
       }
-    }, 1000);
+    },1000);
   }
   resend() {
     this.timer();

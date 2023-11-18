@@ -1,23 +1,22 @@
-
-<app-tab-container 
-[currentTab]="currentTab"
-(tabSelected)="selectedTab($event)" 
+<app-tab-container
+  [currentTab]="currentTab"
+  (tabSelected)="selectedTab($event)"
 >
- <app-login-form 
- (submitLoginForm)="loginFormSubmit($event)"
-*ngIf="currentTab===TabType.Login"
- ></app-login-form>
- <app-signup-form
-*ngIf="currentTab===TabType.Signup"
-(submitSignupForm)="signupFormSubmit($event)"
- ></app-signup-form>
-<app-verify-email
-*ngIf="currentTab===TabType.Verify"
-(submitVerifyEmailForm)="resetPassFormSubmit($event)"
-></app-verify-email>
-<app-verify-otp
-(resendOtp)="resentOtp()"
-(submitVerifyOtpForm)="verifyOtpSubmit($event)"
-*ngIf="currentTab===TabType.verifyOtp"
-></app-verify-otp>
+  <app-login-form
+    (submitLoginForm)="loginFormSubmit($event)"
+    *ngIf="currentTab === TabType.Login"
+  ></app-login-form>
+  <app-signup-form
+    *ngIf="currentTab === TabType.Signup"
+    (submitSignupForm)="signupFormSubmit($event)"
+  ></app-signup-form>
+  <app-verify-email
+    *ngIf="currentTab ===TabType.Verify"
+    (submitVerifyEmailForm)="resetPassFormSubmit($event)"
+  ></app-verify-email>
+  <app-verify-otp
+    *ngIf="currentTab === TabType.VerifyOtp"
+    (resendOtp)="resentOtp()"
+    (submitVerifyOtpForm)="verifyOtpSubmit($event)"
+  ></app-verify-otp>
 </app-tab-container>

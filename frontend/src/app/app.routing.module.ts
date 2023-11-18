@@ -15,6 +15,10 @@ const routes: Routes = [
     canActivate:[unauthenticatedGuard]
   },
   {
+    path:'not-found',
+    component:NotFoundComponent
+  },
+  {
     path: '**',
     component:NotFoundComponent
   },

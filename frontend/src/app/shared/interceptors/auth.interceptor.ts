@@ -21,7 +21,7 @@ export class AuthInterceptor implements HttpInterceptor {
     request: HttpRequest<unknown>,
     next: HttpHandler
   ): Observable<HttpEvent<unknown>> {
-    const token = this.localStorageService.get('access_token');
+    const token = this.localStorageService.get('token');
     console.log('token localstore ==>',token);
 
     if (request.url.includes('https://api.cloudinary.com/v1_1')) {
@@ -31,7 +31,7 @@ export class AuthInterceptor implements HttpInterceptor {
     if (token) {
       request = request.clone({
         setHeaders: {
-          Authorization: `Bearer ${token}`,
+          Authorization:`Bearer ${token}`,
         },
       });
     }

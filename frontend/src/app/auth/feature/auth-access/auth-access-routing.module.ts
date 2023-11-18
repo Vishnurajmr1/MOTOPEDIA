@@ -20,12 +20,13 @@ const routes: Routes = [
       {
         path: 'verify-otp',
         component: VerifyOtpComponent,
-        canActivate: [verifyOTPGuard],
+        // canActivate: [verifyOTPGuard],
       },
       {
-        path:'reset-password',component:ForgotFormComponent,
-        canActivate:[resetPasswordGuard]
-      }
+        path: 'reset-password',
+        component: ForgotFormComponent,
+        canActivate: [resetPasswordGuard],
+      },
     ],
   },
 ];

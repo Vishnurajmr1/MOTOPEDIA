@@ -75,6 +75,7 @@ export class SignupFormComponent {
   }
   onSubmit(){
     if(this.registerForm.valid){
+      this.localStorageService.setOtpVerifyTimeLimitToken();
       this.submitSignupForm.emit(this.registerForm.value as ISignUp);
     }
   }
