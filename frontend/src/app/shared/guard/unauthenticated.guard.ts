@@ -10,7 +10,7 @@ export const unauthenticatedGuard: CanActivateFn = () => {
     take(1),
     map((isUserLoggedIn) => {
       if (isUserLoggedIn) {
-        router.navigateByUrl('');
+        router.navigateByUrl('/home');
         return false;
       } else {
         return true;

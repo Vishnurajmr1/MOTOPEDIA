@@ -108,7 +108,7 @@ const authController = (
     });
     const verifyUserEmail = asyncHandler(async (req: Request, res: Response) => {
         const { email, otp }: { email: string; otp: string } = req.body;
-        const { accessToken, refreshToken } = await verifyOtp(
+        const { accessToken, refreshToken,user } = await verifyOtp(
             email,
             otp,
             authService,
@@ -120,6 +120,7 @@ const authController = (
             message: 'OTP verified successfully',
             accessToken,
             refreshToken,
+            user
         });
     });
     const resendOtpverify = asyncHandler(async (req: Request, res: Response) => {

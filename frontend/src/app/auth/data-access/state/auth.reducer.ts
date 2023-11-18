@@ -15,7 +15,7 @@ export interface ICurrentUser {
   email: string;
   isVerifiedEmail: boolean;
   mobile: string;
-  isBlocked:boolean;
+  isBlocked: boolean;
 }
 
 export interface AuthState {
@@ -31,7 +31,7 @@ export const initialState: AuthState = {
     lastName: '',
     email: '',
     isVerifiedEmail: false,
-    isBlocked:false,
+    isBlocked: false,
     mobile: '',
   },
 };
@@ -41,7 +41,7 @@ export const authReducer = createReducer(
   on(toggleCurrentTab, (state, action): AuthState => {
     return {
       ...state,
-      currentAuthTab:action.currentAuthTab,
+      currentAuthTab: action.currentAuthTab,
     };
   }),
   on(setCurrentUser, (state, action): AuthState => {
@@ -59,7 +59,7 @@ export const authReducer = createReducer(
         lastName: '',
         email: '',
         isVerifiedEmail: false,
-        isBlocked:false,
+        isBlocked: false,
         mobile: '',
       },
       isUserLoggedIn: false,
@@ -86,7 +86,7 @@ export const authReducer = createReducer(
         email: action.currentUser.email,
         isVerifiedEmail: action.currentUser.isVerifiedEmail,
         mobile: action.currentUser.mobile,
-        isBlocked:action.currentUser.isBlocked
+        isBlocked: action.currentUser.isBlocked,
       },
     };
   })

@@ -17,11 +17,10 @@ export class AuthService {
     return this.http.post('/api/auth/googleauth', { googleToken: data });
   }
   signup(signupData: ISignUp): Observable<any> {
-    console.log(signupData);
     return this.http.post('/api/auth/signup', signupData);
   }
   login(loginData: ILogin): Observable<any> {
-    return this.http.post('/api/auth/login', loginData);
+    return this.http.post('/api/auth/user-login', loginData);
   }
   forgotPass(email: { email: string }): Observable<any> {
     return this.http.post('/api/auth/forgot-password', email);
@@ -31,5 +30,8 @@ export class AuthService {
   }
   adminLogin(adminData: ILogin): Observable<any> {
     return this.http.post('/api/auth/admin-login', adminData);
+  }
+  logout():Observable<any>{
+    return this.http.post('/api/auth/logout',{});
   }
 }

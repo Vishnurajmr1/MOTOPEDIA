@@ -24,11 +24,6 @@ export class AuthAccessComponent {
   constructor() {
     this.setAuthTabFromRoute();
   }
-  // ngOnInit() {
-  //   if (this.routeSubscription) {
-  //     this.routeSubscription.unsubscribe();
-  //   }
-  // }
   protected TabType: typeof Tab = Tab;
   currentTab: Tab = Tab.Login;
   private routeSubscription!: Subscription;
@@ -125,6 +120,7 @@ export class AuthAccessComponent {
   signupFormSubmit(formData: ISignUp) {
     this.authService.signup(formData).subscribe({
       next: (res) => {
+        console.log(res)
         const currentUser = {
           firstName: res.userData.firstName,
           email: res.userData.email,
@@ -141,6 +137,7 @@ export class AuthAccessComponent {
   }
   verifyOtpSubmit(otpSubmission: IverifyOtp) {
     const email = this.localstorageService.get('email');
+    console.log(email)
     if (email) {
       otpSubmission.email = email;
     }
@@ -155,15 +152,15 @@ export class AuthAccessComponent {
         );
         this.snackbar.showSuccess('Login Successfully');
         const currentUser: ICurrentUser = {
-          firstName: res.userData.firstName,
-          email: res.userData.email,
-          lastName: '',
-          isVerifiedEmail: res.userData.isVerifiedEmail,
-          mobile: '',
-          isBlocked: res.userData.isBlocked,
+          firstName: res.user.firstName,
+          email: res.user.email,
+          lastName: res.user.lastName,
+          isVerifiedEmail: res.user.isVerifiedEmail,
+          mobile: res.user.mobile,
+          isBlocked: res.user.isBlocked,
         };
         this.store.dispatch(AuthPageActions.setCurrentUser({ currentUser }));
-        this.router.navigateByUrl('/');
+        this.router.navigateByUrl('home');
       },
     });
   }
