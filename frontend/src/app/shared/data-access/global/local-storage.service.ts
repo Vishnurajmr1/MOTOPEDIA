@@ -5,6 +5,7 @@ import { Injectable } from '@angular/core';
 })
 export class LocalStorageService {
   saveKeys(data: any) {
+    console.log(data);
     for (const key in data) {
       this.save(key, data[key]);
     }

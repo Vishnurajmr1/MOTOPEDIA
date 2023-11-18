@@ -12,7 +12,7 @@ import {
 @Component({
   selector: 'app-verify-otp',
   templateUrl: './verify-otp.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  // changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class VerifyOtpComponent {
   constructor() {
@@ -75,8 +75,7 @@ export class VerifyOtpComponent {
       } else textSec = startSec;
 
       this.display = `${prefix}${Math.floor(seconds / 60)}:${textSec}`;
-
-      if (seconds == 0) {
+      if (seconds <= 0) {
         clearInterval(timer);
         this.display = '';
       }

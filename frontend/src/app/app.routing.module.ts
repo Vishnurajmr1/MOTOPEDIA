@@ -15,6 +15,10 @@ const routes: Routes = [
     canActivate:[unauthenticatedGuard]
   },
   {
+    path:'home',
+    loadChildren:()=>import('./home/feature/home.module').then(m=>m.HomeModule)
+  },
+  {
     path:'not-found',
     component:NotFoundComponent
   },

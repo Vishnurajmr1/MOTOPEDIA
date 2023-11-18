@@ -13,6 +13,8 @@ import { SnackbarService } from 'src/app/shared/data-access/global/snackbar.serv
 import { VerifyEmailModule } from '../../ui/verify-email/verify-email.module';
 import { VerifyOtpModule } from '../../ui/verify-otp/verify-otp.module';
 import { ForgotFormModule } from '../../ui/forgot-form/forgot-form.module';
+import { EffectsModule } from '@ngrx/effects';
+import { AuthEffects } from '../../data-access/state/auth.effects';
 
 
 @NgModule({
@@ -28,7 +30,8 @@ import { ForgotFormModule } from '../../ui/forgot-form/forgot-form.module';
     VerifyEmailModule,
     VerifyOtpModule,
     ForgotFormModule,
-    StoreModule.forFeature('auth',authReducer)
+    StoreModule.forFeature('auth',authReducer),
+    EffectsModule.forFeature([AuthEffects])
   ],
 })
 export class AuthAccessModule { }
