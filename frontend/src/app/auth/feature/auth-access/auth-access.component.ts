@@ -97,13 +97,12 @@ export class AuthAccessComponent {
       next: (res) => {
         console.log(res);
         this.snackbar.showSuccess('Login Successfull');
-
         let currentUser: ICurrentUser = {
-          firstName: '',
-          lastName: '',
-          email: '',
-          isVerifiedEmail: res.user.isEmailVerified,
-          mobile: '',
+          firstName: res.user.firstName,
+          lastName: res.user.lastName,
+          email: res.user.email,
+          isVerifiedEmail: res.user.isVerifiedEmail,
+          mobile: res.user.mobile,
           isBlocked: false,
         };
 

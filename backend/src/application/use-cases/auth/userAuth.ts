@@ -80,7 +80,7 @@ export const userLogin = async (
     const refreshToken = authService.generateRefreshToken(payload);
     const expiratonDate = authService.decodedTokenAndReturnExpireDate(refreshToken);
     await refreshTokenRepository.saveRefreshToken(user._id, refreshToken, expiratonDate);
-    return { accessToken, refreshToken };
+    return { accessToken, refreshToken,user };
 };
 
 export const resendOtp = async (

@@ -60,7 +60,7 @@ const authController = (
 
     const loginUser = asyncHandler(async (req: Request, res: Response) => {
         const { email, password }: { email: string; password: string } = req.body;
-        const { accessToken, refreshToken } = await userLogin(
+        const { accessToken, refreshToken,user } = await userLogin(
             email,
             password,
             dbRepositoryUser,
@@ -72,6 +72,7 @@ const authController = (
             message: 'User logged in successfully',
             accessToken,
             refreshToken,
+            user
         });
     });
     const loginAdmin = asyncHandler(async (req: Request, res: Response) => {

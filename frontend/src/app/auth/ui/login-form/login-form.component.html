@@ -22,25 +22,35 @@
   >
     Please enter a valid email address
   </p>
-
+<div class="relative">
   <input
     formControlName="password"
-    type="password"
+    [type]="show?'text':'password'"
     placeholder="Password@123"
     name="password"
     class="form-input md:w-96 w-64 ps-3 py-1 my-3 border-none bg-primary rounded-md text-lg text-gray-900 focus:outline-orange-100"
-  />
-  <p
+    />
+    <span class="absolute right-3 top-5 cursor-pointer" (click)="password()">
+      <!-- Font Awesome eye icon -->
+      <i class="fa-solid text-gray-500" [ngClass]="show?'fa-eye':'fa-eye-slash'"></i>
+    </span>
+    <p
     class="text-red-500"
     *ngIf="loginFormControl.password.touched && loginForm.get('password')?.hasError('required')"
   >
     Password is required
   </p>
+</div>
 
   <button 
   type="submit"
   class="submit_btn shadow-2xl drop-shadow-lg border border-transparent hover:border-gray-400 text-black font-extrabold uppercase rounded-lg md:w-80 w-64 py-3 mt-4 ml-4"
-  [disabled]="!loginForm.valid">
-  Submit
+  [disabled]="!loginForm.valid"
+  [@buttonState]="loginForm.valid? 'valid':'invalid'"
+  >
+  Login In
+  <span *ngIf="loginForm.valid" class="gap-3">
+    <i class="fa-solid fa-arrow-right-from-bracket text-black"></i>
+  </span>
   </button>
 </form>
