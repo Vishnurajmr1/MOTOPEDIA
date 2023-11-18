@@ -12,7 +12,7 @@
     placeholder="First Name"
     name="firstname"
     maxlength="20"
-    class="form-input w-full ps-3 py-1 my-3 border-none bg-primary rounded-md text-lg text-gray-900 focus:outline-orange-100"
+    class="form-input w-full ps-3 py-1 my-3 border-none bg-primary rounded-md text-lg text-gray-900 focus:border-orange-300 focus:ring-orange-300"
     />
   <p
     class="text-red-500 font-light"
@@ -24,7 +24,7 @@
  <div class="md:w-1/2 w-full">
   <label for="lastName" class="font-medium">Last Name:</label>
   <input type="text" formControlName="lastName" name="lastname" placeholder="Last Name" maxlength="20"
-class="form-input w-full ps-3 py-1 my-3 border-none bg-primary rounded-md text-lg text-gray-900 focus:outline-orange-100"
+class="form-input w-full ps-3 py-1 my-3 border-none bg-primary rounded-md text-lg text-gray-900 focus:border-orange-300 focus:ring-orange-300"
 />
 <p
   class="text-red-500 font-light"
@@ -42,7 +42,7 @@ class="form-input w-full ps-3 py-1 my-3 border-none bg-primary rounded-md text-l
     placeholder="sample@gmail.com"
     formControlName="email"
     name="email"
-    class="form-input w-full ps-10 py-1 my-3 mt-4 border-none bg-primary rounded-md text-lg text-gray-900 focus:outline-orange-100"
+    class="form-input w-full ps-10 py-1 my-3 mt-4 border-none bg-primary rounded-md text-lg text-gray-900 focus:border-orange-300 focus:ring-orange-300"
   />
   <span class="absolute left-3 top-11 cursor-pointer">
     <!-- Font Awesome lock icon -->
@@ -70,7 +70,7 @@ class="form-input w-full ps-3 py-1 my-3 border-none bg-primary rounded-md text-l
   pattern="[0-9]{10}"
   name="9132834310"
   placeholder="9132834310"
-  class="form-input w-full ps-10 py-1 my-3 border-none bg-primary rounded-md text-lg text-gray-900 focus:outline-orange-100"
+  class="form-input w-full ps-10 py-1 my-3 border-none bg-primary rounded-md text-lg text-gray-900 focus:border-orange-300 focus:ring-orange-300"
   >
   <span class="absolute left-3 top-10 cursor-pointer">
     <!-- Font Awesome lock icon -->
@@ -94,7 +94,7 @@ class="form-input w-full ps-3 py-1 my-3 border-none bg-primary rounded-md text-l
     formControlName="password"
     [type]="show ? 'text':'password'"
     placeholder="Password@123"
-    class="form-input w-full ps-3 py-1 my-3 border-none bg-primary rounded-md text-lg text-gray-900 focus:outline-orange-100"
+    class="form-input w-full ps-3 py-1 my-3 border-none bg-primary rounded-md text-lg text-gray-900 focus:border-orange-300 focus:ring-orange-300"
   />
   <span class="absolute right-4 top-10 cursor-pointer" (click)="password()">
     <!-- Font Awesome eye icon -->
@@ -122,7 +122,7 @@ class="form-input w-full ps-3 py-1 my-3 border-none bg-primary rounded-md text-l
       formControlName="confirmPassword"
       placeholder="confirm password"
       type="password"
-      class="form-input w-full ps-10 py-1 my-3 border-none bg-primary rounded-md text-lg text-gray-900 focus:outline-orange-100 relative"
+      class="form-input w-full ps-10 py-1 my-3 border-none bg-primary rounded-md text-lg text-gray-900 focus:border-orange-300 focus:ring-orange-300"
     />
     <span class="absolute left-3 top-10 cursor-pointer">
       <!-- Font Awesome lock icon -->

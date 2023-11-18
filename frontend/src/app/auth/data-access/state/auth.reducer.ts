@@ -16,6 +16,7 @@ export interface ICurrentUser {
   isVerifiedEmail: boolean;
   mobile: string;
   isBlocked: boolean;
+  profilePic?:string;
 }
 
 export interface AuthState {
