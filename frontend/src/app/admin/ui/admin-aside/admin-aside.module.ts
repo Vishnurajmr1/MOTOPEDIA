@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AdminAsideComponent } from './admin-aside.component';
+import { RouterModule } from '@angular/router';
 
 
 
@@ -9,7 +10,9 @@ import { AdminAsideComponent } from './admin-aside.component';
     AdminAsideComponent
   ],
   imports: [
-    CommonModule
-  ]
+    CommonModule,
+    RouterModule
+  ],
+  exports:[AdminAsideComponent]
 })
 export class AdminAsideModule { }

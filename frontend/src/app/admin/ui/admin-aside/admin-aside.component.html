@@ -1,1 +1,94 @@
-<p>admin-aside works!</p>
+<aside
+  id="logo-sidebar"
+  class="background-form fixed top-0 left-0 z-40 w-64 h-screen pt-20 transition-transform -translate-x-full bg-transparent border-r border-gray-200 sm:translate-x-0 dark:bg-gray-800 dark:border-gray-700"
+  aria-label="Sidebar"
+>
+  <div class="h-full px-3 pb-4 overflow-y-auto bg-transparent dark:bg-gray-800">
+    <ul class="space-y-2 font-medium">
+      <li>
+        <a
+          routerLink="/admin/dashboard"
+          class="cursor-pointer flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="currentColor"
+            class="w-6 h-6"
+          >
+            <path
+              fill-rule="evenodd"
+              d="M2.25 13.5a8.25 8.25 0 018.25-8.25.75.75 0 01.75.75v6.75H18a.75.75 0 01.75.75 8.25 8.25 0 01-16.5 0z"
+              clip-rule="evenodd"
+            />
+            <path
+              fill-rule="evenodd"
+              d="M12.75 3a.75.75 0 01.75-.75 8.25 8.25 0 018.25 8.25.75.75 0 01-.75.75h-7.5a.75.75 0 01-.75-.75V3z"
+              clip-rule="evenodd"
+            />
+          </svg>
+
+          <span class="ml-3">Dashboard</span>
+        </a>
+      </li>
+
+      <li>
+        <a
+          routerLink="/admin/users"
+          class="cursor-pointer flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+        >
+        <span>
+            <i class="fa-solid fa-users-gear"></i>
+        </span>
+
+          <span class="flex-1 ml-3 whitespace-nowrap">Users</span>
+        </a>
+      </li>
+      <!-- <li>
+        <a
+          routerLink="/admin/"
+          class="cursor-pointer flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="currentColor"
+            class="w-6 h-6"
+          >
+            <path
+              fill-rule="evenodd"
+              d="M7.5 5.25a3 3 0 013-3h3a3 3 0 013 3v.205c.933.085 1.857.197 2.774.334 1.454.218 2.476 1.483 2.476 2.917v3.033c0 1.211-.734 2.352-1.936 2.752A24.726 24.726 0 0112 15.75c-2.73 0-5.357-.442-7.814-1.259-1.202-.4-1.936-1.541-1.936-2.752V8.706c0-1.434 1.022-2.7 2.476-2.917A48.814 48.814 0 017.5 5.455V5.25zm7.5 0v.09a49.488 49.488 0 00-6 0v-.09a1.5 1.5 0 011.5-1.5h3a1.5 1.5 0 011.5 1.5zm-3 8.25a.75.75 0 100-1.5.75.75 0 000 1.5z"
+              clip-rule="evenodd"
+            />
+            <path
+              d="M3 18.4v-2.796a4.3 4.3 0 00.713.31A26.226 26.226 0 0012 17.25c2.892 0 5.68-.468 8.287-1.335.252-.084.49-.189.713-.311V18.4c0 1.452-1.047 2.728-2.523 2.923-2.12.282-4.282.427-6.477.427a49.19 49.19 0 01-6.477-.427C4.047 21.128 3 19.852 3 18.4z"
+            />
+          </svg>
+
+          <span class="flex-1 ml-3 whitespace-nowrap">Founders</span>
+        </a>
+      </li>
+      <li>
+        <a
+          routerLink="/admin/transactions"
+          class="cursor-pointer flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="currentColor"
+            class="w-6 h-6"
+          >
+            <path
+              fill-rule="evenodd"
+              d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25zM9 7.5A.75.75 0 009 9h1.5c.98 0 1.813.626 2.122 1.5H9A.75.75 0 009 12h3.622a2.251 2.251 0 01-2.122 1.5H9a.75.75 0 00-.53 1.28l3 3a.75.75 0 101.06-1.06L10.8 14.988A3.752 3.752 0 0014.175 12H15a.75.75 0 000-1.5h-.825A3.733 3.733 0 0013.5 9H15a.75.75 0 000-1.5H9z"
+              clip-rule="evenodd"
+            />
+          </svg>
+
+          <span class="flex-1 ml-3 whitespace-nowrap">Transactions</span>
+        </a>
+      </li> -->
+    </ul>
+  </div>
+</aside>

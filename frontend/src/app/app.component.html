@@ -1,5 +1,13 @@
 <div>
-  <!-- <app-navbar></app-navbar> -->
+  <ng-container *ngIf="currentLayout === 'admin'; else user">
+    <app-admin-navbar></app-admin-navbar>
+    <app-admin-aside></app-admin-aside>
+  </ng-container>
+  <ng-template #user>
+    <app-navbar></app-navbar>
+  </ng-template>
   <router-outlet></router-outlet>
-  <app-footer></app-footer>
+  <ng-container *ngIf="currentLayout !== 'admin'">
+    <app-footer></app-footer>
+  </ng-container>
 </div>
