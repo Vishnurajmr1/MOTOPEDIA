@@ -27,6 +27,7 @@ const routes: Routes = [
     loadChildren: () =>
     import('./admin/feature/admin-shell/admin-shell.module').then(m=>m.adminShellModule),
     // canActivate: [adminAuthGuard],
+    data:{layout:'admin'}
   },
   {
     path: 'not-found',

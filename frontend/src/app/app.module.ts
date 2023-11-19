@@ -24,6 +24,8 @@ import { AuthInterceptor } from './shared/interceptors/auth.interceptor';
 import { authReducer } from './auth/data-access/state/auth.reducer';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { GlobalErrorHandler } from './shared/data-access/global/global-error-handler.service';
+import { AdminNavbarModule } from './admin/ui/admin-navbar/admin-navbar.module';
+import { AdminAsideModule } from './admin/ui/admin-aside/admin-aside.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -43,6 +45,8 @@ import { GlobalErrorHandler } from './shared/data-access/global/global-error-han
     }),
     BrowserAnimationsModule,
     MatSnackBarModule,
+    AdminNavbarModule,
+    AdminAsideModule,
     RouterModule,
   ],
   providers: [

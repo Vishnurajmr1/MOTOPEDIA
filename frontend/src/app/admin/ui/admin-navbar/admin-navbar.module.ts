@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AdminNavbarComponent } from './admin-navbar.component';
+import { RouterModule } from '@angular/router';
 
 
 
@@ -9,7 +10,9 @@ import { AdminNavbarComponent } from './admin-navbar.component';
     AdminNavbarComponent
   ],
   imports: [
-    CommonModule
-  ]
+    CommonModule,
+    RouterModule
+  ],
+  exports:[AdminNavbarComponent]
 })
 export class AdminNavbarModule { }
