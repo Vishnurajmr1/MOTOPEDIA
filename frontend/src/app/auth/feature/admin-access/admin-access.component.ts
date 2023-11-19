@@ -20,6 +20,7 @@ export class AdminAccessComponent {
       next: (res) => {
         console.log(res);
         this.localStorage.save('access_token', res.accessToken);
+        this.localStorage.save('refresh_token', res.refreshToken);
         this.snackBar.showSuccess('MOTOPEDIA ADMIN LOGIN SUCCESSFULL');
         this.router.navigateByUrl('/admin/dashboard');
       },
