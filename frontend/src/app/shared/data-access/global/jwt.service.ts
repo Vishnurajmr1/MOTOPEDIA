@@ -23,6 +23,7 @@ export class JwtService {
         const decodeToken: JwtPayload = jwtDecode(
           token.substring(tokenPrefix.length)
         );
+        console.log(decodeToken.role)
         return decodeToken.role;
       }
     }
@@ -59,7 +60,7 @@ export class JwtService {
   }
 
   isAdmin(token: string): boolean {
-    return this.getUserRole(token) === 'ADMIN';
+    return this.getUserRole(token) === 'admin';
   }
   isUser(token: string): boolean {
     return this.getUserRole(token) === 'USER';

@@ -2,33 +2,39 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { NotFoundComponent } from './shared/ui/not-found/not-found.component';
 import { unauthenticatedGuard } from './shared/guard/unauthenticated.guard';
+import { adminAuthGuard } from './shared/guard/admin-auth.guard';
 const routes: Routes = [
   {
-    path:'',
-    redirectTo:'home',
-    pathMatch:'full'
+    path: '',
+    redirectTo: 'home',
+    pathMatch: 'full',
   },
   {
-    path:'auth',
-    loadChildren:()=>
-    import('./auth/feature/auth-shell/auth-shell.module').then(m=>m.AuthShellModule),
-    canActivate:[unauthenticatedGuard]
+    path: 'auth',
+    loadChildren: () =>
+      import('./auth/feature/auth-shell/auth-shell.module').then(
+        (m) => m.AuthShellModule
+      ),
+    canActivate: [unauthenticatedGuard],
   },
   {
-    path:'home',
-    loadChildren:()=>import('./home/feature/home.module').then(m=>m.HomeModule)
+    path: 'home',
+    loadChildren: () =>
+      import('./home/feature/home.module').then((m) => m.HomeModule),
   },
-  // {
-  //   path:'admin',
-  //   loadChildren:()=>import('./auth/feature/')
-  // },
   {
-    path:'not-found',
-    component:NotFoundComponent
+    path: 'admin',
+    loadChildren: () =>
+    import('./admin/feature/admin-shell/admin-shell.module').then(m=>m.adminShellModule),
+    // canActivate: [adminAuthGuard],
+  },
+  {
+    path: 'not-found',
+    component: NotFoundComponent,
   },
   {
     path: '**',
-    component:NotFoundComponent
+    component: NotFoundComponent,
   },
 ];
 
