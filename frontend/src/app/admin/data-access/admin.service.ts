@@ -8,6 +8,6 @@ export class AdminService{
     private http=inject(HttpClient)
     
     getUsers(){
-        return this.http.get('/admin/users');
+        return this.http.get('/api/user/get-all-users');
     }
 }

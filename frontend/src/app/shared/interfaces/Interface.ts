@@ -32,4 +32,5 @@ export interface UserDoc {
 	otp?: string;
 	profileImgUrl?: string;
 	isEmailVerified: boolean;
+    isBlocked?:boolean
 }

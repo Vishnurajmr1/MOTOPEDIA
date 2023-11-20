@@ -6,6 +6,7 @@ import HttpStatusCodes from '@src/constants/HttpStatusCodes';
 const roleCheckMiddleware = (roleToCheck: string) => {
     return (req: CustomRequest, res: Response, next: NextFunction) => {
         const role = req.user?.role;
+        console.log(role)
         if (role === roleToCheck) {
             next();
         } else {
