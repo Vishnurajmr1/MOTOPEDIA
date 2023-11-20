@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { State, getCurrentUserData, isUserLoggedIn } from 'src/app/auth/data-access/state';
@@ -12,14 +12,20 @@ import { LocalStorageService } from '../../data-access/global/local-storage.serv
   styleUrls: ['./navbar.component.css']
 })
 export class NavbarComponent {
-  // currentUser$!: Observable<ICurrentUser>;
+
+  currentUser$!: Observable<ICurrentUser>;
   isUserLoggedIn$!:Observable<boolean>;
 
-  constructor(private localStorageService:LocalStorageService,private store:Store<State>){
-    // this.currentUser$=this.localStorageService.get('getCurrentUserData');
+  constructor(private store:Store<State>){
+    this.currentUser$=this.store.select(getCurrentUserData);
     this.isUserLoggedIn$=this.store.select(isUserLoggedIn);
   }
-
+  isDropDownMenu=false;
+  toggleProfileDropDown(){
+    console.log(this.currentUser$);
+    this.isDropDownMenu=!this.isDropDownMenu
+  }
+  
   logout():void{
     this.store.dispatch(unSetCurrentUser())
   }

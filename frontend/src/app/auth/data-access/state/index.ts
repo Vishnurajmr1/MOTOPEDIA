@@ -15,12 +15,12 @@ export const toogleAuthPage = createSelector(
 
 export const getCurrentUserData = createSelector(
   getAuthFeatureState,
-  (state) => state.currentUser
+  (state) => state?.currentUser
 );
 
 export const isUserLoggedIn = createSelector(
   getAuthFeatureState,
-  (state) => state.isUserLoggedIn
+  (state) => state?.isUserLoggedIn
 );
 
 export const getUserEmail = createSelector(

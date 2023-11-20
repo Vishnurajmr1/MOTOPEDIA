@@ -1,10 +1,10 @@
 <section class="min-h-screen flex items-center justify-center mt-5 md:p-5">
     <div class="background-form drop-shadow-2xl rounded-2xl  max-w-5xl items-center flex">
-        <div class="w-full md:w-1/2 pl-20 pr-20">
+        <div class="w-full md:w-1/2 sm:pl-20 sm:pr-20 p-3">
             <h1 class="font-black text-black underline text-center mt-5">MOTOPEDIA</h1>
             <h3 *ngIf="currentTab!==TabType.Signup" class="font-semibold mt-5">Welcome Back!</h3>
             <h2 *ngIf="currentTab===TabType.Signup" class="font-black mt-5">Hello<span class="flex">Please signup to continue!</span></h2>
-            <div class="bg-orange-400 drop-shadow-lg shadow-orange-100/50  rounded-lg text-lg font-black flex gap-2 justify-around p-3 md:w-80 w-64 text-black mt-5 ml-9 md:ml-0">
+            <div class="bg-orange-400 drop-shadow-lg shadow-orange-100/50  rounded-lg text-lg font-black flex gap-2 justify-around p-3 md:w-80 w-64 text-black mt-5 sm:ml-9 md:ml-0">
                 <button class="uppercase" [ngClass]="{
                     'bg-white': currentTab!==TabType.Signup,
                     'text-black':currentTab===TabType.Signup,

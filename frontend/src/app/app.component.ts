@@ -22,7 +22,6 @@ export class AppComponent implements OnInit {
     this.routeSubscription = this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
         let route = this.activatedRoute;
-        console.log(route)
         while (route.firstChild) {
           route.firstChild.data.subscribe((data) => {
             if (data['layout']) {
@@ -30,7 +29,6 @@ export class AppComponent implements OnInit {
             } else {
               this.currentLayout = 'user';
             }
-            console.log(this.currentLayout)
           });
           route = route.firstChild;
         }
