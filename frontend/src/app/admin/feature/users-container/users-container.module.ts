@@ -11,7 +11,8 @@ import { UserContainerRoutingModule } from './user-container-routing.module';
   ],
   imports: [
     CommonModule,
-    UserContainerRoutingModule
+    UserContainerRoutingModule,
+    
   ]
 })
 export class UsersContainerModule { }

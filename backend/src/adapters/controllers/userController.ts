@@ -4,7 +4,11 @@ import { UserRepositoryMongoDB } from '@src/frameworks/database/mongodb/reposito
 import { AuthService, authService } from '@src/frameworks/services/authService';
 import asyncHandler from 'express-async-handler';
 import { Request, Response } from 'express';
-import { getAllUsersUseCase } from '@src/application/use-cases/management/userManagement';
+import {
+    blockUserUseCase,
+    getAllUsersUseCase,
+    unblockUserUseCase,
+} from '@src/application/use-cases/management/userManagement';
 
 const userController = (
     authServiceInterface: AuthServiceInterface,
@@ -23,8 +27,29 @@ const userController = (
             data: users,
         });
     });
+    const blockUser = asyncHandler(async (req: Request, res: Response) => {
+        const userId = req.params.userId;
+        const reason = req.body.reason;
+        await blockUserUseCase(userId,reason, dbRepositoryUser);
+        res.status(200).json({
+            status: 'success',
+            message: 'Successfully blocked user',
+            data: null,
+        });
+    });
+    const unblockUser = asyncHandler(async (req: Request, res: Response) => {
+        const userId = req.params.userId;
+        await unblockUserUseCase(userId, dbRepositoryUser);
+        res.status(200).json({
+            status: 'success',
+            message: 'Successfully Unblocked User',
+            data: null,
+        });
+    });
     return {
         getAllUsers,
+        blockUser,
+        unblockUser,
     };
 };
 
