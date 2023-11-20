@@ -9,6 +9,7 @@
     <div class="flex items-center md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
         <button type="button" class="flex text-sm bg-gray-800 rounded-full md:me-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600" id="user-menu-button" aria-expanded="false" data-dropdown-toggle="user-dropdown" data-dropdown-placement="bottom">
           <span class="sr-only">Open user menu</span>
+          <img src="/assets/images/icons/man_4139970.png" alt="" class="w-8 h-8 rounded-full">
           <!-- <img class="w-8 h-8 rounded-full"
           *ngIf="(currentUser$|async)?.profilePic;else fallbackImage"
            src="{{(currentUser$|async)?.profilePic}}" alt="userphoto">
@@ -30,14 +31,9 @@
             <li>
               <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Profile</a>
             </li>
+          
             <li>
-              <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"></a>
-            </li>
-            <li>
-              <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Earnings</a>
-            </li>
-            <li>
-              <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Sign out <span><i class="fa-duotone fa-arrow-right-from-bracket"></i></span></a>
+              <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white hover:cursor-pointer hover:bg-blue-500">Sign out <span><i class="fa-solid fa-arrow-right-from-bracket"></i></span></a>
             </li>
           </ul>
         </div>
