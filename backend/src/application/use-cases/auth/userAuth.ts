@@ -69,6 +69,9 @@ export const userLogin = async (
             HttpStatusCodes.UNAUTHORIZED,
         );
     }
+    if(user.isBlocked){
+        throw new AppError('You are blocked by our admin.Contact us for enquiry',HttpStatusCodes.UNAVAILABLE_FOR_LEGAL_REASONS);
+    }
 
     const payload: JwtPayload = {
         Id: user._id,
@@ -143,7 +146,7 @@ export const verifyOtp = async (
         role: 'user',
     };
     await refreshTokenRepository.deleteRefreshToken(user._id);
-    const accessToken = authService.generateToken(payload);
+    const accessToken =authService.generateToken(payload);
     const refreshToken = authService.generateRefreshToken(payload);
     const expiratonDate = authService.decodedTokenAndReturnExpireDate(refreshToken);
     await refreshTokenRepository.saveRefreshToken(user._id, refreshToken, expiratonDate);

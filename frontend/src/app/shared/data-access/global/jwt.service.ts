@@ -4,6 +4,11 @@ import { jwtDecode } from 'jwt-decode';
 interface JwtPayload {
   role: string;
   exp: number;
+  payload: {
+    Id: string;
+    email: string;
+    role: string;
+  };
 }
 
 @Injectable({
@@ -12,39 +17,15 @@ interface JwtPayload {
 export class JwtService {
   getUserRole(token: string): string {
     if (token) {
-      let tokenPrefix = '';
-      if (token.startsWith('access:')) {
-        tokenPrefix = 'access';
-      } else if (token.startsWith('google:')) {
-        tokenPrefix = 'google:';
-      }
-
-      if (tokenPrefix) {
-        const decodeToken: JwtPayload = jwtDecode(
-          token.substring(tokenPrefix.length)
-        );
-        console.log(decodeToken.role)
-        return decodeToken.role;
-      }
+      const decodeToken: JwtPayload = jwtDecode(token.substring(7));
+      return decodeToken.payload.role;
     }
     return '';
   }
-
   private getDecodedToken(token: string): JwtPayload | undefined {
     if (token) {
-      let tokenPrefix = '';
-      if (token.startsWith('access:')) {
-        tokenPrefix = 'access:';
-      } else if (token.startsWith('google:')) {
-        tokenPrefix = 'google:';
-      }
-
-      if (tokenPrefix) {
-        const decodedToken: JwtPayload = jwtDecode(
-          token.substring(tokenPrefix.length)
-        );
-        return decodedToken;
-      }
+      const decodedToken: JwtPayload = jwtDecode(token.substring(7));
+      return decodedToken;
     }
     return undefined;
   }

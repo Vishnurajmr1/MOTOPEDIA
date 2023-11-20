@@ -1,5 +1,7 @@
 <section class="py-8 mt-16 md:ml-60">
-  <div class="relative overflow-x-auto shadow-md sm:rounded-lg sm:m-6 m-1 rounded-lg">
+  <div
+    class="relative overflow-x-auto shadow-md sm:rounded-lg sm:m-6 m-1 rounded-lg"
+  >
     <table
       class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400"
     >
@@ -16,25 +18,36 @@
       <tbody>
         <ng-container *ngFor="let item of users">
           <tr
-          class="odd:bg-orange-300 odd:dark:bg-gray-900 even:bg-orange-400 even:dark:bg-gray-800 border-b dark:border-gray-700"
-        >
-          <th
-            scope="row"
-            class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+            class="odd:bg-orange-300 odd:dark:bg-gray-900 even:bg-orange-400 even:dark:bg-gray-800 border-b dark:border-gray-700"
           >
-            {{item.firstName|uppercase}} {{item.lastName|uppercase}}
-          </th>
-          <td class="px-6 py-4 text-black">{{item.email}}</td>
-          <td class="px-6 py-4 text-black">{{item.mobile}}</td>
-          <td class="px-6 py-4">
-            <ng-container  *ngIf="item.isBlocked;else unblockButton">
-              <button class="bg-green-600 p-2 text-white uppercase hover:bg-green-400" (click)="unblock()">Unblock</button>
-            </ng-container>
-            <ng-template #unblockButton>
-              <button class="bg-red-400 p-2 rounded text-white uppercase hover:bg-red-600" (click)="unblock()">Block</button>
-            </ng-template>
-          </td>
-        </ng-container>
+            <th
+              scope="row"
+              class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+            >
+              {{ item.firstName | uppercase }} {{ item.lastName | uppercase }}
+            </th>
+            <td class="px-6 py-4 text-black">{{ item.email }}</td>
+            <td class="px-6 py-4 text-black">{{ item.mobile }}</td>
+            <td class="px-6 py-4">
+              <ng-container *ngIf="item.isBlocked; else unblockButton">
+                <button
+                  class="bg-green-400 p-2 rounded text-white uppercase hover:bg-green-500"
+                  (click)="confirmUnblock(item._id || '')"
+                >
+                  Unblock
+                </button>
+              </ng-container>
+              <ng-template #unblockButton>
+                <button
+                  class="bg-red-400 p-2 rounded text-white uppercase hover:bg-red-600"
+                  (click)="confirmBlock(item._id || '')"
+                >
+                  Block
+                </button>
+              </ng-template>
+            </td>
+          </tr></ng-container
+        >
       </tbody>
     </table>
   </div>
