@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { inject } from '@angular/core';
+import { AdminService } from '../../data-access/admin.service';
 
 @Component({
   selector: 'app-users-container',
@@ -6,5 +8,6 @@ import { Component } from '@angular/core';
   styleUrls: ['./users-container.component.css']
 })
 export class UsersContainerComponent {
-
+  protected users:any;
+  private adminService=inject(AdminService)
 }

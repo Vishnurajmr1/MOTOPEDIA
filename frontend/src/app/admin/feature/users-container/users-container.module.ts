@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { UsersContainerComponent } from './users-container.component';
+import { UserContainerRoutingModule } from './user-container-routing.module';
 
 
 
@@ -9,7 +10,8 @@ import { UsersContainerComponent } from './users-container.component';
     UsersContainerComponent
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    UserContainerRoutingModule
   ]
 })
 export class UsersContainerModule { }
