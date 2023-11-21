@@ -7,7 +7,7 @@ import {
   ISignUp,
   IverifyOtp,
   UserDoc,
-} from 'src/app/shared/interfaces/Interface';
+} from 'src/app/shared/types/user.Interface';
 import { Store } from '@ngrx/store';
 import { State } from '../../data-access/state';
 import { AuthService } from '../../data-access/auth.service';

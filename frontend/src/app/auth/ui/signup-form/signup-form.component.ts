@@ -12,7 +12,7 @@ import {
   AbstractControlOptions,
 } from '@angular/forms';
 import { CustomValidationService } from '../../data-access/custom-validation.service';
-import { ISignUp } from 'src/app/shared/interfaces/Interface';
+import { ISignUp } from 'src/app/shared/types/user.Interface';
 import { GoogleLoginProvider, SocialAuthService } from '@abacritt/angularx-social-login';
 import { Router } from '@angular/router';
 import { animate, state, style, transition, trigger } from '@angular/animations';
