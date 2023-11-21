@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { inject } from '@angular/core';
 import { AdminService } from '../../data-access/admin.service';
-import { UserDoc } from 'src/app/shared/interfaces/Interface';
+import { UserDoc } from 'src/app/shared/types/user.Interface';
 import { SnackbarService } from 'src/app/shared/data-access/global/snackbar.service';
 
 @Component({
