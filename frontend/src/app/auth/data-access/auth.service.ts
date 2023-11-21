@@ -1,13 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
-import {
-  IConfirmPass,
-  ILogin,
-  ISignUp,
-  IverifyOtp,
-} from 'src/app/shared/interfaces/Interface';
-
+import { ILogin,ISignUp,IverifyOtp,IConfirmPass } from 'src/app/shared/types/user.Interface';
 @Injectable({
   providedIn: 'root',
 })
@@ -32,6 +26,6 @@ export class AuthService {
     return this.http.post('/api/auth/admin-login', adminData);
   }
   logout():Observable<any>{
-    return this.http.post('/api/auth/logout',{});
+    return this.http.post('/api/auth/user-logout',{});
   }
 }

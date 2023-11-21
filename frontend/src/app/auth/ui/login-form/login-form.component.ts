@@ -8,7 +8,7 @@ import {
   ChangeDetectionStrategy,
 } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { ILogin } from 'src/app/shared/interfaces/Interface';
+import { ILogin } from 'src/app/shared/types/user.Interface';
 @Component({
   selector: 'app-login-form',
   templateUrl: './login-form.component.html',
