@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { Router } from '@angular/router';
-import { ILogin } from 'src/app/shared/interfaces/Interface';
+import { ILogin } from 'src/app/shared/types/user.Interface';
 import { AuthService } from '../../data-access/auth.service';
 import { SnackbarService } from 'src/app/shared/data-access/global/snackbar.service';
 import { LocalStorageService } from 'src/app/shared/data-access/global/local-storage.service';
