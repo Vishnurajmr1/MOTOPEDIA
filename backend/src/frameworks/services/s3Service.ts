@@ -22,8 +22,8 @@ const cloudFront = new CloudFrontClient({
 const randomImageName = (bytes = 32) => crypto.randomBytes(bytes).toString('hex');
 
 export const s3Service = () => {
-    const uploadFile = async (file: Express.Multer.File) => {
-        const key = randomImageName();
+    const uploadFile = async (file: Express.Multer.File,contentType:string) => {
+        const key = `${contentType}s/${randomImageName()}`;
         const params = {
             Bucket: configKeys.AWS_BUCKET_NAME,
             Key: key,
@@ -37,8 +37,8 @@ export const s3Service = () => {
             key,
         };
     };
-    const uploadAndGetUrl = async (file: Express.Multer.File) => {
-        const key = randomImageName();
+    const uploadAndGetUrl = async (file: Express.Multer.File,contentType:string) => {
+        const key = `${contentType}s/${randomImageName()}`;
         const params = {
             Bucket: configKeys.AWS_BUCKET_NAME,
             Key: key,
@@ -50,7 +50,6 @@ export const s3Service = () => {
         const command = new PutObjectCommand(params);
         await s3.send(command);
         const url = `https://${configKeys.AWS_BUCKET_NAME}.s3.amazonaws.com/${key}`;
-
         return {
             name: file.originalname,
             key,

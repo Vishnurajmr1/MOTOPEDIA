@@ -15,18 +15,20 @@ export const addPosts = async (
         throw new AppError('Invalid input data', HttpStatusCodes.BAD_REQUEST);
     }
     console.log(files);
-
     const uploadPromises = files.map(async (file) => {
         let uploadedFile: any;
         if (file.mimetype.includes('image')) {
-            uploadedFile = await cloudService.upload(file);
+            uploadedFile = await cloudService.upload(file,'Posts/photo');
             postInfo.image = uploadedFile;
+        }
+        if(file.mimetype.includes('video')){
+            uploadedFile=await cloudService.upload(file,'Posts/video')
         }
     });
     await Promise.all(uploadPromises);
     postInfo.authorId = userId;
-
     console.log(postInfo);
+    console.log('postInfo')
     const postId = await postDbRepository.addPost(postInfo);
 
     if (!postId) {
