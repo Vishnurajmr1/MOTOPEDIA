@@ -1,5 +1,5 @@
 import { AddPostInterface, EditPostInterface } from '@src/types/postInterface';
-import Post from '../models/postModel';
+import Post from '../models/post';
 import mongoose from 'mongoose';
 
 export const postRepositoryMongoDb = () => {
