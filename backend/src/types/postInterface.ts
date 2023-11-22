@@ -14,4 +14,7 @@ export interface EditPostInterface {
     title?: string;
     description?: string;
     image?: FileSchema;
+    authorId?:string;
 }
+
+export interface postInterface extends AddPostInterface{}
