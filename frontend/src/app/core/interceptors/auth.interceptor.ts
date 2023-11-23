@@ -7,9 +7,9 @@ import {
   HttpErrorResponse,
 } from '@angular/common/http';
 import { Observable, catchError, throwError } from 'rxjs';
-import { LocalStorageService } from '../data-access/global/local-storage.service';
+import { LocalStorageService } from '../../shared/data-access/global/local-storage.service';
 import { Router } from '@angular/router';
-import { GlobalErrorHandler } from '../data-access/global/global-error-handler.service';
+import { GlobalErrorHandler } from '../../shared/data-access/global/global-error-handler.service';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {

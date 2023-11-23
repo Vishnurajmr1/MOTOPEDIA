@@ -5,9 +5,9 @@ import { LoginFormComponent } from '../../ui/login-form/login-form.component';
 import { SignupFormComponent } from '../../ui/signup-form/signup-form.component';
 import { VerifyEmailComponent } from '../../ui/verify-email/verify-email.component';
 import { VerifyOtpComponent } from '../../ui/verify-otp/verify-otp.component';
-import { verifyOTPGuard } from 'src/app/shared/guard/verify-otp.guard';
+import { verifyOTPGuard } from 'src/app/core/guard/verify-otp.guard';
 import { ForgotFormComponent } from '../../ui/forgot-form/forgot-form.component';
-import { resetPasswordGuard } from 'src/app/shared/guard/reset-password.guard';
+import { resetPasswordGuard } from 'src/app/core/guard/reset-password.guard';
 
 const routes: Routes = [
   {

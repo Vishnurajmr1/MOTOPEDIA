@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { NotFoundComponent } from './shared/ui/not-found/not-found.component';
-import { unauthenticatedGuard } from './shared/guard/unauthenticated.guard';
-import { adminAuthGuard } from './shared/guard/admin-auth.guard';
+import { unauthenticatedGuard } from './core/guard/unauthenticated.guard';
+import { adminAuthGuard } from './core/guard/admin-auth.guard';
 const routes: Routes = [
   {
     path: '',

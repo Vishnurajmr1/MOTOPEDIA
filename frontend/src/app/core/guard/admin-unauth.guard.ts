@@ -1,7 +1,7 @@
 import { inject } from '@angular/core';
 import { CanActivateFn, RouterStateSnapshot, Router } from '@angular/router';
-import { LocalStorageService } from '../data-access/global/local-storage.service';
-import { JwtService } from '../data-access/global/jwt.service';
+import { LocalStorageService } from '../../shared/data-access/global/local-storage.service';
+import { JwtService } from '../../shared/data-access/global/jwt.service';
 
 export const adminUnauthGuard: CanActivateFn = (route, state) => {
   const router = inject(Router);
