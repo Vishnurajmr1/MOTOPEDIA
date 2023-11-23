@@ -53,6 +53,9 @@ const postController = (
             message:'Successfully deleted the post'
         })
     })
+    // const getAllPosts=asyncHandler(async(req:Request,res:Response)=>{
+    //     const posts=await get
+    // })
     return {
         addPost,
         editPost,

@@ -20,7 +20,7 @@ import {
   SocialAuthServiceConfig,
   GoogleLoginProvider,
 } from '@abacritt/angularx-social-login';
-import { AuthInterceptor } from './shared/interceptors/auth.interceptor';
+import { AuthInterceptor } from './core/interceptors/auth.interceptor';
 import { authReducer } from './auth/data-access/state/auth.reducer';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { GlobalErrorHandler } from './shared/data-access/global/global-error-handler.service';
