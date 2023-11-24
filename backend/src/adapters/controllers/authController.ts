@@ -5,6 +5,8 @@ import { AuthServiceInterface } from '@src/application/services/authServicesInte
 import { AdminDbInterface } from '@src/application/repositories/adminDBRepository';
 import { usersDbInterface } from '@src/application/repositories/userDBRepository';
 import {
+    ResetPasswordToken,
+    confirmNewPassword,
     resendOtp,
     resetPassword,
     signInWithGoogle,
@@ -60,7 +62,7 @@ const authController = (
 
     const loginUser = asyncHandler(async (req: Request, res: Response) => {
         const { email, password }: { email: string; password: string } = req.body;
-        const { accessToken, refreshToken,user } = await userLogin(
+        const { accessToken, refreshToken, user } = await userLogin(
             email,
             password,
             dbRepositoryUser,
@@ -72,7 +74,7 @@ const authController = (
             message: 'User logged in successfully',
             accessToken,
             refreshToken,
-            user
+            user,
         });
     });
     const loginAdmin = asyncHandler(async (req: Request, res: Response) => {
@@ -109,7 +111,7 @@ const authController = (
     });
     const verifyUserEmail = asyncHandler(async (req: Request, res: Response) => {
         const { email, otp }: { email: string; otp: string } = req.body;
-        const { accessToken, refreshToken,user } = await verifyOtp(
+        const { accessToken, refreshToken, user } = await verifyOtp(
             email,
             otp,
             authService,
@@ -121,7 +123,7 @@ const authController = (
             message: 'OTP verified successfully',
             accessToken,
             refreshToken,
-            user
+            user,
         });
     });
     const resendOtpverify = asyncHandler(async (req: Request, res: Response) => {
@@ -141,6 +143,19 @@ const authController = (
             message: `Please reset new Password using the link provied to ${email}`,
         });
     });
+    const resetPasswordByEmail = asyncHandler(async (req: Request, res: Response) => {
+        const { token }: { token: string } = req.body;
+        await ResetPasswordToken(token, authService, dbRepositoryUser, dbRepositoryRefreshToken);
+        res.status(200).json({
+            status: 'success',
+            message: 'Please reset the password',
+        });
+    });
+    const confirmPassword=asyncHandler(async(req:Request,res:Response)=>{
+        const {token,newPassword,}=req.body;
+        await confirmNewPassword(token,newPassword,authService,dbRepositoryUser)
+    })
+     
     const logoutUser = asyncHandler(async (req: Request, res: Response) => {
         res.status(200).json({
             status: 'success',
@@ -156,6 +171,8 @@ const authController = (
         logoutUser,
         loginWithGoogle,
         forgotPassword,
+        resetPasswordByEmail,
+        confirmPassword
     };
 };
 

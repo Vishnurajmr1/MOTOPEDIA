@@ -38,6 +38,8 @@ const authRouter = () => {
     router.post('/user-logout', controller.logoutUser);
     router.post('/login-with-google', controller.loginWithGoogle);
     router.post('/forgot-password', controller.forgotPassword);
+    router.post('/reset-password', controller.resetPasswordByEmail);
+    router.put('/confirm-password', controller.confirmPassword);
     //*Admin
     router.post('/admin-login', controller.loginAdmin);
     return router;

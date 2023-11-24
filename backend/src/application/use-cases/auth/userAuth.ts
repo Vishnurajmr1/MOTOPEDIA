@@ -69,8 +69,11 @@ export const userLogin = async (
             HttpStatusCodes.UNAUTHORIZED,
         );
     }
-    if(user.isBlocked){
-        throw new AppError('You are blocked by our admin.Contact us for enquiry',HttpStatusCodes.UNAVAILABLE_FOR_LEGAL_REASONS);
+    if (user.isBlocked) {
+        throw new AppError(
+            'You are blocked by our admin.Contact us for enquiry',
+            HttpStatusCodes.UNAVAILABLE_FOR_LEGAL_REASONS,
+        );
     }
 
     const payload: JwtPayload = {
@@ -83,7 +86,7 @@ export const userLogin = async (
     const refreshToken = authService.generateRefreshToken(payload);
     const expiratonDate = authService.decodedTokenAndReturnExpireDate(refreshToken);
     await refreshTokenRepository.saveRefreshToken(user._id, refreshToken, expiratonDate);
-    return { accessToken, refreshToken,user };
+    return { accessToken, refreshToken, user };
 };
 
 export const resendOtp = async (
@@ -146,7 +149,7 @@ export const verifyOtp = async (
         role: 'user',
     };
     await refreshTokenRepository.deleteRefreshToken(user._id);
-    const accessToken =authService.generateToken(payload);
+    const accessToken = authService.generateToken(payload);
     const refreshToken = authService.generateRefreshToken(payload);
     const expiratonDate = authService.decodedTokenAndReturnExpireDate(refreshToken);
     await refreshTokenRepository.saveRefreshToken(user._id, refreshToken, expiratonDate);
@@ -215,5 +218,42 @@ export const resetPassword = async (
     if (!result) {
         throw new AppError('OOps something went wrong!Please try again later!', HttpStatusCodes.BAD_REQUEST);
     }
-    // return { accessToken, refreshToken };
+};
+
+export const ResetPasswordToken = async (
+    token: string,
+    authService: ReturnType<AuthServiceInterface>,
+    userRepository: ReturnType<usersDbInterface>,
+    refreshTokenRepository: ReturnType<RefreshTokenDbInterface>,
+) => {
+    if (!token) {
+        throw new AppError('Please provide token', HttpStatusCodes.BAD_REQUEST);
+    }
+    const decoded = authService.decodeToken(token);
+    if (!decoded) {
+        throw new AppError('Invalid Token', HttpStatusCodes.BAD_REQUEST);
+    }
+    const userId = decoded.payload.Id;
+    if (decoded.exp && new Date() > new Date(decoded.exp * 1000)) {
+        throw new AppError('Token has expired', HttpStatusCodes.FORBIDDEN);
+    }
+};
+export const confirmNewPassword = async (
+    token: string,
+    newPassword: string,
+    authService: ReturnType<AuthServiceInterface>,
+    userRepository: ReturnType<usersDbInterface>,
+) => {
+    console.log(token,newPassword)
+    const decoded = authService.verifyPassword(token) as { id:string,exp: number; email: string };
+    console.log(decoded);
+    const email=decoded.email;
+    const user=userRepository.getUserByEmail(email);
+    if (decoded.exp * 1000 < Date.now()) {
+        throw new AppError('Token has expired', HttpStatusCodes.BAD_REQUEST);
+    }else{
+        const hashedPassword=await authService.hashPassword(newPassword);
+        await userRepository.changePassword(decoded.id,hashedPassword)
+    }
+
 };
