@@ -3,6 +3,7 @@ import { Tab } from 'src/app/shared/types';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { Subscription, filter } from 'rxjs';
 import {
+  IConfirmPass,
   ILogin,
   ISignUp,
   IverifyOtp,
@@ -167,7 +168,9 @@ export class AuthAccessComponent {
   resentOtp() {
     const email = this.localstorageService.get('email');
     if (email) {
-      // this.authService.verifyOtp
+      this.authService.resentOtp({email}).subscribe({
+        
+      })
       console.log(email);
     } else {
       this.snackbar.showError('Oops Something went wrong!Please signup again');
@@ -181,5 +184,9 @@ export class AuthAccessComponent {
         this.router.navigateByUrl('/auth/login');
       },
     });
+  }
+
+  verifyForgotFormSubmit(data:IConfirmPass){
+    // this.authService.
   }
 }

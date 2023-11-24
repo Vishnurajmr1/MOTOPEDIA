@@ -1,1 +1,80 @@
-<p>forgot-form works!</p>
+<form
+  class="flex flex-col gap-4 mt-10"
+  [formGroup]="forgotForm"
+  (ngSubmit)="onSumbit()"
+>
+<div class="w-full relative">
+  <label for="password" class="font-medium">Password:</label>
+    <input
+    formControlName="password"
+    [type]="show ? 'text':'password'"
+    placeholder="Password@123"
+    class="form-input w-full ps-3 py-1 my-3 border-none bg-primary rounded-md text-lg text-gray-900 focus:border-orange-300 focus:ring-orange-300"
+  />
+  <span class="absolute right-4 top-10 cursor-pointer" (click)="password()">
+    <!-- Font Awesome eye icon -->
+    <i class="fa-solid text-gray-500" [ngClass]="show?'fa-eye':'fa-eye-slash'"></i>
+  </span>
+<p
+  class="text-red-500 font-light"
+  *ngIf="
+    (forgotFormControl.password.touched) && forgotFormControl.password.errors?.['required']"
+>
+  Password is required
+</p>
+<p
+  class="text-red-500 font-light"
+  *ngIf="forgotFormControl.password.touched  && forgotFormControl.password.errors?.['invalidPassword']"
+>
+  Password should have minimum 8 characters,at least 1 uppercase letter,1
+  lowercase letter and 1 number is required
+</p>
+</div>
+ <div class="relative">
+  <label for="confirm_password" class="font-medium">Confirm Password:</label>
+  <div class="flex items-center">
+    <input
+      formControlName="confirmPassword"
+      placeholder="confirm password"
+      type="password"
+      class="form-input w-full ps-10 py-1 my-3 border-none bg-primary rounded-md text-lg text-gray-900 focus:border-orange-300 focus:ring-orange-300"
+    />
+    <span class="absolute left-3 top-10 cursor-pointer">
+      <!-- Font Awesome lock icon -->
+      <i class="fa-solid fa-lock text-gray-500"></i>
+    </span>
+  </div>
+ 
+<p
+  class="text-red-500 font-light"
+  *ngIf="
+  (forgotFormControl.confirmPassword.touched) && forgotFormControl.confirmPassword.errors?.['required']"
+>
+  confirm password is required
+</p>
+<p
+  class="text-red-500"
+  *ngIf="
+   forgotFormControl.confirmPassword.touched && forgotFormControl.confirmPassword.errors?.['passwordMismatch']"
+>
+  Confirm Password doesn't match
+</p>
+ </div>
+
+  <button
+    type="submit"
+    class="submit_btn shadow-2xl drop-shadow-lg border border-transparent hover:border-gray-400 text-black font-extrabold uppercase rounded-lg md:w-60 w-40 py-3 ml-14 mb-8 md:mb-0 hover:cursor-pointer"
+    [disabled]="!forgotForm.valid"
+  >
+    Reset Now
+    <span *ngIf="forgotForm.valid" class="gap-3">
+      <i class="fa-regular fa-circle-check text-black"></i>
+    </span>
+  </button>
+</form>
+
+<!-- <div class="m-5 flex items-center flex-col">
+  <h1>---------------------- Or signup with ----------------------</h1>
+<button (click)="loginWithGoogle()" mat-raised-button class="" ><img src="/assets/images/icons/google.png" alt="" width="50" height="50"></button>
+
+</div> -->

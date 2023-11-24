@@ -3,6 +3,7 @@
   [formGroup]="loginForm"
   (ngSubmit)="onSumbit()"
 >
+<div>
   <input
     type="email"
     placeholder="email"
@@ -22,6 +23,8 @@
   >
     Please enter a valid email address
   </p>
+</div>
+
 <div class="relative">
   <input
     formControlName="password"
