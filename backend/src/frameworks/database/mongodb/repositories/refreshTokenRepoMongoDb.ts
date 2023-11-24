@@ -19,11 +19,15 @@ export const refreshTokenRepositoryMongoDB = () => {
         const token = await RefreshToken.findOne({ token: convertedToken });
         return token;
     };
+    const findRefreshTokenByUserId=async(id:string,refreshToken:string)=>{
+        return await RefreshToken.findOne({userId:new mongoose.Types.ObjectId(id)},{token:refreshToken});
+    }
 
     return {
         saveRefreshToken,
         deleteRefreshToken,
         findRefreshToken,
+        findRefreshTokenByUserId
     };
 };
 

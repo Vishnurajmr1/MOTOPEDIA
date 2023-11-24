@@ -84,12 +84,12 @@ export class AuthAccessComponent {
       AuthPageActions.toggleCurrentTab({ currentAuthTab: this.currentTab })
     );
   }
-  ngOnDestory():void{
-    if(this.routeSubscription){
-      this.routeSubscription.unsubscribe()
+  ngOnDestory(): void {
+    if (this.routeSubscription) {
+      this.routeSubscription.unsubscribe();
     }
-    if(this.socialAuthSubscription){
-      this.socialAuthSubscription.unsubscribe()
+    if (this.socialAuthSubscription) {
+      this.socialAuthSubscription.unsubscribe();
     }
   }
 
@@ -120,7 +120,7 @@ export class AuthAccessComponent {
   signupFormSubmit(formData: ISignUp) {
     this.authService.signup(formData).subscribe({
       next: (res) => {
-        console.log(res)
+        console.log(res);
         const currentUser = {
           firstName: res.userData.firstName,
           email: res.userData.email,
@@ -137,7 +137,7 @@ export class AuthAccessComponent {
   }
   verifyOtpSubmit(otpSubmission: IverifyOtp) {
     const email = this.localstorageService.get('email');
-    console.log(email)
+    console.log(email);
     if (email) {
       otpSubmission.email = email;
     }
@@ -168,10 +168,12 @@ export class AuthAccessComponent {
   resentOtp() {
     const email = this.localstorageService.get('email');
     if (email) {
-      this.authService.resentOtp({email}).subscribe({
-        
-      })
-      console.log(email);
+      this.authService.resentOtp({ email }).subscribe({
+        next: (res) => {
+          console.log(res);
+          this.snackbar.showSuccess(res.message);
+        },
+      });
     } else {
       this.snackbar.showError('Oops Something went wrong!Please signup again');
     }
@@ -186,7 +188,14 @@ export class AuthAccessComponent {
     });
   }
 
-  verifyForgotFormSubmit(data:IConfirmPass){
-    // this.authService.
+  verifyForgotFormSubmit(data: IConfirmPass) {
+    this.authService.confirmPassword(data).subscribe({
+      next: (res) => {
+        this.snackbar.showSuccess(
+          'Password reset successfully,Please login again'
+        );
+        this.router.navigateByUrl('/auth/login');
+      },
+    });
   }
 }

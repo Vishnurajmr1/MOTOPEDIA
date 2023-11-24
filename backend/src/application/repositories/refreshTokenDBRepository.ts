@@ -5,11 +5,12 @@ export const refreshTokenDbRepository = (repository: ReturnType<RefreshTokenRepo
         await repository.saveRefreshToken(userId, token, expirestAt);
     const deleteRefreshToken = async (id: string) => await repository.deleteRefreshToken(id);
     const findRefreshToken = async (refreshToken: string) => await repository.findRefreshToken(refreshToken);
-
+    const findRefreshTokenByUserId=async(id:string,refreshToken:string)=>await repository.findRefreshTokenByUserId(id,refreshToken);
     return {
         saveRefreshToken,
         deleteRefreshToken,
         findRefreshToken,
+        findRefreshTokenByUserId
     };
 };
 
