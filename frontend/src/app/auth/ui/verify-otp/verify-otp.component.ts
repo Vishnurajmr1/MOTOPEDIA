@@ -7,7 +7,9 @@ import {
   ViewChildren,
   QueryList,
   ElementRef,
+  inject,
 } from '@angular/core';
+import { SnackbarService } from 'src/app/shared/data-access/global/snackbar.service';
 
 @Component({
   selector: 'app-verify-otp',
@@ -18,10 +20,10 @@ export class VerifyOtpComponent {
   constructor() {
     this.timer();
   }
-  @Output() submitVerifyOtpForm: EventEmitter<{ otp: string }> =
-    new EventEmitter();
+  @Output() submitVerifyOtpForm: EventEmitter<{ otp: string }> = new EventEmitter();
   @Output() resendOtp: EventEmitter<void> = new EventEmitter();
   display:any;
+  private snackbar=inject(SnackbarService)
   submitted: boolean = false;
   otp: string = '';
 
@@ -37,9 +39,14 @@ export class VerifyOtpComponent {
       this.otp = this.otpInputs
         .map((input) => input.nativeElement.value)
         .join('');
-      this.submitted = false;
-
-      this.submitVerifyOtpForm.emit({ otp: this.otp });
+        if(this.display==''){
+          this.submitted=false
+          this.snackbar.showError('Please rensend the otp!');
+        console.log('Invalid otp');
+        }else{
+          this.submitted = false;
+          this.submitVerifyOtpForm.emit({ otp: this.otp });
+        }
     } else {
       this.submitted = true;
       console.error('Oops enter valid otp');

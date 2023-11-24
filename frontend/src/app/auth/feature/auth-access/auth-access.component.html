@@ -19,4 +19,9 @@
     (resendOtp)="resentOtp()"
     (submitVerifyOtpForm)="verifyOtpSubmit($event)"
   ></app-verify-otp>
+   <app-forgot-form
+   *ngIf="currentTab === TabType.Reset"
+   (submitForgotForm)="verifyForgotFormSubmit($event)"
+   >
+  </app-forgot-form>
 </app-tab-container>
