@@ -1,18 +1,19 @@
-import { ChangeDetectionStrategy, Component ,inject} from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { PostService } from '../../data-access/post.service';
+import { IpostInterface } from 'src/app/shared/types/post.Interface';
 
 @Component({
   selector: 'app-post-list',
   templateUrl: './post-list.component.html',
   styleUrls: ['./post-list.component.css'],
-  changeDetection:ChangeDetectionStrategy.OnPush
-
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PostListComponent {
-  private postService=inject(PostService);
-  posts=this.postService.getAllPost().subscribe({
-    next:(res)=>{
-      console.log(res)
-    }
-  })
+  private postService = inject(PostService);
+  posts: IpostInterface[] = [];
+  ngOnInit(): void {
+    this.postService.getAllPost().subscribe((data: any) => {
+      this.posts = data;
+    });
+  }
 }
