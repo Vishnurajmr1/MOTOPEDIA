@@ -3,6 +3,8 @@ import { CloudServiceInterface } from '@src/application/services/cloudServiceInt
 import { addPosts } from '@src/application/use-cases/post/addPost';
 import { deletePostById } from '@src/application/use-cases/post/deletePost';
 import { editPostUseCase } from '@src/application/use-cases/post/editPost';
+import { getAllPostsUseCase } from '@src/application/use-cases/post/listPost';
+import Status from '@src/constants/HttResponseStatus';
 import { PostRepositoryMongoDbInterface } from '@src/frameworks/database/mongodb/repositories/postRepoMongoDb';
 import { CloudServiceImpl } from '@src/frameworks/services/s3Service';
 import { CustomRequest } from '@src/types/customRequest';
@@ -53,13 +55,19 @@ const postController = (
             message:'Successfully deleted the post'
         })
     })
-    // const getAllPosts=asyncHandler(async(req:Request,res:Response)=>{
-    //     const posts=await get
-    // })
+    const getAllPosts=asyncHandler(async(req:Request,res:Response)=>{
+        const posts=await getAllPostsUseCase(cloudService,dbRepositoryPost);
+        res.status(200).json({
+            status:Status.SUCCESS,
+            message:'Successfully retrieved all posts',
+            data:posts
+        })
+    })
     return {
         addPost,
         editPost,
-        deletePost
+        deletePost,
+        getAllPosts
     };
 };
 

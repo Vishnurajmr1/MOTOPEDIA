@@ -17,4 +17,6 @@ export interface EditPostInterface {
     authorId?:string;
 }
 
-export interface postInterface extends AddPostInterface{}
+export interface postInterface extends AddPostInterface{
+    imageUrl:string
+}
