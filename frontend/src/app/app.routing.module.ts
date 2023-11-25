@@ -23,11 +23,20 @@ const routes: Routes = [
       import('./home/feature/home.module').then((m) => m.HomeModule),
   },
   {
+    path: 'posts',
+    loadChildren: () =>
+      import('./posts/feature/post-shell/post-shell.module').then(
+        (m) => m.postShellModule
+      ),
+  },
+  {
     path: 'admin',
     loadChildren: () =>
-    import('./admin/feature/admin-shell/admin-shell.module').then(m=>m.adminShellModule),
+      import('./admin/feature/admin-shell/admin-shell.module').then(
+        (m) => m.adminShellModule
+      ),
     canActivate: [adminAuthGuard],
-    data:{layout:'admin'}
+    data: { layout: 'admin' },
   },
   {
     path: 'not-found',
