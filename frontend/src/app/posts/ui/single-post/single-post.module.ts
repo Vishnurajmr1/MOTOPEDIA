@@ -10,6 +10,7 @@ import { SinglePostComponent } from './single-post.component';
   ],
   imports: [
     CommonModule
-  ]
+  ],
+  exports:[SinglePostComponent]
 })
 export class SinglePostModule { }
