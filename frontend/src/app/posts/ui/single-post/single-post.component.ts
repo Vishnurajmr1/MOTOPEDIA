@@ -7,5 +7,5 @@ import { IpostInterface } from 'src/app/shared/types/post.Interface';
   styleUrls: ['./single-post.component.css'],
 })
 export class SinglePostComponent {
-  @Input() posts: IpostInterface[] = [];
+  @Input() post: IpostInterface|any;
 }
