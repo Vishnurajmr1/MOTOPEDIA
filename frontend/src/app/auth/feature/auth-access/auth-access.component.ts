@@ -16,6 +16,7 @@ import { SnackbarService } from 'src/app/shared/data-access/global/snackbar.serv
 import { LocalStorageService } from 'src/app/shared/data-access/global/local-storage.service';
 import { AuthPageActions } from '../../data-access/state/actions';
 import { ICurrentUser } from '../../data-access/state/auth.reducer';
+import { userAccess, userRefresh } from 'src/const';
 @Component({
   selector: 'app-auth-access',
   templateUrl: './auth-access.component.html',
@@ -113,6 +114,7 @@ export class AuthAccessComponent {
             tokenType: 'access_token',
           })
         );
+        localStorage.setItem(userAccess, res.accessToken);
         this.store.dispatch(AuthPageActions.setCurrentUser({ currentUser }));
       },
     });
