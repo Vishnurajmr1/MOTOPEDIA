@@ -26,7 +26,7 @@ const routes: Routes = [
     path: 'posts',
     loadChildren: () =>
       import('./posts/feature/post-shell/post-shell.module').then(
-        (m) => m.postShellModule
+        (m) => m.PostShellModule
       ),
   },
   {

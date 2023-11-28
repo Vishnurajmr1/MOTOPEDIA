@@ -28,7 +28,7 @@ import { AdminNavbarModule } from './admin/ui/admin-navbar/admin-navbar.module';
 import { AdminAsideModule } from './admin/ui/admin-aside/admin-aside.module';
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations:[AppComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,

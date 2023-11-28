@@ -10,9 +10,8 @@ import { RouterModule } from '@angular/router';
     SinglePostComponent
   ],
   imports: [
-    CommonModule,
-    RouterModule
+    CommonModule
   ],
   exports:[SinglePostComponent]
 })
-export class SinglePostModule { }
+export class SinglePostModule {}
