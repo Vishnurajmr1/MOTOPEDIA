@@ -34,7 +34,6 @@ export class AppComponent implements OnInit {
         }
       }
     });
-
     this.store.dispatch(checkLocalStorageAction());
     console.log(this.currentLayout);
   }

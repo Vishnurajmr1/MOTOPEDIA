@@ -44,6 +44,6 @@ export class JwtService {
     return this.getUserRole(token) === 'admin';
   }
   isUser(token: string): boolean {
-    return this.getUserRole(token) === 'USER';
+    return this.getUserRole(token) === 'user';
   }
 }
