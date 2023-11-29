@@ -75,9 +75,9 @@ export class AuthAccessComponent {
           break;
       }
     } else {
-      this.selectedTab(this.TabType.Login);
+      // this.selectedTab(this.TabType.Login);
     }
-    this.dispatchAuthTabChange();
+    // this.dispatchAuthTabChange();
   }
 
   private dispatchAuthTabChange(): void {

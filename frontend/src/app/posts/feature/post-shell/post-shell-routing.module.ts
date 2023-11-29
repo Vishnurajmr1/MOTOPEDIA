@@ -5,8 +5,8 @@ const routes: Routes = [
   {
     path: '',
     loadChildren: () =>
-      import('../post-list/post-list-routing.module').then(
-        (m) => m.PostListComponentRoutingModule
+      import('../post-list/post-list.module').then(
+        (m) => m.PostListModule
       ),
   },
 ];

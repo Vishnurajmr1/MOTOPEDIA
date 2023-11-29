@@ -4,6 +4,6 @@ import { PostShellRoutingModule } from './post-shell-routing.module';
 
 @NgModule({
   declarations: [],
-  imports: [CommonModule,PostShellRoutingModule],
+  imports: [CommonModule, PostShellRoutingModule],
 })
 export class PostShellModule {}
