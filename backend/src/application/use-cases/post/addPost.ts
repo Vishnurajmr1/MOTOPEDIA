@@ -27,8 +27,6 @@ export const addPosts = async (
     });
     await Promise.all(uploadPromises);
     postInfo.authorId = userId;
-    console.log(postInfo);
-    console.log('postInfo')
     const postId = await postDbRepository.addPost(postInfo);
 
     if (!postId) {

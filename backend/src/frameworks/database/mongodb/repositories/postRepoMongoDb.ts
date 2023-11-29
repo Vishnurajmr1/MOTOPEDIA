@@ -17,7 +17,7 @@ export const postRepositoryMongoDb = () => {
         return post;
     };
     const getAllPost = async () => {
-        const posts: postInterface[] = await Post.find({});
+        const posts: postInterface[] = await Post.find({}).populate({path:'authorId',select:"firstName lastName "});
         return posts;
     };
     const deletePost = async (postId: string) => {

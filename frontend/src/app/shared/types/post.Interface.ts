@@ -6,7 +6,11 @@ export interface IpostInterface{
         key:string,
         _id:string
     }
-    authorId:string
+    imageUrl:string,
+    authorId:{
+        firstName:string,
+        lastName:string
+    }
     description:string;
     likes:number
 }
