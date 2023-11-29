@@ -1,11 +1,19 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { PostListComponentRoutingModule } from './post-list-routing.module';
+
+import { PostListRoutingModule } from './post-list-routing.module';
 import { PostListComponent } from './post-list.component';
-import { SinglePostModule } from '../../ui/single-post/single-post.module';
+import { PostCardModule } from '../../ui/post-card/post-card.module';
+
 
 @NgModule({
-  declarations: [PostListComponent],
-  imports: [CommonModule,PostListComponentRoutingModule,SinglePostModule],
+  declarations: [
+    PostListComponent
+  ],
+  imports: [
+    CommonModule,
+    PostListRoutingModule,
+    PostCardModule
+  ]
 })
-export class PostListModule {}
+export class PostListModule { }

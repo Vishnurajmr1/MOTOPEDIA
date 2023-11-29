@@ -107,7 +107,6 @@ export class AuthEffects {
           }
         }
         console.log(currentUserData);
-
         const isUserPresent =
           Object.keys(currentUserData).length > 0 &&
           currentUserData.isEmailVerified;

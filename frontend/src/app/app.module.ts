@@ -26,6 +26,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { GlobalErrorHandler } from './shared/data-access/global/global-error-handler.service';
 import { AdminNavbarModule } from './admin/ui/admin-navbar/admin-navbar.module';
 import { AdminAsideModule } from './admin/ui/admin-aside/admin-aside.module';
+import { AuthEffects } from './auth/data-access/state/auth.effects';
 
 @NgModule({
   declarations:[AppComponent],
@@ -37,7 +38,8 @@ import { AdminAsideModule } from './admin/ui/admin-aside/admin-aside.module';
     NavbarModule,
     HttpClientModule,
     StoreModule.forRoot({}),
-    EffectsModule.forRoot([]),
+    StoreModule.forFeature('auth',authReducer),
+    EffectsModule.forRoot([AuthEffects]),
     StoreDevtoolsModule.instrument({
       name: 'MOTOPEDIA APP',
       maxAge: 25,

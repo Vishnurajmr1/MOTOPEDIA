@@ -1,24 +1,19 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  OnInit,
-  inject,
-} from '@angular/core';
-import { PostService } from '../../data-access/post.service';
+import { Component, inject } from '@angular/core';
 import { IpostInterface } from 'src/app/shared/types/post.Interface';
+import { PostService } from '../../data-access/post.service';
 
 @Component({
   selector: 'app-post-list',
-  templateUrl:'./post-list.component.html',
-  styleUrls: ['./post-list.component.css'],
+  templateUrl: './post-list.component.html',
+  styleUrls: ['./post-list.component.css']
 })
-export class PostListComponent implements OnInit  {
+export class PostListComponent {
   private postService = inject(PostService);
   posts: IpostInterface[] = [];
   ngOnInit(): void {
     this.postService.getAllPost().subscribe((data: any) => {
       this.posts = data.data;
-      console.log(this.posts);
+      console.log(this.posts,'hii');
     });
   }
 }

@@ -30,8 +30,6 @@ import { AuthEffects } from '../../data-access/state/auth.effects';
     VerifyEmailModule,
     VerifyOtpModule,
     ForgotFormModule,
-    StoreModule.forFeature('auth',authReducer),
-    EffectsModule.forFeature([AuthEffects])
   ],
 })
 export class AuthAccessModule { }
