@@ -78,5 +78,6 @@ import { AuthEffects } from './auth/data-access/state/auth.effects';
   ],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  
 })
 export class AppModule {}

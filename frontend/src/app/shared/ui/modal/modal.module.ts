@@ -1,16 +1,16 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { CreatePostComponent } from './create-post.component';
+import { ModalComponent } from './modal.component';
 
 
 
 @NgModule({
   declarations: [
-    CreatePostComponent
+    ModalComponent
   ],
   imports: [
     CommonModule
   ],
-  exports:[CreatePostComponent]
+  exports:[ModalComponent]
 })
-export class CreatePostModule { }
+export class ModalModule { }

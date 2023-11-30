@@ -11,13 +11,18 @@ import { checkLocalStorageAction } from './auth/data-access/state/actions/auth-p
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent implements OnInit {
+  constructor(){
+  }
   private store = inject(Store<State>);
   private router = inject(Router);
   private activatedRoute = inject(ActivatedRoute);
   currentLayout: string = 'user';
   private routeSubscription!: Subscription;
+
   ngOnInit(): void {
     initFlowbite();
+    console.log('flowbite init');
+    
 
     this.routeSubscription = this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
@@ -37,6 +42,7 @@ export class AppComponent implements OnInit {
     this.store.dispatch(checkLocalStorageAction());
     console.log(this.currentLayout);
   }
+  
   ngOnDestroy(): void {
     if (this.routeSubscription) {
       this.routeSubscription.unsubscribe();

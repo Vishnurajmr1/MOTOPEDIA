@@ -1,10 +1,15 @@
 <ng-container *ngIf="post">
   <div
-    class="post p-4 max-w-sm md:max-w-screen-md bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-    <div class="flex justify-between p-4 items-center">
+    class="p-4 max-w-sm md:max-w-screen-md bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+    <div class=" flex justify-between p-4 items-center">
+      <div class="flex items-center gap-4">
+      <div class="relative w-10 h-10 overflow-hidden bg-gray-100 rounded-full dark:bg-gray-600 inline-block">
+        <svg class="absolute w-12 h-12 text-gray-400 -left-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"></path></svg>
+    </div>
       <h1 class="font-mono">
         {{ post.authorId.firstName }} {{ post.authorId.lastName }}
       </h1>
+      </div>
       <button class="flex items-center gap-2 text-blue-600">
         <label class="relative inline-flex items-center cursor-pointer">
           <input type="checkbox" value="" class="sr-only peer" />
@@ -17,25 +22,30 @@
     <div class="">
       <a href="#">
         <h5
-          class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white"
-        >
+          class="mb-2 text-xl font-bold tracking-tight text-gray-900 dark:text-white capitalize">
           {{ post.title }}
         </h5>
       </a>
-      <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">
+      <p class="mb-3 ml-8 font-normal text-gray-700 dark:text-gray-400">
         {{ post.description }}
       </p>
     </div>
-    <div>
+    <div class="">
         <a href="#" *ngIf="post.image">
             <img class="rounded-t-lg" src="{{ post.imageUrl }}" alt="" />
           </a>
     </div>
-    <div>
+    <div class="border-b-2 pb-2">
         <p class="pt-2">
             <span><i class="fa-brands fa-gratipay text-red-400"></i></span>
             {{ post.likes }}
           </p>
+    </div>
+    <div class="flex justify-evenly mt-1">
+      <button class="font-bold hover:text-xl focus:text-xl"><span class="font-semibold "><i class="fa-regular fa-thumbs-up fa-flip-horizontal" style="color: #3c393b;"></i></span> Like</button>
+      <button class="font-bold hover:text-xl focus:text-xl"><span class="font-semibold "><i class="fa-regular fa-comments" style="color: #3c393b;"></i></span> Comment</button>
+      <button class="font-bold hover:text-xl focus:text-xl"><span class="font-semibold "><i class="fa-regular fa-paper-plane" style="color: #3c393b;"></i></span> Send</button>
+
     </div>
      
   </div>
