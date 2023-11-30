@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { NotFoundComponent } from './shared/ui/not-found/not-found.component';
 import { unauthenticatedGuard } from './core/guard/unauthenticated.guard';
 import { adminAuthGuard } from './core/guard/admin-auth.guard';
+import { authGuard } from './core/guard/auth.guard';
 const routes: Routes = [
   {
     path: '',
@@ -28,6 +29,7 @@ const routes: Routes = [
       import('./posts/feature/post-shell/post-shell.module').then(
         (m) => m.PostShellModule
       ),
+      canActivate:[authGuard]
   },
   {
     path: 'admin',

@@ -1,5 +1,8 @@
 <div *ngIf="posts" class="flex gap-2 flex-col items-center">
-  <ng-container *ngFor="let post of posts">
+  <ng-container *ngFor="let post of posts ">
     <app-post-card [post]="post"></app-post-card>
   </ng-container>
+</div>
+<div>
+  <app-create-post-button></app-create-post-button>
 </div>
