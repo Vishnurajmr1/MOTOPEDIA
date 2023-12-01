@@ -13,6 +13,7 @@ const userRouter = () => {
     router.get('/get-all-users', jwtAuthMiddleware, controller.getAllUsers);
     router.patch('/block-user/:userId', jwtAuthMiddleware, roleCheckMiddleware('admin'), controller.blockUser);
     router.patch('/unblock-user/:userId', jwtAuthMiddleware, roleCheckMiddleware('admin'), controller.unblockUser);
+    router.route('/get-user-details').get(jwtAuthMiddleware, controller.getUserDetails);
     return router;
 };
 

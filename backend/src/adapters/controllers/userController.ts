@@ -9,6 +9,8 @@ import {
     getAllUsersUseCase,
     unblockUserUseCase,
 } from '@src/application/use-cases/management/userManagement';
+import { CustomRequest } from '@src/types/customRequest';
+import { getUserDetailUseCase } from '@src/application/use-cases/user';
 
 const userController = (
     authServiceInterface: AuthServiceInterface,
@@ -30,7 +32,7 @@ const userController = (
     const blockUser = asyncHandler(async (req: Request, res: Response) => {
         const userId = req.params.userId;
         const reason = req.body.reason;
-        await blockUserUseCase(userId,reason, dbRepositoryUser);
+        await blockUserUseCase(userId, reason, dbRepositoryUser);
         res.status(200).json({
             status: 'success',
             message: 'Successfully blocked user',
@@ -46,10 +48,20 @@ const userController = (
             data: null,
         });
     });
+    const getUserDetails = asyncHandler(async (req: CustomRequest, res: Response) => {
+        const userId: string | undefined = req.user?.Id;
+        const userDetails = await getUserDetailUseCase(userId, dbRepositoryUser);
+        res.status(200).json({
+            status: 'success',
+            message: 'Successfully retrieved user details',
+            userDetails,
+        });
+    });
     return {
         getAllUsers,
         blockUser,
         unblockUser,
+        getUserDetails,
     };
 };
 

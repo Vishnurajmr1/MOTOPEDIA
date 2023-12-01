@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { initFlowbite } from 'flowbite';
 import { State } from './auth/data-access/state';
@@ -10,9 +10,7 @@ import { checkLocalStorageAction } from './auth/data-access/state/actions/auth-p
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
 })
-export class AppComponent implements OnInit {
-  constructor(){
-  }
+export class AppComponent {
   private store = inject(Store<State>);
   private router = inject(Router);
   private activatedRoute = inject(ActivatedRoute);
@@ -21,9 +19,6 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {
     initFlowbite();
-    console.log('flowbite init');
-    
-
     this.routeSubscription = this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
         let route = this.activatedRoute;
@@ -42,7 +37,7 @@ export class AppComponent implements OnInit {
     this.store.dispatch(checkLocalStorageAction());
     console.log(this.currentLayout);
   }
-  
+
   ngOnDestroy(): void {
     if (this.routeSubscription) {
       this.routeSubscription.unsubscribe();
