@@ -11,10 +11,11 @@ const postRouter = () => {
     const router = express.Router();
     const controller = postController(cloudServiceInterface, s3Service, postDbRepository, postRepositoryMongoDb);
 
-    router.get('/get-all-posts', jwtAuthMiddleware, controller.getAllPosts);
-    router.post('/', jwtAuthMiddleware, upload.array('files'), controller.addPost);
-    router.put('/edit-post/:postId', jwtAuthMiddleware, upload.array('files'), controller.editPost);
-    router.delete('/delete-post/:postId', jwtAuthMiddleware, controller.deletePost);
+    router.route('/get-all-posts').get(jwtAuthMiddleware, controller.getAllPosts);
+    router.route('/').post(jwtAuthMiddleware, upload.array('files'), controller.addPost);
+    router.route('/edit-post/:postId').put(jwtAuthMiddleware, upload.array('files'), controller.editPost);
+    router.route('/delete-post/:postId').delete(jwtAuthMiddleware, controller.deletePost);
+    router.route('/get-post-by-user').get(jwtAuthMiddleware, controller.getPostByUser);
     return router;
 };
 

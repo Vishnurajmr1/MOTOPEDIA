@@ -7,7 +7,5 @@ import { initFlowbite } from 'flowbite';
   styleUrls: ['./create-post.component.css']
 })
 export class CreatePostComponent {
- constructor(){
-  initFlowbite()
- }
+ 
 }

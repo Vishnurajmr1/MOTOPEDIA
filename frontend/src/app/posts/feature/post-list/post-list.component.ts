@@ -10,9 +10,6 @@ import { initFlowbite } from 'flowbite';
   styleUrls: ['./post-list.component.css']
 })
 export class PostListComponent {
-  constructor(){
-    initFlowbite()
-  }
   private postService = inject(PostService);
   posts: IpostInterface[] = [];
   ngOnInit(): void {

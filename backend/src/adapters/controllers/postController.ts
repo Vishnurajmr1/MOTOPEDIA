@@ -3,7 +3,7 @@ import { CloudServiceInterface } from '@src/application/services/cloudServiceInt
 import { addPosts } from '@src/application/use-cases/post/addPost';
 import { deletePostById } from '@src/application/use-cases/post/deletePost';
 import { editPostUseCase } from '@src/application/use-cases/post/editPost';
-import { getAllPostsUseCase } from '@src/application/use-cases/post/listPost';
+import { getAllPostsUseCase, getPostByUserUseCase } from '@src/application/use-cases/post/listPost';
 import Status from '@src/constants/HttResponseStatus';
 import { PostRepositoryMongoDbInterface } from '@src/frameworks/database/mongodb/repositories/postRepoMongoDb';
 import { CloudServiceImpl } from '@src/frameworks/services/s3Service';
@@ -63,11 +63,21 @@ const postController = (
             data:posts
         })
     })
+    const getPostByUser=asyncHandler(async(req:CustomRequest,res:Response)=>{
+        const userId:string|undefined=req.user?.Id;
+        const posts=await getPostByUserUseCase(userId,cloudService,dbRepositoryPost)
+        res.status(200).json({
+            status:Status.SUCCESS,
+            message:'Successfully get post by current user',
+            data:posts
+        })
+    })
     return {
         addPost,
         editPost,
         deletePost,
-        getAllPosts
+        getAllPosts,
+        getPostByUser
     };
 };
 

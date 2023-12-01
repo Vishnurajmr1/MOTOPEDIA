@@ -17,11 +17,20 @@ export const postRepositoryMongoDb = () => {
         return post;
     };
     const getAllPost = async () => {
-        const posts: postInterface[] = await Post.find({}).populate({path:'authorId',select:"firstName lastName "});
+        const posts: postInterface[] = await Post.find({}).populate({
+            path: 'authorId',
+            select: 'firstName lastName ',
+        });
         return posts;
     };
     const deletePost = async (postId: string) => {
         await Post.deleteOne({ _id: new mongoose.Types.ObjectId(postId) });
+    };
+    const getPostByUser = async (userId: string) => {
+        const posts: postInterface[] | null = await Post.find({
+            authorId: { $in: [new mongoose.Types.ObjectId(userId)] },
+        });
+        return posts;
     };
     return {
         addPost,
@@ -29,6 +38,7 @@ export const postRepositoryMongoDb = () => {
         getPostById,
         getAllPost,
         deletePost,
+        getPostByUser,
     };
 };
 
