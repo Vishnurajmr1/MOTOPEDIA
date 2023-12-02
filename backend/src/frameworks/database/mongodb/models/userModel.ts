@@ -95,7 +95,7 @@ const UserSchema = new Schema<IUser>({
     },
     otp: {
         type: String,
-    },
+    }
 });
 
 const User = model<IUser>('User', UserSchema, 'user');

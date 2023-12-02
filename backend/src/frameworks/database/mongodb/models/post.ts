@@ -21,9 +21,9 @@ const postSchema = new mongoose.Schema({
         type: FileSchema,
         required: true,
     },
-    imageUrl:{
-        type:String,
-        default:''
+    imageUrl: {
+        type: String,
+        default: '',
     },
     authorId: {
         type: mongoose.Schema.Types.ObjectId,
@@ -38,20 +38,32 @@ const postSchema = new mongoose.Schema({
         default: Date.now,
     },
     likes: {
-        type: Number,
-        default: 0,
+        thumbsUp: {
+            type: Number,
+            default: 0,
+        },
+        like: {
+            type: Number,
+            default: 0,
+        },
+        heart: {
+            type: Number,
+            default: 0,
+        },
     },
     likedBy: {
         type: [
             {
-                type: mongoose.Schema.Types.ObjectId,
-                ref: 'User',
+                userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+                reactionType:{
+                    type:String,
+                    enum:['thumbsUp','like','heart']
+                }
             },
         ],
         default: [],
     },
-    savedPosts: 
-    [
+    savedPosts: [
         {
             type: mongoose.Schema.Types.ObjectId,
             ref: 'User',
@@ -60,7 +72,7 @@ const postSchema = new mongoose.Schema({
     reportCount: {
         type: Number,
         default: 0,
-    }
+    },
 });
 
 const Post = mongoose.model('Post', postSchema, 'posts');

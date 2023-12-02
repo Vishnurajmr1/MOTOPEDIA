@@ -7,15 +7,16 @@ export interface UserInterface {
     password: string;
     isGoogleUser: boolean;
     isBlocked: boolean;
-    isVerifiedEmail:boolean;
-    otp?:string|null;
+    isVerifiedEmail: boolean;
+    otp?: string | null;
     profileUrl: string;
     profilePic?: {
         key?: string;
         name: string;
         url?: string;
     };
-
+    followers?: string[];
+    following?: string[];
 }
 
 export interface UserUpdateInfo {
@@ -28,6 +29,6 @@ export interface UserUpdateInfo {
         name: string;
         url?: string;
     };
-    isVerifiedEmail?:boolean;
-    otp?:string|null;
+    isVerifiedEmail?: boolean;
+    otp?: string | null;
 }

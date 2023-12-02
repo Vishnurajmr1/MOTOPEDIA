@@ -31,17 +31,17 @@ const authRouter = () => {
     );
 
     //* User
-    router.post('/signup', controller.registerUser);
-    router.post('/verify-otp', controller.verifyUserEmail);
-    router.post('/resent-otp', controller.resendOtpverify);
-    router.post('/user-login', controller.loginUser);
-    router.post('/user-logout', controller.logoutUser);
-    router.post('/login-with-google', controller.loginWithGoogle);
-    router.post('/forgot-password', controller.forgotPassword);
-    router.post('/reset-password', controller.resetPasswordByEmail);
-    router.put('/confirm-password', controller.confirmPassword);
+    router.route('/signup').post(controller.registerUser);
+    router.route('/verify-otp').post(controller.verifyUserEmail);
+    router.route('/resent-otp').post(controller.resendOtpverify);
+    router.route('/user-login').post(controller.loginUser);
+    router.route('/user-logout').post(controller.logoutUser);
+    router.route('/login-with-google').post(controller.loginWithGoogle);
+    router.route('/forgot-password').post(controller.forgotPassword);
+    router.route('/reset-password').post(controller.resetPasswordByEmail);
+    router.route('/confirm-password').put(controller.confirmPassword);
     //*Admin
-    router.post('/admin-login', controller.loginAdmin);
+    router.route('/admin-login').post(controller.loginAdmin);
     return router;
 };
 
