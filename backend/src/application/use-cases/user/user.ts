@@ -1,7 +1,8 @@
 import AppError from '@src/utils/appError';
-import { usersDbInterface } from '../repositories/userDBRepository';
+import { usersDbInterface } from '../../repositories/userDBRepository';
 import HttpStatusCodes from '@src/constants/HttpStatusCodes';
-import { UserInterface } from '@src/types/userInterface';
+import { UserInterface, UserUpdateInfo } from '@src/types/userInterface';
+import { ConnectionDbRepositoryInterface } from '../../repositories/connectionDBRepository';
 
 export const getUserDetailUseCase = async (id: string | undefined, userDbRepository: ReturnType<usersDbInterface>) => {
     if (!id) {
@@ -15,3 +16,5 @@ export const getUserDetailUseCase = async (id: string | undefined, userDbReposit
     }
     return userDetails;
 };
+
+

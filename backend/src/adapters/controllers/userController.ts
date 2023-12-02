@@ -10,16 +10,23 @@ import {
     unblockUserUseCase,
 } from '@src/application/use-cases/management/userManagement';
 import { CustomRequest } from '@src/types/customRequest';
-import { getUserDetailUseCase } from '@src/application/use-cases/user';
+import { getUserDetailUseCase } from '@src/application/use-cases/user/user';
+import { followUserUseCase, unfollowUserUseCase } from '@src/application/use-cases/user/followUser';
+import Status from '@src/constants/HttResponseStatus';
+import { ConnectionDbRepositoryInterface } from '@src/application/repositories/connectionDBRepository';
+import { ConnectionRepositoryMongoDB } from '@src/frameworks/database/mongodb/repositories/connectionRepoMongoDb';
 
 const userController = (
     authServiceInterface: AuthServiceInterface,
     authServiceImplementation: AuthService,
     userDbRepository: usersDbInterface,
     userDbRepositoryImplementation: UserRepositoryMongoDB,
+    connectionDbRepository:ConnectionDbRepositoryInterface,
+    connectionDbRepositoryImplementation:ConnectionRepositoryMongoDB
 ) => {
     const dbRepositoryUser = userDbRepository(userDbRepositoryImplementation());
     const authService = authServiceInterface(authServiceImplementation());
+    const dbRepositoryConnection=connectionDbRepository(connectionDbRepositoryImplementation());
 
     const getAllUsers = asyncHandler(async (req: Request, res: Response) => {
         const users = await getAllUsersUseCase(dbRepositoryUser);
@@ -57,11 +64,33 @@ const userController = (
             userDetails,
         });
     });
+    const followUser = asyncHandler(async (req: CustomRequest, res: Response) => {
+        const userId: string | undefined = req.user?.Id;
+        const followUserId: string | undefined = req.params.id;
+        const followUserDetails=await followUserUseCase(userId,followUserId,dbRepositoryConnection);
+        res.status(200).json({
+            status:Status.SUCCESS,
+            message:'Successfully followed the user',
+            followUserDetails
+        })
+    });
+    const unfollowUser = asyncHandler(async (req: CustomRequest, res: Response) => {
+        const userId: string | undefined = req.user?.Id;
+        const followUserId: string | undefined = req.params.id;
+        const followUserDetails=await unfollowUserUseCase(userId,followUserId,dbRepositoryConnection);
+        res.status(200).json({
+            status:Status.SUCCESS,
+            message:'Successfully unfollowed the user',
+            followUserDetails
+        })
+    });
     return {
         getAllUsers,
         blockUser,
         unblockUser,
         getUserDetails,
+        followUser,
+        unfollowUser
     };
 };
 
