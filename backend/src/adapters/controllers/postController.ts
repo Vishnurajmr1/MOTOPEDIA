@@ -2,7 +2,7 @@ import { PostDbRepositoryInterface } from '@src/application/repositories/postDBR
 import { CloudServiceInterface } from '@src/application/services/cloudServiceInterface';
 import { addPosts } from '@src/application/use-cases/post/addPost';
 import { deletePostById } from '@src/application/use-cases/post/deletePost';
-import { editPostUseCase } from '@src/application/use-cases/post/editPost';
+import { editPostUseCase, likePostUseCase } from '@src/application/use-cases/post/editPost';
 import { getAllPostsUseCase, getPostByUserUseCase } from '@src/application/use-cases/post/listPost';
 import Status from '@src/constants/HttResponseStatus';
 import { PostRepositoryMongoDbInterface } from '@src/frameworks/database/mongodb/repositories/postRepoMongoDb';
@@ -72,12 +72,18 @@ const postController = (
             data:posts
         })
     })
+    const likePostById=asyncHandler(async(req:CustomRequest,res:Response)=>{
+        const userId:string|undefined=req.user?.Id;
+        const {postId,reactionType}:{postId:string,reactionType:string}=req.body;
+        await likePostUseCase(userId,postId,reactionType,dbRepositoryPost)
+    })
     return {
         addPost,
         editPost,
         deletePost,
         getAllPosts,
-        getPostByUser
+        getPostByUser,
+        likePostById
     };
 };
 
