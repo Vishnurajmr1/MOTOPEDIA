@@ -51,16 +51,18 @@ const postSchema = new mongoose.Schema({
             default: 0,
         },
     },
-    likedBy: [{
-                userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
-                reactionType:{
-                    type:String,
-                    enum:['thumbsUp','like','heart']
-                }
-            }],
+    likedBy: [
+        {
+            userId: { type:Schema.Types.ObjectId, ref: 'User' },
+            reactionType: {
+                type: String,
+                enum: ['thumbsUp', 'like', 'heart'],
+            },
+        },
+    ],
     savedPosts: [
         {
-            type: mongoose.Schema.Types.ObjectId,
+            type: Schema.Types.ObjectId,
             ref: 'User',
         },
     ],

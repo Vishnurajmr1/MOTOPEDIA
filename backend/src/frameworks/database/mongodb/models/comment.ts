@@ -17,6 +17,10 @@ const commentSchema = new Schema(
             trim: true,
             maxLength: 500,
         },
+        parentId: {
+            type: Schema.Types.ObjectId,
+            ref: 'comment',
+        },
         deleted: {
             type: Boolean,
             default: false,

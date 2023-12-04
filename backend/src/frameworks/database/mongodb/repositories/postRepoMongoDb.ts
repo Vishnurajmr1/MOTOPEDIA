@@ -9,7 +9,7 @@ export const postRepositoryMongoDb = () => {
         return postId;
     };
     const editPost = async (postId: string, editInfo: EditPostInterface) => {
-        const response = await Post.findOneAndUpdate({ _id: new mongoose.Types.ObjectId(postId) }, { ...editInfo });
+        const response = await Post.findOneAndUpdate({ _id: new mongoose.Types.ObjectId(postId) }, { ...editInfo },{new:true});
         return response;
     };
     const getPostById = async (postId: string) => {

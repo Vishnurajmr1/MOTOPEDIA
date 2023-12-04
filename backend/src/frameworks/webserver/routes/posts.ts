@@ -16,8 +16,9 @@ const postRouter = () => {
     router.route('/edit-post/:postId').put(jwtAuthMiddleware, upload.array('files'), controller.editPost);
     router.route('/delete-post/:postId').delete(jwtAuthMiddleware, controller.deletePost);
     router.route('/get-post-by-user').get(jwtAuthMiddleware, controller.getPostByUser);
-    router.route('/like-post').patch(jwtAuthMiddleware,controller.likePostById);
-    router.route('/unlike-post').patch(jwtAuthMiddleware);
+    router.route('/like-post').put(jwtAuthMiddleware,controller.likePostById);
+    router.route('/add-comment').post(jwtAuthMiddleware);
+    // router.route('/unlike-post').patch(jwtAuthMiddleware);
     return router;
 };
 
