@@ -2,9 +2,8 @@ import { PostDbRepositoryInterface } from '@src/application/repositories/postDBR
 import { CloudServiceInterface } from '@src/application/services/cloudServiceInterface';
 import HttpStatusCodes from '@src/constants/HttpStatusCodes';
 import { CloudServiceImpl } from '@src/frameworks/services/s3Service';
-import { EditPostInterface, postInterface } from '@src/types/postInterface';
+import { EditPostInterface } from '@src/types/postInterface';
 import AppError from '@src/utils/appError';
-import { Return } from 'aws-sdk/clients/cloudsearchdomain';
 
 export const editPostUseCase = async (
     userId: string | undefined,
@@ -67,19 +66,28 @@ export const likePostUseCase = async (
         throw new AppError('Unable to get post details', HttpStatusCodes.INTERNAL_SERVER_ERROR);
     }
     let postInfo: EditPostInterface = {
-        likedBy: [{userId:'',reactionType:''}],
-        likes: { like: 0, thumbsUp: 0, heart: 0 },
+        likedBy: [{ userId: '', reactionType: '' }],
+        likes: { like: oldPost.likes?.like, thumbsUp: oldPost.likes?.thumbsUp, heart: oldPost.likes?.heart },
     };
-    
-    console.log(oldPost);
-    console.log('Hello old post to new post');
-    if (userId && reactionType) {
-        console.log(userId,reactionType)
-        postInfo.likedBy?.push({ userId, reactionType });
+
+    if (oldPost.likedBy) {
+        postInfo.likedBy = [...oldPost.likedBy];
     }
-    if (reactionType == 'like') {
-        postInfo.likes?.like != (postInfo.likes?.like || 0) + 1;
+    if (userId && reactionType) {
+        const existingReactionIndex: number = postInfo.likedBy!.findIndex((item) => item.userId.toString() == userId);
+        const existingReaction=postInfo.likedBy!.find(item=>item.userId.toString()==userId);
+        if (existingReactionIndex == -1) {
+            postInfo.likedBy?.push({ userId, reactionType });
+            if (reactionType == 'like') {
+                postInfo.likes!.like = (oldPost.likes?.like || 0) + 1;
+            }
+        } else {
+            postInfo.likedBy!.splice(existingReactionIndex, 1);
+            if (existingReaction?.reactionType=='like') {
+                postInfo.likes!.like = (oldPost.likes?.like || 0) - 1;
+            }
+        }
     }
     const response = await postDbRepository.editPost(postId, postInfo);
-    console.log(response);
+    return response;
 };

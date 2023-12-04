@@ -75,7 +75,12 @@ const postController = (
     const likePostById=asyncHandler(async(req:CustomRequest,res:Response)=>{
         const userId:string|undefined=req.user?.Id;
         const {postId,reactionType}:{postId:string,reactionType:string}=req.body;
-        await likePostUseCase(userId,postId,reactionType,dbRepositoryPost)
+        const post = await likePostUseCase(userId,postId,reactionType,dbRepositoryPost)
+        res.status(200).json({
+            status:Status.SUCCESS,
+            message:'Successfully modified  the post',
+            data:post
+        })
     })
     return {
         addPost,

@@ -4,9 +4,13 @@ interface FileSchema {
     url?: string;
 }
 interface likes {
-    thumbsUp: number;
-    like: number;
-    heart: number;
+    thumbsUp: number | undefined;
+    like: number | undefined;
+    heart: number | undefined;
+}
+interface likedBy {
+    userId: string;
+    reactionType: string;
 }
 
 export interface AddPostInterface {
@@ -15,16 +19,18 @@ export interface AddPostInterface {
     authorId: string;
     image: FileSchema;
 }
+
 export interface EditPostInterface {
     title?: string;
     description?: string;
     image?: FileSchema;
     authorId?: string;
-    likedBy?: [{userId:string,reactionType:string}];
+    likedBy?: likedBy[];
     likes?: likes;
-    // reactionType: string;
 }
 
 export interface postInterface extends AddPostInterface {
     imageUrl: string;
+    likes?: likes;
+    likedBy?: likedBy[];
 }
