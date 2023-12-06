@@ -41,6 +41,6 @@ export class AuthService {
     return this.http.post(`${this.authApi}/reset-password`, { token });
   }
   confirmPassword(data:IConfirmPass):Observable<any>{
-    return this.http.post(`${this.authApi}/confirm-password`,data);
+    return this.http.put(`${this.authApi}/confirm-password`,data);
   }
 }

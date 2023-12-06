@@ -24,6 +24,7 @@ import { SendEmailServiceInterface } from '@src/application/services/sendEmailIn
 import { SendEmailService } from '@src/frameworks/services/sendEmailService';
 import { GoogleAuthServiceInterface } from '@src/application/services/googleAuthServicesInterface';
 import { GoogleAuthService } from '@src/frameworks/services/googleAuthService';
+import Status from '@src/constants/HttResponseStatus';
 const authController = (
     authServiceInterface: AuthServiceInterface,
     authServiceImplementation: AuthService,
@@ -154,6 +155,10 @@ const authController = (
     const confirmPassword=asyncHandler(async(req:Request,res:Response)=>{
         const {token,newPassword,}=req.body;
         await confirmNewPassword(token,newPassword,authService,dbRepositoryUser)
+        res.status(200).json({
+            status:Status.SUCCESS,
+            message:'Password reset successfully completed'
+        })
     })
      
     const logoutUser = asyncHandler(async (req: Request, res: Response) => {

@@ -29,11 +29,11 @@ export const authService = () => {
     };
 
     const verifyToken = (token: string) => {
-        return jwt.verify(token, configKeys.JWT_SECRET);
+        return jwt.verify(token,configKeys.JWT_SECRET);
     };
 
     const decodeToken = (token: string) => {
-        const decodedToken: jwt.JwtPayload | null = jwt.decode(token) as jwt.JwtPayload | null;
+        const decodedToken: jwt.JwtPayload |null = jwt.decode(token) as jwt.JwtPayload |null;
         return decodedToken;
     };
 
