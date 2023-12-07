@@ -8,7 +8,7 @@ const routes: Routes = [
       import('../post-list/post-list.module').then(
         (m) => m.PostListModule
       ),
-  },
+  }
 ];
 
 @NgModule({
