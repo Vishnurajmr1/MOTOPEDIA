@@ -12,5 +12,9 @@ export interface IpostInterface{
         lastName:string
     }
     description:string;
-    likes:number
+    likes:{
+        like?:number,
+        thumbsUp?:number,
+        heart?:number
+    }
 }

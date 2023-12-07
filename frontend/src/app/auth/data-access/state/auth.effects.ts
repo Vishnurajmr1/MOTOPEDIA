@@ -83,7 +83,7 @@ export class AuthEffects {
           'firstName',
           'lastName',
           'email',
-          'isEmailVerified',
+          'isVerifiedEmail',
           'mobile',
         ];
         const currentUserData: any = {};
@@ -91,7 +91,7 @@ export class AuthEffects {
           const value = this.localStorageService.get(key);
           if (value !== null) {
             currentUserData[key] =
-              key === 'isEmailVerified'
+              key === 'isVerifiedEmail'
                 ? isJSONString(value)
                   ? JSON.parse(value)
                   : false
@@ -109,7 +109,7 @@ export class AuthEffects {
         console.log(currentUserData);
         const isUserPresent =
           Object.keys(currentUserData).length > 0 &&
-          currentUserData.isEmailVerified;
+          currentUserData.isVerifiedEmail;
 
         if (isUserPresent) {
           this.store.dispatch(AuthPageActions.setUserLoggedInTrue());

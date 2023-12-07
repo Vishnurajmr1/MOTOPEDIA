@@ -245,14 +245,12 @@ export const confirmNewPassword = async (
     userRepository: ReturnType<usersDbInterface>,
 ) => {
     const decoded = authService.decodeToken(token);
-    const {Id,email}=decoded!.payload;
-    const user=await userRepository.getUserByEmail(email);
-    console.log(user)
+    const id=decoded!.payload.Id;
     if (decoded!.exp && (decoded!.exp * 1000 < Date.now())) {
         throw new AppError('Token has expired', HttpStatusCodes.BAD_REQUEST);
     }else{
         const hashedPassword=await authService.hashPassword(newPassword);
-        await userRepository.changePassword(Id,hashedPassword)
+        await userRepository.changePassword(id,hashedPassword)
     }
 
 };

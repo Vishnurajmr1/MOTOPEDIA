@@ -1,5 +1,9 @@
-import { ChangeDetectionStrategy, Component, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  Output,
+  EventEmitter,
+} from '@angular/core';
 
 @Component({
   selector: 'app-create-post-button',
@@ -8,4 +12,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CreatePostButtonComponent {
+  @Output() createPostClicked: EventEmitter<void> = new EventEmitter<void>();
+  onClick(): void {
+    this.createPostClicked.emit();
+  }
 }
