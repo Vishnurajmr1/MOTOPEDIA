@@ -11,6 +11,7 @@ export class SnackbarService {
     this.snackBar.open(message, '✅', {
       duration: 3000,
       panelClass: ['success-snackbar'],
+      
     });
   }
   showError(message: string): void {

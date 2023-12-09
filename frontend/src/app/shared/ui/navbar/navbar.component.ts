@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import {
@@ -18,17 +19,17 @@ export class NavbarComponent {
   currentUser$!: Observable<ICurrentUser>;
   isUserLoggedIn$!: Observable<boolean>;
 
-  constructor(private store: Store<State>) {
+  constructor(private store: Store<State>,private router:Router) {
     this.currentUser$ = this.store.select(getCurrentUserData);
     this.isUserLoggedIn$ = this.store.select(isUserLoggedIn);
   }
   isDropDownMenu = false;
   toggleProfileDropDown() {
-    console.log(this.currentUser$);
     this.isDropDownMenu = !this.isDropDownMenu;
   }
 
   logout(): void {
     this.store.dispatch(unSetCurrentUser());
+    this.router.navigateByUrl('/');
   }
 }
