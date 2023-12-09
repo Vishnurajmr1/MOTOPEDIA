@@ -18,3 +18,9 @@ export interface IpostInterface{
         heart?:number
     }
 }
+
+export interface IPost{
+    title:string;
+    description:string|string[];
+    files:File|File[]|null;
+}

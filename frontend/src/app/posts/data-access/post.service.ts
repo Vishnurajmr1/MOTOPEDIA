@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { Observable, BehaviorSubject } from 'rxjs';
-import { IpostInterface } from 'src/app/shared/types/post.Interface';
+import { IPost, IpostInterface } from 'src/app/shared/types/post.Interface';
 
 @Injectable({
   providedIn: 'root',
@@ -9,7 +9,10 @@ import { IpostInterface } from 'src/app/shared/types/post.Interface';
 export class PostService {
   private http: HttpClient = inject(HttpClient);
   private postApi = '/api/posts';
-  getAllPost(): Observable<Object> {
+  getAllPost(): Observable<any> {
     return this.http.get(`${this.postApi}/get-all-posts`);
+  }
+  createPost(postData:IPost){
+    return this.http.post(`${this.postApi}`,{postData})
   }
 }

@@ -19,8 +19,9 @@ export class JwtService {
     if (token) {
       const decodeToken: JwtPayload = jwtDecode(token.substring(7));
       return decodeToken.payload.role;
+    }else{
+      return '';
     }
-    return '';
   }
   private getDecodedToken(token: string): JwtPayload | undefined {
     if (token) {
@@ -35,8 +36,9 @@ export class JwtService {
     const expirationTime = decodedToken?.exp;
     const currentTimeStamp = Math.floor(Date.now() / 1000);
     if (expirationTime !== undefined) {
-      return expirationTime < currentTimeStamp;
+      return (expirationTime < currentTimeStamp);
     }
+    console.log(token)
     return false;
   }
 

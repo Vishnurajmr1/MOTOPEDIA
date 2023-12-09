@@ -30,6 +30,7 @@ const postController = (
     const addPost = asyncHandler(async (req: CustomRequest, res: Response, next: NextFunction) => {
         const post: AddPostInterface = req.body;
         const files: Express.Multer.File[] = req.files as Express.Multer.File[];
+        console.log(files)
         const userId = req.user?.Id;
         const response = await addPosts(userId, post, files, cloudService, dbRepositoryPost);
         console.log(response);
