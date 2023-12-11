@@ -27,8 +27,9 @@ export class PostListComponent {
     this.isCreatePostVisible=true
     }
 
-    createPost(formData:IPost) {
-      this.postService.createPost(formData).subscribe({
+    createPost(data:IPost) {
+      console.log(data);
+      this.postService.createPost(data).subscribe({
         next:(res)=>{
           console.log(res);
         }
