@@ -13,6 +13,12 @@ export class PostService {
     return this.http.get(`${this.postApi}/get-all-posts`);
   }
   createPost(postData:IPost){
-    return this.http.post(`${this.postApi}`,{postData})
+    const formData:FormData=new FormData();
+    formData.append('title',postData.title);
+    formData.append('description',postData.description);
+    console.log(postData.image)
+    formData.append('files',postData.image);
+    console.log(postData)
+    return this.http.post(`${this.postApi}/`,formData)
   }
 }

@@ -20,7 +20,7 @@ export interface IpostInterface{
 }
 
 export interface IPost{
-    title:string;
-    description:string|string[];
-    files:File|File[]|null;
+        title:string;
+        description:string;
+        image:File,
 }
