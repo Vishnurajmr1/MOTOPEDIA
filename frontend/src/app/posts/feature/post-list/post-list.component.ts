@@ -4,6 +4,7 @@ import { IPost, IpostInterface } from 'src/app/shared/types/post.Interface';
 import { PostService } from '../../data-access/post.service';
 import { Observable } from 'rxjs';
 import { initFlowbite } from 'flowbite';
+import { SnackbarService } from 'src/app/shared/data-access/global/snackbar.service';
 
 @Component({
   selector: 'app-post-list',
@@ -14,8 +15,8 @@ export class PostListComponent {
 
 
   private router=inject(Router)
-
   private postService = inject(PostService);
+  private snackbar=inject(SnackbarService)
   posts: IpostInterface[] = [];
   isCreatePostVisible=false;
   ngOnInit(): void {
@@ -24,14 +25,22 @@ export class PostListComponent {
     });
   }
   showCreatePost():void {
-    this.isCreatePostVisible=true
+    this.isCreatePostVisible=!this.isCreatePostVisible
     }
-
+    like(data:any){
+      console.log(data)
+      this.postService.likeThePost(data).subscribe((res)=>{
+        console.log(res)
+      })
+    }
     createPost(data:IPost) {
       console.log(data);
       this.postService.createPost(data).subscribe({
         next:(res)=>{
           console.log(res);
+          this.snackbar.showSuccess('Post created Successfully')
+          window.location.reload()
+          
         }
       })
       }
