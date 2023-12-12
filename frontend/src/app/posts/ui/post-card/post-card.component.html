@@ -42,7 +42,7 @@
           </p>
     </div>
     <div class="flex justify-evenly mt-1">
-      <button class="font-bold hover:text-xl focus:text-xl"><span class="font-semibold "><i class="fa-regular fa-thumbs-up fa-flip-horizontal" style="color: #3c393b;"></i></span> Like</button>
+      <button (click)="addLike(post._id,'like')" class="font-bold hover:text-xl focus:text-xl"><span class="font-semibold "><i class="fa-regular fa-thumbs-up fa-flip-horizontal" style="color: #3c393b;"></i></span> Like</button>
       <button class="font-bold hover:text-xl focus:text-xl"><span class="font-semibold "><i class="fa-regular fa-comments" style="color: #3c393b;"></i></span> Comment</button>
       <button class="font-bold hover:text-xl focus:text-xl"><span class="font-semibold "><i class="fa-regular fa-paper-plane" style="color: #3c393b;"></i></span> Send</button>
 

@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 import { IpostInterface } from 'src/app/shared/types/post.Interface';
 
 @Component({
@@ -8,7 +8,11 @@ import { IpostInterface } from 'src/app/shared/types/post.Interface';
 })
 export class PostCardComponent {
   @Input() post!: IpostInterface;
+  @Output() like=new EventEmitter<{postId:string,reactionType:string}>;
   ngAfterViewInit(){
     console.log(this.post);
+  }
+  addLike(postId:string,reactionType:string){
+    this.like.emit({postId,reactionType});
   }
 }

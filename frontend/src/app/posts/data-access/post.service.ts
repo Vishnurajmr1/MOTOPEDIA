@@ -12,6 +12,9 @@ export class PostService {
   getAllPost(): Observable<any> {
     return this.http.get(`${this.postApi}/get-all-posts`);
   }
+  likeThePost(data:any):Observable<any>{
+    return this.http.put(`${this.postApi}/like-post`,data)
+  }
   createPost(postData:IPost){
     const formData:FormData=new FormData();
     formData.append('title',postData.title);
