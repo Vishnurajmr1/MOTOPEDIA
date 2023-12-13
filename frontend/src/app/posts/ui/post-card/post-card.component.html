@@ -10,7 +10,7 @@
         {{ post.authorId.firstName }} {{ post.authorId.lastName }}
       </h1>
       </div>
-      <button class="flex items-center gap-2 text-blue-600">
+      <button class="flex items-center gap-2 text-blue-600" (click)="followUser(post.authorId._id)">
         <label class="relative inline-flex items-center cursor-pointer">
           <input type="checkbox" value="" class="sr-only peer" />
           <div
@@ -42,7 +42,7 @@
           </p>
     </div>
     <div class="flex justify-evenly mt-1">
-      <button (click)="addLike(post._id,'like')" class="font-bold hover:text-xl focus:text-xl"><span class="font-semibold "><i class="fa-regular fa-thumbs-up fa-flip-horizontal" style="color: #3c393b;"></i></span> Like</button>
+      <button (click)="addLike(post._id,'like')" class="font-semibold"><span class="font-semibold "><i class="fa-regular fa-thumbs-up fa-flip-horizontal {{currentUserLiked?'text-black':'text-red-500'}}"></i></span>Like</button>
       <button class="font-bold hover:text-xl focus:text-xl"><span class="font-semibold "><i class="fa-regular fa-comments" style="color: #3c393b;"></i></span> Comment</button>
       <button class="font-bold hover:text-xl focus:text-xl"><span class="font-semibold "><i class="fa-regular fa-paper-plane" style="color: #3c393b;"></i></span> Send</button>
 

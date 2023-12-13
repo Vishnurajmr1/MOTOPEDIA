@@ -8,6 +8,7 @@ export interface IpostInterface{
     }
     imageUrl:string,
     authorId:{
+        _id:string
         firstName:string,
         lastName:string
     }
@@ -17,6 +18,7 @@ export interface IpostInterface{
         thumbsUp?:number,
         heart?:number
     }
+    currentUserLiked?:string;
 }
 
 export interface IPost{

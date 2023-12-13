@@ -87,6 +87,7 @@ const postController = (
             status: Status.SUCCESS,
             message: 'Successfully modified  the post',
             data: post,
+            userId
         });
     });
     const addCommentByPostId=asyncHandler(async(req:CustomRequest,res:Response)=>{

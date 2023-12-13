@@ -152,15 +152,15 @@ const authController = (
             message: 'Please reset the password',
         });
     });
-    const confirmPassword=asyncHandler(async(req:Request,res:Response)=>{
-        const {token,newPassword,}=req.body;
-        await confirmNewPassword(token,newPassword,authService,dbRepositoryUser)
+    const confirmPassword = asyncHandler(async (req: Request, res: Response) => {
+        const { token, newPassword } = req.body;
+        await confirmNewPassword(token, newPassword, authService, dbRepositoryUser);
         res.status(200).json({
-            status:Status.SUCCESS,
-            message:'Password reset successfully completed'
-        })
-    })
-     
+            status: Status.SUCCESS,
+            message: 'Password reset successfully completed',
+        });
+    });
+
     const logoutUser = asyncHandler(async (req: Request, res: Response) => {
         res.status(200).json({
             status: 'success',
@@ -177,7 +177,7 @@ const authController = (
         loginWithGoogle,
         forgotPassword,
         resetPasswordByEmail,
-        confirmPassword
+        confirmPassword,
     };
 };
 
