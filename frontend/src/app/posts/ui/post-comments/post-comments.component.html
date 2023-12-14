@@ -1,0 +1,19 @@
+<div>
+    <h1>Add Comment</h1>
+    <input type="text" placeholder="add comment"/>
+    <button type="submit">Comment</button>
+</div>
+<div *ngIf="comments.length > 0; else noComments">
+    <div *ngFor="let comment of comments">
+        <div class="bg-red-400">
+            <div class="">
+                <h1>{{comment.userId.firstName}}</h1>
+                <p class="p-3">{{comment.content}}</p>
+            </div>
+        </div>
+    </div>
+  </div>
+  
+  <ng-template #noComments>
+    <p>No comments for this post. Add a comment!</p>
+  </ng-template>

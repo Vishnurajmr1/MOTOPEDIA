@@ -2,6 +2,7 @@ import { CommentDbRepositoryInterface } from '@src/application/repositories/comm
 import { PostDbRepositoryInterface } from '@src/application/repositories/postDBRepository';
 import { CloudServiceInterface } from '@src/application/services/cloudServiceInterface';
 import { addComment } from '@src/application/use-cases/comment/addComment';
+import { getAllComments } from '@src/application/use-cases/comment/getAllComments';
 import { addPosts } from '@src/application/use-cases/post/addPost';
 import { deletePostById } from '@src/application/use-cases/post/deletePost';
 import { editPostUseCase, likePostUseCase } from '@src/application/use-cases/post/editPost';
@@ -102,6 +103,15 @@ const postController = (
             commentId
         })
     })
+    const fetchCommentByPostId=asyncHandler(async(req:Request,res:Response)=>{
+        const postId=req.params.postId;
+        const comments=await getAllComments(postId,dbRepositoryComment);
+        res.status(200).json({
+            status:Status.SUCCESS,
+            message:'Fetched all comments by postId',
+            comments
+        })
+    })
     return {
         addPost,
         editPost,
@@ -109,7 +119,8 @@ const postController = (
         getAllPosts,
         getPostByUser,
         likePostById,
-        addCommentByPostId
+        addCommentByPostId,
+        fetchCommentByPostId
     };
 };
 

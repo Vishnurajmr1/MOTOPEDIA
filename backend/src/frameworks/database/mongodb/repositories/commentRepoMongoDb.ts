@@ -9,7 +9,7 @@ export const commentRepositoryMongoDb=()=>{
     }
 
     const getCommentByPostId=async(postId:string)=>{
-        const comments=await comment.find({postId});
+        const comments=await comment.find({postId}).populate('userId');
         return comments;
     }
 
