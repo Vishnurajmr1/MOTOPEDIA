@@ -2,7 +2,8 @@
 
 <div *ngIf="posts" class="flex gap-2 flex-col items-center">
   <ng-container *ngFor="let post of posts ">
-    <app-post-card [post]="post" (like)="like($event)" (follow)="follow($event)"></app-post-card>
+    <app-post-card [post]="post" (like)="like($event)" (follow)="follow($event)" (comment)="showComment(post._id)"></app-post-card>
+    <app-post-comments *ngIf="selectedPostId===post._id" [comments]="selectedPostComments"></app-post-comments>
   </ng-container>
 </div>
 <div data-dial-init class="fixed end-6 bottom-6 group">

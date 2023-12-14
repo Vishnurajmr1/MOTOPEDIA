@@ -5,6 +5,7 @@ import { PostListRoutingModule } from './post-list-routing.module';
 import { PostListComponent } from './post-list.component';
 import { PostCardModule } from '../../ui/post-card/post-card.module';
 import { CreatePostModule } from '../../ui/create-post/create-post.module';
+import { PostCommentsModule } from '../../ui/post-comments/post-comments.module';
 
 
 @NgModule({
@@ -15,7 +16,8 @@ import { CreatePostModule } from '../../ui/create-post/create-post.module';
     CommonModule,
     PostListRoutingModule,
     PostCardModule,
-    CreatePostModule
+    CreatePostModule,
+    PostCommentsModule
   ]
 })
 export class PostListModule { }

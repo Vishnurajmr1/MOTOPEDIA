@@ -5,6 +5,7 @@ import { PostService } from '../../data-access/post.service';
 import { Observable } from 'rxjs';
 import { initFlowbite } from 'flowbite';
 import { SnackbarService } from 'src/app/shared/data-access/global/snackbar.service';
+import { Comments } from 'src/app/shared/types/post-comment';
 
 @Component({
   selector: 'app-post-list',
@@ -17,6 +18,8 @@ export class PostListComponent {
   private snackbar = inject(SnackbarService);
   posts: IpostInterface[] = [];
   isCreatePostVisible = false;
+  selectedPostId: string | null = null;
+  selectedPostComments: Comments[] = [];
   ngOnInit(): void {
     this.postService.getAllPost().subscribe((data: any) => {
       this.posts = data.data;
@@ -25,18 +28,15 @@ export class PostListComponent {
   showCreatePost(): void {
     this.isCreatePostVisible = !this.isCreatePostVisible;
   }
-  like(data: any) {
-    console.log(data);
+  like(data: { postId: string; reactionType: string }) {
     this.postService.likeThePost(data).subscribe((res) => {
-      console.log(res);
-      const postId=data.postId;
-      const updatedLikeCount=res.data.likes.like
-      const currentUser=res.userId;
-      console.log(postId,updatedLikeCount,currentUser)
-      const postIndex=this.posts.findIndex((post)=>post._id===postId)
-      if(postIndex!==-1){
-        this.posts[postIndex].likes.like=updatedLikeCount;
-        this.posts[postIndex].currentUserLiked=currentUser;
+      const postId = data.postId;
+      const updatedLikeCount = res.data.likes.like;
+      const currentUser = res.userId;
+      const postIndex = this.posts.findIndex((post) => post._id === postId);
+      if (postIndex !== -1) {
+        this.posts[postIndex].likes.like = updatedLikeCount;
+        this.posts[postIndex].currentUserLiked = currentUser;
       }
     });
   }
@@ -50,7 +50,14 @@ export class PostListComponent {
       },
     });
   }
-  follow(data:any){
-    
+  follow(data: any) {}
+
+  showComment(postId: string) {
+    console.log('Hello comment list', postId);
+    this.selectedPostId = postId;
+    this.postService.getComments(postId).subscribe((res)=>{
+      console.log(res);
+      this.selectedPostComments=res.comments
+    })
   }
 }

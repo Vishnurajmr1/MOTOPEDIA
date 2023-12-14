@@ -27,6 +27,7 @@ const postRouter = () => {
     router.route('/get-post-by-user').get(jwtAuthMiddleware, controller.getPostByUser);
     router.route('/like-post').put(jwtAuthMiddleware, controller.likePostById);
     router.route('/add-comment').post(jwtAuthMiddleware,controller.addCommentByPostId);
+    router.route('/get-all-comments/:postId').get(jwtAuthMiddleware,controller.fetchCommentByPostId);
     // router.route('/unlike-post').patch(jwtAuthMiddleware);
     return router;
 };
