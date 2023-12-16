@@ -18,6 +18,9 @@ export class PostCardComponent {
   @Output() follow = new EventEmitter<any>();
   @Output() comment = new EventEmitter<string>();
   currentUserLiked: boolean = false;
+  showComments: boolean = false;
+  ngOnInit(){
+  }
   ngAfterViewInit() {
     console.log(this.post);
     this.currentUserLiked ? this.post.currentUserLiked : false;
@@ -30,6 +33,10 @@ export class PostCardComponent {
     this.follow.emit(authorId);
   }
   showComment(postId: string) {
-    this.comment.emit(postId);
+    this.showComments=!this.showComments;
+    if(this.showComments){
+      this.comment.emit(postId);
+    }
   }
+  
 }
