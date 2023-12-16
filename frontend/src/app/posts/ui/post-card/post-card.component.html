@@ -1,6 +1,5 @@
 <ng-container *ngIf="post">
-  <div
-    class="p-4 max-w-sm md:max-w-screen-md bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+  <div>
     <div class=" flex justify-between p-4 items-center">
       <div class="flex items-center gap-4">
       <div class="relative w-10 h-10 overflow-hidden bg-gray-100 rounded-full dark:bg-gray-600 inline-block">
@@ -42,7 +41,7 @@
           </p>
     </div>
     <div class="flex justify-evenly mt-1">
-      <button (click)="addLike(post._id,'like')" class="font-semibold"><span class="font-semibold "><i class="fa-regular fa-thumbs-up fa-flip-horizontal {{currentUserLiked?'text-black':'text-red-500'}}"></i></span>Like</button>
+      <button (click)="addLike(post._id,'like')" class="font-semibold"><span class="font-semibold "><i class="fa-solid fa-heart {{currentUserLiked?'text-red-500':'text-black'}}" ></i></span></button>
       <button (click)="showComment(post._id)" class="font-bold hover:text-sm focus:text-sm"><span class="font-semibold "><i class="fa-regular fa-comments" style="color: #3c393b;"></i></span> Comment</button>
     
       <button class="font-bold hover:text-sm focus:text-sm"><span class="font-semibold "><i class="fa-regular fa-paper-plane" style="color: #3c393b;"></i></span> Send</button>
