@@ -1,18 +1,20 @@
-<div>
-    <input type="text" placeholder="add comment"/>
-    <button type="submit">Comment</button>
-</div>
+<app-comment-form submitLabel="Write Comment"></app-comment-form>
 <div *ngIf="comments.length > 0; else noComments">
-    <div *ngFor="let comment of comments">
+    <app-post-comment
+    *ngFor="let comment of comments"
+    [comment]="comment"
+    ></app-post-comment>
+    <!-- <div *ngFor="let comment of comments">
         <div class="bg-red-400">
             <div class="">
                 <h1>{{comment.userId.firstName}}</h1>
                 <p class="p-3">{{comment.content}}</p>
+                <h1>{{currentUserId}}</h1>
             </div>
         </div>
-    </div>
+    </div> -->
   </div>
-  
   <ng-template #noComments>
-    <p>No comments for this post. Add a comment!</p>
+    <h1>{{currentUserId}}</h1>
+    <p class="font-bold">No comments for this post. Add a comment!</p>
   </ng-template>

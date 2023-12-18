@@ -1,4 +1,5 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, inject } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-comment-form',
@@ -7,5 +8,20 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CommentFormComponent {
+@Input() submitLabel!:string;
+@Input() hasCancelButton:boolean=false;
+@Input() initalText:string='';
 
+form!:FormGroup;
+
+private fb=inject(FormBuilder);
+ngOnInit(){
+  this.form=this.fb.group({
+    title:[this.initalText,Validators.required]
+  })
+}
+
+onSubmit():void{
+  console.log('onSubmit',this.form.value)
+}
 }

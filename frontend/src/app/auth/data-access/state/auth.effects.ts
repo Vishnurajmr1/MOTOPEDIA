@@ -80,6 +80,7 @@ export class AuthEffects {
       ofType(AuthPageActions.checkLocalStorageAction),
       map(() => {
         const keys = [
+          'userId',
           'firstName',
           'lastName',
           'email',

@@ -1,4 +1,5 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { CommentInterface } from 'src/app/shared/types/comment.interface';
 
 @Component({
   selector: 'app-post-comment',
@@ -6,5 +7,5 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
   styleUrls: ['./post-comment.component.css'],
 })
 export class PostCommentComponent {
-
+  @Input() comment!:CommentInterface;
 }

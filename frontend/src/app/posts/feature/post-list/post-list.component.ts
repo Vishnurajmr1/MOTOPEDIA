@@ -5,8 +5,7 @@ import { PostService } from '../../data-access/post.service';
 import { Observable } from 'rxjs';
 import { initFlowbite } from 'flowbite';
 import { SnackbarService } from 'src/app/shared/data-access/global/snackbar.service';
-import { Comments } from 'src/app/shared/types/post-comment';
-
+import { CommentInterface } from 'src/app/shared/types/comment.interface';
 @Component({
   selector: 'app-post-list',
   templateUrl: './post-list.component.html',
@@ -19,10 +18,15 @@ export class PostListComponent {
   posts: IpostInterface[] = [];
   isCreatePostVisible = false;
   selectedPostId: string | null = null;
-  selectedPostComments: Comments[] = [];
+  selectedPostComments: CommentInterface[] = [];
+ currentUser:string | undefined
   ngOnInit(): void {
     this.postService.getAllPost().subscribe((data: any) => {
       this.posts = data.data;
+      this.postService.currentUser$.subscribe((user)=>{
+        this.currentUser=user.userId;
+      })
+      console.log(this.currentUser)
     });
   }
   showCreatePost(): void {
@@ -41,7 +45,6 @@ export class PostListComponent {
     });
   }
   createPost(data: IPost) {
-    console.log(data);
     this.postService.createPost(data).subscribe({
       next: (res) => {
         console.log(res);
@@ -53,11 +56,10 @@ export class PostListComponent {
   follow(data: any) {}
 
   showComment(postId: string) {
-    console.log('Hello comment list', postId);
     this.selectedPostId = postId;
-    this.postService.getComments(postId).subscribe((res)=>{
-      console.log(res);
-      this.selectedPostComments=res.comments
-    })
+    console.log(this.currentUser)
+    this.postService.getComments(postId).subscribe((res) => {
+      this.selectedPostComments = res.comments;
+    });
   }
 }

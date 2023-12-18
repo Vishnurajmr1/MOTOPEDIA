@@ -5,16 +5,25 @@
     <div 
     class="p-4 max-w-sm md:max-w-screen-md bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
       <app-post-card [post]="post" (like)="like($event)" (follow)="follow($event)" (comment)="showComment(post._id)"></app-post-card>
-      <app-post-comments *ngIf="selectedPostId===post._id" [comments]="selectedPostComments"></app-post-comments>
+      <app-post-comments *ngIf="selectedPostId===post._id" [comments]="selectedPostComments" [currentUserId]="currentUser"></app-post-comments>
     </div>
   </ng-container>
 </div>
 <div data-dial-init class="fixed end-6 bottom-6 group">
-  <button type="button" (click)="showCreatePost()" data-dial-toggle="speed-dial-menu-default" aria-controls="speed-dial-menu-default" aria-expanded="false" class="flex items-center justify-center text-white bg-blue-700 rounded-full w-14 h-14 hover:bg-blue-800 dark:bg-blue-600 dark:hover:bg-blue-700 focus:ring-4 focus:ring-blue-300 focus:outline-none dark:focus:ring-blue-800" title="create_post">
+  <button type="button" (click)="showCreatePost()" data-dial-toggle="speed-dial-menu-default" aria-controls="speed-dial-menu-default" aria-expanded="false" class="flex items-center justify-center text-white bg-green-400 rounded-full w-14 h-14 hover:bg-blue-800 dark:bg-blue-600 dark:hover:bg-blue-700 focus:ring-0 focus:outline-none dark:focus:ring-blue-800" title="create_post">
       <svg class="w-5 h-5 transition-transform group-hover:rotate-0" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
           <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 1v16M1 9h16"/>
       </svg>
   </button>
+  <!-- <button type="button" class="flex items-center gap-2 text-blue-600" (click)="showCreatePost()">
+    <label class="relative inline-flex items-center cursor-pointer">
+      <input type="checkbox" value="" class="sr-only peer" />
+      <div
+        class="peer ring-0 bg-green-400 rounded-full outline-none duration-300 after:duration-500 w-12 h-12 shadow-md peer-checked:bg-emerald-500 peer-focus:outline-none after:content-['➕'] after:rounded-full after:absolute after:outline-none after:h-10 after:w-10 after:bg-gray-50 after:top-1 after:left-1 after:flex after:justify-center after:items-center peer-hover:after:scale-75 peer-checked:after:content-['✔️'] after:-rotate-180 peer-checked:after:rotate-0"
+      ></div>
+    </label>
+      <span class="font-medium">Follow</span>
+  </button> -->
 </div>
 
 

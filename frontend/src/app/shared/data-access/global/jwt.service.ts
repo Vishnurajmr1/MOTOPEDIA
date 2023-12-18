@@ -38,7 +38,6 @@ export class JwtService {
     if (expirationTime !== undefined) {
       return (expirationTime < currentTimeStamp);
     }
-    console.log(token)
     return false;
   }
 

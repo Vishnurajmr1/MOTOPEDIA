@@ -18,7 +18,7 @@ export class PostCardComponent {
   @Output() follow = new EventEmitter<any>();
   @Output() comment = new EventEmitter<string>();
   currentUserLiked: boolean = false;
-  showComments: boolean = false;
+  @Output() showComments: boolean = false;
   ngOnInit(){
   }
   ngAfterViewInit() {
@@ -32,7 +32,7 @@ export class PostCardComponent {
   followUser(authorId: string) {
     this.follow.emit(authorId);
   }
-  showComment(postId: string) {
+  toggleComment(postId: string) {
     this.showComments=!this.showComments;
     if(this.showComments){
       this.comment.emit(postId);

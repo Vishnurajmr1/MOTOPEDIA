@@ -1,6 +1,5 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
-import { Comments } from 'src/app/shared/types/post-comment';
-
+import { CommentInterface } from 'src/app/shared/types/comment.interface';
 @Component({
   selector: 'app-post-comments',
   templateUrl: './post-comments.component.html',
@@ -8,5 +7,7 @@ import { Comments } from 'src/app/shared/types/post-comment';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class PostCommentsComponent {
-@Input() comments:Comments[]=[];
+  @Input() currentUserId:string|undefined;
+  @Input() comments:CommentInterface[]=[];
+
 }
