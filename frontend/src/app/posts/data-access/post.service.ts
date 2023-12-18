@@ -1,6 +1,11 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
+import { Router } from '@angular/router';
+import { Store } from '@ngrx/store';
 import { Observable, BehaviorSubject } from 'rxjs';
+import {State, getCurrentUserData, isUserLoggedIn } from 'src/app/auth/data-access/state';
+import { ICurrentUser } from 'src/app/auth/data-access/state/auth.reducer';
+import { CommentInterface } from 'src/app/shared/types/comment.interface';
 import { IPost, IpostInterface } from 'src/app/shared/types/post.Interface';
 
 interface comments {
@@ -13,6 +18,13 @@ interface comments {
 })
 export class PostService {
   private http: HttpClient = inject(HttpClient);
+  currentUser$!: Observable<ICurrentUser>;
+  isUserLoggedIn$!: Observable<boolean>;
+
+  constructor(private store: Store<State>,private router:Router) {
+    this.currentUser$ = this.store.select(getCurrentUserData);
+    this.isUserLoggedIn$ = this.store.select(isUserLoggedIn);
+  }
   private postApi = '/api/posts';
   getAllPost(): Observable<any> {
     return this.http.get(`${this.postApi}/get-all-posts`);

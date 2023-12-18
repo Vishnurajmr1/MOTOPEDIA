@@ -1,0 +1,11 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <textarea formControlName="title" class="comment-form-textarea w-full h-20  mb-2 mt-2 border-solid border-2 border-gray-500 focus:border-none focus:outline-none"></textarea>
+    <small *ngIf="form.get('title')?.hasError('required') && form.get('title')?.touched" class="text-red-500">
+        Title is required
+      </small>
+    <button class="comment-form-button text-lg px-1 py-4 bg-green-300" type="submit" [disabled]="form.invalid">
+    {{submitLabel}}</button>
+    <button *ngIf="hasCancelButton" type="button" class="comment-form-button comment form-cancel-button">  
+    Cancel
+    </button>
+</form>

@@ -10,6 +10,7 @@ import {
 } from './actions/auth-page.actions';
 
 export interface ICurrentUser {
+  userId:string,
   firstName: string;
   lastName: string;
   email: string;
@@ -34,6 +35,7 @@ export const initialState: AuthState = {
     isVerifiedEmail: false,
     isBlocked: false,
     mobile: '',
+    userId:''
   },
 };
 
@@ -62,6 +64,7 @@ export const authReducer = createReducer(
         isVerifiedEmail: false,
         isBlocked: false,
         mobile: '',
+        userId:""
       },
       isUserLoggedIn: false,
     };
@@ -88,6 +91,7 @@ export const authReducer = createReducer(
         isVerifiedEmail: action.currentUser.isVerifiedEmail,
         mobile: action.currentUser.mobile,
         isBlocked: action.currentUser.isBlocked,
+        userId:action.currentUser.userId
       },
     };
   })

@@ -1,5 +1,4 @@
-import { Comments } from "./post-comment"
-
+import { CommentInterface } from "./comment.interface"
 export interface IpostInterface{
     _id:string
     title:string
@@ -27,5 +26,5 @@ export interface IPost{
         title:string;
         description:string;
         image:File,
-        comments?:Comments
+        comments?:CommentInterface
 }

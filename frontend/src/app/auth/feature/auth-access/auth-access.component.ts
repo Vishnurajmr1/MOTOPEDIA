@@ -100,6 +100,7 @@ export class AuthAccessComponent {
         console.log(res);
         this.snackbar.showSuccess('Login Successfull');
         let currentUser: ICurrentUser = {
+          userId:res.user._id,
           firstName: res.user.firstName,
           lastName: res.user.lastName,
           email: res.user.email,
@@ -130,6 +131,7 @@ export class AuthAccessComponent {
           mobile: res.userData.mobile,
           isVerifiedEmail: res.userData.isVerifiedEmail,
           isBlocked: res.userData.isBlocked,
+          userId:res.userData._id
         };
         this.store.dispatch(AuthPageActions.setCurrentUser({ currentUser }));
         this.snackbar.showSuccess(res.message);
@@ -160,6 +162,7 @@ export class AuthAccessComponent {
           isVerifiedEmail: res.user.isVerifiedEmail,
           mobile: res.user.mobile,
           isBlocked: res.user.isBlocked,
+          userId:res.user._id
         };
         this.store.dispatch(AuthPageActions.setCurrentUser({ currentUser }));
         this.router.navigateByUrl('home');
