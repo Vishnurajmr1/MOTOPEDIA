@@ -1,8 +1,11 @@
-<app-comment-form submitLabel="Write Comment"></app-comment-form>
+<app-comment-form submitLabel="Write Comment"
+(handleSubmit)="addComment({content:$event,parentId:null})"></app-comment-form>
 <div *ngIf="comments.length > 0; else noComments">
     <app-post-comment
     *ngFor="let comment of comments"
     [comment]="comment"
+    [currentUserId]="currentUserId"
+    [replies]="getReplies(comment.id)"
     ></app-post-comment>
     <!-- <div *ngFor="let comment of comments">
         <div class="bg-red-400">
@@ -15,6 +18,5 @@
     </div> -->
   </div>
   <ng-template #noComments>
-    <h1>{{currentUserId}}</h1>
     <p class="font-bold">No comments for this post. Add a comment!</p>
   </ng-template>

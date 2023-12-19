@@ -96,11 +96,11 @@ const postController = (
         const {postId,content}=req.body;
         console.log(userId,postId,content)
         const commentInfo:addCommentInterface={postId,userId,content};
-        const commentId=await addComment(userId,postId,commentInfo,dbRepositoryComment);
+        const comments=await addComment(userId,postId,commentInfo,dbRepositoryComment);
         res.status(201).json({
             status:Status.SUCCESS,
             message:'comment added successfully',
-            commentId
+            comments
         })
     })
     const fetchCommentByPostId=asyncHandler(async(req:Request,res:Response)=>{

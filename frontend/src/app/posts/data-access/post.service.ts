@@ -44,4 +44,7 @@ export class PostService {
       `${this.postApi}/get-all-comments/${postId}`
     );
   }
+  createComment(postId:string|null,commentDate:{content:string,parentId:string|null}):Observable<CommentInterface>{
+    return this.http.post<CommentInterface>(`${this.postApi}/add-comment`,{postId,...commentDate})
+  }
 }

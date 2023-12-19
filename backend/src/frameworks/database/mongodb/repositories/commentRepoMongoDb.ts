@@ -4,8 +4,8 @@ import { comment } from "../models/comment";
 export const commentRepositoryMongoDb=()=>{
     const addComment=async(commentInfo:addCommentInterface)=>{
         const newComment=new comment(commentInfo)
-        const {_id:commentId}=await newComment.save()
-        return commentId;
+        const commentData=await newComment.save().then(comment=>comment.populate('userId'))
+        return commentData;
     }
 
     const getCommentByPostId=async(postId:string)=>{

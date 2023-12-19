@@ -14,7 +14,6 @@ export const addComment = async (
     }
     commentInfo.userId = userId;
     commentInfo.postId = postId;
-    console.log(commentInfo)
-    const commentId = await commentDbRepository.addComment(commentInfo);
-    return commentId;
+    const comments = await commentDbRepository.addComment(commentInfo);
+    return comments;
 };

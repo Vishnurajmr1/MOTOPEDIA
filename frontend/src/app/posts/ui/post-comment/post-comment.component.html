@@ -1,11 +1,23 @@
 <div class="flex mb-7 mt-2">
-    <div class="mr-3">
-      <img class="rounded-sm" src="/assets/images/icons/user.png" width="20"  height="20"/>
-    </div>
-    <div class="w-full">
-      <div class="flex">
-        <div class="mr-2 text-xl text-blue-400">{{ comment.userId.firstName }} {{comment.userId.lastName}}</div>
+  <div class="mr-3">
+    <img
+      class="rounded-sm"
+      src="/assets/images/icons/user.png"
+      width="20"
+      height="20"
+    />
+  </div>
+  <div class="w-full">
+    <div class="flex">
+      <div class="mr-2 text-xl text-blue-400">
+        {{ comment.userId?.firstName }} {{ comment.userId?.lastName }}
       </div>
-      <div class="text-lg">{{ comment.content }}</div>
+    </div>
+    <div class="text-lg">{{ comment.content }}</div>
+    <div class="comment-actions">
+      <div *ngIf="canReply" class="comment-action">Reply</div>
+      <div *ngIf="canEdit" class="">Edit</div>
+      <div *ngIf="canDelete">Delete</div>
     </div>
   </div>
+</div>
