@@ -19,14 +19,13 @@ export class PostListComponent {
   isCreatePostVisible = false;
   selectedPostId: string | null = null;
   selectedPostComments: CommentInterface[] = [];
- currentUser:string | undefined
+  currentUser: string | undefined;
   ngOnInit(): void {
     this.postService.getAllPost().subscribe((data: any) => {
       this.posts = data.data;
-      this.postService.currentUser$.subscribe((user)=>{
-        this.currentUser=user.userId;
-      })
-      console.log(this.currentUser)
+      this.postService.currentUser$.subscribe((user) => {
+        this.currentUser = user.userId;
+      });
     });
   }
   showCreatePost(): void {
@@ -57,9 +56,26 @@ export class PostListComponent {
 
   showComment(postId: string) {
     this.selectedPostId = postId;
-    console.log(this.currentUser)
+    console.log(this.currentUser);
     this.postService.getComments(postId).subscribe((res) => {
       this.selectedPostComments = res.comments;
     });
+  }
+  onAddComment(commentData: {
+    content: string;
+    parentId: string | null;
+  }): void {
+    const postId = this.selectedPostId;
+    console.log(postId);
+    console.log(commentData);
+    this.postService
+      .createComment(postId,commentData)
+      .subscribe((createComment) => {
+        console.log(createComment)
+        this.selectedPostComments = [
+          ...this.selectedPostComments,
+          createComment.comments,
+        ];
+      });
   }
 }
