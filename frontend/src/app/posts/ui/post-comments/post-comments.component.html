@@ -6,6 +6,8 @@
     [comment]="comment"
     [currentUserId]="currentUserId"
     [replies]="getReplies(comment.id)"
+    (setActiveComment)="setActiveComment($event)"
+    (addComment)="addComment($event)"
     ></app-post-comment>
     <!-- <div *ngFor="let comment of comments">
         <div class="bg-red-400">

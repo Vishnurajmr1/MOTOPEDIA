@@ -15,9 +15,36 @@
     </div>
     <div class="text-lg">{{ comment.content }}</div>
     <div class="comment-actions">
-      <div *ngIf="canReply" class="comment-action">Reply</div>
-      <div *ngIf="canEdit" class="">Edit</div>
+      <div
+        *ngIf="canReply"
+        class="flex text-xs cursor-pointer mt-2 hover"
+        (click)="
+          setActiveComment.emit({
+            id: comment.id,
+            type: activeCommentType.replying
+          })
+        "
+      >
+        Reply
+      </div>
+      <div
+        *ngIf="canEdit"
+        class=""
+        (click)="
+          setActiveComment.emit({
+            id: comment.id,
+            type: activeCommentType.editing
+          })
+        "
+      >
+        Edit
+      </div>
       <div *ngIf="canDelete">Delete</div>
     </div>
+    <app-comment-form
+      *ngIf="isReplying()"
+      sumbitLabel="Reply"
+      (handleSubmit)="addComment.emit({ content: $event, parentId: replyId })"
+    ></app-comment-form>
   </div>
 </div>

@@ -14,16 +14,20 @@ import { IpostInterface } from 'src/app/shared/types/post.Interface';
 })
 export class PostCardComponent {
   @Input() post!: IpostInterface;
+  @Input() currentUser:string|undefined;
   @Output() like = new EventEmitter<{ postId: string; reactionType: string }>();
-  @Output() follow = new EventEmitter<any>();
+  @Output() follow = new EventEmitter<string>();
   @Output() comment = new EventEmitter<string>();
-  currentUserLiked: boolean = false;
   @Output() showComments: boolean = false;
+  currentUserLiked:boolean=false;
+  followButton:boolean=true;
   ngOnInit(){
-  }
-  ngAfterViewInit() {
-    console.log(this.post);
-    this.currentUserLiked ? this.post.currentUserLiked : false;
+    if(this.post.authorId._id==this.currentUser){
+      this.followButton=false;
+    }
+    if(this.currentUser!==undefined){
+     this.currentUserLiked=this.post.likedBy.some((res: { userId: string | undefined; })=>res.userId===this.currentUser)
+    }
   }
   addLike(postId: string, reactionType: string) {
     this.currentUserLiked = !this.currentUserLiked;
