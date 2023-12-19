@@ -4,8 +4,12 @@ import { Observable } from "rxjs";
 @Injectable({
     providedIn:'root'
 })
-export class userService{
+export class UserService{
     private http:HttpClient=inject(HttpClient);
     private userApi='/api/user';
+
+    followUser(authorId:string):Observable<any>{
+        return this.http.post(`${this.userApi}/follow/${authorId}`,{})
+    }
     
 }

@@ -14,12 +14,12 @@ export interface IpostInterface{
         lastName:string
     }
     description:string;
+    likedBy:any;
     likes:{
         like?:number,
         thumbsUp?:number,
         heart?:number
     }
-    currentUserLiked?:string;
 }
 
 export interface IPost{

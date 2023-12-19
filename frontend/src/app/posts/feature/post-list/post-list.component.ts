@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { IPost, IpostInterface } from 'src/app/shared/types/post.Interface';
 import { PostService } from '../../data-access/post.service';
 import { Observable } from 'rxjs';
+import { UserService } from 'src/app/riders/data-access/user.service';
 import { initFlowbite } from 'flowbite';
 import { SnackbarService } from 'src/app/shared/data-access/global/snackbar.service';
 import { CommentInterface } from 'src/app/shared/types/comment.interface';
@@ -14,12 +15,14 @@ import { CommentInterface } from 'src/app/shared/types/comment.interface';
 export class PostListComponent {
   private router = inject(Router);
   private postService = inject(PostService);
+  private userService=inject(UserService)
   private snackbar = inject(SnackbarService);
   posts: IpostInterface[] = [];
   isCreatePostVisible = false;
   selectedPostId: string | null = null;
   selectedPostComments: CommentInterface[] = [];
   currentUser: string | undefined;
+  isUserFollowed:boolean=false;
   ngOnInit(): void {
     this.postService.getAllPost().subscribe((data: any) => {
       this.posts = data.data;
@@ -39,7 +42,6 @@ export class PostListComponent {
       const postIndex = this.posts.findIndex((post) => post._id === postId);
       if (postIndex !== -1) {
         this.posts[postIndex].likes.like = updatedLikeCount;
-        this.posts[postIndex].currentUserLiked = currentUser;
       }
     });
   }
@@ -52,7 +54,15 @@ export class PostListComponent {
       },
     });
   }
-  follow(data: any) {}
+  follow(data: string) {
+    this.userService.followUser(data).subscribe({
+      next:(res)=>{
+        console.log(res)
+        this.snackbar.showSuccess('User Followed Successfully');
+      }
+    })
+    console.log(data)
+  }
 
   showComment(postId: string) {
     this.selectedPostId = postId;
@@ -71,7 +81,6 @@ export class PostListComponent {
     this.postService
       .createComment(postId,commentData)
       .subscribe((createComment) => {
-        console.log(createComment)
         this.selectedPostComments = [
           ...this.selectedPostComments,
           createComment.comments,
