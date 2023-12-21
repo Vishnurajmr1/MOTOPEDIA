@@ -24,11 +24,11 @@ export interface IverifyOtp {
 export interface UserDoc {
   _id?: string;
   userName?: string;
-  firstName?: string;
+  firstName: string;
   lastName?: string;
-  email: string;
+  email?: string;
   mobile?: string;
-  password: string;
+  password?: string;
   otp?: string;
   profileImgUrl?: string;
   isEmailVerified: boolean;

@@ -31,9 +31,14 @@ const unfollowUser = async (userId: string, followeeUserId: string) => {
         );
         return { userConnection, followeeConnection };
     };
+const connectionByUser=async(userId:string)=>{
+    const connectionData=await Connection.find({userId:userId})
+    return connectionData;
+}
     return{
         followUser,
-        unfollowUser
+        unfollowUser,
+        connectionByUser
     }
 };
 export type ConnectionRepositoryMongoDB = typeof connectionRepositoryMongoDB;

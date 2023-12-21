@@ -25,6 +25,7 @@ const userRouter = () => {
     router.route('/get-user-details').get(jwtAuthMiddleware, controller.getUserDetails);
     router.route('/follow/:id').post(jwtAuthMiddleware, controller.followUser);
     router.route('/unfollow/:id').post(jwtAuthMiddleware, controller.unfollowUser);
+    router.route('/connection/:id').get(jwtAuthMiddleware,)
     return router;
 };
 

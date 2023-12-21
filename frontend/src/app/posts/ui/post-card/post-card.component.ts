@@ -20,6 +20,7 @@ export class PostCardComponent {
   @Output() comment = new EventEmitter<string>();
   @Output() showComments: boolean = false;
   currentUserLiked:boolean=false;
+  currentUserFollowing:boolean=false;
   followButton:boolean=true;
   ngOnInit(){
     if(this.post.authorId._id==this.currentUser){
@@ -35,6 +36,7 @@ export class PostCardComponent {
   }
   followUser(authorId: string) {
     this.follow.emit(authorId);
+    this.currentUserFollowing=!this.currentUserFollowing
   }
   toggleComment(postId: string) {
     this.showComments=!this.showComments;
