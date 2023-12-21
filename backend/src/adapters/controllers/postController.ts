@@ -33,7 +33,6 @@ const postController = (
         const files: Express.Multer.File[] = req.files as Express.Multer.File[];
         const userId = req.user?.Id;
         const response = await addPosts(userId, post, files, cloudService, dbRepositoryPost);
-        console.log(response);
         res.status(201).json({
             status: 'success',
             message: 'Post added Successfully',
@@ -47,7 +46,6 @@ const postController = (
         const userId = req.user?.Id;
         const postId: string = req.params.postId;
         const response = await editPostUseCase(userId, postId, files, post, cloudService, dbRepositoryPost);
-        console.log(response);
         res.status(200).json({
             status: 'success',
             message: 'Successfully modified the post',
@@ -94,7 +92,6 @@ const postController = (
     const addCommentByPostId=asyncHandler(async(req:CustomRequest,res:Response)=>{
         const userId:string|undefined=req.user?.Id;
         const {postId,content}=req.body;
-        console.log(userId,postId,content)
         const commentInfo:addCommentInterface={postId,userId,content};
         const comments=await addComment(userId,postId,commentInfo,dbRepositoryComment);
         res.status(201).json({

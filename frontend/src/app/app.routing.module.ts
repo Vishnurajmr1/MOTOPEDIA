@@ -29,8 +29,17 @@ const routes: Routes = [
       import('./posts/feature/post-shell/post-shell.module').then(
         (m) => m.PostShellModule
       ),
+    canActivate: [authGuard],
+  },
+  {
+    path: 'profile',
+    loadChildren: () =>
+      import('./riders/feature/profile-shell/profile-shell.module').then(
+        (m) => m.ProfileShellModule
+      ),
       canActivate:[authGuard]
   },
+
   {
     path: 'admin',
     loadChildren: () =>
