@@ -35,12 +35,14 @@ export class PostCommentComponent {
   replyId: string | null = null;
 
   ngOnInit(): void {
+    console.log(this.currentUserId)
     const fiveMinutes = 300000;
     const timePassed =
       new Date().getMilliseconds() -
         new Date(this.comment.createdAt).getMilliseconds() >
       fiveMinutes;
     this.canReply = Boolean(this.currentUserId);
+    console.log(this.canReply)
     this.canEdit = this.currentUserId === this.comment.userId.id && !timePassed;
     this.canDelete =
       this.currentUserId === this.comment.userId.id &&
