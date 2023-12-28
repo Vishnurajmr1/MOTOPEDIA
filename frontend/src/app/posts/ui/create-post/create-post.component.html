@@ -35,6 +35,9 @@
       >
         Title is required
       </small>
+      <small *ngIf="postFormControl.title.hasError('whitespace') && postFormControl.title.touched" class="text-red-500">
+        Title cannot be empty or contain only spaces
+      </small>      
     </div>
 
     <div class="relative z-0 w-full mb-5 group">
@@ -57,6 +60,9 @@
         class="text-red-500"
       >
         Description is required
+      </small>
+      <small *ngIf="postFormControl.description.hasError('whitespace') && postFormControl.description.touched" class="text-red-500">
+        Description cannot be empty or contain only spaces
       </small>
     </div>
     <div class="relative z-0 w-full mb-5 group">
@@ -86,7 +92,7 @@
               drop
             </p>
             <p class="text-xs text-gray-500 dark:text-gray-400">
-              SVG, PNG, JPG or GIF
+               PNG,JPEG OR JPG
             </p>
           </div>
           <input
@@ -97,7 +103,11 @@
             (change)="fileChangeEvent($event)"
           />
         </label>
+      
       </div>
+      <!-- <small *ngIf="postFormControl.image.hasError('imageValidation')" class="text-red-500">
+        {{postForm.get('image')?.getError('imageValidation')}}
+      </small> -->
     </div>
     <div class="grid md:grid-cols-2 md:gap-6">
       <div class="relative z-0 w-full mb-5 group" *ngIf="image">

@@ -10,6 +10,7 @@ import { AsideComponent } from './aside.component';
   ],
   imports: [
     CommonModule
-  ]
+  ],
+  exports:[AsideComponent]
 })
 export class AsideModule { }

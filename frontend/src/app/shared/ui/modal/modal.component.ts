@@ -6,7 +6,14 @@ import { ModalService } from '../../data-access/global/modal.service';
   styleUrls: ['./modal.component.css'],
 })
 export class ModalComponent<T> {
+actionFunction() {
+throw new Error('Method not implemented.');
+}
+closeModal() {
+throw new Error('Method not implemented.');
+}
   display = true;
+modalData: any;
   constructor(private modalService: ModalService<T>) {}
 
   async close(): Promise<void> {
