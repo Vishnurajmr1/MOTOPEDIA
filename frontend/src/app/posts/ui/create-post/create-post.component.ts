@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Output, inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { SnackbarService } from 'src/app/shared/data-access/global/snackbar.service';
 import { UtilsService } from 'src/app/shared/data-access/global/utlis.service';
 import { IPost } from 'src/app/shared/types/post.Interface';
 
@@ -21,10 +22,11 @@ export class CreatePostComponent {
   constructor(private _utlis: UtilsService) {}
   @Output() createPostForm: EventEmitter<IPost> = new EventEmitter();
   private fb = inject(FormBuilder);
+  private snackbar=inject(SnackbarService)
 
   postForm = this.fb.group({
-    title: ['', [Validators.required]],
-    description: ['', [Validators.required]],
+    title: ['', [Validators.required,UtilsService.noWhiteSpaceValidator()]],
+    description: ['', [Validators.required,UtilsService.noWhiteSpaceValidator()]],
     image: [''],
   });
 
@@ -43,27 +45,20 @@ export class CreatePostComponent {
       }
 
     }
-    // this.post.data=this._utlis.trimObject(this.post.data);
-    // const formData=new FormData();
-    // if(this.post.data.title && this.post.data.description){
-    //   formData.set('title',this.post.data.title);
-    //   formData.set('description',this.post.data.description);
-    // }
-    // console.log(this.image)
-    // if(this.image){
-    //   this.post.data.files=this.image;
-    // }
-    // console.log(this.post.data)
   }
 
   fileChangeEvent(event: any) {
       if (event.target.files && event.target.files.length > 0) {
         const file = event.target.files[0];
         console.log(file);
+        const validateError=this._utlis.imageValidator(file)
+        if(validateError){
+          this.snackbar.showError(validateError)
+          console.error(validateError);
+          return;
+        }
         const reader = new FileReader();
-        console.log(reader)
         reader.onload = () => {
-          console.log(reader.result)
           this.image = file;
           if(this.image){
             this.showImage=reader.result as string;

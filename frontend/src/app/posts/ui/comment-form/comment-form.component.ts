@@ -7,6 +7,7 @@ import {
   inject,
 } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UtilsService } from 'src/app/shared/data-access/global/utlis.service';
 
 @Component({
   selector: 'app-comment-form',
@@ -19,13 +20,14 @@ export class CommentFormComponent {
   @Input() hasCancelButton: boolean = false;
   @Input() initalText: string = '';
   @Output() handleSubmit = new EventEmitter<string>();
+  constructor(private utlis:UtilsService){}
 
   form!: FormGroup;
 
   private fb = inject(FormBuilder);
   ngOnInit() {
     this.form = this.fb.group({
-      title: [this.initalText, Validators.required],
+      title: [this.initalText, [Validators.required,UtilsService.noWhiteSpaceValidator()]],
     });
   }
 

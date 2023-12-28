@@ -9,15 +9,6 @@
     (setActiveComment)="setActiveComment($event)"
     (addComment)="addComment($event)"
     ></app-post-comment>
-    <!-- <div *ngFor="let comment of comments">
-        <div class="bg-red-400">
-            <div class="">
-                <h1>{{comment.userId.firstName}}</h1>
-                <p class="p-3">{{comment.content}}</p>
-                <h1>{{currentUserId}}</h1>
-            </div>
-        </div>
-    </div> -->
   </div>
   <ng-template #noComments>
     <p class="font-bold">No comments for this post. Add a comment!</p>
