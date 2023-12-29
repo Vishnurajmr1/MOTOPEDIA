@@ -1,16 +1,41 @@
-<div>
-    <app-aside></app-aside>
-    <div class="text-center font-bold">
-        <h1>Profile</h1>
-        <div class="flex flex-col items-center mt-2 relative">
-            <div class="absolute">
-                <img src="/assets/images/icons/user.png" alt="" width="50" height="50">
+<div class="bg-gray-100 m-2 rounded-lg">
+    <div class="container mx-auto py-8">
+        <div class="grid grid-cols-4 sm:grid-cols-12 gap-6 px-4">
+            <!-- User profile div -->
+            <div class="col-span-4 sm:col-span-12">
+                <div class="bg-gray-50 rounded-lg p-6">
+                    <div class=" bg-gray-50 drop-shadow-2xl rounded-md flex flex-row items-start p-6">
+                        <div class="flex items-center">
+                            <img src="https://randomuser.me/api/portraits/men/94.jpg" class="w-32 h-32 bg-gray-300 rounded-full mb-4 shrink-0">
+                        </div>
+                        <div class="ml-4">
+                            <h1 class="text-xl font-bold">{{profile?.firstName||''}} {{profile?.lastName||''}}</h1>
+                            <p class="text-gray-700">{{profile?.email||''}}</p>
+                            <div class="flex gap-4">
+                                <p class="text-gray-700">Followers <br>{{followersLength}}</p>|
+                                <p class="text-gray-700">Following <br>{{followingLength}}</p>
+                            </div>
+                        </div>
+                        <!-- <div class="mt-6 flex flex-wrap gap-4 justify-center">
+                            <a href="#" class="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded">Contact</a>
+                            <a href="#" class="bg-gray-300 hover:bg-gray-400 text-gray-700 py-2 px-4 rounded">Resume</a>
+                        </div> -->
+                    </div>
+                </div>
             </div>
-            <div class="bg-white p-5 rounded-lg mt-10">
-                <strong>{{profile?.firstName||''}} {{profile?.lastName||''}}</strong>
-                <p>{{profile?.email||''}}</p>
-                <p>{{profile?.mobile||''}}</p>
+            <!-- Sidebar div -->
+            <div class="col-span-4 sm:col-span-3">
+              <app-aside></app-aside>
             </div>
+        <!-- postConatiner div -->
+            <div class="col-span-4 sm:col-span-9">
+               <app-display-container></app-display-container>
+            </div>
+          
+          
         </div>
+       
     </div>
 </div>
+
+
