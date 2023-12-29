@@ -40,3 +40,14 @@ export interface userResponse {
   message: string;
   data: Object | null | undefined | string;
 }
+
+export interface IFollowersDetails{
+  status:string;
+  message:string;
+  connectionData:[{
+    _id:string;
+    userId:string;
+    followers:[string];
+    following:[string]
+  }]
+}

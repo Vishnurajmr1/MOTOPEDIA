@@ -5,9 +5,11 @@ export const connectionDbRepository = (repository: ReturnType<ConnectionReposito
         await repository.followUser(userId, followeeUserId);
     const unfollowUser = async (userId: string, followeeUserId: string) =>
         await repository.unfollowUser(userId, followeeUserId);
+    const getFullUserList = async (userId: string) => await repository.connectionByUser(userId);
     return {
         followUser,
         unfollowUser,
+        getFullUserList,
     };
 };
 
