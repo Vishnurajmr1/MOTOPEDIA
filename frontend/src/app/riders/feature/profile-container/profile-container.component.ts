@@ -2,8 +2,11 @@ import { Component, inject } from '@angular/core';
 import {
   IFollowersDetails,
   UserDoc,
-} from 'src/app/shared/types/user.Interface';
+} from '../../../shared/types/user.Interface';
 import { UserService } from '../../data-access/user.service';
+import { PostService } from '../../../posts/data-access/post.service';
+import { ProfileTab } from '../../../shared/types';
+import { IpostInterface } from 'src/app/shared/types/post.Interface';
 
 @Component({
   selector: 'app-profile-container',
@@ -15,7 +18,9 @@ export class ProfileContainerComponent {
   followersDetails: IFollowersDetails | undefined;
   followersLength: number | undefined;
   followingLength: number | undefined;
+  posts: IpostInterface|undefined;
   private userService = inject(UserService);
+  private postService=inject(PostService)
   ngOnInit(): void {
     this.userService.getUserById().subscribe({
       next: (res) => {
@@ -32,5 +37,23 @@ export class ProfileContainerComponent {
           this.followersDetails?.connectionData[0].following.length;
       },
     });
+    this.postService.getPostByUser().subscribe({
+      next:(res)=>{
+        this.posts=res;
+        console.log(res)
+      }
+    })
   }
+
+  displayContent:string='Profile';
+  showProfile() {
+    this.displayContent='Profile';
+      }
+    showPosts() {
+      this.displayContent='Posts'
+    }
+    showSavedPosts() {
+      this.displayContent='Saved Posts'
+    }
+  
 }

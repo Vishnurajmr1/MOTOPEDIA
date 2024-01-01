@@ -1,4 +1,5 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { UserDoc } from '../../../shared/types/user.Interface';
 
 @Component({
   selector: 'app-edit-profile',
@@ -7,5 +8,9 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class EditProfileComponent {
-
+  @Input() userData:UserDoc|undefined;
+closeModal() {
+  this.openModal=false;
+}
+  openModal=true
 }

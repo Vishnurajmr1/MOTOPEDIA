@@ -1,16 +1,22 @@
-<div id="modal-content-wrapper">
-  <header id="modal-header">
-      <h1 id="modal-title">{{ modalData.title }}</h1>
-  </header>
-  <section id="modal-body">
-      <p>{{ modalData.description }}</p>
-  </section>
-  <footer id="modal-footer">
-      <button mat-raised-button id="modal-action-button" (click)="actionFunction()">
-          {{ modalData.actionButtonText }}
-      </button>
-      <button mat-raised-button id="modal-cancel-button" (click)="closeModal()">
-          Go back
-      </button>
-  </footer>
-</div>
+<div class="relative">
+    <div
+      [ngClass]="{ hidden: !modalOpen }"
+      class="fixed bg-white overflow-y-scroll  top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-30 w-full max-w-xl max-h-[65%] shadow-md"
+    >
+      <div class="relative p-4 ">
+        <!-- Modal content -->
+        <div class="p-4 mb-6  mx-auto border border-black shadow-lg">
+         <ng-content select="[first-modal]" ></ng-content>
+        </div>
+        <div class="p-4 mb-6 mx-auto border border-black shadow-lg">
+         <ng-content select="[second-modal]" ></ng-content>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+  (click)="toggleModal()"
+  [ngClass]="{ hidden: !modalOpen }"
+  class="inset-0 bg-black opacity-40 z-20 fixed"
+></div>
+
