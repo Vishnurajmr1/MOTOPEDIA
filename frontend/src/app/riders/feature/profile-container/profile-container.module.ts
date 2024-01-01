@@ -3,7 +3,9 @@ import { CommonModule } from '@angular/common';
 import { ProfileContainerComponent } from './profile-container.component';
 import {ProfileContainerRoutingModule} from './profile-container-routing.module'
 import { AsideModule } from "../../ui/aside/aside.module";
-import { DisplayContainerModule } from '../../ui/display-container/display-container.module';
+import { EditPostModule } from 'src/app/posts/ui/edit-post/edit-post.module';
+import { EditProfileModule } from '../../ui/edit-profile/edit-profile.module';
+import { ListPostModule } from "../../ui/list-post/list-post.module";
 
 
 @NgModule({
@@ -14,7 +16,9 @@ import { DisplayContainerModule } from '../../ui/display-container/display-conta
         CommonModule,
         ProfileContainerRoutingModule,
         AsideModule,
-        DisplayContainerModule
+        EditPostModule,
+        EditProfileModule,
+        ListPostModule
     ]
 })
 export class ProfileContainerModule { }

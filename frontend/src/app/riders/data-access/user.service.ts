@@ -5,6 +5,7 @@ import { Store } from "@ngrx/store";
 import { Observable, Subject, takeUntil } from "rxjs";
 import { State, getCurrentUserData, isUserLoggedIn } from "../../auth/data-access/state";
 import { ICurrentUser } from "../../auth/data-access/state/auth.reducer";
+import { IFollowersDetails } from "src/app/shared/types/user.Interface";
 @Injectable({
     providedIn:'root'
 })
@@ -26,14 +27,12 @@ export class UserService{
     getUserById():Observable<any>{
         return this.http.get(`${this.userApi}/get-user-details`)
     }
-    followUser(authorId:string):Observable<any>{
-        return this.http.post(`${this.userApi}/follow/${authorId}`,{})
+    followUser(authorId:string):Observable<string>{
+        return this.http.post<string>(`${this.userApi}/follow/${authorId}`,{})
     }
-    getConnection():Observable<any>{
-        return this.http.get<{userId:string,followers:[string],following:[string]}>(`${this.userApi}/connection`)
+    getConnection():Observable<IFollowersDetails>{
+        return this.http.get<IFollowersDetails>(`${this.userApi}/connection`)
     }
-
-
     ngOnDestroy() {
         this.ngUnsubscribe$.next();
         this.ngUnsubscribe$.complete();

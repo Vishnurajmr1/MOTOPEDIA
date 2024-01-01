@@ -6,7 +6,7 @@ import {
   ISignUp,
   IverifyOtp,
   IConfirmPass,
-} from 'src/app/shared/types/user.Interface';
+} from '../../shared/types/user.Interface';
 @Injectable({
   providedIn: 'root',
 })

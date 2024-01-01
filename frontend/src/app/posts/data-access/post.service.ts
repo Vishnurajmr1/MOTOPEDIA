@@ -3,10 +3,10 @@ import { Injectable, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Observable, BehaviorSubject } from 'rxjs';
-import {State, getCurrentUserData, isUserLoggedIn } from 'src/app/auth/data-access/state';
-import { ICurrentUser } from 'src/app/auth/data-access/state/auth.reducer';
-import { CommentInterface } from 'src/app/shared/types/comment.interface';
-import { IPost, IpostInterface } from 'src/app/shared/types/post.Interface';
+import {State, getCurrentUserData, isUserLoggedIn } from '../../auth/data-access/state';
+import { ICurrentUser } from '../../auth/data-access/state/auth.reducer';
+import { CommentInterface } from '../../shared/types/comment.interface';
+import { IPost, IpostInterface } from '../../shared/types/post.Interface';
 
 interface comments {
   status: string;
@@ -46,5 +46,8 @@ export class PostService {
   }
   createComment(postId:string|null,commentDate:{content:string,parentId:string|null}):Observable<CommentInterface>{
     return this.http.post<CommentInterface>(`${this.postApi}/add-comment`,{postId,...commentDate})
+  }
+  getPostByUser():Observable<IpostInterface>{
+    return this.http.get<IpostInterface>(`${this.postApi}/get-post-by-user`)
   }
 }

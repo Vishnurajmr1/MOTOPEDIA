@@ -26,9 +26,9 @@ export class PostListComponent {
   ngOnInit(): void {
     this.postService.getAllPost().subscribe((data: any) => {
       this.posts = data.data;
-      this.postService.currentUser$.subscribe((user) => {
-        this.currentUser = user.userId;
-      });
+    });
+    this.postService.currentUser$.subscribe((user) => {
+      this.currentUser = user.userId;
     });
   }
   showCreatePost(): void {

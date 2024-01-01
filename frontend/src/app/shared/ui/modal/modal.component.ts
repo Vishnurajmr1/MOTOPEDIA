@@ -1,26 +1,25 @@
-import { Component } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  Input,
+  Output,
+} from '@angular/core';
 import { ModalService } from '../../data-access/global/modal.service';
 @Component({
   selector: 'app-modal',
   templateUrl: './modal.component.html',
   styleUrls: ['./modal.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ModalComponent<T> {
-actionFunction() {
-throw new Error('Method not implemented.');
-}
-closeModal() {
-throw new Error('Method not implemented.');
-}
-  display = true;
-modalData: any;
-  constructor(private modalService: ModalService<T>) {}
+export class ModalComponent {
+  @Input() modalOpen: boolean = false;
+  @Output() close = new EventEmitter<null>();
 
-  async close(): Promise<void> {
-    this.display = false;
-
-    setTimeout(async () => {
-      await this.modalService.close();
-    }, 300);
+  toggleModal() {
+    this.modalOpen = !this.modalOpen;
+    if (!this.modalOpen) {
+      this.close.emit();
+    }
   }
 }
