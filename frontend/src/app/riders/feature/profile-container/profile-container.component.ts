@@ -14,7 +14,7 @@ import { IpostInterface } from 'src/app/shared/types/post.Interface';
   styleUrls: ['./profile-container.component.css'],
 })
 export class ProfileContainerComponent {
-  profile: UserDoc | undefined;
+  profile!: UserDoc;
   followersDetails: IFollowersDetails | undefined;
   followersLength: number | undefined;
   followingLength: number | undefined;
