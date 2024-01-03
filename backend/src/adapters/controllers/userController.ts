@@ -10,11 +10,14 @@ import {
     unblockUserUseCase,
 } from '@src/application/use-cases/management/userManagement';
 import { CustomRequest } from '@src/types/customRequest';
-import { getUserDetailUseCase } from '@src/application/use-cases/user/user';
+import { editUserDetailsUseCase, getUserDetailUseCase } from '@src/application/use-cases/user/user';
 import { followUserUseCase, getConnectionData, unfollowUserUseCase } from '@src/application/use-cases/user/followUser';
 import Status from '@src/constants/HttResponseStatus';
 import { ConnectionDbRepositoryInterface } from '@src/application/repositories/connectionDBRepository';
 import { ConnectionRepositoryMongoDB } from '@src/frameworks/database/mongodb/repositories/connectionRepoMongoDb';
+import { UserUpdateInfo } from '@src/types/userInterface';
+import { CloudServiceInterface } from '@src/application/services/cloudServiceInterface';
+import { CloudServiceImpl } from '@src/frameworks/services/s3Service';
 
 const userController = (
     authServiceInterface: AuthServiceInterface,
@@ -23,11 +26,13 @@ const userController = (
     userDbRepositoryImplementation: UserRepositoryMongoDB,
     connectionDbRepository: ConnectionDbRepositoryInterface,
     connectionDbRepositoryImplementation: ConnectionRepositoryMongoDB,
+    cloudServiceInterface:CloudServiceInterface,
+    cloudServiceImpl:CloudServiceImpl
 ) => {
     const dbRepositoryUser = userDbRepository(userDbRepositoryImplementation());
     const authService = authServiceInterface(authServiceImplementation());
     const dbRepositoryConnection = connectionDbRepository(connectionDbRepositoryImplementation());
-
+    const cloudService=cloudServiceInterface(cloudServiceImpl());
     const getAllUsers = asyncHandler(async (req: Request, res: Response) => {
         const users = await getAllUsersUseCase(dbRepositoryUser);
         res.status(200).json({
@@ -64,6 +69,25 @@ const userController = (
             userDetails,
         });
     });
+
+    const editUserDetails=asyncHandler(async(req:CustomRequest,res:Response)=>{
+        const userId:string|undefined=req.user?.Id;
+        const userInfo:UserUpdateInfo=req.body;
+        const profilePic:Express.Multer.File|null=req.file as Express.Multer.File;
+        await editUserDetailsUseCase(
+            userId,
+            userInfo,
+            profilePic,
+            cloudService,
+            authService,
+            dbRepositoryUser
+        )
+        res.status(200).json({
+            status:Status.SUCCESS,
+            message:'Successfully updated the profile',
+            data:null
+        })
+    })
     const followUser = asyncHandler(async (req: CustomRequest, res: Response) => {
         const userId: string | undefined = req.user?.Id;
         const followUserId: string | undefined = req.params.id;
@@ -101,6 +125,7 @@ const userController = (
         followUser,
         unfollowUser,
         getConnections,
+        editUserDetails
     };
 };
 

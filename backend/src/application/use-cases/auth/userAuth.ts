@@ -142,6 +142,7 @@ export const verifyOtp = async (
     await userRepository.updateProfile(user._id, {
         isVerifiedEmail: user.isVerifiedEmail,
         otp: user.otp,
+        currentPassword: ''
     });
     const payload: JwtPayload = {
         Id: user._id,

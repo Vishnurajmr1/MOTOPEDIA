@@ -51,3 +51,17 @@ export interface IFollowersDetails{
     following:[string]
   }]
 }
+export interface IUpdateProfile {
+  firstName?: string;
+  lastName?: string;
+  email?: string;
+  mobile?: string;
+  profilePic?: {
+      key?: string;
+      name: string;
+      url?: string;
+  };
+  isVerifiedEmail?: boolean;
+  password?:string;
+  currentPassword?:string;
+}

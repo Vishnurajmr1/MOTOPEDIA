@@ -1,6 +1,7 @@
 import { Component, inject } from '@angular/core';
 import {
   IFollowersDetails,
+  IUpdateProfile,
   UserDoc,
 } from '../../../shared/types/user.Interface';
 import { UserService } from '../../data-access/user.service';
@@ -14,11 +15,12 @@ import { IpostInterface } from 'src/app/shared/types/post.Interface';
   styleUrls: ['./profile-container.component.css'],
 })
 export class ProfileContainerComponent {
-  profile: UserDoc | undefined;
+
+  profile: UserDoc|undefined;
   followersDetails: IFollowersDetails | undefined;
   followersLength: number | undefined;
   followingLength: number | undefined;
-  posts: IpostInterface|undefined;
+  posts!: IpostInterface[];
   private userService = inject(UserService);
   private postService=inject(PostService)
   ngOnInit(): void {
@@ -39,12 +41,21 @@ export class ProfileContainerComponent {
     });
     this.postService.getPostByUser().subscribe({
       next:(res)=>{
-        this.posts=res;
         console.log(res)
+        console.log('hello')
+        this.posts=res.data;
       }
     })
   }
-
+  profileUpdateForm(formData: IUpdateProfile) {
+    this.userService.updateProfile(formData).subscribe({
+      next:(res)=>{
+        console.log(res);
+        window.location.reload()
+        
+      }
+    })
+    }
   displayContent:string='Profile';
   showProfile() {
     this.displayContent='Profile';

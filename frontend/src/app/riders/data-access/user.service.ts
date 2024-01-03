@@ -5,7 +5,7 @@ import { Store } from "@ngrx/store";
 import { Observable, Subject, takeUntil } from "rxjs";
 import { State, getCurrentUserData, isUserLoggedIn } from "../../auth/data-access/state";
 import { ICurrentUser } from "../../auth/data-access/state/auth.reducer";
-import { IFollowersDetails } from "src/app/shared/types/user.Interface";
+import { IFollowersDetails, IUpdateProfile } from "src/app/shared/types/user.Interface";
 @Injectable({
     providedIn:'root'
 })
@@ -32,6 +32,9 @@ export class UserService{
     }
     getConnection():Observable<IFollowersDetails>{
         return this.http.get<IFollowersDetails>(`${this.userApi}/connection`)
+    }
+    updateProfile(formData:IUpdateProfile):Observable<IUpdateProfile>{
+        return this.http.put<IUpdateProfile>(`${this.userApi}/update-profile`,formData)
     }
     ngOnDestroy() {
         this.ngUnsubscribe$.next();

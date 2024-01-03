@@ -31,4 +31,6 @@ export interface UserUpdateInfo {
     };
     isVerifiedEmail?: boolean;
     otp?: string | null;
+    password?:string;
+    currentPassword?:string;
 }

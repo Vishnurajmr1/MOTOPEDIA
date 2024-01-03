@@ -6,7 +6,7 @@ import { Observable, BehaviorSubject } from 'rxjs';
 import {State, getCurrentUserData, isUserLoggedIn } from '../../auth/data-access/state';
 import { ICurrentUser } from '../../auth/data-access/state/auth.reducer';
 import { CommentInterface } from '../../shared/types/comment.interface';
-import { IPost, IpostInterface } from '../../shared/types/post.Interface';
+import { IPost, IPostList, IpostInterface } from '../../shared/types/post.Interface';
 
 interface comments {
   status: string;
@@ -47,7 +47,7 @@ export class PostService {
   createComment(postId:string|null,commentDate:{content:string,parentId:string|null}):Observable<CommentInterface>{
     return this.http.post<CommentInterface>(`${this.postApi}/add-comment`,{postId,...commentDate})
   }
-  getPostByUser():Observable<IpostInterface>{
-    return this.http.get<IpostInterface>(`${this.postApi}/get-post-by-user`)
+  getPostByUser():Observable<IPostList>{
+    return this.http.get<IPostList>(`${this.postApi}/get-post-by-user`)
   }
 }

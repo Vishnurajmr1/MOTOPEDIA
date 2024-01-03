@@ -2,7 +2,7 @@ import { ConnectionDbRepositoryInterface } from '@src/application/repositories/c
 import { usersDbInterface } from '@src/application/repositories/userDBRepository';
 import HttpStatusCodes from '@src/constants/HttpStatusCodes';
 import { UserUpdateInfo } from '@src/types/userInterface';
-import AppError from '@src/utils/appError';
+import AppError from '../../../utils/appError';
 
 export const followUserUseCase = async (
     currentUserId: string | undefined,
