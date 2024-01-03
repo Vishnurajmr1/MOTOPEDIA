@@ -13,7 +13,6 @@
             id="first_name"
             formControlName="firstName"
             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            placeholder="{{ userData.firstName }}"
           />
         </div>
         <div>
@@ -27,35 +26,34 @@
             id="last_name"
             formControlName="lastName"
             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            placeholder="{{ userData.lastName }}"
           />
         </div>
-        <div>
-          <label
-            for="phone"
-            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-            >Phone number</label
-          >
-          <input
-            type="tel"
-            id="phone"
-            formControlName="mobile"
-            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            placeholder="{{ userData.mobile }}"
-            pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}"
-          />
-        </div>
-        <div>
+        <!-- <div>
           <label
             for="profile_pic"
             class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Profile Picture</label>
           <input
             type="file"
             id="profile-pic"
-            formControlName="profilePic"
+            (change)="onFileChange($event)"
             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-          />
-        </div>
+            />
+            <img [src]="imagePreview" *ngIf="imagePreview" alt="Profile Image Preview">
+        </div> -->
+      </div>
+      <div class="mb-6">
+        <label
+          for="phone"
+          class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+          >Phone number</label
+        >
+        <input
+          type="tel"
+          id="phone"
+          formControlName="mobile"
+          class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}"
+        />
       </div>
       <div class="mb-6">
         <label
@@ -68,8 +66,8 @@
           id="email"
           formControlName="email"
           class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-          placeholder="{{ userData.email }}"
         />
+        <small *ngIf="formControl['email'].errors?.['invalid']">Invalid email format</small>
       </div>
       <div class="mb-6">
         <label
@@ -114,16 +112,12 @@
           required
         />
         <p
-        class="text-red-500 font-light"
-        *ngIf="(profileUpdateFormControl.currentPassword.touched) && profileUpdateFormControl.currentPassword.errors?.['required']"
-      >
+        class="text-red-500 font-light" *ngIf="formControl['currentPassword'].errors?.['required']">
         Current Password is required
       </p>
       </div>
       <button
         type="submit"
-        [disabled]="!profileUpdateForm.valid"
-        [ngClass]="{'cursor-not-allowed': !profileUpdateForm.valid}"
         class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
       >
         Update

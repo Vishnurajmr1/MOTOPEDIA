@@ -1,4 +1,5 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { IpostInterface } from 'src/app/shared/types/post.Interface';
 
 @Component({
   selector: 'app-list-post',
@@ -7,5 +8,9 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ListPostComponent {
+@Input() posts!:IpostInterface[];
 
+ngOnInit():void{
+  console.log(this.posts);
+}
 }

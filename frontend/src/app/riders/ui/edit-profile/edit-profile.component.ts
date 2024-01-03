@@ -1,46 +1,94 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output, inject } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  Input,
+  Output,
+  SimpleChanges,
+  inject,
+} from '@angular/core';
 import { IUpdateProfile, UserDoc } from '../../../shared/types/user.Interface';
-import { AbstractControlOptions, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 import { CustomValidationService } from '../../../auth/data-access/custom-validation.service';
 
 @Component({
   selector: 'app-edit-profile',
   templateUrl: './edit-profile.component.html',
   styleUrls: ['./edit-profile.component.css'],
-  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class EditProfileComponent {
-  @Input() userData!:UserDoc;
-  @Output() userUpdateForm:EventEmitter<IUpdateProfile> =new EventEmitter();
-  private fb=inject(FormBuilder);
-  private customValidator=inject(CustomValidationService)
-
-  profileUpdateForm=this.fb.group({
-    firstName:[this.userData?.firstName||''],
-    lastName:[this.userData?.lastName||''],
-    email:[this.userData?.email||''],
-    mobile:[this.userData?.mobile||''],
-    currentPassword:['',Validators.required],
-    profilePic:[''],
-    password:['', Validators.compose([this.customValidator.patternValidator()])],
-    confirmPassword:['']
-  },{
-    validators:this.customValidator.MatchPassword('password','confirmPassword')
-  }as AbstractControlOptions
-  )
-
-  get profileUpdateFormControl(){
-    return this.profileUpdateForm.controls;
-  }
-
-  onSubmit(){
-    console.log(this.profileUpdateForm)
-    if(this.profileUpdateForm.valid){
-      this.userUpdateForm.emit(this.profileUpdateForm.value as IUpdateProfile)
+  @Input() userData: UserDoc | undefined;
+  @Output() userUpdateForm: EventEmitter<IUpdateProfile> = new EventEmitter();
+  private fb = inject(FormBuilder);
+  imagePreview:string='';
+  private customValidator = inject(CustomValidationService);
+  profileUpdateForm!: FormGroup;
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['userData'] && changes['userData'].currentValue) {
+      this.updateFormValues();
     }
   }
-closeModal() {
-  this.openModal=false;
+  ngOnInit(): void {
+    this.profileUpdateForm = this.fb.group({
+      firstName: [''],
+      lastName: [''],
+      email: ['',[Validators.email]],
+      mobile: [''],
+      currentPassword: ['', Validators.required],
+      profilePic: [''],
+      password: ['', Validators.compose([this.customValidator.patternValidator()])],
+      confirmPassword: [''],
+    },
+    {
+      validators: this.customValidator.MatchPassword('password', 'confirmPassword'),
+    });
+
+    console.log(this.userData);
+  }
+
+  updateFormValues(): void {
+    this.profileUpdateForm.patchValue({
+      firstName: this.userData?.firstName,
+      lastName: this.userData?.lastName,
+      email: this.userData?.email,
+      mobile: this.userData?.mobile
+    });
+  }
+get formControl(){
+  return this.profileUpdateForm.controls;
 }
-  openModal=true
+  onFileChange(event:any){
+    const file=event.target.files[0];
+    if(file){
+      console.log(file)
+      this.profileUpdateForm.patchValue({
+        profilePic:file
+      });
+      this.previewImage(file)
+    }
+  }
+  previewImage(file:File){
+    const reader=new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload=()=>{
+      this.imagePreview=reader.result as string;
+    }
+  }
+
+  onSubmit() {
+    console.log(this.profileUpdateForm);
+    console.log(this.userData);
+    // if (this.profileUpdateForm.valid) {
+      console.log(this.profileUpdateForm.value)
+      this.userUpdateForm.emit(this.profileUpdateForm.value as IUpdateProfile);
+  }
+
+  closeModal() {
+    this.openModal = false;
+  }
+  openModal = true;
 }

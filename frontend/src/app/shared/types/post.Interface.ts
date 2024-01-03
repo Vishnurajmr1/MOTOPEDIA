@@ -28,3 +28,12 @@ export interface IPost{
         image:File,
         comments?:CommentInterface
 }
+
+export interface IPostList extends IpostInterface{
+    status:string,
+    message:string,
+    data:[
+        IpostInterface
+    ]
+
+}

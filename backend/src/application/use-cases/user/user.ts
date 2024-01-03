@@ -1,11 +1,11 @@
-import AppError from '@src/utils/appError';
+import AppError from '../../../utils/appError';
 import { usersDbInterface } from '../../repositories/userDBRepository';
-import HttpStatusCodes from '@src/constants/HttpStatusCodes';
-import { UserInterface, UserUpdateInfo } from '@src/types/userInterface';
+import HttpStatusCodes from '../../../constants/HttpStatusCodes';
+import { UserInterface, UserUpdateInfo } from '../../../types/userInterface';
 import { ConnectionDbRepositoryInterface } from '../../repositories/connectionDBRepository';
 import { AuthServiceInterface } from '../../services/authServicesInterface';
-import User from '@src/frameworks/database/mongodb/models/userModel';
-import { CloudServiceInterface } from '@src/application/services/cloudServiceInterface';
+import User from '../../../frameworks/database/mongodb/models/userModel';
+import { CloudServiceInterface } from '../../services/cloudServiceInterface';
 
 export const getUserDetailUseCase = async (id: string | undefined, userDbRepository: ReturnType<usersDbInterface>) => {
     if (!id) {
@@ -51,7 +51,7 @@ export const editUserDetailsUseCase=async(
         const checkPassword=await authService.comparePassword(userData.currentPassword,userDetails.password)
         console.log(checkPassword)
          if(!checkPassword){
-             throw new AppError('Please enter your current password',HttpStatusCodes.BAD_REQUEST);
+             throw new AppError('Current Password is incorrect',HttpStatusCodes.BAD_REQUEST);
          }
          if(userData.password){
             const newPassword=await authService.hashPassword(userData.password);

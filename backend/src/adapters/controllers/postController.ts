@@ -109,6 +109,12 @@ const postController = (
             comments
         })
     })
+    const reportPostById=asyncHandler(async(req:Request,res:Response)=>{
+        const postId=req.params.postId;
+    })
+    const savePostByuserId=asyncHandler(async(req:Request,res:Response)=>{
+        
+    })
     return {
         addPost,
         editPost,
