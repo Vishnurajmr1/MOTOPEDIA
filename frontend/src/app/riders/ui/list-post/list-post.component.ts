@@ -9,8 +9,11 @@ import { IpostInterface } from 'src/app/shared/types/post.Interface';
 })
 export class ListPostComponent {
 @Input() posts!:IpostInterface[];
-
+showButton:boolean=false;
 ngOnInit():void{
   console.log(this.posts);
+}
+showEditButton(){
+  this.showButton=true;
 }
 }
