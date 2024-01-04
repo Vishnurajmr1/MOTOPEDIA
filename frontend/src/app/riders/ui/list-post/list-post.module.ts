@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ListPostComponent } from './list-post.component';
+import { PostCardModule } from '../../../posts/ui/post-card/post-card.module';
 
 
 
@@ -9,7 +10,8 @@ import { ListPostComponent } from './list-post.component';
     ListPostComponent
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    PostCardModule
   ],
   exports:[ListPostComponent]
 })

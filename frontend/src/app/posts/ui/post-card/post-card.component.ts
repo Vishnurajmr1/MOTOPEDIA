@@ -15,6 +15,9 @@ import { IpostInterface } from 'src/app/shared/types/post.Interface';
 export class PostCardComponent {
   @Input() post!: IpostInterface;
   @Input() currentUser:string|undefined;
+  @Input() showAuthorDetails=true;
+  @Input() showActions=true;
+  @Input() isProfilePage:boolean=false;
   @Output() like = new EventEmitter<{ postId: string; reactionType: string }>();
   @Output() follow = new EventEmitter<string>();
   @Output() comment = new EventEmitter<string>();
@@ -22,6 +25,12 @@ export class PostCardComponent {
   currentUserLiked:boolean=false;
   currentUserFollowing:boolean=false;
   followButton:boolean=true;
+  showAuthorActions:boolean=false;
+  showAuthorFunc(){
+    if(this.isProfilePage){
+      this.showAuthorActions=true;
+    }
+  }
   ngOnInit(){
     if(this.post.authorId._id==this.currentUser){
       this.followButton=false;
