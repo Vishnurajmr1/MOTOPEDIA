@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
+import { IpostInterface } from 'src/app/shared/types/post.Interface';
 
 @Component({
   selector: 'app-edit-post',
@@ -6,5 +7,8 @@ import { Component } from '@angular/core';
   styleUrls: ['./edit-post.component.css']
 })
 export class EditPostComponent {
-
+  @Input()
+  post!: IpostInterface;
+  @Input()
+  actionType!:'edit'|'delete'
 }

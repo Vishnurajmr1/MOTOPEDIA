@@ -34,11 +34,11 @@
     <div class="" *ngIf="post.image" [ngClass]="{'cursor-pointer':isProfilePage}">
             <img class="rounded-t-lg" src="{{ post.imageUrl }}" alt="" (click)="showAuthorFunc()"  />
             <div class="flex justify-evenly text-2xl bg-white" *ngIf="showAuthorActions">
-              <button  class="font-semibold"><span class="font-semibold ">
+              <button  class="font-semibold" (click)="editModal(post,'edit')"><span class="font-semibold ">
                 <i class="fa-solid fa-pen-to-square"></i>
               </span>
             </button>
-              <button class="font-bold hover:text-sm focus:text-sm"><span class="font-semibold "><i class="fa-solid fa-trash" style="color: #fd0839;"></i></span></button>
+              <button class="font-semibold" (click)="deleteModal(post,'delete')"><span class="font-semibold "><i class="fa-solid fa-trash" style="color: #fd0839;"></i></span></button>
             </div>
     </div>
     <div *ngIf="showActions">

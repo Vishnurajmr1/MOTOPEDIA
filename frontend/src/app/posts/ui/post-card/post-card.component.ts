@@ -25,12 +25,20 @@ export class PostCardComponent {
   currentUserLiked:boolean=false;
   currentUserFollowing:boolean=false;
   followButton:boolean=true;
+  @Output() showEditModal=new EventEmitter<{post:IpostInterface,actionType:string}>();
   showAuthorActions:boolean=false;
   showAuthorFunc(){
     if(this.isProfilePage){
       this.showAuthorActions=true;
     }
   }
+  editModal(post: IpostInterface,actionType: string) {
+    this.showEditModal.emit({post,actionType})
+  }
+  deleteModal(post:IpostInterface,actionType:string){
+    this.showEditModal.emit({post,actionType})
+  }
+  
   ngOnInit(){
     if(this.post.authorId._id==this.currentUser){
       this.followButton=false;

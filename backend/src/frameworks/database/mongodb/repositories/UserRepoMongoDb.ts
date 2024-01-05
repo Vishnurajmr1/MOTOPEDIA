@@ -53,6 +53,10 @@ export const userRepositoryMongoDB = () => {
         const total = await User.find().count();
         return total;
     };
+    // const searchUser=async()=>{
+    //     isFree:boolean,
+    //     searchQuery
+    // }
 
     return {
         addUser,

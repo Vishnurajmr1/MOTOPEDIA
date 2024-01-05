@@ -117,6 +117,21 @@ const userController = (
             connectionData,
         });
     });
+    // const searchCourse=asyncHandler(async(req:CustomRequest,res:Response)=>{
+    //     const {search,filter}=req.query as {search:string,filter:string};
+    //     const key=search.trim()===''?search:filter
+    //     const searchResult=await searchUserUseCase({
+    //         search,
+    //         filter,
+    //         cloudService,
+    //         dbRepositoryUser
+    //     })
+    //     res.status(200).json({
+    //         status:Status.SUCCESS,
+    //         message:'Successfully retrieved users based on the search query',
+    //         data:searchResult
+    //     })
+    // })
     return {
         getAllUsers,
         blockUser,

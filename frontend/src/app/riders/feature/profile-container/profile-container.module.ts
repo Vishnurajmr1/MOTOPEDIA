@@ -6,6 +6,8 @@ import { AsideModule } from "../../ui/aside/aside.module";
 import { EditPostModule } from 'src/app/posts/ui/edit-post/edit-post.module';
 import { EditProfileModule } from '../../ui/edit-profile/edit-profile.module';
 import { ListPostModule } from "../../ui/list-post/list-post.module";
+import { PostListModule } from 'src/app/posts/feature/post-list/post-list.module';
+import { ModalModule } from 'src/app/shared/ui/modal/modal.module';
 
 
 @NgModule({
@@ -18,7 +20,9 @@ import { ListPostModule } from "../../ui/list-post/list-post.module";
         AsideModule,
         EditPostModule,
         EditProfileModule,
-        ListPostModule
+        ListPostModule,
+        PostListModule,
+        ModalModule
     ]
 })
 export class ProfileContainerModule { }

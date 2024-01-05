@@ -31,7 +31,8 @@ const userRouter = () => {
     router.route('/follow/:id').post(jwtAuthMiddleware, controller.followUser);
     router.route('/unfollow/:id').post(jwtAuthMiddleware, controller.unfollowUser);
     router.route('/connection').get(jwtAuthMiddleware,controller.getConnections)
-    router.route('/update-profile').put(jwtAuthMiddleware,upload.single('image'),controller.editUserDetails)
+    router.route('/update-profile').put(jwtAuthMiddleware,upload.single('image'),controller.editUserDetails);
+    // router.route('/search-user').get(jwtAuthMiddleware,controller)
     return router;
 };
 

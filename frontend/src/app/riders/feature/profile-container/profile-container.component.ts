@@ -7,7 +7,7 @@ import {
 import { UserService } from '../../data-access/user.service';
 import { PostService } from '../../../posts/data-access/post.service';
 import { ProfileTab } from '../../../shared/types';
-import { IpostInterface } from 'src/app/shared/types/post.Interface';
+import { IpostInterface } from '../../../shared/types/post.Interface';
 
 @Component({
   selector: 'app-profile-container',
@@ -15,14 +15,26 @@ import { IpostInterface } from 'src/app/shared/types/post.Interface';
   styleUrls: ['./profile-container.component.css'],
 })
 export class ProfileContainerComponent {
+showtoggleModal(data:any) {
+  console.log(data)
+this.modalOpen=true
+this.post=data.post;
+this.actionType=data.actionType;
+}
 
   profile: UserDoc|undefined;
   followersDetails: IFollowersDetails | undefined;
   followersLength: number | undefined;
   followingLength: number | undefined;
   posts!: IpostInterface[];
+  actionType:string|undefined
+  post:IpostInterface|undefined;
   private userService = inject(UserService);
   private postService=inject(PostService)
+  closeModal(){
+  this.modalOpen=false;  
+  }
+  modalOpen: boolean=false;
   ngOnInit(): void {
     this.userService.getUserById().subscribe({
       next: (res) => {
@@ -41,8 +53,6 @@ export class ProfileContainerComponent {
     });
     this.postService.getPostByUser().subscribe({
       next:(res)=>{
-        console.log(res)
-        console.log('hello')
         this.posts=res.data;
       }
     })
@@ -50,7 +60,6 @@ export class ProfileContainerComponent {
   profileUpdateForm(formData: IUpdateProfile) {
     this.userService.updateProfile(formData).subscribe({
       next:(res)=>{
-        console.log(res);
         window.location.reload()
         
       }

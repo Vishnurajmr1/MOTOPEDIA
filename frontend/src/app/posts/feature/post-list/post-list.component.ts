@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, Input, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { IPost, IpostInterface } from 'src/app/shared/types/post.Interface';
 import { PostService } from '../../data-access/post.service';
@@ -53,6 +53,9 @@ export class PostListComponent {
         window.location.reload();
       },
     });
+  }
+  editPost(data:IPost){
+    // 
   }
   follow(data: string) {
     this.userService.followUser(data).subscribe({
