@@ -18,6 +18,7 @@ import { PostCommentsModule } from '../../ui/post-comments/post-comments.module'
     PostCardModule,
     CreatePostModule,
     PostCommentsModule
-  ]
+  ],
+  exports:[PostListComponent]
 })
 export class PostListModule { }
