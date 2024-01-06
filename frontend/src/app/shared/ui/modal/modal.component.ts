@@ -10,7 +10,7 @@ import { ModalService } from '../../data-access/global/modal.service';
   selector: 'app-modal',
   templateUrl: './modal.component.html',
   styleUrls: ['./modal.component.css'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  // changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ModalComponent {
   @Input() modalOpen: boolean = false;
@@ -18,7 +18,9 @@ export class ModalComponent {
 
   toggleModal() {
     this.modalOpen = !this.modalOpen;
+    console.log("hello")
     if (!this.modalOpen) {
+      console.log("hello world")
       this.close.emit();
     }
   }
