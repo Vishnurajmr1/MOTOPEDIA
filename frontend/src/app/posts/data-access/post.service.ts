@@ -50,4 +50,7 @@ export class PostService {
   getPostByUser():Observable<IPostList>{
     return this.http.get<IPostList>(`${this.postApi}/get-post-by-user`)
   }
+  deletePostByUser(postId:string):Observable<any>{
+    return this.http.delete<any>(`${this.postApi}/delete-post/${postId}`)
+  }
 }

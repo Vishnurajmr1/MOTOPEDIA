@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { IpostInterface } from 'src/app/shared/types/post.Interface';
 
 @Component({
@@ -8,7 +8,17 @@ import { IpostInterface } from 'src/app/shared/types/post.Interface';
 })
 export class EditPostComponent {
   @Input()
-  post!: IpostInterface;
+  post: IpostInterface|undefined;
   @Input()
-  actionType!:'edit'|'delete'
+  actionType:'edit'|'delete'|undefined
+  @Output()
+  closeRequest=new EventEmitter<void>();
+  @Output()
+  deletePost=new EventEmitter<string>();
+  closeModal(){
+    this.closeRequest.emit();
+  }
+  deletePostById(postId:string|undefined){
+    this.deletePost.emit(postId)
+  }
 }
