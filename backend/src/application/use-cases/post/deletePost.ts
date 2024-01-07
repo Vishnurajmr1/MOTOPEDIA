@@ -16,6 +16,7 @@ export const deletePostById = async (
         throw new AppError('Please provide a user id', HttpStatusCodes.BAD_REQUEST);
     }
     const post = await postDbRepository.getPostById(postId);
+    console.log(post)
     if (post?.authorId.toString() !== userId) {
         throw new AppError('You cannot delete this post', HttpStatusCodes.BAD_REQUEST);
     }

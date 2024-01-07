@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, Output, inject } from '@angular/core';
 import {
   IFollowersDetails,
   IUpdateProfile,
@@ -15,26 +15,26 @@ import { IpostInterface } from '../../../shared/types/post.Interface';
   styleUrls: ['./profile-container.component.css'],
 })
 export class ProfileContainerComponent {
-showtoggleModal(data:any) {
-  console.log(data)
-this.modalOpen=true
-this.post=data.post;
-this.actionType=data.actionType;
-}
+  showtoggleModal(data: any) {
+    console.log(data);
+    this.modalOpen = true;
+    this.post = data.post;
+    this.actionType = data.actionType;
+  }
 
-  profile: UserDoc|undefined;
+  profile: UserDoc | undefined;
   followersDetails: IFollowersDetails | undefined;
   followersLength: number | undefined;
   followingLength: number | undefined;
   posts!: IpostInterface[];
-  actionType:string|undefined
-  post:IpostInterface|undefined;
+  actionType: 'edit'|'delete'|undefined;
+  post: IpostInterface | undefined;
   private userService = inject(UserService);
-  private postService=inject(PostService)
-  closeModal(){
-  this.modalOpen=false;  
+  private postService = inject(PostService);
+  closeModal() {
+    this.modalOpen = false;
   }
-  modalOpen: boolean=false;
+  modalOpen: boolean = false;
   ngOnInit(): void {
     this.userService.getUserById().subscribe({
       next: (res) => {
@@ -52,28 +52,35 @@ this.actionType=data.actionType;
       },
     });
     this.postService.getPostByUser().subscribe({
-      next:(res)=>{
-        this.posts=res.data;
-      }
-    })
+      next: (res) => {
+        this.posts = res.data;
+      },
+    });
   }
   profileUpdateForm(formData: IUpdateProfile) {
     this.userService.updateProfile(formData).subscribe({
+      next: (res) => {
+        window.location.reload();
+      },
+    });
+  }
+  // delete post
+  deletePostById(postId:string){
+    this.postService.deletePostByUser(postId).subscribe({
       next:(res)=>{
-        window.location.reload()
-        
+        console.log(res);
+        // window.location.reload();
       }
     })
-    }
-  displayContent:string='Profile';
+  }
+  displayContent: string = 'Profile';
   showProfile() {
-    this.displayContent='Profile';
-      }
-    showPosts() {
-      this.displayContent='Posts'
-    }
-    showSavedPosts() {
-      this.displayContent='Saved Posts'
-    }
-  
+    this.displayContent = 'Profile';
+  }
+  showPosts() {
+    this.displayContent = 'Posts';
+  }
+  showSavedPosts() {
+    this.displayContent = 'Saved Posts';
+  }
 }

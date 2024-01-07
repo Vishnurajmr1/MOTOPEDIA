@@ -55,6 +55,7 @@ const postController = (
     const deletePost = asyncHandler(async (req: CustomRequest, res: Response) => {
         const userId = req.user?.Id;
         const postId: string = req.params.postId;
+        console.log(postId,userId)
         await deletePostById(userId, postId, cloudService, dbRepositoryPost);
         res.status(200).json({
             status: 'success',
