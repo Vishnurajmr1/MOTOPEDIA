@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { IpostInterface } from 'src/app/shared/types/post.Interface';
 
 @Component({
@@ -7,6 +8,8 @@ import { IpostInterface } from 'src/app/shared/types/post.Interface';
   styleUrls: ['./edit-post.component.css']
 })
 export class EditPostComponent {
+
+title:string=''
   @Input()
   post: IpostInterface|undefined;
   @Input()
@@ -20,5 +23,9 @@ export class EditPostComponent {
   }
   deletePostById(postId:string|undefined){
     this.deletePost.emit(postId)
+  }
+  updateField(field:string){
+    console.log(field)
+    // return field;
   }
 }

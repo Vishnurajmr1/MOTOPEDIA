@@ -8,6 +8,7 @@ import { UserService } from '../../data-access/user.service';
 import { PostService } from '../../../posts/data-access/post.service';
 import { ProfileTab } from '../../../shared/types';
 import { IpostInterface } from '../../../shared/types/post.Interface';
+import { SnackbarService } from '../../../shared/data-access/global/snackbar.service';
 
 @Component({
   selector: 'app-profile-container',
@@ -31,6 +32,7 @@ export class ProfileContainerComponent {
   post: IpostInterface | undefined;
   private userService = inject(UserService);
   private postService = inject(PostService);
+  private snakbarService=inject(SnackbarService)
   closeModal() {
     this.modalOpen = false;
   }
@@ -61,6 +63,7 @@ export class ProfileContainerComponent {
     this.userService.updateProfile(formData).subscribe({
       next: (res) => {
         window.location.reload();
+        this.snakbarService.showSuccess('Profile updated Successfully');
       },
     });
   }
@@ -69,7 +72,9 @@ export class ProfileContainerComponent {
     this.postService.deletePostByUser(postId).subscribe({
       next:(res)=>{
         console.log(res);
-        // window.location.reload();
+        this.closeModal()
+        this.snakbarService.showSuccess('Post deleted Successfully')
+        this.posts=this.posts.filter(post=>post._id!==postId)
       }
     })
   }

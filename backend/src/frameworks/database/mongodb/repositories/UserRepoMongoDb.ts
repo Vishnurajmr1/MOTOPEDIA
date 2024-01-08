@@ -23,7 +23,7 @@ export const userRepositoryMongoDB = () => {
         await User.updateOne({ _id: new mongoose.Types.ObjectId(id) }, { password });
     };
     const updateProfile = async (id: string, userInfo: UserUpdateInfo) => {
-        await User.updateOne(
+      const updatedProfile=  await User.updateOne(
             {
                 _id: new mongoose.Types.ObjectId(id),
             },
