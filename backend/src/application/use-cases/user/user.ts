@@ -63,7 +63,6 @@ export const editUserDetailsUseCase=async(
         const response=await cloudService.upload(profilePic,'Profile_photo');
         query['profilePic']=response;
     }
-    await userDbRepository.updateProfile(id,query)
 
 }
 
