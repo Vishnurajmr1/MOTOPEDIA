@@ -28,6 +28,12 @@ export interface IPost{
         image:File,
         comments?:CommentInterface
 }
+export interface IEditPost{
+    _id: string;
+    title?:string;
+    description?:string;
+    image?:File
+}
 
 export interface IPostList extends IpostInterface{
     status:string,

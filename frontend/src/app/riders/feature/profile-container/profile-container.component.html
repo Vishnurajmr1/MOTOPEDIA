@@ -42,7 +42,7 @@
 <!-- Modal for edit and delete post -->
 <app-modal [modalOpen]="modalOpen" (close)="closeModal()">
     <div class="p-4 md:p-5 text-center">
-        <app-edit-post [post]="post" [actionType]="actionType" (closeRequest)="closeModal()" (deletePost)="deletePostById($event)" ></app-edit-post>
+        <app-edit-post [post]="post" [actionType]="actionType" (closeRequest)="closeModal()" (deletePost)="deletePostById($event)" (updatePost)="handleUpdatePost($event)" ></app-edit-post>
     </div>
 </app-modal>
 
