@@ -7,7 +7,7 @@ import {
 import { UserService } from '../../data-access/user.service';
 import { PostService } from '../../../posts/data-access/post.service';
 import { ProfileTab } from '../../../shared/types';
-import { IpostInterface } from '../../../shared/types/post.Interface';
+import { IEditPost, IpostInterface } from '../../../shared/types/post.Interface';
 import { SnackbarService } from '../../../shared/data-access/global/snackbar.service';
 
 @Component({
@@ -16,6 +16,7 @@ import { SnackbarService } from '../../../shared/data-access/global/snackbar.ser
   styleUrls: ['./profile-container.component.css'],
 })
 export class ProfileContainerComponent {
+
   showtoggleModal(data: any) {
     console.log(data);
     this.modalOpen = true;
@@ -78,6 +79,18 @@ export class ProfileContainerComponent {
       }
     })
   }
+  //update post
+  handleUpdatePost(post:IEditPost) {
+    console.log(post)
+    this.postService.updatePostByUser(post).subscribe({
+      next:(res)=>{{
+        console.log(res);
+        this.snakbarService.showSuccess('post updated successfully')
+        
+      }}
+    })
+    }
+    
   displayContent: string = 'Profile';
   showProfile() {
     this.displayContent = 'Profile';

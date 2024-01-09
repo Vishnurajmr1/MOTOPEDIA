@@ -1,9 +1,10 @@
 <div *ngIf="actionType === 'edit'">
     <div>
-     <h3>{{post?.title}}</h3>
-    <input [(ngModel)]="title">
+     <h3 *ngIf="!(editmode && editableField==='title')" (dblclick)="enableEdit('title')" class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">{{post?.title}}</h3>
+     <input *ngIf="editableField==='title'" (focusout)="onFocusOut()" (keydown.enter)="($any($event.target).blur())" type="text"  [(ngModel)]="title">
     </div>
-    <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">{{post?.description}}</h3>
+    <h3 *ngIf="!(editmode && editableField==='description')" (dblclick)="enableEdit('description')" class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">{{post?.description}}</h3>
+    <input *ngIf="editableField==='description'" (focusout)="onFocusOut()" (keydown.enter)="($any($event.target).blur())" type="text" [(ngModel)]="description">
     <div>
         <img [src]="post?.imageUrl" alt="">
     </div>

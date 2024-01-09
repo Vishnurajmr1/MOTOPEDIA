@@ -45,6 +45,7 @@ const postController = (
         const files: Express.Multer.File[] = req.files as Express.Multer.File[];
         const userId = req.user?.Id;
         const postId: string = req.params.postId;
+        console.log(post,postId);
         const response = await editPostUseCase(userId, postId, files, post, cloudService, dbRepositoryPost);
         res.status(200).json({
             status: 'success',
