@@ -39,6 +39,14 @@ const routes: Routes = [
       ),
       canActivate:[authGuard]
   },
+  {
+    path:'chat',
+    loadChildren:()=>
+    import('./chats/feature/chat-shell/chat-shell.module').then(
+      m=>m.ChatShellModule
+    ),
+    canActivate:[authGuard]
+  },
 
   {
     path: 'admin',

@@ -51,12 +51,15 @@ export class EditProfileComponent {
   }
 
   updateFormValues(): void {
-    this.profileUpdateForm.patchValue({
-      firstName: this.userData?.firstName,
-      lastName: this.userData?.lastName,
-      email: this.userData?.email,
-      mobile: this.userData?.mobile
-    });
+    if(this.userData){
+      this.profileUpdateForm.patchValue({
+        firstName: this.userData?.firstName,
+        lastName: this.userData?.lastName,
+        email: this.userData?.email,
+        mobile: this.userData?.mobile
+      });
+    }
+   
   }
 get formControl(){
   return this.profileUpdateForm.controls;
