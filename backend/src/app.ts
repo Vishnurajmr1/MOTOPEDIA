@@ -7,11 +7,25 @@ import expressConfig from './frameworks/webserver/express';
 import serverConfig from './frameworks/webserver/server';
 import errorHandlingMiddleware from './frameworks/webserver/middlewares/errorHandlingMiddleware';
 import routes from './frameworks/webserver/routes';
+import socketConfig from './frameworks/websocket/socket';
+import { authService } from './frameworks/services/authService';
+import { Server } from 'socket.io';
+import { ClientToServerEvents, ServerToClientEvents, SocketData } from './types/socket.Interfact';
+import configKeys from './config';
+import io from './frameworks/websocket/socket.connection';
 
 colors?.enable();
 
 const app: Application = express();
-const server = http.createServer(app);
+export const server = http.createServer(app);
+
+// const io=new Server<ClientToServerEvents,ServerToClientEvents,SocketData>(server,{
+//     cors:{
+//         origin:"*",
+//         methods:["GET","POST","PUT","PATCH"]
+//     }
+// })
+socketConfig(io,authService());
 connectToMongodb();
 expressConfig(app);
 
