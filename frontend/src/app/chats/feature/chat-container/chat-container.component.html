@@ -1,1 +1,33 @@
-<p>chat-container works!</p>
+<!-- <div class="bg-red-300 text-center">
+    <app-aside></app-aside>
+    <app-chat-detail></app-chat-detail>
+</div> -->
+
+
+<div class="bg-gray-100 m-2 rounded-lg">
+    <div class="container mx-auto py-8">
+        <div class="grid grid-cols-4 sm:grid-cols-12 gap-6 px-4">
+            <!-- Sidebar div -->
+            <div class="col-span-6 sm:col-span-3">
+                <div class="grid gap-2">
+                    <app-search-user></app-search-user>
+                    <app-aside></app-aside>
+                    </div>
+            </div>
+        <!-- Chat content div -->
+            <div class="col-span-6 sm:col-span-9">
+            <div class="bg-gray-50 drop-shadow-xl rounded-lg p-4">
+                <app-chat-detail></app-chat-detail>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal for edit and delete post -->
+<!-- <app-modal [modalOpen]="modalOpen" (close)="closeModal()">
+    <div class="p-4 md:p-5 text-center">
+        <app-edit-post [post]="post" [actionType]="actionType" (closeRequest)="closeModal()" (deletePost)="deletePostById($event)" (updatePost)="handleUpdatePost($event)" ></app-edit-post>
+    </div>
+</app-modal> -->
+
+

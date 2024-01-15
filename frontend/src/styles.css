@@ -14,6 +14,7 @@ body{
     font-family:'Montserrat', sans-serif;
     background: linear-gradient(0.25turn,#5eabab,#eb6d3b);
     /* background: linear-gradient(#51A3A3, #ED581C); */
+    /* background: rgba(0, 0,0,1); */
 }
 
 .background-form{

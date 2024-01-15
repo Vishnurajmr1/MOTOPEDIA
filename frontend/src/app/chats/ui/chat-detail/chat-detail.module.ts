@@ -1,18 +1,18 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { AsideComponent } from './aside.component';
+import { ChatDetailComponent } from './chat-detail.component';
 
 
 
 @NgModule({
   declarations: [
-    AsideComponent
+    ChatDetailComponent
   ],
   imports: [
     CommonModule
   ],
   exports:[
-    AsideComponent
+    ChatDetailComponent
   ]
 })
-export class AsideModule { }
+export class ChatDetailModule { }

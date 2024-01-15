@@ -1,18 +1,18 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { AsideComponent } from './aside.component';
+import { SearchUserComponent } from './search-user.component';
 
 
 
 @NgModule({
   declarations: [
-    AsideComponent
+    SearchUserComponent
   ],
   imports: [
     CommonModule
   ],
   exports:[
-    AsideComponent
+    SearchUserComponent
   ]
 })
-export class AsideModule { }
+export class SearchUserModule { }
