@@ -11,7 +11,7 @@ export class ChatService {
   private currentUserId = new BehaviorSubject<string>('');
   private chatHistory = new BehaviorSubject<any>([]);
   constructor() {
-    this.socket = io('http://localhost:4200', {
+    this.socket = io('http://localhost:3000', {
       transports: ['websocket'],
     });
     this.socket.on('', (data: any) => {
@@ -65,7 +65,7 @@ export class ChatService {
     this.chatHistory.next(data);
   }
 
-  
+
   // getMessages(){
   //   let observable=new Observable<{user:String,message:String}>(observer=>{
   //     this.socket.on('new-message',(data)=>{
