@@ -12,6 +12,7 @@ const socketConfig = (
     const addUser=(userId:string,socketId:any)=>{
         !users.some((user)=>user.userId===userId)&&
         users.push({userId,socketId})
+        console.log("New User Connected",users);
     }
     const removeUser=(socketId:any)=>{
         users=users.filter((user)=>user.socketId!==socketId)
@@ -32,7 +33,6 @@ const socketConfig = (
 
         socket.on('request_data', () => {
             const data = { message: 'Hello from the server!' };
-
             socket.emit('response_data', data);
         });
 
