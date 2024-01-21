@@ -1,10 +1,9 @@
-import mongoose from 'mongoose';
 import Chat from '../models/chat.Model';
-import { IChat } from '@src/types/chatInterface';
+import { IChat } from '../../../../types/chatInterface';
 
 export const chatRepositoryMongoDB=()=>{
     const getExistingChat=async(data:IChat)=>{
-        const existingChat=await Chat.findOne({
+        await Chat.findOne({
             $and:[{members:data.senderId},{members:data.recieverId}]
         })
     }

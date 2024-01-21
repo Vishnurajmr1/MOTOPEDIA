@@ -8,6 +8,18 @@ const socketConfig = (
     io: Server<ClientToServerEvents, ServerToClientEvents, SocketData>,
     authService: ReturnType<AuthService>,
 ) => {
+    let users:any[]=[];
+    const addUser=(userId:string,socketId:any)=>{
+        !users.some((user)=>user.userId===userId)&&
+        users.push({userId,socketId})
+        console.log("New User Connected",users);
+    }
+    const removeUser=(socketId:any)=>{
+        users=users.filter((user)=>user.socketId!==socketId)
+    }
+    const getUser=(userId:string)=>{
+        return users.find((user)=>user.userId===userId);
+    }
     io.use((socket, next) => {
         if (socket.handshake.query && socket.handshake.query.token) {
             const res: any = authService.verifyToken(socket.handshake.query.token as string);
@@ -21,15 +33,14 @@ const socketConfig = (
 
         socket.on('request_data', () => {
             const data = { message: 'Hello from the server!' };
-
             socket.emit('response_data', data);
         });
 
-        socket.on('join_room', (userId: string) => {
-            socket.join(userId);
-            console.log(`User ${socket.id} joined room${userId}`);
+        socket.on('addUser', (userId: string) => {
+            console.log(userId,'user added');
+            addUser(userId,socket.id)
+            io.emit('getUsers',users) 
         });
-
         socket.on('disconnect', () => {
             console.log(`User disconnected:${socket.id}`);
         });
