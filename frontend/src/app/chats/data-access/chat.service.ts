@@ -11,10 +11,13 @@ export class ChatService {
   private currentUserId = new BehaviorSubject<string>('');
   private chatHistory = new BehaviorSubject<any>([]);
   constructor() {
-    this.socket = io('http://localhost:3000', {
-      transports: ['websocket'],
+    this.socket = io('http://localhost:3000',{
+      path:'/api/chat/socket.io',
+      transports:['websocket'],
+      withCredentials:true,
+      autoConnect:false,
     });
-    this.socket.on('', (data: any) => {
+    this.socket.on('getUsers', (data: any) => {
       console.log('active sockets', data);
     });
     this.socket.on('receiveMessage', (message) => {
@@ -31,7 +34,6 @@ export class ChatService {
       }
     });
   }
-
   connect() {
     this.socket.connect();
   }
@@ -47,7 +49,6 @@ export class ChatService {
   getCurrentUserId() {
     return this.currentUserId.getValue();
   }
-
   sendMessage(message: string) {
     const participantId = this.participantId.getValue();
     const senderId = this.currentUserId.getValue();
