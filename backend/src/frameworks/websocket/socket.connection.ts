@@ -1,12 +1,15 @@
-import { Server } from 'socket.io';
+import { Server  } from 'socket.io';
 import { ClientToServerEvents, ServerToClientEvents, SocketData } from '../../types/socket.Interfact';
-import { server } from '../../app';
-
-
-const io= new Server<ClientToServerEvents,ServerToClientEvents,SocketData>(server,{
-    cors:{
-        origin:"*",
-        methods:["GET","POST"]
-    }
-})
+import http from 'http';
+import configKeys from '@src/config';
+import server from '../../app';
+const io = new Server<ClientToServerEvents,ServerToClientEvents,SocketData>(server, {
+    path: '/api/chat/socket.io',
+    cors: {
+        origin: '*',
+        allowedHeaders: ['Authentication'],
+        credentials: true,
+    },
+});
 export default io;
+

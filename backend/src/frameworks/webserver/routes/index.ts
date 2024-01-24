@@ -7,12 +7,14 @@ import jwtAuthMiddleware from '../middlewares/userAuthMiddleware';
 import roleCheckMiddleware from '../middlewares/roleCheckMiddleware';
 import adminRouter from './admin';
 import postRouter from './posts';
+import chatRouter from './chat';
 
 const routes=(app:Application)=>{
     app.use('/api/auth',authRouter());
     app.use('/api/all/refresh-token',refreshRouter());
     app.use('/api/admin',jwtAuthMiddleware,roleCheckMiddleware('admin'),adminRouter());
-    app.use('/api/posts',postRouter())
+    app.use('/api/posts',postRouter());
+    app.use('/api/chat',chatRouter())
     app.use('/api/user',userRouter());
 }
 

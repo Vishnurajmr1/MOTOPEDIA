@@ -3,9 +3,10 @@ import { IChat } from '../../../../types/chatInterface';
 
 export const chatRepositoryMongoDB=()=>{
     const getExistingChat=async(data:IChat)=>{
-        await Chat.findOne({
+        const chatHistory=await Chat.findOne({
             $and:[{members:data.senderId},{members:data.recieverId}]
         })
+        return chatHistory;
     }
     const addNewChat=async(data:IChat)=>{
         const newChat=new Chat({members:[data]});

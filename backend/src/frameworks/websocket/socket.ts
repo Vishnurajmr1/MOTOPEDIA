@@ -5,7 +5,7 @@ import AppError from '../../utils/appError';
 import HttpStatusCodes from '../../constants/HttpStatusCodes';
 
 const socketConfig = (
-    io: Server<ClientToServerEvents, ServerToClientEvents, SocketData>,
+    io:Server<ClientToServerEvents,ServerToClientEvents,SocketData>,
     authService: ReturnType<AuthService>,
 ) => {
     let users:any[]=[];
@@ -20,17 +20,8 @@ const socketConfig = (
     const getUser=(userId:string)=>{
         return users.find((user)=>user.userId===userId);
     }
-    io.use((socket, next) => {
-        if (socket.handshake.query && socket.handshake.query.token) {
-            const res: any = authService.verifyToken(socket.handshake.query.token as string);
-            socket.data.userId = res.payload;
-            next();
-        } else {
-            next(new AppError('Authentication token not provided', HttpStatusCodes.UNAUTHORIZED));
-        }
-    }).on('connection', (socket: Socket<ClientToServerEvents, ServerToClientEvents, SocketData>) => {
+    io.on('connection', (socket:any) => {
         console.log(`User connected:${socket.id}`.bg_magenta);
-
         socket.on('request_data', () => {
             const data = { message: 'Hello from the server!' };
             socket.emit('response_data', data);

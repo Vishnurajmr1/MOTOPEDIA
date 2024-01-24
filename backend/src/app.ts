@@ -1,5 +1,4 @@
 import express, { Application, NextFunction, Request, Response } from 'express';
-import http from 'http';
 import connectToMongodb from './frameworks/database/mongodb/connection';
 import colors from 'colors.ts';
 import AppError from './utils/appError';
@@ -13,22 +12,15 @@ import { Server } from 'socket.io';
 import { ClientToServerEvents, ServerToClientEvents, SocketData } from './types/socket.Interfact';
 import configKeys from './config';
 import io from './frameworks/websocket/socket.connection';
-
+import { createServer } from 'http';
+import { setupSocketIO } from './frameworks/websocket/socket01';
 colors?.enable();
 
 const app: Application = express();
-export const server = http.createServer(app);
-
-// const io=new Server<ClientToServerEvents,ServerToClientEvents,SocketData>(server,{
-//     cors:{
-//         origin:"*",
-//         methods:["GET","POST","PUT","PATCH"]
-//     }
-// })
-socketConfig(io,authService());
+const server = createServer(app);
 connectToMongodb();
 expressConfig(app);
-
+// setupSocketIO(server)
 routes(app)
 
 //error handling middleware
@@ -40,3 +32,4 @@ app.all('*', (req: Request, res: Response, next: NextFunction) => {
 });
 
 serverConfig(server).startServer();
+export default server;
