@@ -6,21 +6,15 @@ import expressConfig from './frameworks/webserver/express';
 import serverConfig from './frameworks/webserver/server';
 import errorHandlingMiddleware from './frameworks/webserver/middlewares/errorHandlingMiddleware';
 import routes from './frameworks/webserver/routes';
-import socketConfig from './frameworks/websocket/socket';
-import { authService } from './frameworks/services/authService';
-import { Server } from 'socket.io';
-import { ClientToServerEvents, ServerToClientEvents, SocketData } from './types/socket.Interfact';
-import configKeys from './config';
-import io from './frameworks/websocket/socket.connection';
 import { createServer } from 'http';
-import { setupSocketIO } from './frameworks/websocket/socket01';
+import { setupSocketIO } from './frameworks/websocket/socket';
 colors?.enable();
 
 const app: Application = express();
 const server = createServer(app);
 connectToMongodb();
 expressConfig(app);
-// setupSocketIO(server)
+setupSocketIO(server)
 routes(app)
 
 //error handling middleware
