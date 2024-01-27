@@ -32,7 +32,7 @@ const unfollowUser = async (userId: string, followeeUserId: string) => {
         return { userConnection, followeeConnection };
     };
 const connectionByUser=async(userId:string)=>{
-    const connectionData=await Connection.find({userId:userId})
+    const connectionData=await Connection.find({userId:userId}).populate('followers')
     return connectionData;
 }
     return{

@@ -1,3 +1,5 @@
+import { ICurrentUser } from "src/app/auth/data-access/state/auth.reducer";
+
 export interface ISignUp {
   firstName: string;
   lastName: string;
@@ -47,7 +49,7 @@ export interface IFollowersDetails{
   connectionData:[{
     _id:string;
     userId:string;
-    followers:[string];
+    followers:[ICurrentUser];
     following:[string]
   }]
 }
