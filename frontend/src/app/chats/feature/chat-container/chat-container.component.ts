@@ -1,8 +1,5 @@
-import { Component, inject } from '@angular/core';
+import { Component, Input, inject } from '@angular/core';
 import { ChatService } from '../../data-access/chat.service';
-import { Socket, io } from 'socket.io-client';
-import { AuthService } from '../../../../app/auth/data-access/auth.service';
-import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Observable, Subject, takeUntil } from 'rxjs';
 import {
@@ -10,6 +7,7 @@ import {
   getCurrentUserData,
 } from '../../../../app/auth/data-access/state';
 import { ICurrentUser } from '../../../../app/auth/data-access/state/auth.reducer';
+import { UserService } from '../../../../app/riders/data-access/user.service';
 
 @Component({
   selector: 'app-chat-container',
@@ -18,8 +16,10 @@ import { ICurrentUser } from '../../../../app/auth/data-access/state/auth.reduce
 })
 export class ChatContainerComponent {
   private chatService = inject(ChatService);
+  private userService=inject(UserService);
   currentUser$!: Observable<ICurrentUser>;
   protected users = [];
+  followers!:[ICurrentUser];
   protected currentUserId: string = '';
   private ngUnsubscribe$ = new Subject<void>();
   constructor(private store: Store<State>) {
@@ -35,6 +35,10 @@ export class ChatContainerComponent {
     const currentUser=this.chatService.getCurrentUserId()
     console.log(currentUser)
     this.chatService.addUser();
+    this.userService.getConnection().subscribe((user)=>{
+     this.followers=user.connectionData[0].followers
+     console.log(this.followers);
+    })
   }
 
   ngOnDestroy(){

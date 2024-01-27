@@ -1,6 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { Socket, io } from 'socket.io-client';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { UserService } from '../../../app/riders/data-access/user.service';
 
 @Injectable({
   providedIn: 'root',
@@ -49,6 +50,9 @@ export class ChatService {
   getCurrentUserId() {
     return this.currentUserId.getValue();
   }
+  getChatHistory():Observable<any>{
+    return this.chatHistory.asObservable()
+  }
   sendMessage(message: string) {
     const participantId = this.participantId.getValue();
     const senderId = this.currentUserId.getValue();
@@ -59,14 +63,12 @@ export class ChatService {
     };
     this.socket.emit('new-message', data);
   }
+  setChatHistory(data: any) {
+    this.chatHistory.next(data);
+  } 
   disconnect() {
     this.socket.disconnect();
   }
-  setChatHistory(data: any) {
-    this.chatHistory.next(data);
-  }
-
-
   // getMessages(){
   //   let observable=new Observable<{user:String,message:String}>(observer=>{
   //     this.socket.on('new-message',(data)=>{

@@ -1,4 +1,5 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { ICurrentUser } from 'src/app/auth/data-access/state/auth.reducer';
 
 @Component({
   selector: 'app-aside',
@@ -6,5 +7,5 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
   styleUrls: ['./aside.component.css'],
 })
 export class AsideComponent {
-
+  @Input() followers!:[ICurrentUser];
 }
