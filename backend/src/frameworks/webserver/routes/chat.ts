@@ -7,7 +7,7 @@ import { chatRepositoryMongoDB } from "../../../frameworks/database/mongodb/repo
 const chatRouter=()=>{
     const router=express.Router();
     const controller=chatController(chatDbRepository,chatRepositoryMongoDB);
-    router.route('/:userId').get(controller.createChat);
+    // router.route('/:userId').get(controller.createChat);
     router.route('/find/:firstId/:secondId').get(jwtAuthMiddleware);
     router.route('/createChat').post();
     return router;

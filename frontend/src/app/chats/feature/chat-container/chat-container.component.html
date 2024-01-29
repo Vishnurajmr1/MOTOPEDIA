@@ -1,24 +1,22 @@
-<!-- <div class="bg-red-300 text-center">
-    <app-aside></app-aside>
-    <app-chat-detail></app-chat-detail>
-</div> -->
-
-
 <div class="bg-gray-100 m-2 rounded-lg">
-    <div class="container mx-auto py-8">
+    <div class="mx-auto py-8">
         <div class="grid grid-cols-4 sm:grid-cols-12 gap-6 px-4">
             <!-- Sidebar div -->
-            <div class="col-span-6 sm:col-span-6">
-                <div class="grid gap-2">
+            <div class="col-span-6 sm:col-span-3">
+                <div class="flex flex-col gap-2">
                     <app-search-user></app-search-user>
-                    <app-aside [followers]="followers"></app-aside>
+                    <app-aside [followers]="followers"
+                    (chatSelected)="onChatSelected($event)" 
+                    ></app-aside>
                     </div>
             </div>
         <!-- Chat content div -->
-            <div class="col-span-6 sm:col-span-6">
+            <div class="col-span-6 sm:col-span-9">
             <div class="bg-gray-50 drop-shadow-xl rounded-lg p-4">
-                <app-chat-detail></app-chat-detail>
-                <p>{{currentUserId}}</p>
+                <app-chat-detail [messageRecieved]="messageRecieved"
+                [chatData]="selectedChat" 
+                (messageSend)="onMessageSend($event)"
+                ></app-chat-detail>
             </div>
         </div>
     </div>
