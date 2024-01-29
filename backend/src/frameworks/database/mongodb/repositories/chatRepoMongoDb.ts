@@ -2,20 +2,27 @@ import Chat from '../models/chat.Model';
 import { IChat } from '../../../../types/chatInterface';
 
 export const chatRepositoryMongoDB=()=>{
-    const getExistingChat=async(data:IChat)=>{
-        const chatHistory=await Chat.findOne({
-            $and:[{members:data.senderId},{members:data.recieverId}]
-        })
-        return chatHistory;
-    }
+    // const getExistingChat=async(data:IChat)=>{
+    //     const chatHistory=await Chat.findOne({
+    //         $and:[{senderId:data.senderId},{recieverId:data.recieverId}]
+    //     })
+    //     return chatHistory;
+    // }
     const addNewChat=async(data:IChat)=>{
-        const newChat=new Chat({members:[data]});
-        return await newChat.save();
+        const newChat=await Chat.create({
+            text:data.text,
+            users:[data.senderId,data.recieverId],
+            sender:data.senderId
+        });
+        return newChat.populate({
+            select:'userId',
+            path:'sender'
+        });
     }
 
     return {
-        getExistingChat,
         addNewChat
+        // getExistingChat,
     }
 }
 

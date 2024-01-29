@@ -1,56 +1,67 @@
-<div>
-    <!-- Chat visible area -->
-    <div>   
-<div class="flex items-start gap-2.5">
-      <img class="w-8 h-8 rounded-full" src="" alt="Jese image">
-      <div class="flex flex-col gap-1 w-full max-w-[320px]">
-         <div class="flex items-center space-x-2 rtl:space-x-reverse">
-            <span class="text-sm font-semibold text-gray-900 dark:text-white">Bonnie Green</span>
-            <span class="text-sm font-normal text-gray-500 dark:text-gray-400">11:46</span>
-       </div>
-       <div class="flex flex-col leading-1.5 p-4 border-gray-200 bg-gray-100 rounded-e-xl rounded-es-xl dark:bg-gray-700">
-          <p class="text-sm font-normal text-gray-900 dark:text-white"> That's awesome. I think our users will really appreciate the improvements.</p>
-       </div>
-       <span class="text-sm font-normal text-gray-500 dark:text-gray-400">Delivered</span>
-    </div>
-    <button id="dropdownMenuIconButton" data-dropdown-toggle="dropdownDots" data-dropdown-placement="bottom-start" class="inline-flex self-center items-center p-2 text-sm font-medium text-center text-gray-900 bg-white rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none dark:text-white focus:ring-gray-50 dark:bg-gray-900 dark:hover:bg-gray-800 dark:focus:ring-gray-600" type="button">
-       <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 4 15">
-          <path d="M3.5 1.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Zm0 6.041a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Zm0 5.959a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Z"/>
-       </svg>
-    </button>
-    <div id="dropdownDots" class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-40 dark:bg-gray-700 dark:divide-gray-600">
-       <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownMenuIconButton">
-          <li>
-             <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Reply</a>
-          </li>
-          <li>
-             <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Forward</a>
-          </li>
-          <li>
-             <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Copy</a>
-          </li>
-          <li>
-             <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Report</a>
-          </li>
-          <li>
-             <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Delete</a>
-          </li>
-       </ul>
-    </div>
- </div>
+ <ng-container  *ngIf="messageRecieved;else noMessage">
+   <div class="bg-gray-100 w-full flex items-center gap-3 p-4">
+      <img class="w-8 h-8 rounded-full" src="/assets/images/icons/profile-picture-5.jpg" alt="Jese image">
+      <p class="text-black">{{chatData.firstName}} {{chatData.lastName}}</p>
+   </div>
+   <div class="flex flex-col flex-auto h-full p-6">
+      <div
+        class="flex flex-col flex-auto flex-shrink-0 rounded-2xl  h-full"
+      >
+        <div class="flex flex-col h-full overflow-x-auto mb-4">
+          <div class="flex flex-col h-full">
+            <div class="grid grid-cols-12 gap-y-2">
+              <div class="col-start-1 col-end-8 p-3 rounded-lg">
+                <div class="flex flex-row items-center">
+                  <div
+                    class="flex items-center justify-center h-10 w-10 rounded-full bg-indigo-500 flex-shrink-0"
+                  >
+                    A
+                  </div>
+                  <div
+                    class="relative ml-3 text-sm bg-white py-2 px-4 shadow rounded-xl"
+                  >
+                    <div>Hey How are you today?</div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-start-6 col-end-13 p-3 rounded-lg">
+                <div class="flex items-center justify-start flex-row-reverse">
+                  <div
+                    class="flex items-center justify-center h-10 w-10 rounded-full bg-indigo-500 flex-shrink-0"
+                  >
+                    A
+                  </div>
+                  <div
+                    class="relative mr-3 text-sm bg-gray-100 py-2 px-4 shadow rounded-xl"
+                  >
+                    <div>I'm ok what about you?</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+       
+      </div>
     </div>
     <!-- Chat send area -->
-    <div>
-        <form>
+    <div class="mt-4">
+        <form  (ngSubmit)="sendMessage()">
             <div class="flex gap-4">
                 <label for="search-dropdown" class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Your Email</label>
                 <div class="relative w-full">
-                    <input type="search" id="search-dropdown" class=" rounded-md block p-2.5 w-full z-20 text-sm text-gray-900 bg-gray-50 rounded-e-lg rounded-s-gray-100 rounded-s-2 border border-gray-300 focus:ring-0  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:border-blue-500" placeholder="Type here..." required>
-                    <button type="submit" class="absolute top-0 end-0 p-2.5 h-full text-sm font-medium text-white bg-gray-700 rounded-e-lg border">
+                    <input [(ngModel)]="message" name="message"  type="text" id="search-dropdown" class=" rounded-md block p-2.5 w-full z-20 text-sm text-gray-900 bg-gray-50 rounded-e-lg rounded-s-gray-100 rounded-s-2 border border-gray-300 focus:ring-0  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:border-blue-500" placeholder="Type here..." required>
+                    <!-- <button type="submit" class="absolute top-0 end-0 p-2.5 h-full text-sm font-medium text-white bg-gray-700 rounded-e-lg border">
                         <i class="fa-solid fa-paper-plane"></i>
-                    </button>
+                    </button> -->
                 </div>
             </div>
         </form>        
     </div>
-</div>
+</ng-container> 
+<ng-template #noMessage>
+   <div class="flex items-center gap-2.5 flex-col ">
+      <img src="/assets/images/icons/inbox.png" alt="" class="m-auto">
+      <h1 class="font-bold">No Chats</h1>
+   </div>
+</ng-template>

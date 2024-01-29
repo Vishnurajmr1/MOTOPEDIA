@@ -20,6 +20,8 @@ export class ChatContainerComponent {
   currentUser$!: Observable<ICurrentUser>;
   protected users = [];
   followers!:[ICurrentUser];
+  messageRecieved=false;
+  selectedChat:any;
   protected currentUserId: string = '';
   private ngUnsubscribe$ = new Subject<void>();
   constructor(private store: Store<State>) {
@@ -28,6 +30,15 @@ export class ChatContainerComponent {
       this.currentUserId = res?.userId || '';
     });
     console.log(this.currentUserId);
+  }
+  onChatSelected(chat:any):void{
+    this.selectedChat=chat;
+    this.messageRecieved=true;
+    this.chatService.setCurrentParticipant(chat._id);
+  }
+  onMessageSend(message:string):void{
+    console.log('Message received:', message);
+    this.chatService.sendMessage(message)
   }
   ngOnInit(){
     this.chatService.connect();
@@ -40,7 +51,6 @@ export class ChatContainerComponent {
      console.log(this.followers);
     })
   }
-
   ngOnDestroy(){
     this.chatService.disconnect();
   }

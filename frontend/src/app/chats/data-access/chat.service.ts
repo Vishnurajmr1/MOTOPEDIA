@@ -28,9 +28,10 @@ export class ChatService {
         message.currentUserId === this.participantId.getValue()
       ) {
         const history = this.chatHistory.getValue();
+        console.log(history);
         this.setChatHistory({
           participant: history.participant,
-          messages: [...history.message, message.result],
+          messages: [...history.messages,message.result],
         });
       }
     });
@@ -61,7 +62,7 @@ export class ChatService {
       sender: senderId,
       text: message,
     };
-    this.socket.emit('new-message', data);
+    this.socket.emit('new-message',data);
   }
   setChatHistory(data: any) {
     this.chatHistory.next(data);
