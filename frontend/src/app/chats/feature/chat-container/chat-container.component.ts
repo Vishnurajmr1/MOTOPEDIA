@@ -8,6 +8,7 @@ import {
 } from '../../../../app/auth/data-access/state';
 import { ICurrentUser } from '../../../../app/auth/data-access/state/auth.reducer';
 import { UserService } from '../../../../app/riders/data-access/user.service';
+import { ChatApiService } from '../../data-access/chatApi.service';
 
 @Component({
   selector: 'app-chat-container',
@@ -16,12 +17,15 @@ import { UserService } from '../../../../app/riders/data-access/user.service';
 })
 export class ChatContainerComponent {
   private chatService = inject(ChatService);
+  private chatApiService=inject(ChatApiService);
   private userService=inject(UserService);
   currentUser$!: Observable<ICurrentUser>;
   protected users = [];
   followers!:[ICurrentUser];
+  protected participant:any;
   messageRecieved=false;
   selectedChat:any;
+  protected allMsg:any;
   protected currentUserId: string = '';
   private ngUnsubscribe$ = new Subject<void>();
   constructor(private store: Store<State>) {
@@ -35,10 +39,21 @@ export class ChatContainerComponent {
     this.selectedChat=chat;
     this.messageRecieved=true;
     this.chatService.setCurrentParticipant(chat._id);
+    this.chatApiService.getApiChatHistory(chat._id).subscribe((res:any)=>{
+    this.chatService.setChatHistory(res.history);
+    this.participant=res.history.participant
+   });
+   this.chatService.getChatHistory().subscribe((chat)=>{
+    this.allMsg=chat.messages;
+  })
   }
   onMessageSend(message:string):void{
     console.log('Message received:', message);
     this.chatService.sendMessage(message)
+  }
+
+  isSendByUser(msg:any){
+    this.messageRecieved=msg.sender.userId===this.chatService.getCurrentUserId();
   }
   ngOnInit(){
     this.chatService.connect();

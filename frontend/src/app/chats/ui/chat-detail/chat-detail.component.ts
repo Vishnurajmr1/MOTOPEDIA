@@ -9,11 +9,13 @@ import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from 
 export class ChatDetailComponent {
   @Input() messageRecieved!:boolean;
   @Input() chatData:any;
+  @Input() getAllMsg:any=[];
   @Output() messageSend:EventEmitter<string>=new EventEmitter<string>();
   message:string='';
-
+  chatHistory:any;
   ngOnChanges(){
     console.log(this.chatData);
+    console.log(this.getAllMsg);
   }
   sendMessage():void{
     if(this.message.trim()){

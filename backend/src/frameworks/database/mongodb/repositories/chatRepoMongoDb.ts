@@ -19,9 +19,14 @@ export const chatRepositoryMongoDB=()=>{
             path:'sender'
         });
     }
+    const getChatHistory=async(userId:string,participantId:string)=>{
+        const chatHistory=await Chat.find({users:{$all:[userId,participantId]}}).sort({createAt:1}).populate('sender','userId');
+        return chatHistory;
+    }
 
     return {
-        addNewChat
+        addNewChat,
+        getChatHistory
         // getExistingChat,
     }
 }
