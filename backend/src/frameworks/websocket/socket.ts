@@ -1,11 +1,13 @@
 //Socket config 
 import http from 'http';
 import { Server, Socket } from 'socket.io';
-import chatController from '@src/adapters/controllers/chatController';
-import AppError from '@src/utils/appError';
-import HttpStatusCodes from '@src/constants/HttpStatusCodes';
-import { chatDbRepository } from '@src/application/repositories/chatDBRepository';
+import chatController from '../../adapters/controllers/chatController';
+import AppError from '../../utils/appError';
+import HttpStatusCodes from '../../constants/HttpStatusCodes';
+import { chatDbRepository } from '../../application/repositories/chatDBRepository';
 import { chatRepositoryMongoDB } from '../database/mongodb/repositories/chatRepoMongoDb';
+import { userDbRepository } from '../../application/repositories/userDBRepository';
+import { userRepositoryMongoDB } from '../database/mongodb/repositories/UserRepoMongoDb';
 
 export const setupSocketIO = async (server: http.Server) => {
     const io = new Server(server, {
@@ -24,7 +26,7 @@ export const setupSocketIO = async (server: http.Server) => {
 };
 
 let users: any[] = [];
-const controller=chatController(chatDbRepository,chatRepositoryMongoDB);
+const controller=chatController(chatDbRepository,chatRepositoryMongoDB,userDbRepository,userRepositoryMongoDB);
 
 const addUser = (userId: string, socketId: string) => {
     // eslint-disable-next-line no-unused-expressions

@@ -3,28 +3,34 @@
       <img class="w-8 h-8 rounded-full" src="/assets/images/icons/profile-picture-5.jpg" alt="Jese image">
       <p class="text-black">{{chatData.firstName}} {{chatData.lastName}}</p>
    </div>
-   <div class="flex flex-col flex-auto h-full p-6">
+   <div class="flex flex-col flex-auto h-full p-6" #scrollMe>
       <div
         class="flex flex-col flex-auto flex-shrink-0 rounded-2xl  h-full"
       >
         <div class="flex flex-col h-full overflow-x-auto mb-4">
           <div class="flex flex-col h-full">
             <div class="grid grid-cols-12 gap-y-2">
-              <div class="col-start-1 col-end-8 p-3 rounded-lg">
-                <div class="flex flex-row items-center">
-                  <div
-                    class="flex items-center justify-center h-10 w-10 rounded-full bg-indigo-500 flex-shrink-0"
-                  >
-                    A
-                  </div>
-                  <div
-                    class="relative ml-3 text-sm bg-white py-2 px-4 shadow rounded-xl"
-                  >
-                    <div>Hey How are you today?</div>
+              <ng-container  *ngFor="let msg of getAllMsg">
+                <div class="col-start-1 col-end-8 p-3 rounded-lg">
+                  <div class="flex flex-row items-center"
+                  [style.background-color]="!messageRecieved ? '#e2f7cb' : '#f2f2f2'">
+                    <div
+                      class=" text-black flex items-center justify-center h-10 w-10 rounded-full bg-indigo-500 flex-shrink-0"
+                    *ngIf="!messageRecieved"
+                      >
+                      {{chatData.firstName.charAt(0)|uppercase}}
+                    </div>
+                    <div
+                      class="relative ml-3 text-sm bg-white py-2 px-4 shadow rounded-xl"
+                    >
+                      <div>{{msg.text}}</div>
+                      <p>{{msg.createAt|date:'h:mm a'}}</p>
+                    </div>
                   </div>
                 </div>
-              </div>
-              <div class="col-start-6 col-end-13 p-3 rounded-lg">
+              </ng-container>
+            
+              <!-- <div class="col-start-6 col-end-13 p-3 rounded-lg">
                 <div class="flex items-center justify-start flex-row-reverse">
                   <div
                     class="flex items-center justify-center h-10 w-10 rounded-full bg-indigo-500 flex-shrink-0"
@@ -37,7 +43,7 @@
                     <div>I'm ok what about you?</div>
                   </div>
                 </div>
-              </div>
+              </div> -->
             </div>
           </div>
         </div>
