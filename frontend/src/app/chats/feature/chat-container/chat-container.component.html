@@ -17,6 +17,7 @@
                 [chatData]="selectedChat" 
                 (messageSend)="onMessageSend($event)"
                 [getAllMsg]="allMsg"
+                [isSendByUser]="isSendByUser.bind(this)"
                 ></app-chat-detail>
             </div>
         </div>
