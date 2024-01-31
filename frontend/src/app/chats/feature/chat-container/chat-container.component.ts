@@ -51,9 +51,9 @@ export class ChatContainerComponent {
     console.log('Message received:', message);
     this.chatService.sendMessage(message)
   }
-
   isSendByUser(msg:any){
-    this.messageRecieved=msg.sender.userId===this.chatService.getCurrentUserId();
+    console.log(msg)
+    return msg.sender._id===this.chatService.getCurrentUserId();
   }
   ngOnInit(){
     this.chatService.connect();
