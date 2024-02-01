@@ -68,4 +68,7 @@ export class CreatePostComponent {
         reader.readAsDataURL(file);
       }
   }
+  closeModal(){
+    this.isVisible=false;
+  }
 }

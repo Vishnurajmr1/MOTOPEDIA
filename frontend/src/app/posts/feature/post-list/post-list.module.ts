@@ -6,6 +6,7 @@ import { PostListComponent } from './post-list.component';
 import { PostCardModule } from '../../ui/post-card/post-card.module';
 import { CreatePostModule } from '../../ui/create-post/create-post.module';
 import { PostCommentsModule } from '../../ui/post-comments/post-comments.module';
+import { PostFeaturesModule } from '../../ui/post-features/post-features.module';
 
 
 @NgModule({
@@ -17,7 +18,8 @@ import { PostCommentsModule } from '../../ui/post-comments/post-comments.module'
     PostListRoutingModule,
     PostCardModule,
     CreatePostModule,
-    PostCommentsModule
+    PostCommentsModule,
+    PostFeaturesModule
   ],
   exports:[PostListComponent]
 })
