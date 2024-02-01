@@ -19,6 +19,8 @@ interface IUser extends Document {
     blockedReason: string;
     isVerifiedEmail: boolean;
     otp?: string;
+    savedPost: any[];
+    online:boolean;
 }
 
 const ProfileSchema = new Schema<ProfilePic>({
@@ -95,6 +97,19 @@ const UserSchema = new Schema<IUser>({
     },
     otp: {
         type: String,
+    },
+    savedPost: {
+        type: [
+            {
+                type: Schema.Types.ObjectId,
+                ref: 'Post',
+            },
+        ],
+        default: [],
+    },
+    online:{
+        type:Boolean,
+        default:false
     }
 });
 

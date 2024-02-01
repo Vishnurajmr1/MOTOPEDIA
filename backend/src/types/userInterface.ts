@@ -8,6 +8,7 @@ export interface UserInterface {
     isGoogleUser: boolean;
     isBlocked: boolean;
     isVerifiedEmail: boolean;
+    online?:boolean;
     otp?: string | null;
     profileUrl: string;
     profilePic?: {
@@ -17,6 +18,7 @@ export interface UserInterface {
     };
     followers?: string[];
     following?: string[];
+    savedPost?:string[];
 }
 
 export interface UserUpdateInfo {

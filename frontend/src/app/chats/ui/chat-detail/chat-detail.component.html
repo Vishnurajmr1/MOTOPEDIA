@@ -3,7 +3,7 @@
       <img class="w-8 h-8 rounded-full" src="/assets/images/icons/profile-picture-5.jpg" alt="Jese image">
       <p class="text-black">{{chatData.firstName}} {{chatData.lastName}}</p>
    </div>
-   <div class="flex flex-col flex-auto overflow-auto h-full p-6" #scrollMe>
+   <div class="flex flex-col flex-auto overflow-auto h-full" #scrollMe>
       <div
         class="flex flex-col flex-auto flex-shrink-0 rounded-2xl  h-full"
       >
@@ -12,10 +12,10 @@
             <div class="grid grid-cols-12 gap-y-2">
               <ng-container  *ngFor="let msg of getAllMsg">
                 <div class="p-3 rounded-lg" 
-                [ngClass]="isCurrentUserSender(msg)?['col-start-6','col-start-13']:['col-start-1','col-end-8']"
+                [ngClass]="isCurrentUserSender(msg)? ['col-start-6','col-end-13']:['col-start-1','col-end-8']"
                  >
                   <div class="flex flex-row items-center"
-                  [ngClass]="{'flex-col-reverse':isCurrentUserSender(msg),'justify-start':isCurrentUserSender(msg)}"
+                  [ngClass]="{'flex-row-reverse':isCurrentUserSender(msg)}"
                   >
                     <!-- <div
                       class=" text-black flex items-center justify-center h-10 w-10 rounded-full bg-indigo-500 flex-shrink-0"

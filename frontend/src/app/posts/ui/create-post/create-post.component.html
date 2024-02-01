@@ -1,3 +1,4 @@
+<app-modal [modalOpen]="isVisible" (close)="closeModal()">
 <div class="bg-white max-w-lg mx-auto p-5 mb-2" *ngIf="isVisible">
   <button class="button float-right" (click)="closeCreatePost()">
     <span class="X"></span>
@@ -127,4 +128,4 @@
     </button>
   </form>
 </div>
-
+</app-modal>
