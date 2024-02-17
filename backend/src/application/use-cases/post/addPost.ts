@@ -14,7 +14,6 @@ export const addPosts = async (
     if (!userId || !postInfo || !files || files.length === 0) {
         throw new AppError('Invalid input data', HttpStatusCodes.BAD_REQUEST);
     }
-    console.log(files);
     const uploadPromises = files.map(async (file) => {
         let uploadedFile: any;
         if (file.mimetype.includes('image')) {

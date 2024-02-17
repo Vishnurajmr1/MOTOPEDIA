@@ -27,9 +27,11 @@ import { GlobalErrorHandler } from './shared/data-access/global/global-error-han
 import { AdminNavbarModule } from './admin/ui/admin-navbar/admin-navbar.module';
 import { AdminAsideModule } from './admin/ui/admin-aside/admin-aside.module';
 import { AuthEffects } from './auth/data-access/state/auth.effects';
+import { SpinnerModule } from './shared/ui/spinner/spinner.module';
+import { LoaderInterceptor } from './core/interceptors/loader.interceptor';
 
 @NgModule({
-  declarations:[AppComponent],
+  declarations: [AppComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -38,7 +40,7 @@ import { AuthEffects } from './auth/data-access/state/auth.effects';
     NavbarModule,
     HttpClientModule,
     StoreModule.forRoot({}),
-    StoreModule.forFeature('auth',authReducer),
+    StoreModule.forFeature('auth', authReducer),
     EffectsModule.forRoot([AuthEffects]),
     StoreDevtoolsModule.instrument({
       name: 'MOTOPEDIA APP',
@@ -50,11 +52,17 @@ import { AuthEffects } from './auth/data-access/state/auth.effects';
     AdminNavbarModule,
     AdminAsideModule,
     RouterModule,
+    SpinnerModule,
   ],
   providers: [
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,
+      multi: true,
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: LoaderInterceptor,
       multi: true,
     },
     {
@@ -78,6 +86,5 @@ import { AuthEffects } from './auth/data-access/state/auth.effects';
   ],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  
 })
 export class AppModule {}
