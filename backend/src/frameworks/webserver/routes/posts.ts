@@ -1,13 +1,15 @@
 import express from 'express';
 import jwtAuthMiddleware from '../middlewares/userAuthMiddleware';
-import { cloudServiceInterface } from '@src/application/services/cloudServiceInterface';
-import postController from '@src/adapters/controllers/postController';
-import { s3Service } from '@src/frameworks/services/s3Service';
-import { postDbRepository } from '@src/application/repositories/postDBRepository';
-import { postRepositoryMongoDb } from '@src/frameworks/database/mongodb/repositories/postRepoMongoDb';
+import { cloudServiceInterface } from '../../../application/services/cloudServiceInterface';
+import postController from '../../../adapters/controllers/postController';
+import { s3Service } from '../../../frameworks/services/s3Service';
+import { postDbRepository } from '../../../application/repositories/postDBRepository';
+import { postRepositoryMongoDb } from '../../../frameworks/database/mongodb/repositories/postRepoMongoDb';
 import upload from '../middlewares/multer';
-import { commentDbRepository } from '@src/application/repositories/commentDBRepository';
-import { commentRepositoryMongoDb } from '@src/frameworks/database/mongodb/repositories/commentRepoMongoDb';
+import { commentDbRepository } from '../../../application/repositories/commentDBRepository';
+import { commentRepositoryMongoDb } from '../../../frameworks/database/mongodb/repositories/commentRepoMongoDb';
+import { reportDbRepository } from '@src/application/repositories/reportDBRepoistory';
+import { reportRepositoryMongoDb } from '@src/frameworks/database/mongodb/repositories/reportRepoMongoDb';
 
 const postRouter = () => {
     const router = express.Router();
@@ -18,6 +20,8 @@ const postRouter = () => {
         postRepositoryMongoDb,
         commentDbRepository,
         commentRepositoryMongoDb,
+        reportDbRepository,
+        reportRepositoryMongoDb
     );
 
     router.route('/get-all-posts').get(jwtAuthMiddleware, controller.getAllPosts);
@@ -28,6 +32,7 @@ const postRouter = () => {
     router.route('/like-post').put(jwtAuthMiddleware, controller.likePostById);
     router.route('/add-comment').post(jwtAuthMiddleware,controller.addCommentByPostId);
     router.route('/get-all-comments/:postId').get(jwtAuthMiddleware,controller.fetchCommentByPostId);
+    router.route('/report/:postId').post(jwtAuthMiddleware,controller.reportPostById);
     // router.route('/unlike-post').patch(jwtAuthMiddleware);
     return router;
 };

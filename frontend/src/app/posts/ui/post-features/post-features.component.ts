@@ -7,12 +7,6 @@ import { ChangeDetectionStrategy, Component, ElementRef, Renderer2, ViewChild } 
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class PostFeaturesComponent {
-
-  isDropdownVisible:boolean=false;
-
-  toggleDrop(){
-    this.isDropdownVisible=!this.isDropdownVisible
-  }
 constructor(private renderer:Renderer2){}
   @ViewChild('dropdownDots')
   dropDownDots!: ElementRef;
