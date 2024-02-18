@@ -4,3 +4,8 @@ export interface IAddReport{
     targetId:string;
     reason?:string;
 }
+
+export interface IgetReportByPost{
+    targetId?:string;
+    reporterId?:string;
+}
