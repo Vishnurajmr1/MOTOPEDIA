@@ -27,10 +27,12 @@ export interface EditPostInterface {
     authorId?: string;
     likedBy?: likedBy[];
     likes?: likes;
+    saved?:string[];
 }
 
 export interface postInterface extends AddPostInterface {
     imageUrl: string;
     likes?: likes;
     likedBy?: likedBy[];
+    savedPosts?:string[];
 }

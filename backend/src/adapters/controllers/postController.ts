@@ -9,6 +9,7 @@ import { deletePostById } from '@src/application/use-cases/post/deletePost';
 import { editPostUseCase, likePostUseCase } from '@src/application/use-cases/post/editPost';
 import { getAllPostsUseCase, getPostByUserUseCase } from '@src/application/use-cases/post/listPost';
 import { reportPost } from '@src/application/use-cases/post/reportPost';
+import { savePostUseCase } from '@src/application/use-cases/post/savePost';
 import Status from '@src/constants/HttResponseStatus';
 import { CommentRepositoryMongoDbInterface } from '@src/frameworks/database/mongodb/repositories/commentRepoMongoDb';
 import { PostRepositoryMongoDbInterface } from '@src/frameworks/database/mongodb/repositories/postRepoMongoDb';
@@ -128,9 +129,15 @@ const postController = (
             data
         });
     });
-    const savePostByuserId = asyncHandler(async (req: CustomRequest, res: Response) => {
+    const savePost = asyncHandler(async (req: CustomRequest, res: Response) => {
         const postId = req.params.postId;
         const saveUserId = req.user?.Id;
+        const data =await savePostUseCase(saveUserId,postId,dbRepositoryPost);
+        res.status(200).json({
+            status:Status.SUCCESS,
+            message:"Post saved successfully",
+            data
+        })
     });
     return {
         addPost,
@@ -142,6 +149,7 @@ const postController = (
         addCommentByPostId,
         fetchCommentByPostId,
         reportPostById,
+        savePost
     };
 };
 
