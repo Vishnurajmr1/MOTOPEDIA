@@ -23,7 +23,7 @@ export const userRepositoryMongoDB = () => {
         await User.updateOne({ _id: new mongoose.Types.ObjectId(id) }, { password });
     };
     const updateProfile = async (id: string, userInfo: UserUpdateInfo) => {
-      const updatedProfile=  await User.updateOne(
+        const updatedProfile = await User.updateOne(
             {
                 _id: new mongoose.Types.ObjectId(id),
             },
@@ -53,10 +53,14 @@ export const userRepositoryMongoDB = () => {
         const total = await User.find().count();
         return total;
     };
-    // const searchUser=async()=>{
-    //     isFree:boolean,
-    //     searchQuery
-    // }
+    const searchUser = async (searchQuery: string) => {
+        const regexExp = new RegExp(searchQuery, 'i');
+        const users = await User.find({
+            $or: [{ firstName: { $regex: regexExp } }, { lastName: { $regex: regexExp } }],
+        });
+        console.log(users);
+        return users;
+    };
 
     return {
         addUser,
@@ -69,6 +73,7 @@ export const userRepositoryMongoDB = () => {
         updateProfile,
         getAllBlockedUsers,
         getTotalNumberofUsers,
+        searchUser,
     };
 };
 
