@@ -22,7 +22,7 @@ const userRouter = () => {
         connectionDbRepository,
         connectionRepositoryMongoDB,
         cloudServiceInterface,
-        s3Service
+        s3Service,
     );
     router.get('/get-all-users', jwtAuthMiddleware, controller.getAllUsers);
     router.patch('/block-user/:userId', jwtAuthMiddleware, roleCheckMiddleware('admin'), controller.blockUser);
@@ -30,9 +30,10 @@ const userRouter = () => {
     router.route('/get-user-details').get(jwtAuthMiddleware, controller.getUserDetails);
     router.route('/follow/:id').post(jwtAuthMiddleware, controller.followUser);
     router.route('/unfollow/:id').post(jwtAuthMiddleware, controller.unfollowUser);
-    router.route('/connection').get(jwtAuthMiddleware,controller.getConnections)
-    router.route('/update-profile').put(jwtAuthMiddleware,upload.single('image'),controller.editUserDetails);
-    // router.route('/search-user').get(jwtAuthMiddleware,controller)
+    router.route('/connection').get(jwtAuthMiddleware, controller.getConnections);
+    router.route('/get-user/:id').get(jwtAuthMiddleware, controller.getOtherUserDetails);
+    router.route('/update-profile').put(jwtAuthMiddleware, upload.single('image'), controller.editUserDetails);
+    router.route('/search-user').get(jwtAuthMiddleware, controller.searchUser);
     return router;
 };
 

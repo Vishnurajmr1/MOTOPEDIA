@@ -18,6 +18,7 @@ import { ConnectionRepositoryMongoDB } from '@src/frameworks/database/mongodb/re
 import { UserUpdateInfo } from '@src/types/userInterface';
 import { CloudServiceInterface } from '@src/application/services/cloudServiceInterface';
 import { CloudServiceImpl } from '@src/frameworks/services/s3Service';
+import { searchUserUseCase } from '@src/application/use-cases/user/search';
 
 const userController = (
     authServiceInterface: AuthServiceInterface,
@@ -117,21 +118,28 @@ const userController = (
             connectionData,
         });
     });
-    // const searchCourse=asyncHandler(async(req:CustomRequest,res:Response)=>{
-    //     const {search,filter}=req.query as {search:string,filter:string};
-    //     const key=search.trim()===''?search:filter
-    //     const searchResult=await searchUserUseCase({
-    //         search,
-    //         filter,
-    //         cloudService,
-    //         dbRepositoryUser
-    //     })
-    //     res.status(200).json({
-    //         status:Status.SUCCESS,
-    //         message:'Successfully retrieved users based on the search query',
-    //         data:searchResult
-    //     })
-    // })
+    const getOtherUserDetails=asyncHandler(async(req:Request,res:Response)=>{
+        const userId=req.params.id;
+        const getUser=await getUserDetailUseCase(userId,dbRepositoryUser);
+        res.status(200).json({
+            status:Status.SUCCESS,
+            message:"Successfully retrieved other user details",
+            getUser
+        })
+    })
+    const searchUser=asyncHandler(async(req:Request,res:Response)=>{
+        const search=req.query.search as string;
+        console.log(req.query)
+        const searchResult=await searchUserUseCase(
+            search,
+            dbRepositoryUser
+        )
+        res.status(200).json({
+            status:Status.SUCCESS,
+            message:'Successfully retrieved users based on the search query',
+            data:searchResult
+        })
+    })
     return {
         getAllUsers,
         blockUser,
@@ -140,7 +148,9 @@ const userController = (
         followUser,
         unfollowUser,
         getConnections,
-        editUserDetails
+        editUserDetails,
+        searchUser,
+        getOtherUserDetails
     };
 };
 
