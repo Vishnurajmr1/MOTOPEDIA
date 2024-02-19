@@ -60,7 +60,7 @@ const postSchema = new mongoose.Schema({
             },
         },
     ],
-    saved: {
+    savedPosts: {
         type: [
             {
                 type: Schema.Types.ObjectId,

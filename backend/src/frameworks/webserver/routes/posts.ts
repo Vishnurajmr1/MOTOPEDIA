@@ -33,6 +33,7 @@ const postRouter = () => {
     router.route('/add-comment').post(jwtAuthMiddleware,controller.addCommentByPostId);
     router.route('/get-all-comments/:postId').get(jwtAuthMiddleware,controller.fetchCommentByPostId);
     router.route('/report/:postId').post(jwtAuthMiddleware,controller.reportPostById);
+    router.route('/save-post/:postId').patch(jwtAuthMiddleware,controller.savePost);
     // router.route('/unlike-post').patch(jwtAuthMiddleware);
     return router;
 };
