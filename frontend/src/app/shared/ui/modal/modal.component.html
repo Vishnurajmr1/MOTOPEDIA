@@ -1,4 +1,5 @@
-  <div [ngClass]="{hidden:!modalOpen,flex:modalOpen}" class="overflow-y-auto overflow-x-hidden fixed top-50 right-50 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full" (click)="toggleModal()">
+  <!-- <div [ngClass]="{hidden:!modalOpen,flex:modalOpen}" class="overflow-y-auto overflow-x-hidden fixed top-50 right-50 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full" (click)="toggleModal()"> -->
+  <div [ngClass]="{hidden:!modalOpen,flex:modalOpen}" class="overflow-y-auto overflow-x-hidden fixed  top-0 md:top-50 right-50 left-0 z-50 justify-center items-center w-full h-[calc(100%-1rem)] max-h-full" (click)="toggleModal()">
     <div class="relative p-4 w-full max-w-md max-h-full" (click)="$event.stopPropagation()">
         <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
            <ng-content></ng-content>

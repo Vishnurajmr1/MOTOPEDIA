@@ -7,6 +7,7 @@ import {
   Renderer2,
   ViewChild,
 } from '@angular/core';
+import { IReportPost } from 'src/app/shared/types/post.Interface';
 
 @Component({
   selector: 'app-post-features',
@@ -17,12 +18,15 @@ import {
 export class PostFeaturesComponent {
   constructor(private renderer: Renderer2) {}
   @Output() save: EventEmitter<void> = new EventEmitter<void>();
+  @Output() reportPost:EventEmitter<IReportPost>=new EventEmitter<IReportPost>();
   @ViewChild('dropdownDots')
   dropDownDots!: ElementRef;
   @ViewChild('dropdownMenuIconButton')
   dropdownMenuIconButton!: ElementRef;
   private globalClickListener!: () => void;
-  isVisible:boolean=true;
+  isVisible: boolean = false;
+  isDisabled: boolean = true;
+  reason:string='';
 
   toggleDropDown() {
     const dropDown = this.dropDownDots.nativeElement;
@@ -53,14 +57,24 @@ export class PostFeaturesComponent {
   savePost() {
     this.save.emit();
   }
-  showModal(){
+  showModal() {
     this.isVisible = true;
   }
 
-  closeModal(){
+  closeModal() {
     this.isVisible = false;
   }
 
+  onUserInput(event: any) {
+    let inputText = event.target.value;
+
+    inputText == '' ? (this.isDisabled = true) : (this.isDisabled = false);
+  }
+  submitReason(){
+    const reportData:IReportPost={reason:this.reason,targetType:'post'} 
+    this.reportPost.emit(reportData);
+    this.closeModal();
+  }
   ngOnDestroy() {
     if (this.globalClickListener) {
       this.globalClickListener();

@@ -46,3 +46,8 @@ export interface IPostList extends IpostInterface{
     ]
 
 }
+
+export interface reportPost{
+    reasonType:string,
+    reportType:string
+}
