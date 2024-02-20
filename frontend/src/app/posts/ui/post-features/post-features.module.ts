@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { PostFeaturesComponent } from './post-features.component';
+import { ModalModule } from 'src/app/shared/ui/modal/modal.module';
 
 
 
@@ -9,7 +10,8 @@ import { PostFeaturesComponent } from './post-features.component';
     PostFeaturesComponent
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    ModalModule
   ],
   exports:[
     PostFeaturesComponent

@@ -34,7 +34,10 @@ export interface IEditPost{
     description?:string;
     image?:File
 }
-
+export interface IReportPost{
+    reason:string,
+    targetType:string
+}
 export interface IPostList extends IpostInterface{
     status:string,
     message:string,
