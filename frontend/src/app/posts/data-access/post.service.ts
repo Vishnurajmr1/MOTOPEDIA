@@ -6,7 +6,7 @@ import { Observable, BehaviorSubject } from 'rxjs';
 import {State, getCurrentUserData, isUserLoggedIn } from '../../auth/data-access/state';
 import { ICurrentUser } from '../../auth/data-access/state/auth.reducer';
 import { CommentInterface } from '../../shared/types/comment.interface';
-import { IEditPost, IPost, IPostList, IpostInterface } from '../../shared/types/post.Interface';
+import { IEditPost, IPost, IPostList, IReportPost, IpostInterface } from '../../shared/types/post.Interface';
 
 interface comments {
   status: string;
@@ -55,5 +55,11 @@ export class PostService {
   }
   updatePostByUser(post:IEditPost):Observable<any>{
     return this.http.put(`${this.postApi}/edit-post/${post._id}`,post)
+  }
+  reportPostByUser(postId:string,post:IReportPost):Observable<any>{
+    return this.http.post(`${this.postApi}/report/${postId}`,post)
+  }
+  savePostByUser(postId:string):Observable<any>{
+    return this.http.patch(`${this.postApi}/save-post/${postId}`,{});
   }
 }

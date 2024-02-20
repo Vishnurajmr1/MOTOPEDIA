@@ -60,16 +60,23 @@ export class PostListComponent {
   follow(data: string) {
     this.userService.followUser(data).subscribe({
       next:(res)=>{
-        console.log(res)
         this.snackbar.showSuccess('User Followed Successfully');
       }
     })
-    console.log(data)
+  }
+  savePost(postId:string){
+   this.postService.savePostByUser(postId).subscribe(
+    ()=>{
+      this.snackbar.showSuccess('Item saved');
+    },
+    error=>{
+      this.snackbar.showError(`something went wrong`)
+    }
+   )
   }
 
   showComment(postId: string) {
     this.selectedPostId = postId;
-    console.log(this.currentUser);
     this.postService.getComments(postId).subscribe((res) => {
       this.selectedPostComments = res.comments;
     });
@@ -79,8 +86,6 @@ export class PostListComponent {
     parentId: string | null;
   }): void {
     const postId = this.selectedPostId;
-    console.log(postId);
-    console.log(commentData);
     this.postService
       .createComment(postId,commentData)
       .subscribe((createComment) => {

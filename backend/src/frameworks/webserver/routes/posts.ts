@@ -8,8 +8,8 @@ import { postRepositoryMongoDb } from '../../../frameworks/database/mongodb/repo
 import upload from '../middlewares/multer';
 import { commentDbRepository } from '../../../application/repositories/commentDBRepository';
 import { commentRepositoryMongoDb } from '../../../frameworks/database/mongodb/repositories/commentRepoMongoDb';
-import { reportDbRepository } from '@src/application/repositories/reportDBRepoistory';
-import { reportRepositoryMongoDb } from '@src/frameworks/database/mongodb/repositories/reportRepoMongoDb';
+import { reportDbRepository } from '../../../application/repositories/reportDBRepoistory';
+import { reportRepositoryMongoDb } from '../../../frameworks/database/mongodb/repositories/reportRepoMongoDb';
 
 const postRouter = () => {
     const router = express.Router();
