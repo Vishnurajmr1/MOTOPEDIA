@@ -1,6 +1,10 @@
 import { Component, Input, inject } from '@angular/core';
 import { Router } from '@angular/router';
-import { IPost, IpostInterface } from 'src/app/shared/types/post.Interface';
+import {
+  IPost,
+  IReportPost,
+  IpostInterface,
+} from 'src/app/shared/types/post.Interface';
 import { PostService } from '../../data-access/post.service';
 import { Observable } from 'rxjs';
 import { UserService } from 'src/app/riders/data-access/user.service';
@@ -15,14 +19,14 @@ import { CommentInterface } from 'src/app/shared/types/comment.interface';
 export class PostListComponent {
   private router = inject(Router);
   private postService = inject(PostService);
-  private userService=inject(UserService)
+  private userService = inject(UserService);
   private snackbar = inject(SnackbarService);
   posts: IpostInterface[] = [];
   isCreatePostVisible = false;
   selectedPostId: string | null = null;
   selectedPostComments: CommentInterface[] = [];
   currentUser: string | undefined;
-  isUserFollowed:boolean=false;
+  isUserFollowed: boolean = false;
   ngOnInit(): void {
     this.postService.getAllPost().subscribe((data: any) => {
       this.posts = data.data;
@@ -54,25 +58,27 @@ export class PostListComponent {
       },
     });
   }
-  editPost(data:IPost){
-    // 
+  editPost(data: IPost) {
+    //
   }
   follow(data: string) {
     this.userService.followUser(data).subscribe({
-      next:(res)=>{
+      next: (res) => {
         this.snackbar.showSuccess('User Followed Successfully');
-      }
-    })
+      },
+    });
   }
-  savePost(postId:string){
-   this.postService.savePostByUser(postId).subscribe(
-    ()=>{
-      this.snackbar.showSuccess('Item saved');
-    },
-    error=>{
-      this.snackbar.showError(`something went wrong`)
-    }
-   )
+  savePost(postId: string) {
+    this.postService.savePostByUser(postId).subscribe({
+      next: (res) => this.snackbar.showSuccess('Item saved'),
+      error: (err) => this.snackbar.showError(`something went wrong`),
+    });
+  }
+  handleReport(reportData: IReportPost, postId: string) {
+    this.postService.reportPostByUser(postId, reportData).subscribe({
+      next: (res) => this.snackbar.showSuccess('Post reported successfully'),
+      error: (err) => this.snackbar.showError('Something went wrong'),
+    });
   }
 
   showComment(postId: string) {
@@ -87,7 +93,7 @@ export class PostListComponent {
   }): void {
     const postId = this.selectedPostId;
     this.postService
-      .createComment(postId,commentData)
+      .createComment(postId, commentData)
       .subscribe((createComment) => {
         this.selectedPostComments = [
           ...this.selectedPostComments,

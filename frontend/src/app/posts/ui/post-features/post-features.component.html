@@ -16,11 +16,12 @@
         </ul>
     </div>
     <app-modal [modalOpen]="isVisible" (close)="closeModal()">
-      <div class="bg-white max-w-lg mx-auto p-2 flex flex-col gap-2 rounded-sm">
-        <textarea name="" id="" cols="2" rows="1"></textarea>
+      <div class="bg-white max-w-lg mx-auto p-5 flex flex-col gap-2 rounded-lg">
+        <textarea [(ngModel)]="reason" class="outline-none resize-none overflow-auto" name="reason" id="" cols="2" rows="1" placeholder="Type the reason.." (input)="onUserInput($event)"></textarea>
         <div class="flex justify-around">
-          <button class="bg-gray-300 p-2 font-bold rounded-md">cancel</button>
-          <button class="bg-red-400 p-2 font-bold rounded-md hover:bg-red-600 hover:text-white">Report</button>
+          <button class="bg-gray-300 p-2  font-bold rounded-md hover:bg-gray-400 hover:text-white" (click)="closeModal()">cancel</button>
+          <button  class="p-2 font-bold rounded-md" [disabled]="isDisabled" (click)="submitReason()" [ngClass]="{'bg-red-400 hover:bg-red-600 text-white': !isDisabled,
+          'bg-red-50 cursor-not-allowed text-gray-400': isDisabled}">Report</button>
         </div>
       </div>
     </app-modal>
