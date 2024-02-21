@@ -8,6 +8,7 @@ import { EditProfileModule } from '../../ui/edit-profile/edit-profile.module';
 import { ListPostModule } from "../../ui/list-post/list-post.module";
 import { PostListModule } from '../../../posts/feature/post-list/post-list.module';
 import { ModalModule } from '../../../shared/ui/modal/modal.module';
+import { FollowersListModule } from '../../ui/followers-list/followers-list.module';
 
 
 @NgModule({
@@ -22,7 +23,8 @@ import { ModalModule } from '../../../shared/ui/modal/modal.module';
         EditProfileModule,
         ListPostModule,
         PostListModule,
-        ModalModule
+        ModalModule,
+        FollowersListModule
     ]
 })
 export class ProfileContainerModule { }

@@ -7,8 +7,14 @@ import {
 import { UserService } from '../../data-access/user.service';
 import { PostService } from '../../../posts/data-access/post.service';
 import { ProfileTab } from '../../../shared/types';
-import { IEditPost, IpostInterface } from '../../../shared/types/post.Interface';
+import {
+  IEditPost,
+  IpostInterface,
+} from '../../../shared/types/post.Interface';
 import { SnackbarService } from '../../../shared/data-access/global/snackbar.service';
+import { State, getCurrentUserData } from 'src/app/auth/data-access/state';
+import { Store } from '@ngrx/store';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-profile-container',
@@ -16,7 +22,6 @@ import { SnackbarService } from '../../../shared/data-access/global/snackbar.ser
   styleUrls: ['./profile-container.component.css'],
 })
 export class ProfileContainerComponent {
-
   showtoggleModal(data: any) {
     console.log(data);
     this.modalOpen = true;
@@ -24,28 +29,40 @@ export class ProfileContainerComponent {
     this.actionType = data.actionType;
   }
 
-  profile: UserDoc | undefined;
+  profile?: UserDoc;
   followersDetails: IFollowersDetails | undefined;
   followersLength: number | undefined;
   followingLength: number | undefined;
   posts!: IpostInterface[];
-  actionType: 'edit'|'delete'|undefined;
+  actionType: 'edit' | 'delete' | undefined;
   post: IpostInterface | undefined;
   private userService = inject(UserService);
   private postService = inject(PostService);
-  private snakbarService=inject(SnackbarService)
+  private snakbarService = inject(SnackbarService);
+  private store = inject(Store<State>);
+  private router = inject(ActivatedRoute);
+  id: any;
+  currentUser: any;
+  owner: boolean = false;
   closeModal() {
     this.modalOpen = false;
   }
   modalOpen: boolean = false;
+  followersList: boolean = false;
   ngOnInit(): void {
-    this.userService.getUserById().subscribe({
-      next: (res) => {
-        this.profile = res.userDetails;
-        console.log(this.profile);
-      },
+    this.currentUser = this.store.select(getCurrentUserData);
+    this.currentUser.subscribe((state: any) => {
+      this.id = this.router.snapshot.params['id'] || state?.userId;
+      this.userService.getAUser(this.id).subscribe({
+        next: (res) => {
+          this.profile = res.userDetails;
+          if (state.userId === this.profile?._id) {
+            this.owner = true;
+          }
+        },
+      });
     });
-    this.userService.getConnection().subscribe({
+    this.userService.getConnection(this.id).subscribe({
       next: (res) => {
         this.followersDetails = res;
         this.followersLength =
@@ -54,7 +71,7 @@ export class ProfileContainerComponent {
           this.followersDetails?.connectionData[0].following.length;
       },
     });
-    this.postService.getPostByUser().subscribe({
+    this.postService.getPostByUser(this.id).subscribe({
       next: (res) => {
         this.posts = res.data;
       },
@@ -69,28 +86,29 @@ export class ProfileContainerComponent {
     });
   }
   // delete post
-  deletePostById(postId:string){
+  deletePostById(postId: string) {
     this.postService.deletePostByUser(postId).subscribe({
-      next:(res)=>{
+      next: (res) => {
         console.log(res);
-        this.closeModal()
-        this.snakbarService.showSuccess('Post deleted Successfully')
-        this.posts=this.posts.filter(post=>post._id!==postId)
-      }
-    })
+        this.closeModal();
+        this.snakbarService.showSuccess('Post deleted Successfully');
+        this.posts = this.posts.filter((post) => post._id !== postId);
+      },
+    });
   }
   //update post
-  handleUpdatePost(post:IEditPost) {
-    console.log(post)
+  handleUpdatePost(post: IEditPost) {
+    console.log(post);
     this.postService.updatePostByUser(post).subscribe({
-      next:(res)=>{{
-        console.log(res);
-        this.snakbarService.showSuccess('post updated successfully')
-        
-      }}
-    })
-    }
-    
+      next: (res) => {
+        {
+          console.log(res);
+          this.snakbarService.showSuccess('post updated successfully');
+        }
+      },
+    });
+  }
+
   displayContent: string = 'Profile';
   showProfile() {
     this.displayContent = 'Profile';
@@ -100,5 +118,8 @@ export class ProfileContainerComponent {
   }
   showSavedPosts() {
     this.displayContent = 'Saved Posts';
+  }
+  showFollowersList() {
+    this.followersList = true;
   }
 }

@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { PostCardComponent } from './post-card.component';
 import { EditPostModule } from '../edit-post/edit-post.module';
+import { RouterModule } from '@angular/router';
 
 
 
@@ -11,7 +12,8 @@ import { EditPostModule } from '../edit-post/edit-post.module';
   ],
   imports: [
     CommonModule,
-    EditPostModule
+    EditPostModule,
+    RouterModule
   ],
   exports:[PostCardComponent]
 })

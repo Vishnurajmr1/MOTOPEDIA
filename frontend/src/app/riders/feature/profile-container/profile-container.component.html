@@ -11,16 +11,17 @@
                         <div class="ml-4">
                             <h1 class="text-xl font-bold">{{profile?.firstName}} {{profile?.lastName}}</h1>
                             <p class="text-gray-700">{{profile?.email}}</p>
-                            <div class="flex gap-4">
+                            <div class="flex gap-4" (click)="showFollowersList()">
                                 <p class="text-gray-700 hover:cursor-pointer focus:cursor-pointer">Followers <br>{{followersLength}}</p>|
                                 <p class="text-gray-700 hover:cursor-pointer focus:cursor-pointer">Following <br>{{followingLength}}</p>
                             </div>
+                            <followers-list *ngIf="followersList"></followers-list>
                         </div>
                     </div>
                 </div>
             </div>
             <!-- Sidebar div -->
-            <div class="col-span-4 sm:col-span-3">
+            <div class="col-span-4 sm:col-span-3" *ngIf="owner">
               <app-aside
               (editprofile)="showProfile()"
               (postsClicked)="showPosts()"
@@ -29,13 +30,19 @@
             </div>
         <!-- postConatiner div -->
             <div class="col-span-4 sm:col-span-9">
-            <div class="bg-gray-50 drop-shadow-xl rounded-lg p-6">
-                <app-edit-profile *ngIf="displayContent==='Profile'" [userData]="profile"
-                (userUpdateForm)="profileUpdateForm($event)"
-                ></app-edit-profile>
-                <app-list-post *ngIf="displayContent==='Posts'" [posts]="posts" (toggleModal)="showtoggleModal($event)"></app-list-post>
+                <div class="bg-gray-50 drop-shadow-xl rounded-lg p-6" *ngIf="owner;else postList">
+                    <app-edit-profile *ngIf="displayContent==='Profile'" [userData]="profile"
+                    (userUpdateForm)="profileUpdateForm($event)"
+                    ></app-edit-profile>
+                    <app-list-post *ngIf="displayContent==='Posts'" [posts]="posts" (toggleModal)="showtoggleModal($event)"></app-list-post>
+                </div>
+
+                <ng-template #postList>
+                    <div class="bg-gray-50 drop-shadow-xl rounded-lg p-6">
+                        <app-list-post [posts]="posts" (toggleModal)="showtoggleModal($event)"></app-list-post>
+                    </div>
+                </ng-template>
             </div>
-        </div>
     </div>
 </div>
 

@@ -24,7 +24,7 @@ export interface IverifyOtp {
 }
 
 export interface UserDoc {
-  _id?: string;
+  _id: string;
   userName?: string;
   firstName: string;
   lastName?: string;
