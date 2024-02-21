@@ -110,7 +110,7 @@ const userController = (
         });
     });
     const getConnections = asyncHandler(async (req: CustomRequest, res: Response) => {
-        const userId: string | undefined = req.user?.Id;
+        const userId: string | undefined = req.query?.Id as string || req.user?.Id;
         const connectionData = await getConnectionData(userId,dbRepositoryConnection);
         res.status(200).json({
             status: Status.SUCCESS,
@@ -120,11 +120,11 @@ const userController = (
     });
     const getOtherUserDetails=asyncHandler(async(req:Request,res:Response)=>{
         const userId=req.params.id;
-        const getUser=await getUserDetailUseCase(userId,dbRepositoryUser);
+        const userDetails=await getUserDetailUseCase(userId,dbRepositoryUser);
         res.status(200).json({
             status:Status.SUCCESS,
             message:"Successfully retrieved other user details",
-            getUser
+            userDetails
         })
     })
     const searchUser=asyncHandler(async(req:Request,res:Response)=>{

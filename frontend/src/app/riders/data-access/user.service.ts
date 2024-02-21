@@ -27,11 +27,14 @@ export class UserService{
     getUserById():Observable<any>{
         return this.http.get(`${this.userApi}/get-user-details`)
     }
+    getAUser(userId:string):Observable<any>{
+        return this.http.get(`${this.userApi}/get-user/${userId}`)
+    }
     followUser(authorId:string):Observable<string>{
         return this.http.post<string>(`${this.userApi}/follow/${authorId}`,{})
     }
-    getConnection():Observable<IFollowersDetails>{
-        return this.http.get<IFollowersDetails>(`${this.userApi}/connection`)
+    getConnection(userId: string | null = null):Observable<IFollowersDetails>{
+        return this.http.get<IFollowersDetails>(`${this.userApi}/connection?Id=${userId || ''}`)
     }
     updateProfile(formData:IUpdateProfile):Observable<IUpdateProfile>{
         return this.http.put<IUpdateProfile>(`${this.userApi}/update-profile`,formData)

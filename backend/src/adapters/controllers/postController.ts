@@ -79,7 +79,7 @@ const postController = (
         });
     });
     const getPostByUser = asyncHandler(async (req: CustomRequest, res: Response) => {
-        const userId: string | undefined = req.user?.Id;
+        const userId: string | undefined = req.query?.Id as string || req.user?.Id;
         const posts = await getPostByUserUseCase(userId, cloudService, dbRepositoryPost);
         res.status(200).json({
             status: Status.SUCCESS,

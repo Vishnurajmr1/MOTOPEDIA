@@ -6,6 +6,11 @@ const routes: Routes = [
   path:'',
   loadChildren:()=>
   import('../profile-container/profile-container.module').then((m)=>m.ProfileContainerModule)
+},
+{
+  path: ':id',
+  loadChildren:()=>
+  import('../profile-container/profile-container.module').then((m)=>m.ProfileContainerModule)
 }
 ];
 

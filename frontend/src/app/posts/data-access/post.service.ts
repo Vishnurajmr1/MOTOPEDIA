@@ -47,8 +47,8 @@ export class PostService {
   createComment(postId:string|null,commentDate:{content:string,parentId:string|null}):Observable<CommentInterface>{
     return this.http.post<CommentInterface>(`${this.postApi}/add-comment`,{postId,...commentDate})
   }
-  getPostByUser():Observable<IPostList>{
-    return this.http.get<IPostList>(`${this.postApi}/get-post-by-user`)
+  getPostByUser(userId: string | null = null):Observable<IPostList>{
+    return this.http.get<IPostList>(`${this.postApi}/get-post-by-user?Id=${userId || ''}`)
   }
   deletePostByUser(postId:string):Observable<any>{
     return this.http.delete<any>(`${this.postApi}/delete-post/${postId}`)
