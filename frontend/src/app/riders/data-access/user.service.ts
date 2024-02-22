@@ -39,6 +39,9 @@ export class UserService{
     updateProfile(formData:IUpdateProfile):Observable<IUpdateProfile>{
         return this.http.put<IUpdateProfile>(`${this.userApi}/update-profile`,formData)
     }
+    searchUserDetails(searchData:string):Observable<any>{
+        return this.http.get(`${this.userApi}/search-user?${searchData}`);
+    }
     ngOnDestroy() {
         this.ngUnsubscribe$.next();
         this.ngUnsubscribe$.complete();

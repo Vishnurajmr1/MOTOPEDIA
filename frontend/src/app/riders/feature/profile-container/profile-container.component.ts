@@ -23,7 +23,6 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class ProfileContainerComponent {
   showtoggleModal(data: any) {
-    console.log(data);
     this.modalOpen = true;
     this.post = data.post;
     this.actionType = data.actionType;
@@ -41,7 +40,7 @@ export class ProfileContainerComponent {
   private snakbarService = inject(SnackbarService);
   private store = inject(Store<State>);
   private router = inject(ActivatedRoute);
-  id: any;
+  id!: string;
   currentUser: any;
   owner: boolean = false;
   closeModal() {
