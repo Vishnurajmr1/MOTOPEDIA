@@ -14,13 +14,16 @@ import { IpostInterface } from 'src/app/shared/types/post.Interface';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ListPostComponent {
-  @Input() posts!: IpostInterface[];
+  @Input() posts: IpostInterface[] = [];
   showButton: boolean = false;
   @Output() toggleModal = new EventEmitter<{
     post: IpostInterface;
     actionType: string;
   }>();
   ngOnInit(): void {
+    console.log(this.posts);
+  }
+  ngAfterViewInit():void{
     console.log(this.posts);
   }
   showEditButton() {

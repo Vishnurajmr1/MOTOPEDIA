@@ -52,7 +52,7 @@ export class EditProfileComponent {
 
   updateFormValues(): void {
     if(this.userData){
-      this.profileUpdateForm.patchValue({
+      this.profileUpdateForm?.patchValue({
         firstName: this.userData?.firstName,
         lastName: this.userData?.lastName,
         email: this.userData?.email,
