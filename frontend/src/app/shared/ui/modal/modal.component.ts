@@ -18,9 +18,7 @@ export class ModalComponent {
 
   toggleModal() {
     this.modalOpen = !this.modalOpen;
-    console.log("hello")
     if (!this.modalOpen) {
-      console.log("hello world")
       this.close.emit();
     }
   }

@@ -18,6 +18,7 @@ import { ICurrentUser } from 'src/app/auth/data-access/state/auth.reducer';
 export class NavbarComponent {
   currentUser$!: Observable<ICurrentUser>;
   isUserLoggedIn$!: Observable<boolean>;
+  openSearchBar:boolean=false;
 
   constructor(private store: Store<State>,private router:Router) {
     this.currentUser$ = this.store.select(getCurrentUserData);
@@ -31,5 +32,8 @@ export class NavbarComponent {
   logout(): void {
     this.store.dispatch(unSetCurrentUser());
     this.router.navigateByUrl('/');
+  }
+  showSearchComponent(){
+    this.openSearchBar=!this.openSearchBar;
   }
 }
