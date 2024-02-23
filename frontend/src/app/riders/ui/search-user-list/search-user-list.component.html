@@ -1,0 +1,35 @@
+<div *ngIf="userData && userData.length" class="z-10 bg-white divide-y divide-gray-100 rounded-lg shadow w-60 dark:bg-gray-700 dark:divide-gray-600">
+    <ul class="p-3 space-y-1 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownHelperButton">
+      <li  *ngFor="let user of userData">
+            <div class="flex p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-600" [routerLink]="['/profile',user._id]">
+                <div class="flex items-center h-5">
+                </div>
+                <div class="ms-2 text-sm">
+                    <label for="helper-checkbox-1" class="font-medium text-gray-900 dark:text-gray-300">
+                      <div>{{user.firstName}}</div>
+                      <p id="helper-checkbox-text-1" class="text-xs font-normal text-gray-500 dark:text-gray-300">{{user.email}}</p>
+                    </label>
+                </div>
+              </div>
+      </li>
+    </ul>
+</div>
+<ng-template #noResult>
+    <div class="z-10 bg-white divide-y divide-gray-100 rounded-lg shadow w-60 dark:bg-gray-700 dark:divide-gray-600">
+        <ul class="p-3 space-y-1 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownHelperButton">
+          <li>
+            <div class="flex p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-600">
+              <div class="flex items-center h-5">
+    
+              </div>
+              <div class="ms-2 text-sm">
+                  <label for="helper-checkbox-1" class="font-medium text-gray-900 dark:text-gray-300">
+                    <div>No User Found</div>
+                    <p id="helper-checkbox-text-1" class="text-xs font-normal text-gray-500 dark:text-gray-300">Some helpful instruction goes over here.</p>
+                  </label>
+              </div>
+            </div>
+          </li>
+        </ul>
+    </div>
+</ng-template>
