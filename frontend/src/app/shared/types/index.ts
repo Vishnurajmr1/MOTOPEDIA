@@ -4,6 +4,8 @@ export enum Tab {
   Verify = 'verify',
   VerifyOtp = 'verify-otp',
   Reset = 'reset-password',
+  Followers='followers',
+  Following='following'
 }
 
 export enum ProfileTab {
@@ -12,3 +14,4 @@ export enum ProfileTab {
   EditSavedPost = 'EditSavedPost',
   NothingSelected='nothingselected'
 }
+

@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Output,Input } from '@angular/core';
 import { ICurrentUser } from 'src/app/auth/data-access/state/auth.reducer';
+import { IUserInfo } from 'src/app/shared/types/user.Interface';
 
 @Component({
   selector: 'app-aside',
@@ -7,10 +8,10 @@ import { ICurrentUser } from 'src/app/auth/data-access/state/auth.reducer';
   styleUrls: ['./aside.component.css'],
 })
 export class AsideComponent {
-@Output() chatSelected:EventEmitter<ICurrentUser>=new EventEmitter<ICurrentUser>
-  @Input() followers!:[ICurrentUser];
+@Output() chatSelected:EventEmitter<IUserInfo>=new EventEmitter<IUserInfo>
+  @Input() followers!:[IUserInfo];
 
-  onChatClick(follow: ICurrentUser | undefined):void{
+  onChatClick(follow: IUserInfo | undefined):void{
     this.chatSelected.emit(follow)
   }
 }

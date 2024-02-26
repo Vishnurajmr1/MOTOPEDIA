@@ -1,3 +1,71 @@
-<div>
-    <h1>Hello world</h1>
-</div>
+<app-modal [modalOpen]="modalOpen" (close)="closeModal()">
+  <div>
+    <div class="mb-4 border-b border-gray-200 dark:border-gray-700">
+      <ul
+        class="flex flex-wrap -mb-px text-sm font-medium text-center"
+        id="default-tab"
+        data-tabs-toggle="#default-tab-content"
+        role="tablist"
+      >
+        <li class="me-2" role="presentation">
+          <button
+            class="inline-block p-4 border-b-2 rounded-t-lg"
+            type="button"
+            role="tab"
+            (click)="toggleTab(TabType.Followers)"
+            [ngClass]="{ 'bg-blue-500 text-white': selectedTab === TabType.Followers }"
+          >
+            Followers
+          </button>
+        </li>
+        <li class="me-2" role="presentation">
+          <button
+            class="inline-block p-4 border-b-2 rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300"
+            type="button"
+            role="tab"
+            aria-controls="profile"
+            (click)="toggleTab(TabType.Following)"
+            [ngClass]="{ 'bg-blue-500 text-white': selectedTab === TabType.Following}"
+          >
+            Following
+          </button>
+        </li>
+      </ul>
+    </div>
+    <div id="default-tab-content" [ngSwitch]="selectedTab">
+      <div
+      *ngSwitchDefault
+        class="p-4 rounded-lg bg-gray-50 dark:bg-gray-800"
+        id="profile"
+        role="tabpanel"
+        aria-labelledby="profile-tab"
+      >
+      <ng-container *ngFor="let follow of followersList">
+        <div [routerLink]="['/profile',follow._id]">
+          <p class="text-sm text-gray-500 dark:text-gray-400" >
+            {{follow.firstName}}{{follow.lastName}}
+          </p>
+          <p>{{follow.email}}</p>
+        </div>
+        
+      </ng-container>
+      </div>
+      <div
+      *ngSwitchCase="TabType.Following"
+        class="p-4 rounded-lg bg-gray-50 dark:bg-gray-800"
+        id="dashboard"
+        role="tabpanel"
+        aria-labelledby="dashboard-tab"
+      >
+      <ng-container *ngFor="let following of followingList">
+        <div>
+        <p class="text-sm text-gray-500 dark:text-gray-400">
+          {{following.firstName}} {{following.lastName}}
+        </p>
+        <p>{{following.email}}</p>
+      </div>
+      </ng-container>
+      </div>
+    </div>
+  </div>
+</app-modal>

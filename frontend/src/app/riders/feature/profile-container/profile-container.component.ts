@@ -2,6 +2,7 @@ import { Component, Output, inject } from '@angular/core';
 import {
   IFollowersDetails,
   IUpdateProfile,
+  IUserInfo,
   UserDoc,
 } from '../../../shared/types/user.Interface';
 import { UserService } from '../../data-access/user.service';
@@ -43,11 +44,13 @@ export class ProfileContainerComponent {
   id!: string;
   currentUser: any;
   owner: boolean = false;
+  followers!:[IUserInfo];
+  following!:[IUserInfo];
   closeModal() {
     this.modalOpen = false;
   }
   modalOpen: boolean = false;
-  followersList: boolean = false;
+  openFollowersModal:boolean=false;
   ngOnInit(): void {
     this.currentUser = this.store.select(getCurrentUserData);
     this.currentUser.subscribe((state: any) => {
@@ -66,8 +69,10 @@ export class ProfileContainerComponent {
         this.followersDetails = res;
         this.followersLength =
           this.followersDetails?.connectionData[0].followers.length;
+          this.followers=this.followersDetails?.connectionData[0].followers;
         this.followingLength =
           this.followersDetails?.connectionData[0].following.length;
+          this.following=this.followersDetails?.connectionData[0].following;
       },
     });
     this.postService.getPostByUser(this.id).subscribe({
@@ -119,6 +124,6 @@ export class ProfileContainerComponent {
     this.displayContent = 'Saved Posts';
   }
   showFollowersList() {
-    this.followersList = true;
+    this.openFollowersModal=!this.openFollowersModal;
   }
 }
