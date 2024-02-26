@@ -15,7 +15,6 @@
                                 <p class="text-gray-700 hover:cursor-pointer focus:cursor-pointer">Followers <br>{{followersLength}}</p>|
                                 <p class="text-gray-700 hover:cursor-pointer focus:cursor-pointer">Following <br>{{followingLength}}</p>
                             </div>
-                            <followers-list *ngIf="followersList"></followers-list>
                         </div>
                     </div>
                 </div>
@@ -53,3 +52,5 @@
     </div>
 </app-modal>
 
+
+<followers-list  [followersList]="followers" [followingList]="following" [modalOpen]="openFollowersModal"></followers-list>

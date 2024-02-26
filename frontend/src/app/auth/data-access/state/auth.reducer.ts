@@ -18,6 +18,7 @@ export interface ICurrentUser {
   mobile: string;
   isBlocked: boolean;
   profilePic?:string;
+  _id?:string
 }
 
 export interface AuthState {

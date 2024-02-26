@@ -35,6 +35,8 @@ export interface UserDoc {
   profileImgUrl?: string;
   isEmailVerified: boolean;
   isBlocked?: boolean;
+  userId?:string;
+  isVerifiedEmail?:string;
 }
 
 export interface userResponse {
@@ -49,8 +51,8 @@ export interface IFollowersDetails{
   connectionData:[{
     _id:string;
     userId:string;
-    followers:[ICurrentUser];
-    following:[string]
+    followers:[IUserInfo];
+    following:[IUserInfo]
   }]
 }
 export interface IUpdateProfile {
@@ -66,4 +68,16 @@ export interface IUpdateProfile {
   isVerifiedEmail?: boolean;
   password?:string;
   currentPassword?:string;
+}
+
+
+export interface IUserInfo {
+  _id:string
+  firstName: string;
+  lastName: string;
+  email: string;
+  isVerifiedEmail: boolean;
+  mobile: string;
+  isBlocked: boolean;
+  profilePic?:string;
 }

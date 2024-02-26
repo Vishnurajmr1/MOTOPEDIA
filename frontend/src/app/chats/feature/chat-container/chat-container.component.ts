@@ -9,6 +9,7 @@ import {
 import { ICurrentUser } from '../../../../app/auth/data-access/state/auth.reducer';
 import { UserService } from '../../../../app/riders/data-access/user.service';
 import { ChatApiService } from '../../data-access/chatApi.service';
+import { IUserInfo } from 'src/app/shared/types/user.Interface';
 
 @Component({
   selector: 'app-chat-container',
@@ -21,7 +22,7 @@ export class ChatContainerComponent {
   private userService=inject(UserService);
   currentUser$!: Observable<ICurrentUser>;
   protected users = [];
-  followers!:[ICurrentUser];
+  followers!:[IUserInfo];
   protected participant:any;
   messageRecieved=false;
   selectedChat:any;
