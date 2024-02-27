@@ -21,7 +21,7 @@ import { CustomValidationService } from '../../../auth/data-access/custom-valida
   styleUrls: ['./edit-profile.component.css'],
 })
 export class EditProfileComponent {
-  @Input() userData: UserDoc | undefined;
+  @Input() userData: UserDoc |undefined ;
   @Output() userUpdateForm: EventEmitter<IUpdateProfile> = new EventEmitter();
   private fb = inject(FormBuilder);
   imagePreview:string='';
@@ -39,13 +39,13 @@ export class EditProfileComponent {
       email: ['',[Validators.email]],
       mobile: [''],
       currentPassword: ['', Validators.required],
-      profilePic: [''],
       password: ['', Validators.compose([this.customValidator.patternValidator()])],
       confirmPassword: [''],
     },
     {
       validators: this.customValidator.MatchPassword('password', 'confirmPassword'),
     });
+    this.updateFormValues()
 
     console.log(this.userData);
   }
@@ -85,9 +85,9 @@ get formControl(){
   onSubmit() {
     console.log(this.profileUpdateForm);
     console.log(this.userData);
-    // if (this.profileUpdateForm.valid) {
-      console.log(this.profileUpdateForm.value)
+    if(this.profileUpdateForm.value.currentPassword){
       this.userUpdateForm.emit(this.profileUpdateForm.value as IUpdateProfile);
+    }
   }
 
   closeModal() {

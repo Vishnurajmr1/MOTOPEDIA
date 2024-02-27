@@ -75,7 +75,7 @@ const userController = (
         const userId:string|undefined=req.user?.Id;
         const userInfo:UserUpdateInfo=req.body;
         const profilePic:Express.Multer.File|null=req.file as Express.Multer.File;
-        await editUserDetailsUseCase(
+        const updatedProfile=await editUserDetailsUseCase(
             userId,
             userInfo,
             profilePic,
@@ -86,7 +86,7 @@ const userController = (
         res.status(200).json({
             status:Status.SUCCESS,
             message:'Successfully updated the profile',
-            data:null
+            data:updatedProfile
         })
     })
     const followUser = asyncHandler(async (req: CustomRequest, res: Response) => {

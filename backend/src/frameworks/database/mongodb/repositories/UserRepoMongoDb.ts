@@ -29,6 +29,7 @@ export const userRepositoryMongoDB = () => {
             },
             { ...userInfo },
         );
+        return updatedProfile
     };
     const getAllUsers = async () => {
         const users: UserInterface[] | null = await User.find({});
