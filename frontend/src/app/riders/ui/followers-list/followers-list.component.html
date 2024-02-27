@@ -43,7 +43,7 @@
       <ng-container *ngFor="let follow of followersList">
         <div [routerLink]="['/profile',follow._id]">
           <p class="text-sm text-gray-500 dark:text-gray-400" >
-            {{follow.firstName}}{{follow.lastName}}
+            {{follow.firstName}} {{follow.lastName}}
           </p>
           <p>{{follow.email}}</p>
         </div>
@@ -58,7 +58,7 @@
         aria-labelledby="dashboard-tab"
       >
       <ng-container *ngFor="let following of followingList">
-        <div>
+        <div [routerLink]="['/profile',following._id]">
         <p class="text-sm text-gray-500 dark:text-gray-400">
           {{following.firstName}} {{following.lastName}}
         </p>
