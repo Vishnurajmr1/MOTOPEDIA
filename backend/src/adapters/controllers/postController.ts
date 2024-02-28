@@ -9,7 +9,7 @@ import { deletePostById } from '../../application/use-cases/post/deletePost';
 import { editPostUseCase, likePostUseCase } from '../../application/use-cases/post/editPost';
 import { getAllPostsUseCase, getPostByUserUseCase } from '../../application/use-cases/post/listPost';
 import { reportPost } from '../../application/use-cases/post/reportPost';
-import { savePostUseCase } from '../../application/use-cases/post/savePost';
+import { getSavedPostsUseCase, savePostUseCase } from '../../application/use-cases/post/savePost';
 import Status from '@src/constants/HttResponseStatus';
 import { CommentRepositoryMongoDbInterface } from '../../frameworks/database/mongodb/repositories/commentRepoMongoDb';
 import { PostRepositoryMongoDbInterface } from '../../frameworks/database/mongodb/repositories/postRepoMongoDb';
@@ -139,6 +139,15 @@ const postController = (
             data
         })
     });
+    const getSavedPosts=asyncHandler(async(req:CustomRequest,res:Response)=>{
+        const userId:string|undefined=req.user?.Id;
+        const posts=await getSavedPostsUseCase(userId,dbRepositoryPost,cloudService);
+        res.status(200).json({
+            status:Status.SUCCESS,
+            message:'Successfully get all saved posts of current user',
+            data:posts
+        })
+    })
     return {
         addPost,
         editPost,
@@ -149,7 +158,8 @@ const postController = (
         addCommentByPostId,
         fetchCommentByPostId,
         reportPostById,
-        savePost
+        savePost,
+        getSavedPosts
     };
 };
 

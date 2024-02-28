@@ -9,8 +9,12 @@ export const postRepositoryMongoDb = () => {
         return postId;
     };
     const editPost = async (postId: string, editInfo: EditPostInterface) => {
-        console.log(postId,editInfo)
-        const response = await Post.findOneAndUpdate({ _id: new mongoose.Types.ObjectId(postId) }, { ...editInfo },{new:true});
+        console.log(postId, editInfo);
+        const response = await Post.findOneAndUpdate(
+            { _id: new mongoose.Types.ObjectId(postId) },
+            { ...editInfo },
+            { new: true },
+        );
         return response;
     };
     const getPostById = async (postId: string) => {
@@ -18,7 +22,7 @@ export const postRepositoryMongoDb = () => {
         return post;
     };
     const getAllPost = async () => {
-        const posts: postInterface[] = await Post.find({}).sort({createdAt:-1}).populate({
+        const posts: postInterface[] = await Post.find({}).sort({ createdAt: -1 }).populate({
             path: 'authorId',
             select: 'firstName lastName ',
         });
@@ -33,6 +37,12 @@ export const postRepositoryMongoDb = () => {
         });
         return posts;
     };
+    const getSavedPostsByUser = async (userId: string) => {
+        const posts: postInterface[] | null = await Post.find({
+            savedPosts: { $in: [new mongoose.Types.ObjectId(userId)] },
+        });
+        return posts;
+    };
     return {
         addPost,
         editPost,
@@ -40,6 +50,7 @@ export const postRepositoryMongoDb = () => {
         getAllPost,
         deletePost,
         getPostByUser,
+        getSavedPostsByUser
     };
 };
 

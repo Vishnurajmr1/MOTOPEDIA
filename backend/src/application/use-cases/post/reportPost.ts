@@ -12,10 +12,8 @@ export const reportPost = async (
     }
     const targetId = reportData.targetId;
     const reporterId = reportData.reporterId;
-    const getReportByPostId = await reportDbRepository.getReportByPostId({targetId});
-    console.log(getReportByPostId);
+    const getReportByPostId = await reportDbRepository.getReportByPostId({ targetId });
     const existedData = getReportByPostId.find((item) => item.reporterId.toString() === reporterId);
-    console.log(existedData);
     if (existedData) {
         throw new AppError('User already reported this post', HttpStatusCodes.BAD_REQUEST);
     }

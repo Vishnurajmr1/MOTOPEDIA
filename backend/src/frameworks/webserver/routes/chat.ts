@@ -1,5 +1,5 @@
-import chatController from "../../../adapters/controllers/chatController";
 import express from "express"
+import chatController from "../../../adapters/controllers/chatController";
 import jwtAuthMiddleware from "../middlewares/userAuthMiddleware";
 import { chatDbRepository } from "../../../application/repositories/chatDBRepository";
 import { chatRepositoryMongoDB } from "../../../frameworks/database/mongodb/repositories/chatRepoMongoDb";
