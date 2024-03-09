@@ -40,23 +40,35 @@ export const getPostByUserUseCase = async (
     return posts;
 };
 
-export const getPostsByFollowersUseCase= async (
-    userId:string|undefined,
+export const getPostsByFollowersUseCase = async (
+    userId: string | undefined,
     cloudService: ReturnType<CloudServiceInterface>,
     postDbRepository: ReturnType<PostDbRepositoryInterface>,
     connectionDbRepository: ReturnType<ConnectionDbRepositoryInterface>,
-)=>{
-if(!userId){
-    throw new AppError('Please provide a valid id',HttpStatusCodes.BAD_REQUEST);
-}
-const connectionData=await connectionDbRepository.getFullUserList(userId);
-const followerIds=connectionData.flatMap(follower=>follower.followers.map(f=>f._id));
-const postsByFollowers=await Promise.all(followerIds.map(async(followerId)=>{
-    const posts=await postDbRepository.getPostByUser(followerId.toString())
-    return posts
-}))
-return postsByFollowers;
-}
+) => {
+    if (!userId) {
+        throw new AppError('Please provide a valid id', HttpStatusCodes.BAD_REQUEST);
+    }
+    const connectionData = await connectionDbRepository.getFullUserList(userId);
+    const followerIds = connectionData.flatMap((follower) => follower.followers.map((f) => f._id));
+    const postsByFollowers = await Promise.all(
+        followerIds.map(async (followerId) => {
+            const posts = await postDbRepository.getPostByUser(followerId.toString());
+            return posts;
+        }),
+    );
+
+    const currentUserPosts=await postDbRepository.getPostByUser(userId);
+    const allPosts=postsByFollowers.flat().concat(currentUserPosts);
+
+    await Promise.all(allPosts.map(async(post)=>{
+        if(post && post.image){
+            post.imageUrl=await cloudService.getFile(post.image.key)
+        }
+    }))
+
+    return allPosts;
+};
 
 // const followers=connectionData.map((user)=>{
 //     user.followers
