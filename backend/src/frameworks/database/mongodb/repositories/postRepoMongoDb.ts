@@ -9,7 +9,6 @@ export const postRepositoryMongoDb = () => {
         return postId;
     };
     const editPost = async (postId: string, editInfo: EditPostInterface) => {
-        console.log(postId, editInfo);
         const response = await Post.findOneAndUpdate(
             { _id: new mongoose.Types.ObjectId(postId) },
             { ...editInfo },
@@ -43,6 +42,9 @@ export const postRepositoryMongoDb = () => {
         });
         return posts;
     };
+    // const getPostsByFollowers=async(userId:string)=>{
+
+    // }
     return {
         addPost,
         editPost,

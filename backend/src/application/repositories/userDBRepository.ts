@@ -25,6 +25,8 @@ export const userDbRepository = (repository: ReturnType<UserRepositoryMongoDB>) 
 
     const searchUser = async (searchQuery: string) => await repository.searchUser(searchQuery);
 
+    const searchAvailableUsers=async(userId:string)=>await repository.searchAvailableUsers(userId);
+
     return {
         addUser,
         getUserByEmail,
@@ -37,6 +39,7 @@ export const userDbRepository = (repository: ReturnType<UserRepositoryMongoDB>) 
         getAllBlockedUsers,
         getTotalNumberofUsers,
         searchUser,
+        searchAvailableUsers
     };
 };
 

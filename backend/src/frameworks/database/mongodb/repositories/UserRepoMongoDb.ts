@@ -54,6 +54,25 @@ export const userRepositoryMongoDB = () => {
         const total = await User.find().count();
         return total;
     };
+    const searchAvailableUsers=async(userId:string)=>{
+        const users=await User.aggregate([
+            {
+                $match:{
+                    _id:{
+                        $ne:userId
+                    }
+                }
+            },{
+                $project:{
+                    profilePic:1,
+                    firstName:1,
+                    lastName:1,
+                    email:1
+                }
+            }
+        ])
+        return users;
+    }
     const searchUser = async (searchQuery: string) => {
         const regexExp = new RegExp(searchQuery, 'i');
         const users = await User.find({
@@ -75,6 +94,7 @@ export const userRepositoryMongoDB = () => {
         getAllBlockedUsers,
         getTotalNumberofUsers,
         searchUser,
+        searchAvailableUsers
     };
 };
 

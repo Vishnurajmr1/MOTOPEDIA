@@ -1,5 +1,5 @@
 import mongoose, { Schema } from 'mongoose';
-const FileSchema = new Schema({
+export const FileSchema = new Schema({
     name: {
         type: String,
         required: true,
@@ -73,6 +73,10 @@ const postSchema = new mongoose.Schema({
         type: Number,
         default: 0,
     },
+    tags:{
+        type:[String],
+        default:[]
+    }
 });
 
 const Post = mongoose.model('Post', postSchema, 'posts');
