@@ -140,6 +140,7 @@ const userController = (
             data:searchResult
         })
     })
+    
     return {
         getAllUsers,
         blockUser,
@@ -150,7 +151,7 @@ const userController = (
         getConnections,
         editUserDetails,
         searchUser,
-        getOtherUserDetails
+        getOtherUserDetails,
     };
 };
 

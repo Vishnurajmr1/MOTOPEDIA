@@ -1,8 +1,9 @@
-import { PostDbRepositoryInterface } from '@src/application/repositories/postDBRepository';
-import { CloudServiceInterface } from '@src/application/services/cloudServiceInterface';
-import HttpStatusCodes from '@src/constants/HttpStatusCodes';
-import { postInterface } from '@src/types/postInterface';
-import AppError from '@src/utils/appError';
+import { ConnectionDbRepositoryInterface } from '../../repositories/connectionDBRepository';
+import { PostDbRepositoryInterface } from '../../repositories/postDBRepository';
+import { CloudServiceInterface } from '../../services/cloudServiceInterface';
+import HttpStatusCodes from '../../../constants/HttpStatusCodes';
+import { postInterface } from '../../../types/postInterface';
+import AppError from '../../../utils/appError';
 
 export const getAllPostsUseCase = async (
     cloudService: ReturnType<CloudServiceInterface>,
@@ -38,3 +39,25 @@ export const getPostByUserUseCase = async (
     );
     return posts;
 };
+
+export const getPostsByFollowersUseCase= async (
+    userId:string|undefined,
+    cloudService: ReturnType<CloudServiceInterface>,
+    postDbRepository: ReturnType<PostDbRepositoryInterface>,
+    connectionDbRepository: ReturnType<ConnectionDbRepositoryInterface>,
+)=>{
+if(!userId){
+    throw new AppError('Please provide a valid id',HttpStatusCodes.BAD_REQUEST);
+}
+const connectionData=await connectionDbRepository.getFullUserList(userId);
+const followerIds=connectionData.flatMap(follower=>follower.followers.map(f=>f._id));
+const postsByFollowers=await Promise.all(followerIds.map(async(followerId)=>{
+    const posts=await postDbRepository.getPostByUser(followerId.toString())
+    return posts
+}))
+return postsByFollowers;
+}
+
+// const followers=connectionData.map((user)=>{
+//     user.followers
+// })

@@ -22,7 +22,10 @@ export const userDbRepository = (repository: ReturnType<UserRepositoryMongoDB>) 
     const getAllBlockedUsers = async () => await repository.getAllBlockedUsers();
 
     const getTotalNumberofUsers = async () => await repository.getTotalNumberofUsers();
-    const searchUser=async(searchQuery:string)=>await repository.searchUser(searchQuery);
+
+    const searchUser = async (searchQuery: string) => await repository.searchUser(searchQuery);
+
+    const searchAvailableUsers=async(userId:string)=>await repository.searchAvailableUsers(userId);
 
     return {
         addUser,
@@ -35,7 +38,8 @@ export const userDbRepository = (repository: ReturnType<UserRepositoryMongoDB>) 
         unblockUser,
         getAllBlockedUsers,
         getTotalNumberofUsers,
-        searchUser
+        searchUser,
+        searchAvailableUsers
     };
 };
 

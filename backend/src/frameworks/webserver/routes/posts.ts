@@ -10,6 +10,8 @@ import { commentDbRepository } from '../../../application/repositories/commentDB
 import { commentRepositoryMongoDb } from '../../../frameworks/database/mongodb/repositories/commentRepoMongoDb';
 import { reportDbRepository } from '../../../application/repositories/reportDBRepoistory';
 import { reportRepositoryMongoDb } from '../../../frameworks/database/mongodb/repositories/reportRepoMongoDb';
+import { connectionDbRepository } from '@src/application/repositories/connectionDBRepository';
+import { connectionRepositoryMongoDB } from '@src/frameworks/database/mongodb/repositories/connectionRepoMongoDb';
 
 const postRouter = () => {
     const router = express.Router();
@@ -21,7 +23,9 @@ const postRouter = () => {
         commentDbRepository,
         commentRepositoryMongoDb,
         reportDbRepository,
-        reportRepositoryMongoDb
+        reportRepositoryMongoDb,
+        connectionDbRepository,
+        connectionRepositoryMongoDB
     );
 
     router.route('/get-all-posts').get(jwtAuthMiddleware, controller.getAllPosts);
@@ -34,7 +38,8 @@ const postRouter = () => {
     router.route('/get-all-comments/:postId').get(jwtAuthMiddleware,controller.fetchCommentByPostId);
     router.route('/report/:postId').post(jwtAuthMiddleware,controller.reportPostById);
     router.route('/save-post/:postId').patch(jwtAuthMiddleware,controller.savePost);
-    // router.route('/saved-post').get(jwtAuthMiddleware,controller.getSavedPosts);
+    router.route('/saved-post').get(jwtAuthMiddleware,controller.getSavedPosts);
+    router.route('/get-followers-post').get(jwtAuthMiddleware,controller.getPostsByFollowers);
     // router.route('/unlike-post').patch(jwtAuthMiddleware);
     return router;
 };

@@ -7,9 +7,9 @@ import { getAllComments } from '../../application/use-cases/comment/getAllCommen
 import { addPosts } from '../../application/use-cases/post/addPost';
 import { deletePostById } from '../../application/use-cases/post/deletePost';
 import { editPostUseCase, likePostUseCase } from '../../application/use-cases/post/editPost';
-import { getAllPostsUseCase, getPostByUserUseCase } from '../../application/use-cases/post/listPost';
+import { getAllPostsUseCase, getPostByUserUseCase, getPostsByFollowersUseCase } from '../../application/use-cases/post/listPost';
 import { reportPost } from '../../application/use-cases/post/reportPost';
-import { savePostUseCase } from '../../application/use-cases/post/savePost';
+import { getSavedPostsUseCase, savePostUseCase } from '../../application/use-cases/post/savePost';
 import Status from '@src/constants/HttResponseStatus';
 import { CommentRepositoryMongoDbInterface } from '../../frameworks/database/mongodb/repositories/commentRepoMongoDb';
 import { PostRepositoryMongoDbInterface } from '../../frameworks/database/mongodb/repositories/postRepoMongoDb';
@@ -20,6 +20,8 @@ import { CustomRequest } from '../../types/customRequest';
 import { AddPostInterface, EditPostInterface } from '../../types/postInterface';
 import { Request, Response, NextFunction } from 'express';
 import asyncHandler from 'express-async-handler';
+import { ConnectionRepositoryMongoDB } from '@src/frameworks/database/mongodb/repositories/connectionRepoMongoDb';
+import { ConnectionDbRepositoryInterface } from '@src/application/repositories/connectionDBRepository';
 
 const postController = (
     cloudServiceInterface: CloudServiceInterface,
@@ -29,12 +31,16 @@ const postController = (
     commentDbRepository: CommentDbRepositoryInterface,
     commentDbRepositoryImpl: CommentRepositoryMongoDbInterface,
     reportDbRepository:ReportDbRepositoryInterface,
-    reportDbRepositoryImpl:ReportRepositoryMongoDbInterface
+    reportDbRepositoryImpl:ReportRepositoryMongoDbInterface,
+    connectionDbRepository:ConnectionDbRepositoryInterface,
+    connectionDbRepositoryImpl:ConnectionRepositoryMongoDB
+    
 ) => {
     const dbRepositoryPost = postDbRepository(postDbRepositoryImpl());
     const cloudService = cloudServiceInterface(cloudServiceImpl());
     const dbRepositoryComment = commentDbRepository(commentDbRepositoryImpl());
     const dbRepositoryReport=reportDbRepository(reportDbRepositoryImpl());
+    const dbRepositoryConnection=connectionDbRepository(connectionDbRepositoryImpl());
     const addPost = asyncHandler(async (req: CustomRequest, res: Response, next: NextFunction) => {
         const post: AddPostInterface = req.body;
         const files: Express.Multer.File[] = req.files as Express.Multer.File[];
@@ -139,6 +145,24 @@ const postController = (
             data
         })
     });
+    const getSavedPosts=asyncHandler(async(req:CustomRequest,res:Response)=>{
+        const userId:string|undefined=req.user?.Id;
+        const posts=await getSavedPostsUseCase(userId,dbRepositoryPost,cloudService);
+        res.status(200).json({
+            status:Status.SUCCESS,
+            message:'Successfully get all saved posts of current user',
+            data:posts
+        })
+    })
+    const getPostsByFollowers=asyncHandler(async(req:CustomRequest,res:Response)=>{
+        const userId:string|undefined=req.user?.Id;
+        const posts=await getPostsByFollowersUseCase(userId,cloudService,dbRepositoryPost,dbRepositoryConnection);
+        res.status(200).json({
+            status:Status.SUCCESS,
+            message:"Successfully fetched the posts of followers",
+            data:posts
+        })
+    })
     return {
         addPost,
         editPost,
@@ -149,7 +173,9 @@ const postController = (
         addCommentByPostId,
         fetchCommentByPostId,
         reportPostById,
-        savePost
+        savePost,
+        getSavedPosts,
+        getPostsByFollowers
     };
 };
 

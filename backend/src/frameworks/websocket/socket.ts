@@ -1,7 +1,7 @@
 //Socket config 
 import http from 'http';
 import { Server, Socket } from 'socket.io';
-import chatController from '../../adapters/controllers/chatController';
+// import chatController from '../../adapters/controllers/chatController';
 import AppError from '../../utils/appError';
 import HttpStatusCodes from '../../constants/HttpStatusCodes';
 import { chatDbRepository } from '../../application/repositories/chatDBRepository';
@@ -26,7 +26,7 @@ export const setupSocketIO = async (server: http.Server) => {
 };
 
 let users: any[] = [];
-const controller=chatController(chatDbRepository,chatRepositoryMongoDB,userDbRepository,userRepositoryMongoDB);
+// const controller=chatController(chatDbRepository,chatRepositoryMongoDB,userDbRepository,userRepositoryMongoDB);
 
 const addUser = (userId: string, socketId: string) => {
     // eslint-disable-next-line no-unused-expressions
@@ -51,36 +51,36 @@ const onSocketConnection = (io: Server, socket: Socket) => {
     });
     
 
-    socket.on('new-message', async (data: any) => {
-        try {
-            const { sender, recipient, text } = data;
-            if (!text ||!sender||!recipient) {
-               throw new AppError('Please provide message',HttpStatusCodes.BAD_REQUEST);
-            }
-            // const senderData = await userService.findUserById(sender);
-            // const recipientData = await userService.findUserById(recipient);
-            // if (!senderData || !recipientData) throw new BadRequestError('Oops something goes wrong');
-            const result = await controller.createChat(
-                sender,
-                recipient,
-                text
-            );
-            const user1 = getUser(sender);
-            const user2 = getUser(recipient);
+    // socket.on('new-message', async (data: any) => {
+    //     try {
+    //         const { sender, recipient, text } = data;
+    //         if (!text ||!sender||!recipient) {
+    //            throw new AppError('Please provide message',HttpStatusCodes.BAD_REQUEST);
+    //         }
+    //         // const senderData = await userService.findUserById(sender);
+    //         // const recipientData = await userService.findUserById(recipient);
+    //         // if (!senderData || !recipientData) throw new BadRequestError('Oops something goes wrong');
+    //         const result = await controller.createChat(
+    //             sender,
+    //             recipient,
+    //             text
+    //         );
+    //         const user1 = getUser(sender);
+    //         const user2 = getUser(recipient);
 
-            const message = { result, currentUserId: sender, participantId: recipient };
+    //         const message = { result, currentUserId: sender, participantId: recipient };
             
-            if (user1?.socketId) {
-                io.to(user1.socketId).emit('receiveMessage', message);
-            }
+    //         if (user1?.socketId) {
+    //             io.to(user1.socketId).emit('receiveMessage', message);
+    //         }
 
-            if (user2?.socketId) {
-                io.to(user2.socketId).emit('receiveMessage', message);
-            }
-        } catch (error) {
-            console.error('Error processing message:', error);
-        }
-    });
+    //         if (user2?.socketId) {
+    //             io.to(user2.socketId).emit('receiveMessage', message);
+    //         }
+    //     } catch (error) {
+    //         console.error('Error processing message:', error);
+    //     }
+    // });
     socket.on('disconnect', () => {
         console.log('User disconnected');
         removeUser(socket.id);

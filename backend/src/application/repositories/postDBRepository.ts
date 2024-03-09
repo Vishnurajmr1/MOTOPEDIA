@@ -8,13 +8,15 @@ export const postDbRepository = (repository: ReturnType<PostRepositoryMongoDbInt
     const deletePostById=async(postId:string)=>await repository.deletePost(postId);
     const getAllPosts=async()=>await repository.getAllPost();
     const getPostByUser=async(userId:string)=>await repository.getPostByUser(userId)
+    const getSavedPosts=async(userId:string)=>await repository.getSavedPostsByUser(userId);
     return {
         addPost,
         editPost,
         getPostById,
         getAllPosts,
         deletePostById,
-        getPostByUser
+        getPostByUser,
+        getSavedPosts
     };
 };
 
