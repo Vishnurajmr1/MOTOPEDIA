@@ -11,3 +11,13 @@ export const searchUserUseCase = async (searchQuery: string, userDbRepository: R
     console.log(searchResult);
     return searchResult;
 };
+
+
+export const getAvailableUsersUsingSearch=async(userid:string|undefined,userDbRepository:ReturnType<usersDbInterface>)=>{
+
+    if(!userid){
+        throw new AppError('Please provide a valid userId',HttpStatusCodes.BAD_REQUEST);
+    }
+    const searchResult=await userDbRepository.searchAvailableUsers(userid);
+    return searchResult;
+}

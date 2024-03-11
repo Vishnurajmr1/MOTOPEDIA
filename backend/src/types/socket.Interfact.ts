@@ -1,3 +1,6 @@
+import { Socket } from "socket.io";
+import { UserInterface } from "./userInterface";
+
 export interface ServerToClientEvents {
     recieve_message: (data: any) => void;
     response_data: (data: any) => void;
@@ -13,4 +16,9 @@ export interface ClientToServerEvents {
 
 export interface SocketData {
     userId: string;
+}
+
+
+export interface customSocket extends Socket{
+   user:UserInterface
 }

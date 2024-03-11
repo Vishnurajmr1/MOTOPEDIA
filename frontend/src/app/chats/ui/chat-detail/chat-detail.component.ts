@@ -25,17 +25,17 @@ export class ChatDetailComponent {
     }
   }
     //sroll
-    @ViewChild('scrollMe') private myScrollContainer!: ElementRef;
+    // @ViewChild('scrollMe') private myScrollContainer!: ElementRef;
 
-    ngAfterViewChecked() {
-      this.scrollToBottom();
-    }
+    // ngAfterViewChecked() {
+    //   this.scrollToBottom();
+    // }
   
-    scrollToBottom(): void {
-      try {
-        this.myScrollContainer.nativeElement.scrollTop = this.myScrollContainer.nativeElement.scrollHeight;
-      } catch (err) { 
-        console.log(err);
-      }
-    }
+    // scrollToBottom(): void {
+    //   try {
+    //     this.myScrollContainer.nativeElement.scrollTop = this.myScrollContainer.nativeElement.scrollHeight;
+    //   } catch (err) { 
+    //     console.log(err);
+    //   }
+    // }
 }

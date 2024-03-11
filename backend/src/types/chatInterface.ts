@@ -1,5 +1,7 @@
 export interface IChat{
-    senderId:string;
-    recieverId:string;
-    text:string;
+    name?:string;
+    isGroupChat?:boolean;
+    lastMessage?:string;
+    participants?:[string];
+    admin?:string;
 }

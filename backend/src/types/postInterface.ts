@@ -18,6 +18,7 @@ export interface AddPostInterface {
     description: string;
     authorId: string;
     image: FileSchema;
+    tags?:string[]
 }
 
 export interface EditPostInterface {
@@ -28,6 +29,7 @@ export interface EditPostInterface {
     likedBy?: likedBy[];
     likes?: likes;
     saved?:string[];
+    tags?:string[]
 }
 
 export interface postInterface extends AddPostInterface {
@@ -35,4 +37,5 @@ export interface postInterface extends AddPostInterface {
     likes?: likes;
     likedBy?: likedBy[];
     savedPosts?:string[];
+    tags?:string[]
 }

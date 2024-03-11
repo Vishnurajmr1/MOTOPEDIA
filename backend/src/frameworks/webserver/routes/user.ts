@@ -34,7 +34,8 @@ const userRouter = () => {
     router.route('/get-user/:id').get(jwtAuthMiddleware, controller.getOtherUserDetails);
     router.route('/update-profile').put(jwtAuthMiddleware, upload.single('image'), controller.editUserDetails);
     router.route('/search-user').get(jwtAuthMiddleware, controller.searchUser);
-    router.route('/profile-pic').patch(jwtAuthMiddleware,upload.single('image'),controller.editUserDetails);
+    router.route('/profile-pic').patch(jwtAuthMiddleware, upload.single('image'), controller.editUserDetails);
+    router.route('/users').get(jwtAuthMiddleware, controller.searchAvailableUsers);
     return router;
 };
 
