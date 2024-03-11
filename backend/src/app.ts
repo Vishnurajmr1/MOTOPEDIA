@@ -1,4 +1,4 @@
-import express, { Application, NextFunction, Request, Response } from 'express';
+import express, { Application, NextFunction, Request, Response,Express } from 'express';
 import connectToMongodb from './frameworks/database/mongodb/connection';
 import colors from 'colors.ts';
 import AppError from './utils/appError';
@@ -10,11 +10,11 @@ import { createServer } from 'http';
 import { setupSocketIO } from './frameworks/websocket/socket';
 colors?.enable();
 
-const app: Application = express();
+const app: Express = express();
 const server = createServer(app);
 connectToMongodb();
 expressConfig(app);
-setupSocketIO(server)
+setupSocketIO(app,server)
 routes(app)
 
 //error handling middleware

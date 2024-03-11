@@ -29,6 +29,9 @@ export class PostService {
   getAllPost(): Observable<any> {
     return this.http.get(`${this.postApi}/get-all-posts`);
   }
+  getPostByFollowers():Observable<IpostInterface[]>{
+    return this.http.get<IpostInterface[]>(`${this.postApi}/get-followers-post`)
+  }
   likeThePost(data: any): Observable<any> {
     return this.http.put(`${this.postApi}/like-post`, data);
   }

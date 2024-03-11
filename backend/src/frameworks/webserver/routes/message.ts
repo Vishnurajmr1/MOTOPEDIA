@@ -6,4 +6,7 @@ const messageRouter=()=>{
    const router=express.Router();
 
    router.route('/chatList')
+   return router;
 }
+
+export default messageRouter;

@@ -28,7 +28,7 @@ export class PostListComponent {
   currentUser: string | undefined;
   isUserFollowed: boolean = false;
   ngOnInit(): void {
-    this.postService.getAllPost().subscribe((data: any) => {
+    this.postService.getPostByFollowers().subscribe((data: any) => {
       this.posts = data.data;
     });
     this.postService.currentUser$.subscribe((user) => {

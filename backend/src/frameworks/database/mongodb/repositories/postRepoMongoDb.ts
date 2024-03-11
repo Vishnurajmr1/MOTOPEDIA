@@ -33,7 +33,7 @@ export const postRepositoryMongoDb = () => {
     const getPostByUser = async (userId: string) => {
         const posts: postInterface[] | null = await Post.find({
             authorId: { $in: [new mongoose.Types.ObjectId(userId)] },
-        });
+        }).populate({path:'authorId',select:'firstName lastName'});
         return posts;
     };
     const getSavedPostsByUser = async (userId: string) => {
@@ -42,9 +42,6 @@ export const postRepositoryMongoDb = () => {
         });
         return posts;
     };
-    // const getPostsByFollowers=async(userId:string)=>{
-
-    // }
     return {
         addPost,
         editPost,

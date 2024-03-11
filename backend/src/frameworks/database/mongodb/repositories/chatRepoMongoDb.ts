@@ -1,4 +1,4 @@
-import Chat from '../models/chat.Model';
+import Chat from '../models/chat'
 import { ChatMessage } from '../models/message';
 import mongoose from 'mongoose';
 
@@ -35,7 +35,7 @@ const chatCommonAggregation = () => {
     return [
         {
             $lookup: {
-                from: '$user',
+                from: 'user',
                 foreignField: '_id',
                 localField: 'participants',
                 as: 'participants',
@@ -115,7 +115,7 @@ export const chatRepositoryMongoDB = () => {
                     isGroupChat: false,
                     $and: [
                         {
-                            participants: { $elemMatch: { $eq: userId } },
+                            participants: { $elemMatch: { $eq: new mongoose.Types.ObjectId(userId) } },
                         },
                         {
                             participants: { $elemMatch: { $eq: new mongoose.Types.ObjectId(recieverId) } },
@@ -126,6 +126,8 @@ export const chatRepositoryMongoDB = () => {
             ...chatCommonAggregation(),
         ]);
         if (chat.length) {
+            console.log(chat)
+            console.log("Chat is used here");
             return chat[0];
         }
 
@@ -134,7 +136,6 @@ export const chatRepositoryMongoDB = () => {
             participants: [userId, recieverId],
             admin: userId,
         });
-
         const createChat = await Chat.aggregate([
             {
                 $match: {
@@ -144,7 +145,8 @@ export const chatRepositoryMongoDB = () => {
             ...chatCommonAggregation(),
         ]);
         const payload = createChat[0];
-
+        console.log(payload)
+        console.log("hello payload used");
         if (payload) return payload;
     };
 

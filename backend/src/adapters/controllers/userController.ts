@@ -18,7 +18,7 @@ import { ConnectionRepositoryMongoDB } from '@src/frameworks/database/mongodb/re
 import { UserUpdateInfo } from '@src/types/userInterface';
 import { CloudServiceInterface } from '@src/application/services/cloudServiceInterface';
 import { CloudServiceImpl } from '@src/frameworks/services/s3Service';
-import { searchUserUseCase } from '@src/application/use-cases/user/search';
+import { getAvailableUsersUsingSearch, searchUserUseCase } from '@src/application/use-cases/user/search';
 
 const userController = (
     authServiceInterface: AuthServiceInterface,
@@ -140,6 +140,15 @@ const userController = (
             data:searchResult
         })
     })
+    const searchAvailableUsers=asyncHandler(async(req:CustomRequest,res:Response)=>{
+        const userId: string | undefined = req.query?.Id as string || req.user?.Id;
+        const users = await getAvailableUsersUsingSearch(userId,dbRepositoryUser);
+        res.status(200).json({
+            status: Status.SUCCESS,
+            message: 'Successfully retrieved user connection list',
+            data:users,
+        });
+    })
     
     return {
         getAllUsers,
@@ -152,6 +161,7 @@ const userController = (
         editUserDetails,
         searchUser,
         getOtherUserDetails,
+        searchAvailableUsers
     };
 };
 
