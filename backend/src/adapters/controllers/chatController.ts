@@ -2,7 +2,7 @@ import asyncHandler from 'express-async-handler';
 import { Request, Response } from 'express';
 import Status from '../../constants/HttResponseStatus';
 import { createOneToOneChatUseCase } from '../../application/use-cases/chat/createChat';
-import { chatDbInterface } from '../../application/repositories/chatDBRepository';
+import { ChatDbRepositoryInterface } from '../../application/repositories/chatDBRepository';
 import { ChatRepositoryMongoDB } from '../../frameworks/database/mongodb/repositories/chatRepoMongoDb';
 import { CustomRequest } from '../../types/customRequest';
 import { usersDbInterface } from '@src/application/repositories/userDBRepository';
@@ -12,7 +12,7 @@ import { ChatEventEnum } from '@src/constants/chatEventEnum';
 import { getAllChatsUseCase } from '@src/application/use-cases/chat/getChat';
 
 const chatController = (
-    chatDbRepository: chatDbInterface,
+    chatDbRepository: ChatDbRepositoryInterface,
     chatDbRepositoryImplemtation: ChatRepositoryMongoDB,
     userDbRepository: usersDbInterface,
     userDbRepositoryImplementation: UserRepositoryMongoDB,
@@ -31,9 +31,6 @@ const chatController = (
         const senderId: string | undefined = req.user?.Id;
         const receiverId = req.params.receiverId;
         const result = await createOneToOneChatUseCase(senderId,receiverId, dbRepositoryChat, dbRepositoryUser);
-        console.log("Hello here comes the result");
-        console.log(result);
-        console.log("REsult is successfully fetched")
         if (result.participants) {
             result.participants.forEach((participant) => {
                 if (participant._id.toString() === senderId) return;
