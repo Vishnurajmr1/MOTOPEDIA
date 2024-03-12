@@ -126,8 +126,6 @@ export const chatRepositoryMongoDB = () => {
             ...chatCommonAggregation(),
         ]);
         if (chat.length) {
-            console.log(chat)
-            console.log("Chat is used here");
             return chat[0];
         }
 
@@ -145,8 +143,6 @@ export const chatRepositoryMongoDB = () => {
             ...chatCommonAggregation(),
         ]);
         const payload = createChat[0];
-        console.log(payload)
-        console.log("hello payload used");
         if (payload) return payload;
     };
 
@@ -203,7 +199,7 @@ export const chatRepositoryMongoDB = () => {
         const chats=await Chat.aggregate([
             {
                 $match:{
-                    participants:{$elemMatch:{$eq:userId}}
+                    participants:{$elemMatch:{$eq:new mongoose.Types.ObjectId(userId)}}
                 }
             },
             {
@@ -215,6 +211,40 @@ export const chatRepositoryMongoDB = () => {
         ])
         return chats
     }
+    const getChatById=async(chatId:string)=>{
+        const chat=await Chat.findById(chatId);
+        return chat;
+    }
+    const getParticipantsOfChat=async(chatId:string)=>{
+        const particpants=await Chat.aggregate([
+            {
+                $match:{
+                    _id:new mongoose.Types.ObjectId(chatId)
+                }
+            },
+            {
+                $project:{
+                    participants:1,
+                    _id:0
+                }
+            }
+        ])
+        
+        return particpants;
+    }
+    const updateLastMessageChat=async(chatId:string,messageId:string)=>{
+        const chat=await Chat.findByIdAndUpdate(
+            chatId,
+            {
+                $set:{
+                    lastMessage:new mongoose.Types.ObjectId(messageId)
+                }
+            },
+            {new:true}
+        )
+        return chat;
+    }
+
 
     return {
         createAGroupChat,
@@ -222,6 +252,9 @@ export const chatRepositoryMongoDB = () => {
         getGroupChatDetails,
         getAllChats,
         renameGroupChat,
+        updateLastMessageChat,
+        getChatById,
+        getParticipantsOfChat
     };
 };
 

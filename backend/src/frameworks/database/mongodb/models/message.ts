@@ -12,8 +12,8 @@ const chatMessageSchema = new Schema(
         attachments: {
             type: [
                 {
-                    url: FileSchema,
-                    local: String,
+                    file: FileSchema,
+                    url: String,
                 },
             ],
             default: [],

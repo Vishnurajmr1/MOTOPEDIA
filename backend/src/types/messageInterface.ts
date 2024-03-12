@@ -1,6 +1,11 @@
-export interface ImessageChat{
+interface FileSchema {
+    key: string;
+    name: string;
+    url?: string;
+}
+export interface IaddMessage{
     sender?:string;
     content?:string;
-    attachments?:[string]
-    chat?:string
+    attachments?:any[]
+    chat?:string;
 }

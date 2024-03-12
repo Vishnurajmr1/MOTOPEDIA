@@ -3,7 +3,7 @@
 // import HttpStatusCodes from '../../../constants/HttpStatusCodes';
 // import { usersDbInterface } from '@src/application/repositories/userDBRepository';
 
-import { chatDbInterface } from "@src/application/repositories/chatDBRepository";
+import { ChatDbRepositoryInterface } from "@src/application/repositories/chatDBRepository";
 import HttpStatusCodes from "@src/constants/HttpStatusCodes";
 import AppError from "@src/utils/appError";
 
@@ -32,7 +32,7 @@ import AppError from "@src/utils/appError";
 //     }
 // };
 
-export const getAllChatsUseCase=async(userId:string|undefined,chatDbRepository:ReturnType<chatDbInterface>)=>{
+export const getAllChatsUseCase=async(userId:string|undefined,chatDbRepository:ReturnType<ChatDbRepositoryInterface>)=>{
     if(!userId){
         throw new AppError("Please provide a valid userId",HttpStatusCodes.BAD_REQUEST);
     }

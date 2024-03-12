@@ -59,7 +59,7 @@ export const userRepositoryMongoDB = () => {
             {
                 $match:{
                     _id:{
-                        $ne:userId
+                        $ne:new mongoose.Types.ObjectId(userId)
                     }
                 }
             },{
