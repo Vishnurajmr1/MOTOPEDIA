@@ -10,6 +10,7 @@ import { ICurrentUser } from '../../../../app/auth/data-access/state/auth.reduce
 import { UserService } from '../../../../app/riders/data-access/user.service';
 import { ChatApiService } from '../../data-access/chatApi.service';
 import { IUserInfo } from 'src/app/shared/types/user.Interface';
+import { ChatListItemInterface } from 'src/app/shared/types/chat.Interface';
 
 @Component({
   selector: 'app-chat-container',
@@ -18,15 +19,17 @@ import { IUserInfo } from 'src/app/shared/types/user.Interface';
 })
 export class ChatContainerComponent {
   private chatService = inject(ChatService);
-  private chatApiService=inject(ChatApiService);
-  private userService=inject(UserService);
+  private chatApiService = inject(ChatApiService);
+  private userService = inject(UserService);
   currentUser$!: Observable<ICurrentUser>;
+  openCreateChatModal: boolean = false;
   protected users = [];
-  followers!:[IUserInfo];
-  protected participant:any;
-  messageRecieved=false;
-  selectedChat:any;
-  protected allMsg:any;
+  followers!: [IUserInfo];
+  getChats!: ChatListItemInterface[];
+  protected participant: any;
+  messageRecieved = false;
+  selectedChat: any;
+  protected allMsg: any;
   protected currentUserId: string = '';
   private ngUnsubscribe$ = new Subject<void>();
   constructor(private store: Store<State>) {
@@ -34,40 +37,61 @@ export class ChatContainerComponent {
     this.currentUser$.pipe(takeUntil(this.ngUnsubscribe$)).subscribe((res) => {
       this.currentUserId = res?.userId || '';
     });
-    console.log(this.currentUserId);
   }
-  onChatSelected(chat:any):void{
-    this.selectedChat=chat;
-    this.messageRecieved=true;
+  onChatSelected(chat: any): void {
+    this.selectedChat = chat;
+    this.messageRecieved = true;
     this.chatService.setCurrentParticipant(chat._id);
-    this.chatApiService.getApiChatHistory(chat._id).subscribe((res:any)=>{
-    this.chatService.setChatHistory(res.history);
-    this.participant=res.history.participant
-   });
-   this.chatService.getChatHistory().subscribe((chat)=>{
-    this.allMsg=chat.messages;
-  })
+    this.chatApiService.getApiChatHistory(chat._id).subscribe((res: any) => {
+      this.chatService.setChatHistory(res.history);
+      this.participant = res.history.participant;
+    });
+    this.chatService.getChatHistory().subscribe((chat) => {
+      this.allMsg = chat.messages;
+    });
   }
-  onMessageSend(message:string):void{
+  CallCreateUserModal() {
+    this.openCreateChatModal = true;
+  }
+  closeCreateChatModal() {
+    this.openCreateChatModal = false;
+  }
+  onMessageSend(message: string): void {
     console.log('Message received:', message);
-    this.chatService.sendMessage(message)
+    this.chatService.sendMessage(message);
   }
-  isSendByUser(msg:any){
-    console.log(msg)
-    return msg.sender._id===this.chatService.getCurrentUserId();
+  isSendByUser(msg: any) {
+    console.log(msg);
+    return msg.sender._id === this.chatService.getCurrentUserId();
   }
-  ngOnInit(){
+  handleFollowerSelected(follower: IUserInfo) {
+    this.createOneToOneChat(follower);
+  }
+  createOneToOneChat(follower: IUserInfo) {
+    this.chatApiService.createUserChat(follower._id).subscribe((data) => {
+      console.log(data);
+    });
+  }
+  getCurrentUserChat() {
+    this.chatApiService.getUserChats().subscribe((res) => {
+      this.getChats = res.data.map((chat:ChatListItemInterface)=>({
+        ...chat,
+        participants:chat.participants.filter(participant=>participant._id.toString()!==this.currentUserId)
+      }));
+    });
+  }
+  ngOnInit() {
     this.chatService.connect();
+    this.getCurrentUserChat();
     this.chatService.setCurrentUser(this.currentUserId);
-    const currentUser=this.chatService.getCurrentUserId()
-    console.log(currentUser)
+    const currentUser = this.chatService.getCurrentUserId();
+    console.log(currentUser);
     this.chatService.addUser();
-    this.userService.getConnection().subscribe((user)=>{
-     this.followers=user.connectionData[0].followers
-     console.log(this.followers);
-    })
+    this.userService.getConnection().subscribe((user) => {
+      this.followers = user.connectionData[0].followers;
+    });
   }
-  ngOnDestroy(){
+  ngOnDestroy() {
     this.chatService.disconnect();
   }
 }

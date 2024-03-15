@@ -1,4 +1,4 @@
-import { ICurrentUser } from "src/app/auth/data-access/state/auth.reducer";
+import { ICurrentUser } from 'src/app/auth/data-access/state/auth.reducer';
 
 export interface ISignUp {
   firstName: string;
@@ -35,8 +35,8 @@ export interface UserDoc {
   profileImgUrl?: string;
   isEmailVerified: boolean;
   isBlocked?: boolean;
-  userId?:string;
-  isVerifiedEmail?:string;
+  userId?: string;
+  isVerifiedEmail?: string;
 }
 
 export interface userResponse {
@@ -45,15 +45,17 @@ export interface userResponse {
   data: Object | null | undefined | string;
 }
 
-export interface IFollowersDetails{
-  status:string;
-  message:string;
-  connectionData:[{
-    _id:string;
-    userId:string;
-    followers:[IUserInfo];
-    following:[IUserInfo]
-  }]
+export interface IFollowersDetails {
+  status: string;
+  message: string;
+  connectionData: [
+    {
+      _id: string;
+      userId: string;
+      followers: [IUserInfo];
+      following: [IUserInfo];
+    }
+  ];
 }
 export interface IUpdateProfile {
   firstName?: string;
@@ -61,23 +63,38 @@ export interface IUpdateProfile {
   email?: string;
   mobile?: string;
   profilePic?: {
-      key?: string;
-      name: string;
-      url?: string;
+    key?: string;
+    name: string;
+    url?: string;
   };
   isVerifiedEmail?: boolean;
-  password?:string;
-  currentPassword?:string;
+  password?: string;
+  currentPassword?: string;
 }
 
-
 export interface IUserInfo {
-  _id:string
+  _id: string;
   firstName: string;
   lastName: string;
   email: string;
   isVerifiedEmail: boolean;
   mobile: string;
   isBlocked: boolean;
-  profilePic?:string;
+  profilePic?: string;
+}
+
+export interface IUserDetails {
+  _id: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+  isVerifiedEmail?: boolean;
+  mobile?: number;
+  profilePic?: {
+    key: string;
+    name: string;
+    _id: string;
+    url?:string
+  };
+  online?:boolean;
 }

@@ -215,22 +215,20 @@ export const chatRepositoryMongoDB = () => {
         const chat=await Chat.findById(chatId);
         return chat;
     }
-    const getParticipantsOfChat=async(chatId:string)=>{
+    const checkUserIsAParticipantOfChat=async(chatId:string,userId:string)=>{
         const particpants=await Chat.aggregate([
             {
                 $match:{
-                    _id:new mongoose.Types.ObjectId(chatId)
+                    _id:new mongoose.Types.ObjectId(chatId),
+                    participants:{$elemMatch:{$eq:new mongoose.Types.ObjectId(userId)}}
                 }
             },
             {
-                $project:{
-                    participants:1,
-                    _id:0
-                }
+                $limit:1
             }
         ])
         
-        return particpants;
+        return particpants.length>0;
     }
     const updateLastMessageChat=async(chatId:string,messageId:string)=>{
         const chat=await Chat.findByIdAndUpdate(
@@ -254,7 +252,7 @@ export const chatRepositoryMongoDB = () => {
         renameGroupChat,
         updateLastMessageChat,
         getChatById,
-        getParticipantsOfChat
+        checkUserIsAParticipantOfChat
     };
 };
 

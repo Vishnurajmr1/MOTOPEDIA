@@ -1,10 +1,19 @@
-<div class="bg-gray-50 drop-shadow-xl rounded-lg p-6 ">
-    <div class="flex flex-col gap-4 drop-shadow-xl bg-gray-50 p-4">
-        <ng-container *ngFor="let follow of followers">
-            <div class="flex flex-col leading-1.5 p-4 border-gray-200 bg-gray-100 rounded-e-xl rounded-es-xl dark:bg-gray-700 cursor-pointer" (click)="onChatClick(follow)">
-                <div class="flex gap-4">
-                    <img class="w-10 h-10 p-1 rounded-full ring-2 ring-gray-300 dark:ring-gray-500" src="/assets/images/icons/profile-picture-5.jpg" alt="Bordered avatar">
-                    <p class="text-sm font-normal text-gray-900 dark:text-white">{{follow.firstName}} {{follow.lastName}}</p>
+<div class="bg-gray-50 drop-shadow-xl rounded-lg p-6 " *ngIf="userChats">
+    <div class="flex flex-col gap-4 drop-shadow-xl  p-4 max-h-screen overflow-y-auto ">
+        <ng-container *ngFor="let participant of participants">
+            <div class="flex flex-col  leading-1.5 p-2 border-gray-200 bg-gray-100 rounded-e-xl rounded-es-xl dark:bg-gray-700 cursor-pointer  hover:bg-gray-200" (click)="onChatClick(participant)">
+                <div class="flex gap-4 justify-around items-center">
+                    <div class="relative">
+                        <img class=" w-10 h-10 p-1 rounded-full" src="/assets/images/icons/profile_avatar.svg" alt="Bordered avatar">
+                        <!-- <span class="top-0 start-7 absolute w-3.5 h-3.5 bg-green-500 border-2 border-white dark:border-gray-800 rounded-full"></span> -->
+                    </div>
+                    <div>
+                        <p class="text-sm  text-gray-900 dark:text-white font-semibold">{{participant.firstName|uppercase}}</p>
+                        <small>Attachments or last message</small>
+                    </div>
+                    <div class="w-5 h-5 rounded-full bg-green-500 flex justify-center items-center">
+                        <p class="text-sm font-bold  text-black">1</p>
+                    </div>
                 </div>          
              </div>
             </ng-container>

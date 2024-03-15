@@ -75,14 +75,13 @@ const onSocketConnection = (io: Server, socket: Socket) => {
             console.log(userId, 'user added');
             addUser(userId, socket.id);
             socket.join(userId);
-            socket.emit(ChatEventEnum.CONNECTED_EVENT);
-            console.log('User Connected .userId', userId);
-            mountJoinChatEvent(socket);
-            mountTypingChatEvent(socket);
-            mountParticipantStopTypingEvent(socket);
-            console.log('Successfull');
-            console.log(users);
+            console.log('User Connected 🗼 .userId', userId);
         });
+        socket.emit(ChatEventEnum.CONNECTED_EVENT);
+        mountJoinChatEvent(socket);
+        mountTypingChatEvent(socket);
+        mountParticipantStopTypingEvent(socket);
+        console.log('Successfull');
 
         // socket.on('new-message', async (data: any) => {
         //     try {
@@ -118,7 +117,6 @@ const onSocketConnection = (io: Server, socket: Socket) => {
             console.log(`User has disconnected🚫.userId`, socket.id);
             removeUser(socket.id);
             console.log(users);
-
             io.emit('getUsers', users);
         });
     } catch (error: any) {

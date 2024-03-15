@@ -9,9 +9,8 @@ export const getAllMessagesUseCase=async(userId:string|undefined,chatId:string,c
     if(!selectedChat){
         throw new AppError('Chat does not exist',HttpStatusCodes.NOT_FOUND);
     }
-    const participants=await chatDbRepository.getParticipantsOfChat(chatId);
-    console.log(participants);
-    if(!participants.includes(userId)){
+    const participant=await chatDbRepository.checkUserIsAParticipantOfChat(chatId,userId as string);
+    if(!participant){
         throw new AppError('User is not a part of this chat',HttpStatusCodes.BAD_REQUEST)
     }
     const messages=await chatMessageDbRepository.getAllMessages(chatId);
