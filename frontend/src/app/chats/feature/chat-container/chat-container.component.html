@@ -4,8 +4,11 @@
             <!-- Sidebar div -->
             <div class="col-span-6 sm:col-span-3">
                 <div class="flex flex-col gap-2">
-                    <app-search-user></app-search-user>
-                    <app-aside [followers]="followers"
+                    <div class="flex gap-2">
+                        <app-search-user></app-search-user>
+                        <button (click)="CallCreateUserModal()" class="bg-gray-500 text-white p-4 rounded-md hover:bg-gray-300 hover:text-black hover:font-medium disabled:bg-gray-50">+ Add Chat</button>
+                    </div>
+                    <app-aside [userChats]="getChats"
                     (chatSelected)="onChatSelected($event)" 
                     ></app-aside>
                     </div>
@@ -24,6 +27,7 @@
     </div>
     </div>
 </div>
+<create-chat *ngIf="openCreateChatModal" [modalOpen]="openCreateChatModal" (closeCreateChatComponent)="closeCreateChatModal()" [followers]="followers" (followerSelected)="handleFollowerSelected($event)"></create-chat>
 
 <!-- Modal for edit and delete post -->
 <!-- <app-modal [modalOpen]="modalOpen" (close)="closeModal()">

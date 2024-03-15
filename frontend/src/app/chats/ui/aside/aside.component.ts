@@ -1,6 +1,13 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Output,Input } from '@angular/core';
-import { ICurrentUser } from 'src/app/auth/data-access/state/auth.reducer';
-import { IUserInfo } from 'src/app/shared/types/user.Interface';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  Output,
+  Input,
+  SimpleChanges,
+} from '@angular/core';
+import { ChatListItemInterface } from 'src/app/shared/types/chat.Interface';
+import { IUserDetails } from 'src/app/shared/types/user.Interface';
 
 @Component({
   selector: 'app-aside',
@@ -8,10 +15,23 @@ import { IUserInfo } from 'src/app/shared/types/user.Interface';
   styleUrls: ['./aside.component.css'],
 })
 export class AsideComponent {
-@Output() chatSelected:EventEmitter<IUserInfo>=new EventEmitter<IUserInfo>
-  @Input() followers!:[IUserInfo];
+  @Output() chatSelected: EventEmitter<IUserDetails> =
+    new EventEmitter<IUserDetails>();
+  @Input() userChats!: ChatListItemInterface[];
+  protected participants!: IUserDetails[];
+  onChatClick(follow: IUserDetails | undefined): void {
+    this.chatSelected.emit(follow);
+  }
 
-  onChatClick(follow: IUserInfo | undefined):void{
-    this.chatSelected.emit(follow)
+  ngOnChanges(): void {
+    this.extractParticipants();
+  }
+  private extractParticipants() {
+    this.participants = [];
+    if (this.userChats) {
+      this.userChats.forEach((chat) => {
+        this.participants.push(...(chat.participants || []));
+      });
+    }
   }
 }

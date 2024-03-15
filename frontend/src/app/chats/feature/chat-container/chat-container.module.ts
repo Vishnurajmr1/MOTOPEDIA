@@ -6,6 +6,7 @@ import { AsideModule } from "../../ui/aside/aside.module";
 import { ChatContainerRoutingModule } from './chat-container-routing.module';
 import { ChatDetailModule } from '../../ui/chat-detail/chat-detail.module';
 import { SearchUserModule } from '../../ui/search-user/search-user.module';
+import { CreateChatModule } from '../../ui/create-chat/create-chat.module';
 
 
 @NgModule({
@@ -17,7 +18,8 @@ import { SearchUserModule } from '../../ui/search-user/search-user.module';
         AsideModule,
         ChatContainerRoutingModule,
         ChatDetailModule,
-        SearchUserModule
+        SearchUserModule,
+        CreateChatModule
     ],
     exports:[
         ChatContainerComponent

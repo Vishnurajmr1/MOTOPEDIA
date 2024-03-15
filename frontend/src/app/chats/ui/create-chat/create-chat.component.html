@@ -1,0 +1,33 @@
+<app-modal [modalOpen]="modalOpen" (close)="closeModal()">
+    <div class="relative transform overflow-x-hidden rounded-lg px-4 pb-4 pt-5 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-3xl sm:p-6 opacity-100 translate-y-0 sm:scale-100">
+        <div class="flex justify-between items-center">
+            <h1 class="text-lg font-semibold leading-6">Create Chat</h1>
+            <button (click)="closeModal()" class="text-black hover:text-gray-500 focus:font-semibold focus:ring-1">X</button>
+        </div>
+        <div>
+            <!-- <div></div> for group chat -->
+            <div class="w-full">
+                <div class="relative mt-2" >
+                    <button class="w-full" type="button" (click)="toggleFollowersList()">
+                        <input type="text" placeholder="Select a user to chat..." [value]="followerName" class="block w-full rounded-xl border-0 py-4 px-5 bg-gray-300 outline outline-[1px] text-black font-light placeholder:text-black/50 focus:ring-[1px]">
+                    </button>
+                </div>
+                <ng-container *ngIf="showFollowers" >
+                        <div class="w-full">
+                            <div class="relative mt-2">
+                                <ul class="grid grid-cols-4 gap-2">
+                                    <li *ngFor="let follower of followers" >
+                                       <button (click)="selectFollower(follower)" class="p-4 rounded-lg bg-gray-400 text-white font-medium">{{follower.firstName}}</button>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </ng-container>
+            </div>
+        </div>
+        <div class="mt-5 flex justify-between items-center gap-4">
+            <button (click)="closeModal()" class="rounded-full inline-flex flex-shrink-0 justify-center items-center text-center focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-200 shadow-sm bg-gray-300 disabled:bg-gray-600 text-base px-3 py-4 w-1/2">Close</button>
+            <button (click)="createChat()" class="rounded-full inline-flex flex-shrink-0 justify-center items-center text-center focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-200 shadow-sm bg-green-300 disabled:bg-gray-600 text-base px-3 py-4 w-1/2">Create</button>
+        </div>
+    </div>
+</app-modal>

@@ -42,6 +42,9 @@ export class UserService{
     searchUserDetails(searchData:string):Observable<any>{
         return this.http.get(`${this.userApi}/search-user?search=${searchData}`);
     }
+    getAvailableSearchUserDetails():Observable<any>{
+        return this.http.get(`${this.userApi}/users`)
+    }
     ngOnDestroy() {
         this.ngUnsubscribe$.next();
         this.ngUnsubscribe$.complete();
