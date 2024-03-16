@@ -26,12 +26,12 @@
             ></path>
           </svg>
         </button>
-        <a href="#" class="flex ml-2 md:mr-24">
+        <button class="flex ml-2 md:mr-24" (click)="toggle()" type="button">
           <span
             class="self-center text-xl font-extrabold sm:text-2xl whitespace-nowrap text-black"
             >MOTOPEDIA</span
           >
-        </a>
+        </button>
       </div>
       <div class="flex items-center">
         <div class="flex items-center ml-3">
@@ -66,7 +66,7 @@
                   (click)="logOut()"
                   class="cursor-pointer block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
                   role="menuitem"
-                  >Sign out <span><i class="fa-solid fa-right-from-bracket"></i></span></a
+                  >Sign out<span><i class="fa-solid fa-right-from-bracket"></i></span></a
                 >
               </li>
             </ul>

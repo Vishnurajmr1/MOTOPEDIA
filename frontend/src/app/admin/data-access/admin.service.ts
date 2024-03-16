@@ -1,5 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
+import { Observable } from 'rxjs';
+import { IpostInterface } from 'src/app/shared/types/post.Interface';
 
 @Injectable({
   providedIn: 'root',
@@ -15,5 +17,8 @@ export class AdminService {
   }
   unblockUser(userId: string) {
     return this.http.patch(`/api/user/unblock-user/${userId}`, {});
+  }
+  getPosts():Observable<IpostInterface[]>{
+    return this.http.get<IpostInterface[]>('/api/posts/get-all-posts');
   }
 }

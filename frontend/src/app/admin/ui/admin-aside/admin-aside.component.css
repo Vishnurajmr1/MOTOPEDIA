@@ -2,3 +2,25 @@
     color: white;
     background: rgb(255, 128, 0);
 }
+
+.example-container {
+    width:15rem;
+    height: 100vh;
+    position: fixed;
+    background: #DFCCB5;
+    top: 2rem;
+    left: 0;
+  }
+  
+  .example-sidenav-content {
+    display: flex;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .example-sidenav {
+    padding: 20px;
+    background: transparent;
+    border: none;
+  }

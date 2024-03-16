@@ -1,7 +1,7 @@
 <div>
   <ng-container *ngIf="currentLayout === 'admin'; else user">
-    <app-admin-navbar></app-admin-navbar>
-    <app-admin-aside></app-admin-aside>
+    <app-admin-navbar (toggleSideBar)="toggleSidebar()"></app-admin-navbar>
+    <app-admin-aside [OpenSideBar]="isSidebarOpen"></app-admin-aside>
   </ng-container>
   <ng-template #user>
     <app-navbar></app-navbar>

@@ -18,7 +18,13 @@ const routes: Routes = [
       import('../users-container/users-container.module').then(
         (m) => m.UsersContainerModule
       ),
-  },
+  },{
+    path:'posts',
+    loadChildren:()=>
+    import('../post-container/post-container.module').then(
+      m=>m.PostContainerModule
+    )
+  }
 ];
 
 @NgModule({

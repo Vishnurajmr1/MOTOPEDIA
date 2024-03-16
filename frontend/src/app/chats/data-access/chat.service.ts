@@ -7,13 +7,14 @@ import {
   ChatListItemInterface,
   ChatMessageInterface,
 } from 'src/app/shared/types/chat.Interface';
+import { ICurrentUser } from 'src/app/auth/data-access/state/auth.reducer';
 @Injectable({
   providedIn: 'root',
 })
 export class ChatService {
   private socket: Socket;
   private participantId = new BehaviorSubject<string>('');
-  private currentUserId = new BehaviorSubject<string>('');
+  private currentUser = new BehaviorSubject<ICurrentUser|null>(null);
   private chatsSubject = new BehaviorSubject<ChatListItemInterface[]>([]);
   private setMessages = new BehaviorSubject<ChatMessageInterface[]>([]);
   private setUnreadMessages = new BehaviorSubject<ChatMessageInterface[]>([]);
@@ -37,23 +38,6 @@ export class ChatService {
       autoConnect: false,
     });
     this.socket.on(ISocketEvents.CONNECTED_EVENT,()=>this.connect());
-    this.socket.on('getUsers', (data: any) => {
-      console.log('active sockets', data);
-    });
-    this.socket.on('receiveMessage', (message) => {
-      console.log(message, 'message recieved');
-      if (
-        message.participantId === this.participantId.getValue() ||
-        message.currentUserId === this.participantId.getValue()
-      ) {
-        const history = this.chatHistory.getValue();
-        console.log(history);
-        this.setChatHistory({
-          participant: history.participant,
-          messages: [...history.messages, message.result],
-        });
-      }
-    });
     this.socket.on(ISocketEvents.DISCONNECT_EVENT,()=>this.disconnect());
   }
 
@@ -61,23 +45,26 @@ export class ChatService {
     this.socket.connect();
   }
   addUser() {
-    this.socket.emit('addUser', this.currentUserId.getValue());
+    this.socket.emit('addUser',this.getCurrentUserId(),this.participantId.getValue());
   }
   setCurrentParticipant(participantId: string) {
     this.participantId.next(participantId);
   }
-  setCurrentUser(user: string) {
-    this.currentUserId.next(user);
+  setCurrentUser(user: ICurrentUser) {
+    this.currentUser.next(user);
   }
   getCurrentUserId() {
-    return this.currentUserId.getValue();
+    return this.currentUser.getValue()?.userId;
+  }
+  getParticipantId(){
+    return this.participantId.getValue()
   }
   getChatHistory(): Observable<any> {
     return this.chatHistory.asObservable();
   }
   sendMessage(message: string) {
     const participantId = this.participantId.getValue();
-    const senderId = this.currentUserId.getValue();
+    const senderId = this.getCurrentUserId;
     const data = {
       recipient: participantId,
       sender: senderId,
@@ -108,8 +95,8 @@ export class ChatService {
       this.chatsSubject.next(currentChats);
     }
   }
-  getMessages(){
-    this.socket.emit(ISocketEvents.JOIN_CHAT_EVENT,this.currentChat.asObservable())
+  setChatRoom(chatId:string){
+    this.socket.emit(ISocketEvents.JOIN_CHAT_EVENT,chatId)
   }
   UnreadMessages(){
    const unreadMessages=this.setUnreadMessages.getValue();
