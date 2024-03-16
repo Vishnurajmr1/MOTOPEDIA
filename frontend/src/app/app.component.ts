@@ -16,7 +16,10 @@ export class AppComponent {
   private activatedRoute = inject(ActivatedRoute);
   currentLayout: string = 'user';
   private routeSubscription!: Subscription;
-
+  isSidebarOpen:boolean=true;
+  toggleSidebar(){
+    this.isSidebarOpen=!this.isSidebarOpen;
+  }
   ngOnInit(): void {
     initFlowbite();
     this.routeSubscription = this.router.events.subscribe((event) => {

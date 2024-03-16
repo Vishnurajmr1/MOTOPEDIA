@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Output, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { LocalStorageService } from 'src/app/shared/data-access/global/local-storage.service';
 
@@ -11,9 +11,13 @@ import { LocalStorageService } from 'src/app/shared/data-access/global/local-sto
 export class AdminNavbarComponent {
   private localStoreService = inject(LocalStorageService);
   private router = inject(Router);
+  @Output() toggleSideBar:EventEmitter<void>=new EventEmitter<void>();
 
   logOut() {
     this.localStoreService.clear();
     this.router.navigateByUrl('/home');
+  }
+  toggle(){
+    this.toggleSideBar.emit()
   }
 }

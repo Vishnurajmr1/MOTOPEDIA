@@ -9,8 +9,8 @@ import {
 import { ICurrentUser } from '../../../../app/auth/data-access/state/auth.reducer';
 import { UserService } from '../../../../app/riders/data-access/user.service';
 import { ChatApiService } from '../../data-access/chatApi.service';
-import { IUserInfo } from 'src/app/shared/types/user.Interface';
-import { ChatListItemInterface } from 'src/app/shared/types/chat.Interface';
+import { IUserDetails, IUserInfo } from 'src/app/shared/types/user.Interface';
+import { ChatListItemInterface, ChatMessageInterface } from 'src/app/shared/types/chat.Interface';
 
 @Component({
   selector: 'app-chat-container',
@@ -29,26 +29,28 @@ export class ChatContainerComponent {
   protected participant: any;
   messageRecieved = false;
   selectedChat: any;
-  protected allMsg: any;
-  protected currentUserId: string = '';
+  protected chatMessages!: ChatMessageInterface[];
+  protected currentUser!: ICurrentUser;
   private ngUnsubscribe$ = new Subject<void>();
   constructor(private store: Store<State>) {
     this.currentUser$ = this.store.select(getCurrentUserData);
     this.currentUser$.pipe(takeUntil(this.ngUnsubscribe$)).subscribe((res) => {
-      this.currentUserId = res?.userId || '';
+      this.currentUser= res;
     });
   }
-  onChatSelected(chat: any): void {
+  onChatSelected(chat: IUserDetails): void {
     this.selectedChat = chat;
+    console.log(chat)
     this.messageRecieved = true;
     this.chatService.setCurrentParticipant(chat._id);
-    this.chatApiService.getApiChatHistory(chat._id).subscribe((res: any) => {
-      this.chatService.setChatHistory(res.history);
-      this.participant = res.history.participant;
-    });
-    this.chatService.getChatHistory().subscribe((chat) => {
-      this.allMsg = chat.messages;
-    });
+    this.chatService.addUser();
+    this.chatApiService.createUserChat(this.chatService.getParticipantId()).subscribe((res)=>{
+      this.chatService.setChatRoom(res.data._id)
+      this.chatApiService.getChatMessages(res.data._id).subscribe((response)=>{
+        this.chatMessages=response.data
+      })
+      console.log(this.chatMessages)
+    })
   }
   CallCreateUserModal() {
     this.openCreateChatModal = true;
@@ -68,25 +70,33 @@ export class ChatContainerComponent {
     this.createOneToOneChat(follower);
   }
   createOneToOneChat(follower: IUserInfo) {
-    this.chatApiService.createUserChat(follower._id).subscribe((data) => {
-      console.log(data);
-    });
+    const existingChat=this.getChats.find(chat=>{
+      const participants=chat.participants.map(participant=>participant._id.toString());
+      return participants.includes(follower._id.toString());
+    })
+    if(!existingChat){
+      this.chatApiService.createUserChat(follower._id).subscribe((response) => {
+        const participants=response.data.participants.filter((partcipant:any)=>partcipant._id.toString()!==this.currentUser.userId)
+        const updatedData:ChatListItemInterface={
+          ...response.data,
+          participants:participants
+        }
+        this.getChats = [updatedData, ...this.getChats]
+      });
+    }
   }
   getCurrentUserChat() {
     this.chatApiService.getUserChats().subscribe((res) => {
       this.getChats = res.data.map((chat:ChatListItemInterface)=>({
         ...chat,
-        participants:chat.participants.filter(participant=>participant._id.toString()!==this.currentUserId)
+        participants:chat.participants.filter(participant=>participant._id.toString()!==this.currentUser.userId?.toString())
       }));
     });
   }
   ngOnInit() {
     this.chatService.connect();
     this.getCurrentUserChat();
-    this.chatService.setCurrentUser(this.currentUserId);
-    const currentUser = this.chatService.getCurrentUserId();
-    console.log(currentUser);
-    this.chatService.addUser();
+    this.chatService.setCurrentUser(this.currentUser);
     this.userService.getConnection().subscribe((user) => {
       this.followers = user.connectionData[0].followers;
     });
