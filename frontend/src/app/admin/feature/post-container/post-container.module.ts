@@ -4,6 +4,7 @@ import { PostContainerComponent } from './post-container.component';
 import { PostContainerComponentRoutingModule } from './post-container-routing.module';
 import { MatTableModule, MatTableDataSource } from '@angular/material/table';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
+import { PostTableModule } from '../../ui/post-table/post-table.module';
 
 @NgModule({
   declarations: [PostContainerComponent],
@@ -12,6 +13,7 @@ import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
     PostContainerComponentRoutingModule,
     MatTableModule,
     MatPaginatorModule,
+    PostTableModule
   ],
   exports: [PostContainerComponent],
 })

@@ -12,7 +12,7 @@ import {
 })
 export class AdminAsideComponent {
   @Input() OpenSideBar!: boolean;
-  AdminLinks:string[]=['dashboard','users','posts','reportedPosts']
+  AdminLinks:string[]=['dashboard','users','posts','reportedPosts','Subscription']
   constructor() {}
   ngOnDestroy(): void {
   }

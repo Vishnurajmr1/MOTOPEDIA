@@ -12,6 +12,7 @@ import { reportDbRepository } from '../../../application/repositories/reportDBRe
 import { reportRepositoryMongoDb } from '../../../frameworks/database/mongodb/repositories/reportRepoMongoDb';
 import { connectionDbRepository } from '@src/application/repositories/connectionDBRepository';
 import { connectionRepositoryMongoDB } from '@src/frameworks/database/mongodb/repositories/connectionRepoMongoDb';
+import roleCheckMiddleware from '../middlewares/roleCheckMiddleware';
 
 const postRouter = () => {
     const router = express.Router();
@@ -25,7 +26,7 @@ const postRouter = () => {
         reportDbRepository,
         reportRepositoryMongoDb,
         connectionDbRepository,
-        connectionRepositoryMongoDB
+        connectionRepositoryMongoDB,
     );
 
     router.route('/get-all-posts').get(jwtAuthMiddleware, controller.getAllPosts);
@@ -34,12 +35,13 @@ const postRouter = () => {
     router.route('/delete-post/:postId').delete(jwtAuthMiddleware, controller.deletePost);
     router.route('/get-post-by-user').get(jwtAuthMiddleware, controller.getPostByUser);
     router.route('/like-post').put(jwtAuthMiddleware, controller.likePostById);
-    router.route('/add-comment').post(jwtAuthMiddleware,controller.addCommentByPostId);
-    router.route('/get-all-comments/:postId').get(jwtAuthMiddleware,controller.fetchCommentByPostId);
-    router.route('/report/:postId').post(jwtAuthMiddleware,controller.reportPostById);
-    router.route('/save-post/:postId').patch(jwtAuthMiddleware,controller.savePost);
-    router.route('/saved-post').get(jwtAuthMiddleware,controller.getSavedPosts);
-    router.route('/get-followers-post').get(jwtAuthMiddleware,controller.getPostsByFollowers);
+    router.route('/add-comment').post(jwtAuthMiddleware, controller.addCommentByPostId);
+    router.route('/get-all-comments/:postId').get(jwtAuthMiddleware, controller.fetchCommentByPostId);
+    router.route('/report/:postId').post(jwtAuthMiddleware, controller.reportPostById);
+    router.route('/save-post/:postId').patch(jwtAuthMiddleware, controller.savePost);
+    router.route('/saved-post').get(jwtAuthMiddleware, controller.getSavedPosts);
+    router.route('/get-followers-post').get(jwtAuthMiddleware, controller.getPostsByFollowers);
+    router.route('/get-reported-posts').get(roleCheckMiddleware('admin'), jwtAuthMiddleware, controller.getAllPosts);
     // router.route('/unlike-post').patch(jwtAuthMiddleware);
     return router;
 };
