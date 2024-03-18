@@ -61,8 +61,8 @@
     >
       <mat-nav-list *ngFor="let link of AdminLinks">
         <mat-list-item routerLinkActive="active-link">
-          <a routerLink="/admin/{{ link }}" >{{
-            link
+          <a routerLink="/admin/{{ link }}">{{
+            link |uppercase
           }}</a>
         </mat-list-item>
       </mat-nav-list>
