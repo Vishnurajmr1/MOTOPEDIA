@@ -17,7 +17,10 @@ export const postRepositoryMongoDb = () => {
         return response;
     };
     const getPostById = async (postId: string) => {
-        const post: postInterface | null = await Post.findOne({ _id: new mongoose.Types.ObjectId(postId) });
+        const post: postInterface | null = await Post.findOne({ _id: new mongoose.Types.ObjectId(postId) }).populate({
+            path: 'authorId',
+            select: 'firstName lastName ',
+        });
         return post;
     };
     const getAllPost = async () => {

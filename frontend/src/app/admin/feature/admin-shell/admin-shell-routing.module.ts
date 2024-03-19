@@ -18,17 +18,25 @@ const routes: Routes = [
       import('../users-container/users-container.module').then(
         (m) => m.UsersContainerModule
       ),
-  },{
-    path:'posts',
-    loadChildren:()=>
-    import('../post-container/post-container.module').then(
-      m=>m.PostContainerModule
-    )
-  }
+  },
+  {
+    path: 'posts',
+    loadChildren: () =>
+      import('../post-container/post-container.module').then(
+        (m) => m.PostContainerModule
+      ),
+  },
+  {
+    path: 'reportPosts',
+    loadChildren: () =>
+      import('../report-post-container/report-post-container.module').then(
+        (m) => m.ReportPostContainerModule
+      ),
+  },
 ];
 
 @NgModule({
-    imports:[RouterModule.forChild(routes)],
-    exports:[RouterModule]
+  imports: [RouterModule.forChild(routes)],
+  exports: [RouterModule],
 })
-export class adminShellRoutingModule{}
+export class adminShellRoutingModule {}

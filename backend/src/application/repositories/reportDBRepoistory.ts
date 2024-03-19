@@ -6,10 +6,14 @@ export const reportDbRepository = (repository: ReturnType<ReportRepositoryMongoD
     const getReportByPostId = async (reportInfo: IgetReportByPost) => await repository.getReportByPostId(reportInfo);
     const getReportByReporterId = async (reportInfo: IgetReportByPost) =>
         await repository.getReportByReporterId(reportInfo);
+    const getReportedPosts=async()=>await repository.getAllReportedPosts();
+    const getPostReportedCount=async(postId:string)=>await repository.PostReportedCount(postId)
     return {
         reportPost,
         getReportByPostId,
         getReportByReporterId,
+        getReportedPosts,
+        getPostReportedCount
     };
 };
 

@@ -1,0 +1,38 @@
+<div class="container mt-40 p-4">
+    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+      <!-- Title Column -->
+      <ng-container matColumnDef="Title">
+        <th mat-header-cell *matHeaderCellDef>Title</th>
+        <td mat-cell *matCellDef="let post">{{ post.title }}</td>
+      </ng-container>
+  
+      <!-- Author Column -->
+      <ng-container matColumnDef="Author">
+        <th mat-header-cell *matHeaderCellDef>Author</th>
+        <td mat-cell *matCellDef="let post">{{ post.author |uppercase }}</td>
+      </ng-container>
+  
+      <!-- Image Column -->
+      <ng-container matColumnDef="Image">
+        <th mat-header-cell *matHeaderCellDef>Image</th>
+        <td mat-cell *matCellDef="let post">
+          <img [src]="post.image" alt="Post Image" width="100" height="100" />
+        </td>
+      </ng-container>
+  
+      <!-- Likes Column -->
+      <ng-container matColumnDef="Likes">
+        <th mat-header-cell *matHeaderCellDef>Likes</th>
+        <td mat-cell *matCellDef="let post">{{ post.likes }}</td>
+      </ng-container>
+      <ng-container matColumnDef="ReportCount">
+        <th mat-header-cell *matHeaderCellDef>ReportCount</th>
+        <td mat-cell *matCellDef="let post">{{ post.reportCount }}</td>
+      </ng-container>
+  
+      <!-- Table Rows -->
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    </table>
+  </div>
+  

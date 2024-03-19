@@ -7,8 +7,12 @@ import { getAllComments } from '../../application/use-cases/comment/getAllCommen
 import { addPosts } from '../../application/use-cases/post/addPost';
 import { deletePostById } from '../../application/use-cases/post/deletePost';
 import { editPostUseCase, likePostUseCase } from '../../application/use-cases/post/editPost';
-import { getAllPostsUseCase, getPostByUserUseCase, getPostsByFollowersUseCase } from '../../application/use-cases/post/listPost';
-import { reportPost } from '../../application/use-cases/post/reportPost';
+import {
+    getAllPostsUseCase,
+    getPostByUserUseCase,
+    getPostsByFollowersUseCase,
+} from '../../application/use-cases/post/listPost';
+import { reportPost, reportPostUseCase } from '../../application/use-cases/post/reportPost';
 import { getSavedPostsUseCase, savePostUseCase } from '../../application/use-cases/post/savePost';
 import Status from '@src/constants/HttResponseStatus';
 import { CommentRepositoryMongoDbInterface } from '../../frameworks/database/mongodb/repositories/commentRepoMongoDb';
@@ -30,17 +34,16 @@ const postController = (
     postDbRepositoryImpl: PostRepositoryMongoDbInterface,
     commentDbRepository: CommentDbRepositoryInterface,
     commentDbRepositoryImpl: CommentRepositoryMongoDbInterface,
-    reportDbRepository:ReportDbRepositoryInterface,
-    reportDbRepositoryImpl:ReportRepositoryMongoDbInterface,
-    connectionDbRepository:ConnectionDbRepositoryInterface,
-    connectionDbRepositoryImpl:ConnectionRepositoryMongoDB
-    
+    reportDbRepository: ReportDbRepositoryInterface,
+    reportDbRepositoryImpl: ReportRepositoryMongoDbInterface,
+    connectionDbRepository: ConnectionDbRepositoryInterface,
+    connectionDbRepositoryImpl: ConnectionRepositoryMongoDB,
 ) => {
     const dbRepositoryPost = postDbRepository(postDbRepositoryImpl());
     const cloudService = cloudServiceInterface(cloudServiceImpl());
     const dbRepositoryComment = commentDbRepository(commentDbRepositoryImpl());
-    const dbRepositoryReport=reportDbRepository(reportDbRepositoryImpl());
-    const dbRepositoryConnection=connectionDbRepository(connectionDbRepositoryImpl());
+    const dbRepositoryReport = reportDbRepository(reportDbRepositoryImpl());
+    const dbRepositoryConnection = connectionDbRepository(connectionDbRepositoryImpl());
     const addPost = asyncHandler(async (req: CustomRequest, res: Response, next: NextFunction) => {
         const post: AddPostInterface = req.body;
         const files: Express.Multer.File[] = req.files as Express.Multer.File[];
@@ -85,7 +88,7 @@ const postController = (
         });
     });
     const getPostByUser = asyncHandler(async (req: CustomRequest, res: Response) => {
-        const userId: string | undefined = req.query?.Id as string || req.user?.Id;
+        const userId: string | undefined = (req.query?.Id as string) || req.user?.Id;
         const posts = await getPostByUserUseCase(userId, cloudService, dbRepositoryPost);
         res.status(200).json({
             status: Status.SUCCESS,
@@ -127,42 +130,50 @@ const postController = (
     const reportPostById = asyncHandler(async (req: CustomRequest, res: Response) => {
         const targetId = req.params.postId;
         const reporterId = req.user?.Id;
-        const {reason,targetType}=req.body;
-        const data=await reportPost({reporterId,targetType,targetId,reason},dbRepositoryReport);
+        const { reason, targetType } = req.body;
+        const data = await reportPost({ reporterId, targetType, targetId, reason }, dbRepositoryReport);
         res.status(200).json({
             status: Status.SUCCESS,
             message: 'Post reported successfully',
-            data
+            data,
+        });
+    });
+    const getReportedPosts = asyncHandler(async (req: CustomRequest, res: Response) => {
+        const data = await reportPostUseCase(dbRepositoryReport, dbRepositoryPost, cloudService);
+        res.status(200).json({
+            status: Status.SUCCESS,
+            message: 'Fetched reported posts successfully',
+            data: data || [],
         });
     });
     const savePost = asyncHandler(async (req: CustomRequest, res: Response) => {
         const postId = req.params.postId;
         const saveUserId = req.user?.Id;
-        const data =await savePostUseCase(saveUserId,postId,dbRepositoryPost);
+        const data = await savePostUseCase(saveUserId, postId, dbRepositoryPost);
         res.status(200).json({
-            status:Status.SUCCESS,
-            message:"Post saved successfully",
-            data
-        })
+            status: Status.SUCCESS,
+            message: 'Post saved successfully',
+            data,
+        });
     });
-    const getSavedPosts=asyncHandler(async(req:CustomRequest,res:Response)=>{
-        const userId:string|undefined=req.user?.Id;
-        const posts=await getSavedPostsUseCase(userId,dbRepositoryPost,cloudService);
+    const getSavedPosts = asyncHandler(async (req: CustomRequest, res: Response) => {
+        const userId: string | undefined = req.user?.Id;
+        const posts = await getSavedPostsUseCase(userId, dbRepositoryPost, cloudService);
         res.status(200).json({
-            status:Status.SUCCESS,
-            message:'Successfully get all saved posts of current user',
-            data:posts
-        })
-    })
-    const getPostsByFollowers=asyncHandler(async(req:CustomRequest,res:Response)=>{
-        const userId:string|undefined=req.user?.Id;
-        const posts=await getPostsByFollowersUseCase(userId,cloudService,dbRepositoryPost,dbRepositoryConnection);
+            status: Status.SUCCESS,
+            message: 'Successfully get all saved posts of current user',
+            data: posts,
+        });
+    });
+    const getPostsByFollowers = asyncHandler(async (req: CustomRequest, res: Response) => {
+        const userId: string | undefined = req.user?.Id;
+        const posts = await getPostsByFollowersUseCase(userId, cloudService, dbRepositoryPost, dbRepositoryConnection);
         res.status(200).json({
-            status:Status.SUCCESS,
-            message:"Successfully fetched the posts of followers",
-            data:posts
-        })
-    })
+            status: Status.SUCCESS,
+            message: 'Successfully fetched the posts of followers',
+            data: posts,
+        });
+    });
     return {
         addPost,
         editPost,
@@ -175,7 +186,8 @@ const postController = (
         reportPostById,
         savePost,
         getSavedPosts,
-        getPostsByFollowers
+        getPostsByFollowers,
+        getReportedPosts,
     };
 };
 

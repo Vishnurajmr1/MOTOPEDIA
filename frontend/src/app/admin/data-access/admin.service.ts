@@ -18,7 +18,10 @@ export class AdminService {
   unblockUser(userId: string) {
     return this.http.patch(`/api/user/unblock-user/${userId}`, {});
   }
-  getPosts():Observable<IPostList>{
+  getPosts(): Observable<IPostList> {
     return this.http.get<IPostList>('/api/posts/get-all-posts');
+  }
+  getReportedPosts(): Observable<any> {
+    return this.http.get(`api/posts/get-reported-posts`);
   }
 }

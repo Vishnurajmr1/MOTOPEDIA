@@ -59,13 +59,17 @@
       mode="side"
       [opened]="OpenSideBar"
     >
-      <mat-nav-list *ngFor="let link of AdminLinks">
-        <mat-list-item routerLinkActive="active-link">
+      <mat-nav-list >
+        <mat-list-item routerLinkActive="active-link" *ngFor="let link of AdminLinks">
           <a routerLink="/admin/{{ link }}">{{
             link |uppercase
           }}</a>
         </mat-list-item>
+        <mat-list-item routerLinkActive="active-link">
+          <a [routerLink]="['/','admin','reportPosts']" >Reported Posts</a>
+        </mat-list-item>
       </mat-nav-list>
+ 
     </mat-drawer>
   </mat-drawer-container>
 </aside>

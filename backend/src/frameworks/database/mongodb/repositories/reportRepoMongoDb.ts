@@ -9,20 +9,53 @@ export const reportRepositoryMongoDb = () => {
         return reportId;
     };
 
-    const getReportByPostId=async(reportInfo:IgetReportByPost)=>{
-        const {reporterId,targetId}=reportInfo;
-        const getDataByPost= await Report.find({targetId:targetId});
+    const getReportByPostId = async (reportInfo: IgetReportByPost) => {
+        const { reporterId, targetId } = reportInfo;
+        const getDataByPost = await Report.find({ targetId: targetId });
         return getDataByPost;
-    }
-    const getReportByReporterId=async(reportInfo:IgetReportByPost)=>{
-        const {reporterId}=reportInfo;
-        const getDataByUser=await Report.find({reporterId});
+    };
+    const getReportByReporterId = async (reportInfo: IgetReportByPost) => {
+        const { reporterId } = reportInfo;
+        const getDataByUser = await Report.find({ reporterId });
         return getDataByUser;
-    }
+    };
+    const getAllReportedPosts = async () => {
+        const reportedPosts = await Report.aggregate([
+            {
+                $match: { targetType: 'post' },
+            },
+            {
+                $lookup: {
+                    from: 'posts',
+                    localField: 'targetId',
+                    foreignField: '_id',
+                    as: 'posts',
+                },
+            },
+        ]);
+        return reportedPosts;
+    };
+    const PostReportedCount = async (postId: string) => {
+        const reportCount = await Report.aggregate([
+            {
+                $match: {
+                    targetId: new mongoose.Types.ObjectId(postId),
+                    targetType: 'post',
+                },
+            },
+            {
+                $count: 'totalReport',
+            },
+        ]);
+        const totalReports = reportCount.length > 0 ? reportCount[0].totalReport : 0;
+        return totalReports;
+    };
     return {
         addReport,
         getReportByPostId,
-        getReportByReporterId
+        getReportByReporterId,
+        getAllReportedPosts,
+        PostReportedCount,
     };
 };
 
