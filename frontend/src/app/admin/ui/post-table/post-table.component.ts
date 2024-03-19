@@ -18,6 +18,7 @@ export class PostTableComponent {
   dataSource: DisplayPost[] = [];
 
   ngOnChanges(changes: SimpleChanges): void {
+    console.log(this.posts)
     this.dataSource = this.posts.map((post) => ({
       title: post.title,
       author: `${post.authorId.firstName}${post.authorId.lastName}`,

@@ -41,7 +41,7 @@ const postRouter = () => {
     router.route('/save-post/:postId').patch(jwtAuthMiddleware, controller.savePost);
     router.route('/saved-post').get(jwtAuthMiddleware, controller.getSavedPosts);
     router.route('/get-followers-post').get(jwtAuthMiddleware, controller.getPostsByFollowers);
-    router.route('/get-reported-posts').get(roleCheckMiddleware('admin'), jwtAuthMiddleware, controller.getAllPosts);
+    router.route('/get-reported-posts').get(jwtAuthMiddleware,roleCheckMiddleware('admin'), controller.getReportedPosts);
     // router.route('/unlike-post').patch(jwtAuthMiddleware);
     return router;
 };
