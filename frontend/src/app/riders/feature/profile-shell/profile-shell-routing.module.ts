@@ -2,20 +2,31 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
-{
-  path:'',
-  loadChildren:()=>
-  import('../profile-container/profile-container.module').then((m)=>m.ProfileContainerModule)
-},
-{
-  path: ':id',
-  loadChildren:()=>
-  import('../profile-container/profile-container.module').then((m)=>m.ProfileContainerModule)
-}
+  {
+    path: '',
+    loadChildren: () =>
+      import('../profile-container/profile-container.module').then(
+        (m) => m.ProfileContainerModule
+      ),
+  },
+  {
+    path: ':id',
+    loadChildren: () =>
+      import('../profile-container/profile-container.module').then(
+        (m) => m.ProfileContainerModule
+      ),
+  },
+  {
+    path: 'subscription',
+    loadChildren: () =>
+      import('../profile-container/profile-container.module').then(
+        (m) => m.ProfileContainerModule
+      ),
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class ProfileShellRoutingModule { }
+export class ProfileShellRoutingModule {}
