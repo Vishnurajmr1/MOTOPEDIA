@@ -20,7 +20,8 @@ interface IUser extends Document {
     isVerifiedEmail: boolean;
     otp?: string;
     savedPost: any[];
-    online:boolean;
+    online: boolean;
+    premium: boolean;
 }
 
 const ProfileSchema = new Schema<ProfilePic>({
@@ -107,10 +108,14 @@ const UserSchema = new Schema<IUser>({
         ],
         default: [],
     },
-    online:{
-        type:Boolean,
-        default:false
-    }
+    online: {
+        type: Boolean,
+        default: false,
+    },
+    premium: {
+        type: Boolean,
+        default: false,
+    },
 });
 
 const User = model<IUser>('User', UserSchema, 'user');

@@ -24,6 +24,13 @@ const routes: Routes = [
       import('./home/feature/home.module').then((m) => m.HomeModule),
   },
   {
+    path: 'pricing',
+    loadChildren: () =>
+      import(
+        './riders/feature/pricing-container/pricing-container.module'
+      ).then((m) => m.PricingContainerModule),
+  },
+  {
     path: 'posts',
     loadChildren: () =>
       import('./posts/feature/post-shell/post-shell.module').then(
@@ -37,15 +44,15 @@ const routes: Routes = [
       import('./riders/feature/profile-shell/profile-shell.module').then(
         (m) => m.ProfileShellModule
       ),
-      canActivate:[authGuard]
+    canActivate: [authGuard],
   },
   {
-    path:'chat',
-    loadChildren:()=>
-    import('./chats/feature/chat-shell/chat-shell.module').then(
-      m=>m.ChatShellModule
-    ),
-    canActivate:[authGuard]
+    path: 'chat',
+    loadChildren: () =>
+      import('./chats/feature/chat-shell/chat-shell.module').then(
+        (m) => m.ChatShellModule
+      ),
+    canActivate: [authGuard],
   },
 
   {

@@ -13,6 +13,37 @@ export interface UploadedFileInterface {
     filename: string;
 }
 
+export type Interval = 'month' | 'day' | 'year' | 'week';
 
+export interface stripeCard {
+    number: string;
+    expMonth: number;
+    expYear: number;
+    cvv: string;
+}
+export interface stripeAddress {
+    name: string;
+    phone: number;
+}
 
+export enum PlanType {
+    basic = 'BASIC',
+    pro = 'PRO',
+    premium = 'PREMIUM',
+}
+export enum PaymentStatus {
+    SUCCESS = 'SUCCESS',
+    PENDING = 'PENDING',
+    FAILED = 'FAILED',
+}
+export enum SubscriptionStatus {
+    ACTIVE = 'ACTIVE',
+    CANCELED = 'CANCELED',
+}
 
+export enum SubscriptionInterval{
+    YEAR='YEAR',
+    MONTH='MONTHLY',
+    DAY='DAY',
+    WEEK='WEEK'
+}
