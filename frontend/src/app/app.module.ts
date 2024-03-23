@@ -29,6 +29,7 @@ import { AdminAsideModule } from './admin/ui/admin-aside/admin-aside.module';
 import { AuthEffects } from './auth/data-access/state/auth.effects';
 import { SpinnerModule } from './shared/ui/spinner/spinner.module';
 import { LoaderInterceptor } from './core/interceptors/loader.interceptor';
+import { NgxStripeModule } from 'ngx-stripe';
 @NgModule({
   declarations: [AppComponent],
   imports: [
@@ -52,7 +53,7 @@ import { LoaderInterceptor } from './core/interceptors/loader.interceptor';
     AdminAsideModule,
     RouterModule,
     SpinnerModule,
-    // NgxStripeModule.forRoot('pk_test_51Ow4oFSGocDch8je3w9T03YW37u0FSb1eN39WCTrqRYOh40VVDkaPZ2XopUvzFQ7K3OiMDxijq1ijHTc9qvH3EBf00n2zQ8gd0')
+    NgxStripeModule.forRoot('pk_test_51Ow4oFSGocDch8je3w9T03YW37u0FSb1eN39WCTrqRYOh40VVDkaPZ2XopUvzFQ7K3OiMDxijq1ijHTc9qvH3EBf00n2zQ8gd0')
   ],
   providers: [
     {
@@ -87,4 +88,5 @@ import { LoaderInterceptor } from './core/interceptors/loader.interceptor';
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
-export class AppModule {}
+export class AppModule {};
+

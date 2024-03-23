@@ -1,8 +1,11 @@
-import { Component, inject } from '@angular/core';
+import { Component, ViewChild, inject } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { State, isUserLoggedIn } from '../../../auth/data-access/state';
 import { SnackbarService } from 'src/app/shared/data-access/global/snackbar.service';
 import { Router } from '@angular/router';
+import { FormControl, FormGroup } from '@angular/forms';
+import { StripeCardComponent } from 'ngx-stripe';
+import { StripeCardElementOptions, StripeElementsOptions } from '@stripe/stripe-js';
 
 @Component({
   selector: 'app-pricing-container',
@@ -14,18 +17,47 @@ export class PricingContainerComponent {
   private snackbar = inject(SnackbarService);
   private router = inject(Router);
   private isLoggedIn: boolean = false;
+  customerID:string=''
   ngOnInit(): void {
     this.store.select(isUserLoggedIn).subscribe((loggedIn) => {
       this.isLoggedIn = loggedIn;
     });
   }
+  @ViewChild(StripeCardComponent)
+  card!: StripeCardComponent;
+  cardOptions:StripeCardElementOptions={
+    style:{
+      base: {
+        iconColor: '#666EE8',
+         color: '#31325F',
+         fontWeight: '300',
+         fontFamily: '"Helvetica Neue", Helvetica, sans-serif',
+         fontSize: '18px',
+        '::placeholder': {
+        color: '#CFD7E0',
+        },
+      },
+    }
+  }
+  elementOptions:StripeElementsOptions={
+    locale:'en'
+  }
   payNow(plan: string) {
-   if(!this.isLoggedIn){
-    this.router.navigateByUrl('/auth/login')
-    this.snackbar.showError('Please login');
-    return
-   }
+    console.log(plan);
+    if (!this.isLoggedIn) {
+      this.router.navigateByUrl('/auth/login');
+      this.snackbar.showError('Please login');
+      return;
+    }
+  }
 
+  stripePaymentForm=new FormGroup({
+    email:new FormControl('')
+  })
+  onSubmit(){
+    
+  }
+  createToken(){
 
   }
 }
