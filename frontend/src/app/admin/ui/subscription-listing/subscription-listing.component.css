@@ -1,0 +1,12 @@
+table {
+  width: 100%;
+}
+
+.add-button {
+  align-self: flex-end;
+  margin-bottom: 2rem;
+}
+.table-container {
+  flex: 1;
+  overflow-y: auto;
+}

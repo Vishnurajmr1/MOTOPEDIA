@@ -52,7 +52,7 @@ const subscriptionController = (
         createSubscription,
         updateSubscription,
         SubscriptionList,
-        getSubscriptionById
+        getSubscriptionById,
     };
 };
 

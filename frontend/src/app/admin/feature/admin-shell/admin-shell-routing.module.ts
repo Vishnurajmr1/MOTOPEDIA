@@ -33,6 +33,13 @@ const routes: Routes = [
         (m) => m.ReportPostContainerModule
       ),
   },
+  {
+    path: 'subscriptions',
+    loadChildren: () =>
+      import('../subscription-container/subscription-container.module').then(
+        (m) => m.SubscriptionContainerModule
+      ),
+  },
 ];
 
 @NgModule({

@@ -1,0 +1,105 @@
+<div class="p-4">
+  <h1 mat-dialog-title class="font-bold uppercase">Create Subscription</h1>
+  <mat-dialog-content>
+    <form class="subscription-form" [formGroup]="subscriptionForm">
+      <p>
+        <mat-form-field class="form_input_field">
+          <mat-label>Name</mat-label>
+          <input matInput formControlName="name" placeholder="Ex. Premium" />
+          <mat-error *ngIf="subscriptionFormControl.name.hasError('required')">
+            Please enter a valid name
+          </mat-error>
+          <mat-error
+            *ngIf="subscriptionFormControl.name.hasError('whitespace')"
+          >
+            Name cannot be empty
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field class="form_input_field">
+          <mat-label>Description</mat-label>
+          <textarea matInput formControlName="description"></textarea>
+          <mat-error
+            *ngIf="subscriptionFormControl.description.hasError('required')"
+          >
+            Please enter a description
+          </mat-error>
+          <mat-error
+            *ngIf="subscriptionFormControl.description.hasError('whitespace')"
+          >
+            Description cannot be emtpy
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field class="form_input_field">
+          <mat-label>Features</mat-label>
+          <textarea matInput formControlName="features"></textarea>
+
+          <mat-error
+            *ngIf="subscriptionFormControl.features.hasError('required')"
+          >
+            Please enter a feature
+          </mat-error>
+          <mat-error
+            *ngIf="subscriptionFormControl.features.hasError('whitespace')"
+          >
+            Feature cannot be empty
+          </mat-error>
+        </mat-form-field>
+      </p>
+      <!-- <div>
+        <button mat-button disabled type="button">
+          {{ subscriptionFormControl.features.value }}
+        </button>
+      </div> -->
+      <table>
+        <tr class="subscription-table-row">
+          <td>
+            <mat-form-field>
+              <mat-label>Duration</mat-label>
+              <mat-select
+                (selectionChange)="onSubscriptionTypeChange($event)"
+                formControlName="duration"
+              >
+                <mat-option
+                  *ngFor="let type of subscriptionType | keyvalue"
+                  [value]="type.value"
+                  >{{ type.value }}</mat-option
+                >
+              </mat-select>
+            </mat-form-field>
+          </td>
+          <td>
+            <mat-form-field>
+              <mat-label>Price</mat-label>
+              <input
+                type="number"
+                formControlName="price"
+                matInput
+                placeholder="Ex.199"
+              />
+
+              <mat-error
+                *ngIf="subscriptionFormControl.price.hasError('required')"
+              >
+                Please enter the price for plan
+              </mat-error>
+              <mat-error *ngIf="subscriptionFormControl.price.hasError('min')">
+                Price must be greater than or equal to 0
+              </mat-error>
+            </mat-form-field>
+          </td>
+        </tr>
+      </table>
+    </form>
+  </mat-dialog-content>
+  <mat-dialog-actions class="flex gap-4">
+    <button
+      mat-raised-button
+      color="accent"
+      [mat-dialog-close]="true"
+      (click)="onSubmit()"
+    >
+      Create
+    </button>
+    <button mat-button mat-dialog-close>Cancel</button>
+  </mat-dialog-actions>
+</div>
