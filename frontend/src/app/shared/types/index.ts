@@ -21,3 +21,11 @@ export enum PlanType {
   PRO = 'PRO',
   PREMIUM = 'PREMIUM',
 }
+
+
+export enum SubscriptionType{
+  day='DAY',
+  month='MONTHLY',
+  year='YEARLY',
+  week='WEEK'
+}

@@ -1,0 +1,22 @@
+.subscription-form {
+  min-width: 150px;
+  max-width: 500px;
+  width: 100%;
+}
+
+.subscription-form textarea:focus,
+.subscription-form textarea:hover,
+.subscription-form textarea:active {
+  outline: none;
+}
+.description_field {
+  width: 100%;
+}
+
+.form_input_field {
+  width: 100%;
+}
+.subscription-table-row{
+    display: flex;
+    gap: 2rem;
+}

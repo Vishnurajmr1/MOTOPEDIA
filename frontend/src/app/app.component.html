@@ -6,9 +6,9 @@
   <ng-template #user>
     <app-navbar></app-navbar>
   </ng-template>
-  <router-outlet></router-outlet>
   <ng-container *ngIf="currentLayout !== 'admin'">
     <!-- <app-footer></app-footer> -->
   </ng-container>
 </div>
+<router-outlet></router-outlet>
 <app-spinner></app-spinner>
