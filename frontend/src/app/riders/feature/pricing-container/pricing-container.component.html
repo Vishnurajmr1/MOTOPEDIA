@@ -1,7 +1,9 @@
-  <div class="py-12 flex items-center justify-center">
-      <pricing-plans (sub)="payNow($event)"></pricing-plans>
-  </div>
-
+<div class="py-12 flex items-center justify-center">
+  <pricing-plans
+    (sub)="payNow($event)"
+    [subscriptionPlans]="subscriptionData"
+  ></pricing-plans>
+</div>
 
 <!-- <div>
  <form (ngSubmit)="onSubmit()" [formGroup]="stripePaymentForm">
