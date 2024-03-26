@@ -1,5 +1,6 @@
-import { Component, EventEmitter, Output } from '@angular/core';
-import { PlanType } from 'src/app/shared/types';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { PlanType, SubscriptionType } from 'src/app/shared/types';
+import { ISubscription } from 'src/app/shared/types/subscriptionInterface';
 
 @Component({
   selector: 'pricing-plans',
@@ -7,9 +8,10 @@ import { PlanType } from 'src/app/shared/types';
   styleUrls: ['./pricing-plans.component.css'],
 })
 export class PricingPlansComponent {
-  @Output() sub = new EventEmitter<PlanType>();
+  @Output() sub = new EventEmitter<SubscriptionType>();
+  @Input() subscriptionPlans: ISubscription[] = [];
   Plan = PlanType;
-  subscribe(plan: PlanType) {
+  subscribe(plan: SubscriptionType) {
     this.sub.emit(plan);
   }
 }
