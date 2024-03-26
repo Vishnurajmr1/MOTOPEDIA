@@ -3,7 +3,7 @@ import { Request, Response } from 'express';
 import { PaymentServiceInterface } from '@src/application/services/paymentServiceInterface';
 import { PaymentServiceImpl } from '@src/frameworks/services/paymentService';
 import asyncHandler from 'express-async-handler';
-import { getConfigUseCase } from '@src/application/use-cases/payment/createPayment';
+import { createSessionsUseCase, getConfigUseCase } from '@src/application/use-cases/payment/createPayment';
 import Status from '@src/constants/HttResponseStatus';
 
 const paymentController = (
@@ -15,12 +15,22 @@ const paymentController = (
         const config = getConfigUseCase(paymentService);
         res.status(200).json({
             status: Status.SUCCESS,
-            message: 'Successfully completed payment',
+            message: 'successfully completed payment',
             data: config,
+        });
+    });
+    const createPaymentSession = asyncHandler(async (req: Request, res: Response) => {
+        const priceId = req.body.priceId;
+        const paymentSessionId = await createSessionsUseCase(priceId, paymentService);
+        res.status(200).json({
+            status: Status.SUCCESS,
+            message: 'successfully created session',
+            data: paymentSessionId,
         });
     });
     return {
         getConfig,
+        createPaymentSession,
     };
 };
 

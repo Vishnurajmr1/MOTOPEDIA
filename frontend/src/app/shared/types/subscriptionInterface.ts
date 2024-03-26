@@ -8,3 +8,10 @@ export interface ISubscription {
   duration: SubscriptionType;
   isActive: boolean;
 }
+
+
+export interface IStripeSubscription{
+  data:string;
+  status:number;
+  message:string;
+}
