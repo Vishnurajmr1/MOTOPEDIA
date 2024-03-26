@@ -42,11 +42,21 @@ export const paymentService = () => {
         return paymentMethod;
     };
 
-    const stripeCustomer = async (email:string) => {
+    const stripeCustomer = async (email: string) => {
         const customer = await stripe.customers.create({
             email,
         });
         return customer;
+    };
+    const createSessions = async (priceId: string) => {
+        const sessions = await stripe.checkout.sessions.create({
+            payment_method_types: ['card'],
+            line_items: [{price:priceId, quantity: 1}],
+            mode: 'payment',
+            success_url: 'http://localhost:4200/checkout-success',
+            cancel_url: 'http://localhost:4200/pricing',
+        });
+        return sessions.id;
     };
     const getConfig = () => configKeys.STRIPE_PUBLISHABLE_KEY;
 
@@ -57,6 +67,7 @@ export const paymentService = () => {
         stripePlan,
         stripeCustomer,
         getStripeProduct,
+        createSessions,
     };
 };
 

@@ -8,10 +8,10 @@ import { ISubscription } from 'src/app/shared/types/subscriptionInterface';
   styleUrls: ['./pricing-plans.component.css'],
 })
 export class PricingPlansComponent {
-  @Output() sub = new EventEmitter<SubscriptionType>();
+  @Output() sub = new EventEmitter<ISubscription>();
   @Input() subscriptionPlans: ISubscription[] = [];
   Plan = PlanType;
-  subscribe(plan: SubscriptionType) {
+  subscribe(plan: ISubscription) {
     this.sub.emit(plan);
   }
 }

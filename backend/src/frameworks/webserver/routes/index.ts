@@ -21,7 +21,7 @@ const routes = (app: Application) => {
     app.use('/api/messages', messageRouter());
     app.use('/api/user', userRouter());
     app.use('/api/subscription', subscriptionRouter());
-    app.use('/api/payments', jwtAuthMiddleware, paymentRouter());
+    app.use('/api/payment', jwtAuthMiddleware, paymentRouter());
 };
 
 export default routes;

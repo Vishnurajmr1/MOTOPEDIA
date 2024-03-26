@@ -1,16 +1,24 @@
 import { Component, ViewChild, inject } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { State, isUserLoggedIn } from '../../../auth/data-access/state';
+import {
+  State,
+  getCurrentUserData,
+  isUserLoggedIn,
+} from '../../../auth/data-access/state';
 import { SnackbarService } from '../../../../app/shared/data-access/global/snackbar.service';
 import { Router } from '@angular/router';
 import { FormControl, FormGroup } from '@angular/forms';
 import { StripeCardComponent } from 'ngx-stripe';
 import {
+  Stripe,
   StripeCardElementOptions,
   StripeElementsOptions,
 } from '@stripe/stripe-js';
 import { SubscriptionService } from '../../../../app/shared/data-access/global/subscription.service';
 import { ISubscription } from 'src/app/shared/types/subscriptionInterface';
+import { PaymentService } from '../../data-access/payment.service';
+import { environment } from '../../../../environments/environment';
+import { StripeService } from '../../data-access/stripe.service';
 
 @Component({
   selector: 'app-pricing-container',
@@ -23,8 +31,13 @@ export class PricingContainerComponent {
   private router = inject(Router);
   private subService = inject(SubscriptionService);
   private isLoggedIn: boolean = false;
+  private stripeService = inject(StripeService);
+  private paymentService = inject(PaymentService);
+  stripePromise: Promise<Stripe> | undefined;
   subscriptionData: ISubscription[] = [];
   customerID: string = '';
+  stripeBox: boolean = false;
+  constructor() {}
   ngOnInit(): void {
     this.store.select(isUserLoggedIn).subscribe((loggedIn) => {
       this.isLoggedIn = loggedIn;
@@ -35,8 +48,7 @@ export class PricingContainerComponent {
       );
     });
   }
-  @ViewChild(StripeCardComponent)
-  card!: StripeCardComponent;
+  card: StripeCardComponent | undefined;
   cardOptions: StripeCardElementOptions = {
     style: {
       base: {
@@ -54,18 +66,27 @@ export class PricingContainerComponent {
   elementOptions: StripeElementsOptions = {
     locale: 'en',
   };
-  payNow(plan: string) {
+  async payNow(plan: ISubscription) {
     console.log(plan);
     if (!this.isLoggedIn) {
       this.router.navigateByUrl('/auth/login');
       this.snackbar.showError('Please login');
       return;
+    }else{
+      this.store.select(getCurrentUserData).subscribe((result) => {
+        this.customerID = result.userId;
+      });
+      this.stripeBox = true;
+      this.redirectToCheckout();
     }
+
   }
 
-  stripePaymentForm = new FormGroup({
-    email: new FormControl(''),
-  });
-  onSubmit() {}
-  createToken() {}
+  async redirectToCheckout() {
+    console.log(environment.priceId)
+    let model = {
+      priceId: environment.priceId,
+    };
+    await this.stripeService.redirectToCheckout(model);
+  }
 }

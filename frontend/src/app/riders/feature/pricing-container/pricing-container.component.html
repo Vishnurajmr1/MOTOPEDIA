@@ -4,17 +4,7 @@
     [subscriptionPlans]="subscriptionData"
   ></pricing-plans>
 </div>
-
-<!-- <div>
- <form (ngSubmit)="onSubmit()" [formGroup]="stripePaymentForm">
-  <input type="email" id="email" formControlName="email">
-  <button type="submit">Create Customer</button>
- </form>
- <h4 *ngIf="customerID" class="center">{{customerID}}</h4>
- <h2 class="center">Start Subscription</h2>
-
-</div> -->
-<!-- <div>
+<!-- <div *ngIf="stripeBox" class="StripeElement">
   <ngx-stripe-card class="stripe" [options]="cardOptions" [elementsOptions]="elementOptions"></ngx-stripe-card>
-  <button type="submit" (click)="createToken()">Start Subscription</button>
+  <button type="submit" (click)="redire()">Start Subscription</button>
 </div> -->
