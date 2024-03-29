@@ -34,6 +34,7 @@ export interface IEditPost {
   title?: string;
   description?: string;
   image?: File;
+  blocked?:boolean;
 }
 export interface IReportPost {
   reason: string;
@@ -50,16 +51,6 @@ export interface reportPost {
   reportType: string;
 }
 
-// export interface reportPostList {
-//   createdAt: string;
-//   posts: IpostInterface[];
-//   reason: string;
-//   reporterId: string;
-//   targetId: string;
-//   targetType: string;
-//   updatedAt: string;
-//   _id: string;
-// }
 export interface reportPostList {
   postId: string;
   reportCount: number;
@@ -71,4 +62,5 @@ export interface reportPostList {
     firstName: string;
     lastName: string;
   };
+  blocked:boolean;
 }

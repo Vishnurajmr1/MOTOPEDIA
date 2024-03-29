@@ -1,7 +1,11 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
-import { IPostList, IpostInterface } from 'src/app/shared/types/post.Interface';
+import {
+  IEditPost,
+  IPostList,
+  IpostInterface,
+} from 'src/app/shared/types/post.Interface';
 
 @Injectable({
   providedIn: 'root',
@@ -23,5 +27,8 @@ export class AdminService {
   }
   getReportedPosts(): Observable<any> {
     return this.http.get(`api/posts/get-reported-posts`);
+  }
+  BlockPost(postId: string, updatedPost: IEditPost) {
+    return this.http.put(`api/posts/edit-post/${postId}`,updatedPost);
   }
 }

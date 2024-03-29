@@ -1,12 +1,15 @@
 import { Component, inject } from '@angular/core';
 import { Subject, takeUntil } from 'rxjs';
-import { IpostInterface, reportPostList } from 'src/app/shared/types/post.Interface';
+import {
+  IpostInterface,
+  reportPostList,
+} from 'src/app/shared/types/post.Interface';
 import { AdminService } from '../../data-access/admin.service';
 
 @Component({
   selector: 'app-report-post-container',
   templateUrl: './report-post-container.component.html',
-  styleUrls: ['./report-post-container.component.css']
+  styleUrls: ['./report-post-container.component.css'],
 })
 export class ReportPostContainerComponent {
   protected reportedPosts: reportPostList[] = [];
@@ -22,11 +25,6 @@ export class ReportPostContainerComponent {
     });
   }
 
-  ngOnDestroy(): void {
-    this.unsubscribe$.next();
-    this.unsubscribe$.complete();
-  }
-
   private loadData(): void {
     this.adminService
       .getReportedPosts()
@@ -35,5 +33,20 @@ export class ReportPostContainerComponent {
         this.reportedPosts = res.data;
         this.postSubject.next(this.reportedPosts);
       });
+  }
+  handleBlockPost(post: { postId: string; blocked: boolean }) {
+    this.adminService
+      .BlockPost(post.postId, {
+        _id: post.postId,
+        blocked: post.blocked,
+      })
+      .subscribe((res) => {
+        console.log(res);
+      });
+  }
+
+  ngOnDestroy(): void {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
   }
 }

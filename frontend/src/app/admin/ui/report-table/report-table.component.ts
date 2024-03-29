@@ -1,4 +1,10 @@
-import { Component, Input, SimpleChanges } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  Output,
+  SimpleChanges,
+} from '@angular/core';
 import {
   IReportPost,
   IpostInterface,
@@ -11,6 +17,8 @@ export interface DisplayPost {
   image: string;
   likes: number;
   reportCount: number;
+  blocked: boolean;
+  id:string;
 }
 @Component({
   selector: 'report-table',
@@ -19,12 +27,17 @@ export interface DisplayPost {
 })
 export class ReportTableComponent {
   @Input() reportedposts: reportPostList[] = [];
+  @Output() postStatusToggled: EventEmitter<{
+    postId: string;
+    blocked: boolean;
+  }> = new EventEmitter<{ postId: string; blocked: boolean }>();
   displayedColumns: string[] = [
     'Title',
     'Author',
     'Image',
     'Likes',
     'ReportCount',
+    'Action',
   ];
   dataSource: DisplayPost[] = [];
   ngOnChanges(changes: SimpleChanges): void {
@@ -35,6 +48,13 @@ export class ReportTableComponent {
       image: report.imageUrl,
       likes: report.likes ?? 0,
       reportCount: report.reportCount ?? 0,
+      blocked: report.blocked,
+      id:report.postId
     }));
+  }
+
+  togglePostStatus(post: DisplayPost) {
+    post.blocked = !post.blocked;
+    this.postStatusToggled.emit({postId:post.id,blocked:post.blocked})
   }
 }
