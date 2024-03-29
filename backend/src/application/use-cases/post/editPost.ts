@@ -24,9 +24,9 @@ export const editPostUseCase = async (
         throw new AppError('Please provide post details', HttpStatusCodes.BAD_REQUEST);
     }
     const oldPost = await postDbRepository.getPostById(postId);
-    if (oldPost?.authorId.toString() !== userId) {
-        throw new AppError('You have no permission to edit this post', HttpStatusCodes.FORBIDDEN);
-    }
+    // if (oldPost?.authorId.toString() !== userId) {
+    //     throw new AppError('You have no permission to edit this post', HttpStatusCodes.FORBIDDEN);
+    // }
     if (files && files.length > 0) {
         const uploadPromises = files.map(async (file) => {
             const image = await cloudService.upload(file, 'Posts/photo');
@@ -36,7 +36,9 @@ export const editPostUseCase = async (
 
         await Promise.all(uploadPromises);
     }
-    postInfo.authorId = userId;
+    if (oldPost?.authorId.toString() === userId) {
+        postInfo.authorId = userId;
+    }
     const response = await postDbRepository.editPost(postId, postInfo);
 
     if (response) {
@@ -75,7 +77,7 @@ export const likePostUseCase = async (
     }
     if (userId && reactionType) {
         const existingReactionIndex: number = postInfo.likedBy!.findIndex((item) => item.userId.toString() == userId);
-        const existingReaction=postInfo.likedBy!.find(item=>item.userId.toString()==userId);
+        const existingReaction = postInfo.likedBy!.find((item) => item.userId.toString() == userId);
         if (existingReactionIndex == -1) {
             postInfo.likedBy?.push({ userId, reactionType });
             if (reactionType == 'like') {
@@ -83,7 +85,7 @@ export const likePostUseCase = async (
             }
         } else {
             postInfo.likedBy!.splice(existingReactionIndex, 1);
-            if (existingReaction?.reactionType=='like') {
+            if (existingReaction?.reactionType == 'like') {
                 postInfo.likes!.like = (oldPost.likes?.like || 0) - 1;
             }
         }

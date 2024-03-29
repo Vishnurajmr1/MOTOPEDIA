@@ -67,16 +67,20 @@ const postSchema = new mongoose.Schema({
                 ref: 'User',
             },
         ],
-        default:[]
+        default: [],
     },
     reportCount: {
         type: Number,
         default: 0,
     },
-    tags:{
-        type:[String],
-        default:[]
-    }
+    blocked: {
+        type: Boolean,
+        default: false,
+    },
+    tags: {
+        type: [String],
+        default: [],
+    },
 });
 
 const Post = mongoose.model('Post', postSchema, 'posts');

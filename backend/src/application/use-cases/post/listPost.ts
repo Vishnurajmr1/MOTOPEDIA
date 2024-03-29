@@ -60,14 +60,14 @@ export const getPostsByFollowersUseCase = async (
 
     const currentUserPosts=await postDbRepository.getPostByUser(userId);
     const allPosts=postsByFollowers.flat().concat(currentUserPosts);
-
-    await Promise.all(allPosts.map(async(post)=>{
+    const unblockedPosts=allPosts.filter((post)=>!post.blocked);
+    await Promise.all(unblockedPosts.map(async(post)=>{
         if(post && post.image){
             post.imageUrl=await cloudService.getFile(post.image.key)
         }
     }))
 
-    return allPosts;
+    return unblockedPosts;
 };
 
 // const followers=connectionData.map((user)=>{

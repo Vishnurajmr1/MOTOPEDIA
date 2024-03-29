@@ -29,20 +29,18 @@ export const reportPostUseCase = async (
     cloudService: ReturnType<CloudServiceInterface>,
 ) => {
     const reportedPosts = await reportDbRepository.getReportedPosts();
-    console.log(reportedPosts)
+    console.log(reportedPosts);
     for (const report of reportedPosts) {
         const postId = report.postId;
         const post = await postDbRepository.getPostById(postId);
         console.log(post);
         if (post && post.image) {
-            report.title=post.title;
-            report.likes=post.likedBy?.length;
+            report.title = post.title;
+            report.likes = post.likedBy?.length;
             report.imageUrl = (await cloudService.getFile(post.image.key)) || '';
-            // const reportCount = await reportDbRepository.getPostReportedCount(postId);
-            // report.post.reportCount = reportCount;
             report.authorId = post.authorId;
+            report.blocked = post.blocked;
         }
     }
-    console.log(reportedPosts)
     return reportedPosts;
 };

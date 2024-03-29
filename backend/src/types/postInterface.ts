@@ -18,7 +18,7 @@ export interface AddPostInterface {
     description: string;
     authorId: string;
     image: FileSchema;
-    tags?:string[]
+    tags?: string[];
 }
 
 export interface EditPostInterface {
@@ -28,14 +28,16 @@ export interface EditPostInterface {
     authorId?: string;
     likedBy?: likedBy[];
     likes?: likes;
-    saved?:string[];
-    tags?:string[]
+    saved?: string[];
+    tags?: string[];
+    blocked?: boolean;
 }
 
 export interface postInterface extends AddPostInterface {
     imageUrl: string;
     likes?: likes;
     likedBy?: likedBy[];
-    savedPosts?:string[];
-    tags?:string[]
+    savedPosts?: string[];
+    tags?: string[];
+    blocked:boolean;
 }
