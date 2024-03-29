@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AsideComponent } from './aside.component';
+import { TimeAgoModule } from 'src/app/shared/pipes/time-ago.module';
 
 
 
@@ -9,7 +10,8 @@ import { AsideComponent } from './aside.component';
     AsideComponent
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    TimeAgoModule
   ],
   exports:[
     AsideComponent

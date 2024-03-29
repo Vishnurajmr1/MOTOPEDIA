@@ -1,6 +1,6 @@
 import { Injectable, inject } from '@angular/core';
 import { Socket, io } from 'socket.io-client';
-import { BehaviorSubject, Observable, sample } from 'rxjs';
+import { BehaviorSubject, Observable, Subject, sample } from 'rxjs';
 import { UserService } from '../../../app/riders/data-access/user.service';
 import { ISocketEvents } from 'src/app/shared/types/socket.Interface';
 import {
@@ -14,21 +14,22 @@ import { ICurrentUser } from 'src/app/auth/data-access/state/auth.reducer';
 export class ChatService {
   private socket: Socket;
   private participantId = new BehaviorSubject<string>('');
-  private currentUser = new BehaviorSubject<ICurrentUser|null>(null);
+  private currentUser = new BehaviorSubject<ICurrentUser | null>(null);
   private chatsSubject = new BehaviorSubject<ChatListItemInterface[]>([]);
-  private setMessages = new BehaviorSubject<ChatMessageInterface[]>([]);
+  private setMessages = new Subject<ChatMessageInterface>();
   private setUnreadMessages = new BehaviorSubject<ChatMessageInterface[]>([]);
-  private currentChat=new BehaviorSubject<ChatListItemInterface|null>(null);
-  private setIsTyping: BehaviorSubject<boolean> = 
-    new BehaviorSubject<boolean>(false);
+  private currentChat = new BehaviorSubject<ChatListItemInterface | null>(null);
+  private setIsTyping: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
+    false
+  );
   private setSelfTyping: BehaviorSubject<boolean> =
     new BehaviorSubject<boolean>(false);
-  private setMessage: BehaviorSubject<string> = 
-    new BehaviorSubject<string>('');
+  private setMessage: BehaviorSubject<string> = new BehaviorSubject<string>('');
   private setLocalSearchQuery: BehaviorSubject<string> =
     new BehaviorSubject<string>('');
-  private setAttachedFiles: BehaviorSubject<File[]> = 
-    new BehaviorSubject<File[]>([]);
+  private setAttachedFiles: BehaviorSubject<File[]> = new BehaviorSubject<
+    File[]
+  >([]);
   private chatHistory = new BehaviorSubject<any>([]);
   constructor() {
     this.socket = io('http://localhost:3000', {
@@ -37,15 +38,23 @@ export class ChatService {
       withCredentials: true,
       autoConnect: false,
     });
-    this.socket.on(ISocketEvents.CONNECTED_EVENT,()=>this.connect());
-    this.socket.on(ISocketEvents.DISCONNECT_EVENT,()=>this.disconnect());
+    this.socket.on(ISocketEvents.CONNECTED_EVENT, () => this.connect());
+    this.socket.on(ISocketEvents.DISCONNECT_EVENT, () => this.disconnect());
+    this.socket.on(ISocketEvents.MESSAGE_RECEIVED_EVENT, (data: any) =>
+    {
+      console.log(data)
+      this.setMessages.next(data)});
   }
 
-  connect(){
+  connect() {
     this.socket.connect();
   }
   addUser() {
-    this.socket.emit('addUser',this.getCurrentUserId(),this.participantId.getValue());
+    this.socket.emit(
+      'addUser',
+      this.getCurrentUserId(),
+      this.participantId.getValue()
+    );
   }
   setCurrentParticipant(participantId: string) {
     this.participantId.next(participantId);
@@ -56,28 +65,25 @@ export class ChatService {
   getCurrentUserId() {
     return this.currentUser.getValue()?.userId;
   }
-  getParticipantId(){
-    return this.participantId.getValue()
+  getParticipantId() {
+    return this.participantId.getValue();
   }
   getChatHistory(): Observable<any> {
     return this.chatHistory.asObservable();
   }
-  sendMessage(message: string) {
-    const participantId = this.participantId.getValue();
-    const senderId = this.getCurrentUserId;
-    const data = {
-      recipient: participantId,
-      sender: senderId,
-      text: message,
-    };
-    this.socket.emit('new-message', data);
+  getNewMessages() {
+    return this.setMessages.asObservable();
+  }
+  updatedMessage(message:ChatMessageInterface){
+    console.log(message)
+    this.setMessages.next(message)
   }
   setChatHistory(data: any) {
     this.chatHistory.next(data);
   }
-  disconnect=()=>{
+  disconnect = () => {
     this.socket.disconnect();
-  }
+  };
 
   updateChatLastMessage(chatToUpdateId: string, message: ChatMessageInterface) {
     const currentChats = this.chatsSubject.getValue();
@@ -95,14 +101,13 @@ export class ChatService {
       this.chatsSubject.next(currentChats);
     }
   }
-  setChatRoom(chatId:string){
-    this.socket.emit(ISocketEvents.JOIN_CHAT_EVENT,chatId)
+  setChatRoom(chatId: string) {
+    this.socket.emit(ISocketEvents.JOIN_CHAT_EVENT, chatId);
   }
   UnreadMessages(){
-   const unreadMessages=this.setUnreadMessages.getValue();
-   unreadMessages.filter((msg)=>msg.chat!==this.currentChat.getValue()?._id)
+    return this.setUnreadMessages.asObservable()
   }
-  getParticipants(){
-    this.socket.emit(ISocketEvents.NEW_CHAT_EVENT)
+  getParticipants() {
+    this.socket.emit(ISocketEvents.NEW_CHAT_EVENT);
   }
 }

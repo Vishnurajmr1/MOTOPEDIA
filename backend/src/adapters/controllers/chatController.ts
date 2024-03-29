@@ -45,7 +45,7 @@ const chatController = (
     });
     const getAllChats = asyncHandler(async (req: CustomRequest, res: Response) => {
         const userId: string | undefined = req.user?.Id;
-        const chats = await getAllChatsUseCase(userId, dbRepositoryChat);
+        const chats = await getAllChatsUseCase(userId,dbRepositoryChat);
         console.log(chats);
         res.status(200).json({
             status: Status.SUCCESS,

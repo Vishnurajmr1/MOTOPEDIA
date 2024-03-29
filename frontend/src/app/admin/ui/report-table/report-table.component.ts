@@ -9,7 +9,7 @@ export interface DisplayPost {
   title: string;
   author: string;
   image: string;
-  likes: string;
+  likes: number;
   reportCount: number;
 }
 @Component({
@@ -30,11 +30,11 @@ export class ReportTableComponent {
   ngOnChanges(changes: SimpleChanges): void {
     console.log(this.reportedposts);
     this.dataSource = this.reportedposts.map((report) => ({
-      title: report.posts[0].title,
-      author: `${report.posts[0].authorId.firstName}${report.posts[0].authorId.lastName}`,
-      image: report.posts[0].imageUrl,
-      likes: report.posts[0].likedBy.length ?? 0,
-      reportCount: report.posts[0].reportCount ?? 0,
+      title: report.title,
+      author: `${report.authorId.firstName}${report.authorId.lastName}`,
+      image: report.imageUrl,
+      likes: report.likes ?? 0,
+      reportCount: report.reportCount ?? 0,
     }));
   }
 }

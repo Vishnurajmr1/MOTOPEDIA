@@ -27,7 +27,7 @@ import { GlobalErrorHandler } from './shared/data-access/global/global-error-han
 import { AdminNavbarModule } from './admin/ui/admin-navbar/admin-navbar.module';
 import { AdminAsideModule } from './admin/ui/admin-aside/admin-aside.module';
 import { AuthEffects } from './auth/data-access/state/auth.effects';
-import { SpinnerModule } from './shared/ui/spinner/spinner.module';
+// import { SpinnerModule } from './shared/ui/spinner/spinner.module';
 import { LoaderInterceptor } from './core/interceptors/loader.interceptor';
 import { NgxStripeModule } from 'ngx-stripe';
 import { MAT_DIALOG_DEFAULT_OPTIONS } from '@angular/material/dialog';
@@ -53,7 +53,7 @@ import { MAT_DIALOG_DEFAULT_OPTIONS } from '@angular/material/dialog';
     AdminNavbarModule,
     AdminAsideModule,
     RouterModule,
-    SpinnerModule,
+    // SpinnerModule,
     NgxStripeModule.forRoot(
       'pk_test_51Ow4oFSGocDch8je3w9T03YW37u0FSb1eN39WCTrqRYOh40VVDkaPZ2XopUvzFQ7K3OiMDxijq1ijHTc9qvH3EBf00n2zQ8gd0'
     ),
@@ -75,7 +75,7 @@ import { MAT_DIALOG_DEFAULT_OPTIONS } from '@angular/material/dialog';
     },
     {
       provide: MAT_DIALOG_DEFAULT_OPTIONS,
-      useValue: { hasBackdrop: false},
+      useValue: { hasBackdrop: false },
     },
     {
       provide: 'SocialAuthServiceConfig',
