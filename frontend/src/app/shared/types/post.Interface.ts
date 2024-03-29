@@ -50,13 +50,25 @@ export interface reportPost {
   reportType: string;
 }
 
+// export interface reportPostList {
+//   createdAt: string;
+//   posts: IpostInterface[];
+//   reason: string;
+//   reporterId: string;
+//   targetId: string;
+//   targetType: string;
+//   updatedAt: string;
+//   _id: string;
+// }
 export interface reportPostList {
-  createdAt: string;
-  posts: IpostInterface[];
-  reason: string;
-  reporterId: string;
-  targetId: string;
-  targetType: string;
-  updatedAt: string;
-  _id: string;
+  postId: string;
+  reportCount: number;
+  title: string;
+  likes: number;
+  imageUrl: string;
+  authorId: {
+    _id: string;
+    firstName: string;
+    lastName: string;
+  };
 }

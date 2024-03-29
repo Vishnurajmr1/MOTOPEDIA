@@ -19,8 +19,8 @@
                 <app-chat-detail [messageRecieved]="messageRecieved"
                 [chatData]="selectedChat" 
                 (messageSend)="onMessageSend($event)"
-                
                 [isSendByUser]="isSendByUser.bind(this)"
+                [getAllMsg]="chatMessages"
                 ></app-chat-detail>
             </div>
         </div>
@@ -29,11 +29,5 @@
 </div>
 <create-chat *ngIf="openCreateChatModal" [modalOpen]="openCreateChatModal" (closeCreateChatComponent)="closeCreateChatModal()" [followers]="followers" (followerSelected)="handleFollowerSelected($event)"></create-chat>
 
-<!-- Modal for edit and delete post -->
-<!-- <app-modal [modalOpen]="modalOpen" (close)="closeModal()">
-    <div class="p-4 md:p-5 text-center">
-        <app-edit-post [post]="post" [actionType]="actionType" (closeRequest)="closeModal()" (deletePost)="deletePostById($event)" (updatePost)="handleUpdatePost($event)" ></app-edit-post>
-    </div>
-</app-modal> -->
 
 

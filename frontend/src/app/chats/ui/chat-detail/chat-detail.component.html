@@ -1,38 +1,49 @@
- <ng-container *ngIf="messageRecieved;else noMessage">
-   <div class="bg-gray-100 w-full flex items-center gap-3 p-4">
-      <img class="w-8 h-8 rounded-full" src="/assets/images/icons/profile-picture-5.jpg" alt="Jese image">
-      <p class="text-black">{{chatData.firstName}} {{chatData.lastName}}</p>
-   </div>
-   <div class="flex flex-col flex-auto overflow-auto h-full" #scrollMe>
-      <div
-        class="flex flex-col flex-auto flex-shrink-0 rounded-2xl  h-full"
-      >
-        <div class="flex flex-col h-full overflow-x-auto mb-4">
-          <div class="flex flex-col h-full">
-            <div class="grid grid-cols-12 gap-y-2">
-              <ng-container  *ngFor="let msg of getAllMsg">
-                <div class="p-3 rounded-lg" 
-                [ngClass]="isCurrentUserSender(msg)? ['col-start-6','col-end-13']:['col-start-1','col-end-8']"
-                 >
-                  <div class="flex flex-row items-center"
-                  [ngClass]="{'flex-row-reverse':isCurrentUserSender(msg)}"
-                  >
-                    <!-- <div
+<ng-container *ngIf="messageRecieved; else noMessage">
+  <div class="bg-gray-100 w-full flex items-center gap-3 p-4">
+    <img
+      class="w-8 h-8 rounded-full"
+      src="/assets/images/icons/profile_avatar.svg"
+      alt="Jese image"
+    />
+    <p class="text-black">{{ chatData.firstName |uppercase}}</p>
+  </div>
+  <div class="flex flex-col flex-auto" #scrollMe HideScrollbar>
+    <div class="flex flex-col flex-auto flex-shrink-0 rounded-2xl h-full">
+      <div class="flex flex-col h-full overflow-x-auto mb-4">
+        <div class="flex flex-col h-full">
+          <div class="grid grid-cols-12 gap-y-2">
+            <ng-container *ngFor="let msg of getAllMsg">
+              <div
+                class="p-3 rounded-lg"
+                [ngClass]="
+                  isCurrentUserSender(msg)
+                    ? ['col-start-6', 'col-end-13']
+                    : ['col-start-1', 'col-end-8']
+                "
+              >
+                <div
+                  class="flex flex-row items-center"
+                  [ngClass]="{ 'flex-row-reverse': isCurrentUserSender(msg) }"
+                >
+                  <!-- <div
                       class=" text-black flex items-center justify-center h-10 w-10 rounded-full bg-indigo-500 flex-shrink-0"
                     *ngIf="!isCurrentUserSender(msg)"
                       >
                       {{chatData.firstName.charAt(0)|uppercase}}
                     </div> -->
-                    <div
-                      class="relative text-sm bg-slate-100 flex gap-6 py-2 px-4 shadow rounded-xl"
-                      [ngClass]="{'bg-slate-300':isCurrentUserSender(msg)}"
-                    >
-                      <div>{{msg.text}}</div>
-                      <p class="text-xs self-end">{{msg.createdAt|date:'h:mm a'}}</p>
-                    </div>
+                  <div
+                    class="relative text-sm bg-slate-100 flex gap-6 py-2 px-4 shadow rounded-xl"
+                    [ngClass]="{ 'bg-slate-300': isCurrentUserSender(msg) }"
+                  >
+                    <div>{{ msg.content }}</div>
+                    <p class="text-xs self-end">
+                      <!-- {{ msg.createdAt | date : "h:mm a" }} -->
+                      {{ msg.createdAt | timeAgo }}
+                    </p>
                   </div>
                 </div>
-                 <!-- <div class="col-start-6 col-end-13 p-3 rounded-lg" *ngIf="!isCurrentUserSender(msg)">
+              </div>
+              <!-- <div class="col-start-6 col-end-13 p-3 rounded-lg" *ngIf="!isCurrentUserSender(msg)">
                 <div class="flex items-center justify-start flex-row-reverse">
                   <div
                     class="flex items-center justify-center h-10 w-10 rounded-full bg-indigo-500 flex-shrink-0"
@@ -47,30 +58,44 @@
                   </div>
                 </div>
               </div> -->
-              </ng-container> 
-            </div>
+            </ng-container>
           </div>
         </div>
-       
       </div>
     </div>
-    <!-- Chat send area -->
-    <div class="mt-4">
-        <form  (ngSubmit)="sendMessage()">
-            <div class="flex gap-4">
-                <label for="search-dropdown" class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Your Email</label>
-                <div class="relative w-full">
-                    <input [(ngModel)]="message" name="message"  type="text" id="search-dropdown" class=" rounded-md block p-2.5 w-full z-20 text-sm text-gray-900 bg-gray-50 rounded-e-lg rounded-s-gray-100 rounded-s-2 border border-gray-300 focus:ring-0  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:border-blue-500" placeholder="Type here..." required>
-                    <!-- <button type="submit" class="absolute top-0 end-0 p-2.5 h-full text-sm font-medium text-white bg-gray-700 rounded-e-lg border">
-                        <i class="fa-solid fa-paper-plane"></i>
-                    </button> -->
-                </div>
-            </div>
-        </form>        
-    </div>
-</ng-container> 
+  </div>
+  <!-- Chat send area -->
+  <div class="mt-4">
+    <form (ngSubmit)="sendMessage()">
+      <div class="flex gap-4">
+        <label
+          for="search-dropdown"
+          class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white"
+          >Your Message</label
+        >
+        <div class="relative w-full">
+          <input
+            [(ngModel)]="message"
+            name="message"
+            type="text"
+            id="search-dropdown"
+            class="rounded-md block p-2.5 w-full z-20 text-sm text-gray-900 bg-gray-50 rounded-e-lg rounded-s-gray-100 rounded-s-2 border border-gray-300 focus:ring-0 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:border-blue-500"
+            placeholder="Type here..."
+            required
+          />
+        </div>
+      </div>
+    </form>
+  </div>
+</ng-container>
 <ng-template #noMessage>
-   <div class="flex items-center gap-2.5 flex-col">
-      <img src="/assets/images/icons/undraw_begin_chat_re_v0lw.svg" alt="" class="m-auto">
-   </div>
+  <div class="flex items-center gap-2.5 flex-col">
+    <img
+      src="/assets/images/icons/undraw_begin_chat_re_v0lw.svg"
+      alt=""
+      width="300"
+      height="300"
+      class="m-auto"
+    />
+  </div>
 </ng-template>

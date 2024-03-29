@@ -41,7 +41,7 @@ export const chatMessageRepositoryMongoDB = () => {
             ...chatMessageCommonAggregation(),
             {
                 $sort: {
-                    createdAt: -1,
+                    createdAt: 1,
                 },
             },
         ]);

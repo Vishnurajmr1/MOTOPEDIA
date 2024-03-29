@@ -25,11 +25,25 @@ export const reportRepositoryMongoDb = () => {
                 $match: { targetType: 'post' },
             },
             {
+                $group: {
+                    _id: '$targetId',
+                    count: { $sum: 1 },
+                },
+            },
+            {
                 $lookup: {
                     from: 'posts',
                     localField: 'targetId',
                     foreignField: '_id',
                     as: 'posts',
+                },
+            },
+            {
+                $project: {
+                    _id: 0,
+                    postId: '$_id',
+                    post: { $arrayElemAt: ['$posts', 0] },
+                    reportCount: '$count',
                 },
             },
         ]);

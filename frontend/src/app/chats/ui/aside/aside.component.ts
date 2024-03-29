@@ -6,7 +6,10 @@ import {
   Input,
   SimpleChanges,
 } from '@angular/core';
-import { ChatListItemInterface } from 'src/app/shared/types/chat.Interface';
+import {
+  ChatListItemInterface,
+  ChatMessageInterface,
+} from 'src/app/shared/types/chat.Interface';
 import { IUserDetails } from 'src/app/shared/types/user.Interface';
 
 @Component({
@@ -18,7 +21,9 @@ export class AsideComponent {
   @Output() chatSelected: EventEmitter<IUserDetails> =
     new EventEmitter<IUserDetails>();
   @Input() userChats!: ChatListItemInterface[];
+  lastMessage: ChatMessageInterface | undefined;
   protected participants!: IUserDetails[];
+  lastMessageUpdatedTime!: string;
   onChatClick(follow: IUserDetails | undefined): void {
     this.chatSelected.emit(follow);
   }
@@ -31,6 +36,8 @@ export class AsideComponent {
     if (this.userChats) {
       this.userChats.forEach((chat) => {
         this.participants.push(...(chat.participants || []));
+        this.lastMessage = chat.lastMessage;
+        this.lastMessageUpdatedTime = chat.updatedAt;
       });
     }
   }

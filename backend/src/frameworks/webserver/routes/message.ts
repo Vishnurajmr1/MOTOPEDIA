@@ -14,9 +14,7 @@ const messageRouter=()=>{
    const router=express.Router();
    const controller=messageController(cloudServiceInterface,s3Service,chatDbRepository,chatRepositoryMongoDB,chatMessageDbRepository,chatMessageRepositoryMongoDB)
    router.use(jwtAuthMiddleware);
-   router.route('/chatList')
-   router.route('/:chatId').get(controller.getAllMessages)
-   .post(upload.single('image'),controller.sendMessage)
+   router.route('/:chatId').get(controller.getAllMessages).post(upload.single('image'),controller.sendMessage)
    return router;
 }
 

@@ -29,5 +29,7 @@ const configKeys = {
     STRIPE_CURRENCY: process.env.STRIPE_CURRENCY as string,
     SUCCESS_URL: process.env.SUCCESS_URL as string,
     CANCEL_URL: process.env.CANCEL_URL as string,
+    WEBPUSH_PUBLIC_KEY: process.env.WEBPUSH_PUBLIC_KEY as string,
+    WEBPUSH_PRIVATE_KEY: process.env.WEBPUSH_PRIVATE_KEY as string,
 };
 export default configKeys;
