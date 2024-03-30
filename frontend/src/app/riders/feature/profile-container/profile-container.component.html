@@ -1,56 +1,97 @@
 <div class="bg-gray-100 m-2 rounded-lg">
-    <div class="container mx-auto py-8">
-        <div class="grid grid-cols-4 sm:grid-cols-12 gap-6 px-4">
-            <!-- User profile div -->
-            <div class="col-span-4 sm:col-span-12">
-                <div class="bg-gray-50 rounded-lg p-6">
-                    <div class=" bg-gray-50 drop-shadow-2xl rounded-md flex flex-row items-start p-6">
-                        <div class="flex items-center">
-                            <img src="https://randomuser.me/api/portraits/men/94.jpg" class="w-32 h-32 bg-gray-300 rounded-full mb-4 shrink-0">
-                        </div>
-                        <div class="ml-4">
-                            <h1 class="text-xl font-bold">{{profile?.firstName}} {{profile?.lastName}}</h1>
-                            <p class="text-gray-700">{{profile?.email}}</p>
-                            <div class="flex gap-4" (click)="showFollowersList()">
-                                <p class="text-gray-700 hover:cursor-pointer focus:cursor-pointer">Followers <br>{{followersLength}}</p>|
-                                <p class="text-gray-700 hover:cursor-pointer focus:cursor-pointer">Following <br>{{followingLength}}</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+  <div class="container mx-auto py-8">
+    <div class="grid grid-cols-4 sm:grid-cols-12 gap-6 px-4">
+      <!-- User profile div -->
+      <div class="col-span-4 sm:col-span-12">
+        <div class="bg-gray-50 rounded-lg p-6">
+          <div
+            class="bg-gray-50 drop-shadow-2xl rounded-md flex flex-row items-start p-6"
+          >
+            <div class="flex items-center">
+              <img
+                src="https://randomuser.me/api/portraits/men/94.jpg"
+                class="w-32 h-32 bg-gray-300 rounded-full mb-4 shrink-0"
+              />
             </div>
-            <!-- Sidebar div -->
-            <div class="col-span-4 sm:col-span-3" *ngIf="owner">
-              <app-aside
-              (editprofile)="showProfile()"
-              (postsClicked)="showPosts()"
-              (savedPostsClicked)="showSavedPosts()"
-              ></app-aside>
-            </div>
-        <!-- postConatiner div -->
-            <div class="col-span-4 sm:col-span-9">
-                <div class="bg-gray-50 drop-shadow-xl rounded-lg p-6" *ngIf="owner;else postList">
-                    <app-edit-profile *ngIf="displayContent==='Profile'" [userData]="profile"
-                    (userUpdateForm)="profileUpdateForm($event)"
-                    ></app-edit-profile>
-                    <app-list-post *ngIf="displayContent==='Posts'" [posts]="posts" (toggleModal)="showtoggleModal($event)"></app-list-post>
+            <div class="ml-4">
+              <div class="flex gap-2">
+                <h1 class="text-xl font-bold">
+                  {{ profile?.firstName }} {{ profile?.lastName }}
+                </h1>
+                <div *ngIf="profile?.premium" class="flex">
+                    <img src="/assets/images/icons/tick-circle-svgrepo-com.svg" alt="" width="20" height="20">
+                    <p>Verified</p>
                 </div>
+              </div>
+              <p class="text-gray-700">{{ profile?.email }}</p>
+              <div class="flex gap-4" (click)="showFollowersList()">
+                <p
+                  class="text-gray-700 hover:cursor-pointer focus:cursor-pointer"
+                >
+                  Followers <br />{{ followersLength }}
+                </p>
+                |
+                <p
+                  class="text-gray-700 hover:cursor-pointer focus:cursor-pointer"
+                >
+                  Following <br />{{ followingLength }}
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Sidebar div -->
+      <div class="col-span-4 sm:col-span-3" *ngIf="owner">
+        <app-aside
+          (editprofile)="showProfile()"
+          (postsClicked)="showPosts()"
+          (savedPostsClicked)="showSavedPosts()"
+        ></app-aside>
+      </div>
+      <!-- postConatiner div -->
+      <div class="col-span-4 sm:col-span-9">
+        <div
+          class="bg-gray-50 drop-shadow-xl rounded-lg p-6"
+          *ngIf="owner; else postList"
+        >
+          <app-edit-profile
+            *ngIf="displayContent === 'Profile'"
+            [userData]="profile"
+            (userUpdateForm)="profileUpdateForm($event)"
+          ></app-edit-profile>
+          <app-list-post
+            *ngIf="displayContent === 'Posts'"
+            [posts]="posts"
+            (toggleModal)="showtoggleModal($event)"
+          ></app-list-post>
+        </div>
 
-                <ng-template #postList>
-                    <div class="bg-gray-50 drop-shadow-xl rounded-lg p-6">
-                        <app-list-post [posts]="posts"></app-list-post>
-                    </div>
-                </ng-template>
-            </div>
+        <ng-template #postList>
+          <div class="bg-gray-50 drop-shadow-xl rounded-lg p-6">
+            <app-list-post [posts]="posts"></app-list-post>
+          </div>
+        </ng-template>
+      </div>
     </div>
-</div>
+  </div>
 
-<!-- Modal for edit and delete post -->
-<app-modal [modalOpen]="modalOpen" (close)="closeModal()">
+  <!-- Modal for edit and delete post -->
+  <app-modal [modalOpen]="modalOpen" (close)="closeModal()">
     <div class="p-4 md:p-5 text-center">
-        <app-edit-post [post]="post" [actionType]="actionType" (closeRequest)="closeModal()" (deletePost)="deletePostById($event)" (updatePost)="handleUpdatePost($event)" ></app-edit-post>
+      <app-edit-post
+        [post]="post"
+        [actionType]="actionType"
+        (closeRequest)="closeModal()"
+        (deletePost)="deletePostById($event)"
+        (updatePost)="handleUpdatePost($event)"
+      ></app-edit-post>
     </div>
-</app-modal>
+  </app-modal>
 
-
-<followers-list  [followersList]="followers" [followingList]="following" [modalOpen]="openFollowersModal"></followers-list>
+  <followers-list
+    [followersList]="followers"
+    [followingList]="following"
+    [modalOpen]="openFollowersModal"
+  ></followers-list>
+</div>

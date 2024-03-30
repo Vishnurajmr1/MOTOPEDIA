@@ -51,12 +51,19 @@ export const paymentService = () => {
     const createSessions = async (priceId: string) => {
         const sessions = await stripe.checkout.sessions.create({
             payment_method_types: ['card'],
-            line_items: [{price:priceId, quantity: 1}],
+            line_items: [{ price: priceId, quantity: 1 }],
+            currency: 'INR',
             mode: 'payment',
-            success_url: 'http://localhost:4200/checkout-success',
+            success_url: 'http://localhost:4200/pricing/checkout-success',
             cancel_url: 'http://localhost:4200/pricing',
+            customer_creation: 'always',
+            billing_address_collection: 'required',
         });
         return sessions.id;
+    };
+    const getSessionDetails = async (sessionId: string) => {
+        const session = await stripe.checkout.sessions.retrieve(sessionId);
+        return session;
     };
     const getConfig = () => configKeys.STRIPE_PUBLISHABLE_KEY;
 
@@ -68,6 +75,7 @@ export const paymentService = () => {
         stripeCustomer,
         getStripeProduct,
         createSessions,
+        getSessionDetails
     };
 };
 

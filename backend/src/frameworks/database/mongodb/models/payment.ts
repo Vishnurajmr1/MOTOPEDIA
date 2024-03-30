@@ -52,9 +52,21 @@ const paymentSchema = new Schema(
             type: Schema.Types.ObjectId,
             ref: 'Subscription',
         },
-        stripeId: {
+        paymentId: {
             type: String,
         },
+        amount:{
+            type:Number
+        },
+        currency:{
+            type:String
+        },
+        payment_method:{
+            type:String
+        },
+        status:{
+            type:String
+        }
     },
     { timestamps: true },
 );

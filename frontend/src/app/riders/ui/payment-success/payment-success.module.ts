@@ -1,10 +1,11 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { NotFoundComponent } from './not-found.component';
+import { PaymentSuccessComponent } from './payment-success.component';
 import { RouterModule } from '@angular/router';
 
 @NgModule({
-  declarations: [NotFoundComponent],
+  declarations: [PaymentSuccessComponent],
   imports: [CommonModule,RouterModule],
+  exports: [PaymentSuccessComponent],
 })
-export class NotFoundModule {}
+export class PaymentSuccessModule {}

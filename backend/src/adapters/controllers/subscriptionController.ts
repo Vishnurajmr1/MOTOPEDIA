@@ -9,14 +9,19 @@ import {
     getSubscriptionByIdUseCase,
     subscriptionListUseCase,
 } from '@src/application/use-cases/subscription/getSubscription';
+import { PaymentServiceInterface } from '@src/application/services/paymentServiceInterface';
+import { PaymentServiceImpl } from '@src/frameworks/services/paymentService';
 const subscriptionController = (
     subscriptionDbRepository: subscriptionDbInterface,
     subscriptionDbRepositoryImplementation: SubscriptionRepositoryMongoDb,
+    stripeServiceInterface: PaymentServiceInterface,
+    stripeServiceImpl: PaymentServiceImpl,
 ) => {
     const dbRepositorySubscription = subscriptionDbRepository(subscriptionDbRepositoryImplementation());
+    const stripeService = stripeServiceInterface(stripeServiceImpl());
     const createSubscription = asyncHandler(async (req: Request, res: Response) => {
         const subData: ISubscriptionInfo = req.body;
-        const subscription = await createSubscriptionUseCase(subData, dbRepositorySubscription);
+        const subscription = await createSubscriptionUseCase(subData,dbRepositorySubscription,stripeService);
         res.status(200).json({
             status: Status.SUCCESS,
             message: 'Successfully created Subscription',

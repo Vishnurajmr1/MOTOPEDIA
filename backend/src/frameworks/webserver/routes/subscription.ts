@@ -4,10 +4,17 @@ import { subscriptionRepositoryMongoDb } from '../../../frameworks/database/mong
 import express from 'express';
 import roleCheckMiddleware from '../middlewares/roleCheckMiddleware';
 import jwtAuthMiddleware from '../middlewares/userAuthMiddleware';
+import { paymentService } from '@src/frameworks/services/paymentService';
+import { paymentServiceInterface } from '@src/application/services/paymentServiceInterface';
 
 const subscriptionRouter = () => {
     const router = express.Router();
-    const controller = subscriptionController(subscriptionDbRepository, subscriptionRepositoryMongoDb);
+    const controller = subscriptionController(
+        subscriptionDbRepository,
+        subscriptionRepositoryMongoDb,
+        paymentServiceInterface,
+        paymentService,
+    );
     router
         .route('/')
         .post(roleCheckMiddleware('admin'), jwtAuthMiddleware, controller.createSubscription)

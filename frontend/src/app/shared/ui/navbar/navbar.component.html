@@ -55,7 +55,8 @@
         <!-- Dropdown menu -->
         <div *ngIf="isDropDownMenu" class="absolute top-9  right-7 z-50 my-4 text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-700 dark:divide-gray-600"  #userDropdown>
           <div class="px-4 py-3">
-            <span class="block text-sm text-gray-900 dark:text-white">{{(currentUser$|async)?.firstName}}</span>
+            <p class="block text-sm text-gray-900 dark:text-white">{{(currentUser$|async)?.firstName}}
+            </p>
             <span class="block text-sm  text-gray-500 truncate dark:text-gray-400">{{(currentUser$|async)?.email}}</span>
           </div>
           <ul class="py-2" aria-labelledby="user-menu-button" >
