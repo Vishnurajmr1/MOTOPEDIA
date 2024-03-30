@@ -22,6 +22,7 @@ interface IUser extends Document {
     savedPost: any[];
     online: boolean;
     premium: boolean;
+    paymentId: any;
 }
 
 const ProfileSchema = new Schema<ProfilePic>({
@@ -107,6 +108,10 @@ const UserSchema = new Schema<IUser>({
             },
         ],
         default: [],
+    },
+    paymentId: {
+        type: Schema.Types.ObjectId,
+        ref: 'Payment',
     },
     online: {
         type: Boolean,

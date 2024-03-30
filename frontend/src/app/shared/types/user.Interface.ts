@@ -37,6 +37,7 @@ export interface UserDoc {
   isBlocked?: boolean;
   userId?: string;
   isVerifiedEmail?: string;
+  premium?:boolean;
 }
 
 export interface userResponse {

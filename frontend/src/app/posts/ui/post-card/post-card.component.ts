@@ -61,5 +61,7 @@ export class PostCardComponent {
       this.comment.emit(postId);
     }
   }
-  
+  sharePost(post:IpostInterface){
+    console.log(post)
+  }
 }

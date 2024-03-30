@@ -7,6 +7,7 @@ export interface IPaymentInfo {
     status: string;
 }
 
+
 export interface ISubscriptionInfo {
     name: string;
     description: string;

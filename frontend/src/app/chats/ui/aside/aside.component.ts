@@ -25,6 +25,7 @@ export class AsideComponent {
   protected participants!: IUserDetails[];
   lastMessageUpdatedTime!: string;
   onChatClick(follow: IUserDetails | undefined): void {
+    console.log(follow)
     this.chatSelected.emit(follow);
   }
 

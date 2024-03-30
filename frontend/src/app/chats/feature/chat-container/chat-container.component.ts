@@ -81,6 +81,7 @@ export class ChatContainerComponent {
     console.log(this.getChatDetail);
     let chatId = this.getChatDetail._id;
     this.chatApiService.sendMessage(chatId, message).subscribe((res) => {
+      console.log(res);
       this.chatMessages.push(res.data);
       // this.getCurrentUserChat();
     });
