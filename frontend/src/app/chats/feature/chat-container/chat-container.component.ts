@@ -27,14 +27,13 @@ export class ChatContainerComponent {
   currentUser$!: Observable<ICurrentUser>;
   openCreateChatModal: boolean = false;
   protected users = [];
-  followers!: [IUserInfo];
-  getChats!: ChatListItemInterface[];
+  followers: IUserInfo[] = [];
+  getChats: ChatListItemInterface[] = [];
   getChatDetail!: ChatListItemInterface;
-  protected participant: any;
+  protected participantData: IUserDetails | undefined;
   messageRecieved = false;
-  selectedChat: any;
-  unreadMessagesCount: { [chatId: string]: number } = {};
-  protected chatMessages!: ChatMessageInterface[];
+  selectedChat: string = '';
+  protected chatMessages: ChatMessageInterface[] = [];
   protected currentUser!: ICurrentUser;
   private ngUnsubscribe$ = new Subject<void>();
   constructor(private store: Store<State>) {
@@ -45,29 +44,24 @@ export class ChatContainerComponent {
   }
   ngOnInit() {
     this.chatService.connect();
-    this.getCurrentUserChat();
     this.chatService.setCurrentUser(this.currentUser);
     this.userService.getConnection().subscribe((user) => {
       this.followers = user.connectionData[0].followers;
     });
+    this.getCurrentUserChat();
   }
-  onChatSelected(user: IUserDetails): void {
-    this.selectedChat = user;
-    console.log(user);
+  onChatSelected(value: { participant: IUserDetails; chatId: string }): void {
+    this.selectedChat = value.chatId;
+    console.log(value);
+    this.participantData = value.participant;
     this.messageRecieved = true;
-    this.chatService.setCurrentParticipant(user._id);
+    this.chatService.setCurrentParticipant(value.participant._id);
     this.chatService.addUser();
+    this.chatService.setChatRoom(this.selectedChat);
     this.chatApiService
-      .createUserChat(this.chatService.getParticipantId())
-      .subscribe((res) => {
-        this.getChatDetail = res.data;
-        this.chatService.setChatRoom(res.data._id);
-        this.chatApiService
-          .getChatMessages(res.data._id)
-          .subscribe((response) => {
-            this.chatMessages = response.data;
-          });
-        console.log(this.chatMessages);
+      .getChatMessages(this.selectedChat)
+      .subscribe((response) => {
+        this.chatMessages = response.data;
       });
   }
   CallCreateUserModal() {
@@ -78,17 +72,16 @@ export class ChatContainerComponent {
   }
   onMessageSend(message: string): void {
     console.log('Message received:', message);
-    console.log(this.getChatDetail);
-    let chatId = this.getChatDetail._id;
+    let chatId = this.selectedChat;
     this.chatApiService.sendMessage(chatId, message).subscribe((res) => {
       console.log(res);
       this.chatMessages.push(res.data);
-      // this.getCurrentUserChat();
+      this.updateLastChatMessage(chatId, res.data);
     });
-    this.chatService.getNewMessages().subscribe((res) => {
-      console.log(res);
-      this.chatMessages.push(res);
-    });
+    // this.chatService.getNewMessages().subscribe((res) => {
+    //   console.log(res);
+    //   this.chatMessages.push(res);
+    // });
   }
 
   isSendByUser(msg: any) {
@@ -106,28 +99,50 @@ export class ChatContainerComponent {
     });
     if (!existingChat) {
       this.chatApiService.createUserChat(follower._id).subscribe((response) => {
-        const participants = response.data.participants.filter(
-          (partcipant: any) =>
-            partcipant._id.toString() !== this.currentUser.userId
-        );
-        const updatedData: ChatListItemInterface = {
-          ...response.data,
-          participants: participants,
-        };
-        this.getChats = [updatedData, ...this.getChats];
+        this.updatedChatsList(response.data);
       });
+    } else {
+      console.log('Chat already exists');
     }
   }
   getCurrentUserChat() {
     this.chatApiService.getUserChats().subscribe((res) => {
-      this.getChats = res.data.map((chat: ChatListItemInterface) => ({
-        ...chat,
-        participants: chat.participants.filter(
-          (participant) =>
-            participant._id.toString() !== this.currentUser.userId?.toString()
-        ),
-      }));
+      console.log(res);
+      res.data.forEach((chat: ChatListItemInterface) =>
+        this.updatedChatsList(chat)
+      );
     });
+  }
+
+  private updatedChatsList(chat: ChatListItemInterface) {
+    const participants = chat.participants.filter(
+      (partcipant) => partcipant._id.toString() !== this.currentUser.userId
+    );
+    console.log(participants);
+    const updatedData: ChatListItemInterface = {
+      ...chat,
+      participants: participants,
+    };
+    this.getChats = [updatedData, ...this.getChats];
+    console.log('Here something wrong happens');
+    console.log(this.getChats);
+    console.log('Here is the end of that wrong thing');
+  }
+  private updateLastChatMessage(
+    chatToUpdateId: string,
+    message: ChatMessageInterface
+  ) {
+    const chatToUpdate = this.getChats.find(
+      (chat) => chat._id === chatToUpdateId
+    )!;
+    chatToUpdate.lastMessage = message;
+    chatToUpdate.updatedAt = message.updatedAt;
+    chatToUpdate.participants.filter((partcipant) => partcipant._id.toString() !== this.currentUser.userId)
+    this.getChats = [
+      chatToUpdate,
+      ...this.getChats.filter((chat) => chat._id !== chatToUpdateId),
+    ];
+    console.log(this.getChats);
   }
 
   ngOnDestroy() {

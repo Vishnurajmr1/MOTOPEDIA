@@ -18,28 +18,20 @@ import { IUserDetails } from 'src/app/shared/types/user.Interface';
   styleUrls: ['./aside.component.css'],
 })
 export class AsideComponent {
-  @Output() chatSelected: EventEmitter<IUserDetails> =
-    new EventEmitter<IUserDetails>();
-  @Input() userChats!: ChatListItemInterface[];
+  @Output() chatSelected: EventEmitter<{
+    participant: IUserDetails;
+    chatId: string;
+  }> = new EventEmitter<{ participant: IUserDetails; chatId: string }>();
+  @Input() allChats: ChatListItemInterface[] = [];
   lastMessage: ChatMessageInterface | undefined;
   protected participants!: IUserDetails[];
   lastMessageUpdatedTime!: string;
-  onChatClick(follow: IUserDetails | undefined): void {
-    console.log(follow)
-    this.chatSelected.emit(follow);
+  onChatClick(participant: IUserDetails, chatId: string): void {
+    console.log(participant, chatId);
+    this.chatSelected.emit({ participant, chatId });
   }
 
   ngOnChanges(): void {
-    this.extractParticipants();
-  }
-  private extractParticipants() {
-    this.participants = [];
-    if (this.userChats) {
-      this.userChats.forEach((chat) => {
-        this.participants.push(...(chat.participants || []));
-        this.lastMessage = chat.lastMessage;
-        this.lastMessageUpdatedTime = chat.updatedAt;
-      });
-    }
+    console.log(this.allChats);
   }
 }

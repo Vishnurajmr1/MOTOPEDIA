@@ -1,49 +1,54 @@
 <ng-container *ngIf="messageRecieved; else noMessage">
-  <div class="bg-gray-100 w-full flex items-center gap-3 p-4">
+  <div class="bg-gray-100 w-full flex items-center gap-3 p-4 shadow-sm">
     <img
       class="w-8 h-8 rounded-full"
       src="/assets/images/icons/profile_avatar.svg"
       alt="Jese image"
     />
-    <p class="text-black">{{ chatData.firstName |uppercase}}</p>
+    <p class="text-black">{{ participantData?.firstName | uppercase }}</p>
   </div>
   <div class="flex flex-col flex-auto" #scrollMe HideScrollbar>
     <div class="flex flex-col flex-auto flex-shrink-0 rounded-2xl h-full">
       <div class="flex flex-col h-full overflow-x-auto mb-4">
         <div class="flex flex-col h-full">
-          <div class="grid grid-cols-12 gap-y-2">
-            <ng-container *ngFor="let msg of getAllMsg">
-              <div
-                class="p-3 rounded-lg"
-                [ngClass]="
-                  isCurrentUserSender(msg)
-                    ? ['col-start-6', 'col-end-13']
-                    : ['col-start-1', 'col-end-8']
-                "
-              >
+          <ng-container *ngIf="CurrentChatMessages.length; else noChatMessages">
+            <div class="grid grid-cols-12 gap-y-2">
+              <ng-container *ngFor="let messages of CurrentChatMessages">
                 <div
-                  class="flex flex-row items-center"
-                  [ngClass]="{ 'flex-row-reverse': isCurrentUserSender(msg) }"
+                  class="p-3 rounded-lg"
+                  [ngClass]="
+                    isCurrentUserSender(messages)
+                      ? ['col-start-6', 'col-end-13']
+                      : ['col-start-1', 'col-end-8']
+                  "
                 >
-                  <!-- <div
+                  <div
+                    class="flex flex-row items-center"
+                    [ngClass]="{
+                      'flex-row-reverse': isCurrentUserSender(messages)
+                    }"
+                  >
+                    <!-- <div
                       class=" text-black flex items-center justify-center h-10 w-10 rounded-full bg-indigo-500 flex-shrink-0"
                     *ngIf="!isCurrentUserSender(msg)"
                       >
                       {{chatData.firstName.charAt(0)|uppercase}}
                     </div> -->
-                  <div
-                    class="relative text-sm bg-slate-100 flex gap-6 py-2 px-4 shadow rounded-xl"
-                    [ngClass]="{ 'bg-slate-300': isCurrentUserSender(msg) }"
-                  >
-                    <div>{{ msg.content }}</div>
-                    <p class="text-xs self-end">
-                      <!-- {{ msg.createdAt | date : "h:mm a" }} -->
-                      {{ msg.createdAt | timeAgo }}
-                    </p>
+                    <div
+                      class="relative text-sm bg-slate-100 flex gap-6 py-2 px-4 shadow rounded-xl"
+                      [ngClass]="{
+                        'bg-slate-300': isCurrentUserSender(messages)
+                      }"
+                    >
+                      <div>{{ messages.content }}</div>
+                      <sub class="text-xs self-end text-nowrap">
+                        <!-- {{ msg.createdAt | date : "h:mm a" }} -->
+                        {{ messages.createdAt | timeAgo }}
+                      </sub>
+                    </div>
                   </div>
                 </div>
-              </div>
-              <!-- <div class="col-start-6 col-end-13 p-3 rounded-lg" *ngIf="!isCurrentUserSender(msg)">
+                <!-- <div class="col-start-6 col-end-13 p-3 rounded-lg" *ngIf="!isCurrentUserSender(msg)">
                 <div class="flex items-center justify-start flex-row-reverse">
                   <div
                     class="flex items-center justify-center h-10 w-10 rounded-full bg-indigo-500 flex-shrink-0"
@@ -58,8 +63,9 @@
                   </div>
                 </div>
               </div> -->
-            </ng-container>
-          </div>
+              </ng-container>
+            </div>
+          </ng-container>
         </div>
       </div>
     </div>
@@ -75,7 +81,7 @@
         >
         <div class="relative w-full">
           <input
-            [(ngModel)]="message"
+            [(ngModel)]="messageTyped"
             name="message"
             type="text"
             id="search-dropdown"
@@ -91,11 +97,25 @@
 <ng-template #noMessage>
   <div class="flex items-center gap-2.5 flex-col">
     <img
-      src="/assets/images/icons/undraw_begin_chat_re_v0lw.svg"
+      src="/assets/images/icons/undraw_conversation_re_c26v.svg"
       alt=""
       width="300"
       height="300"
       class="m-auto"
     />
+    <h1>Please select a <strong>Converstion🙂</strong></h1>
+  </div>
+</ng-template>
+
+<ng-template #noChatMessages>
+  <div class="flex items-center gap-2.5 flex-col">
+    <img
+      src="/assets/images/icons/undraw_begin_chat_re_v0lw.svg"
+      alt=""
+      width="200"
+      height="200"
+      class="m-auto"
+    />
+    <h1>No Messages</h1>
   </div>
 </ng-template>

@@ -8,7 +8,7 @@
                         <app-search-user></app-search-user>
                         <button (click)="CallCreateUserModal()" class="bg-gray-500 text-white p-4 rounded-md hover:bg-gray-300 hover:text-black hover:font-medium disabled:bg-gray-50">+ Add Chat</button>
                     </div>
-                    <app-aside [userChats]="getChats"
+                    <app-aside [allChats]="getChats"
                     (chatSelected)="onChatSelected($event)" 
                     ></app-aside>
                     </div>
@@ -17,10 +17,10 @@
             <div class="col-span-6 sm:col-span-9">
             <div class="bg-gray-50 drop-shadow-xl rounded-lg p-4">
                 <app-chat-detail [messageRecieved]="messageRecieved"
-                [chatData]="selectedChat" 
+                [participantData]="participantData" 
                 (messageSend)="onMessageSend($event)"
                 [isSendByUser]="isSendByUser.bind(this)"
-                [getAllMsg]="chatMessages"
+                [CurrentChatMessages]="chatMessages"
                 ></app-chat-detail>
             </div>
         </div>
