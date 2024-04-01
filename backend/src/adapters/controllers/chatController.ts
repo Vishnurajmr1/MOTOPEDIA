@@ -5,11 +5,11 @@ import { createOneToOneChatUseCase } from '../../application/use-cases/chat/crea
 import { ChatDbRepositoryInterface } from '../../application/repositories/chatDBRepository';
 import { ChatRepositoryMongoDB } from '../../frameworks/database/mongodb/repositories/chatRepoMongoDb';
 import { CustomRequest } from '../../types/customRequest';
-import { usersDbInterface } from '@src/application/repositories/userDBRepository';
-import { UserRepositoryMongoDB } from '@src/frameworks/database/mongodb/repositories/UserRepoMongoDb';
-import { emitSocketEvent } from '@src/frameworks/websocket/socket';
-import { ChatEventEnum } from '@src/constants/chatEventEnum';
-import { getAllChatsUseCase } from '@src/application/use-cases/chat/getChat';
+import { usersDbInterface } from '../../application/repositories/userDBRepository';
+import { UserRepositoryMongoDB } from '../../frameworks/database/mongodb/repositories/UserRepoMongoDb';
+import { emitSocketEvent } from '../../frameworks/websocket/socket';
+import { ChatEventEnum } from '../../constants/chatEventEnum';
+import { getAllChatsUseCase } from '../../application/use-cases/chat/getChat';
 
 const chatController = (
     chatDbRepository: ChatDbRepositoryInterface,
@@ -19,14 +19,6 @@ const chatController = (
 ) => {
     const dbRepositoryChat = chatDbRepository(chatDbRepositoryImplemtation());
     const dbRepositoryUser = userDbRepository(userDbRepositoryImplementation());
-    // const createChat=asyncHandler(async(req:CustomRequest,res:Response)=>{
-    //     const result = await createOneToOneChatUseCase(senderId,receiverId,dbRepositoryChat,dbRepositoryUser);
-    //      res.status(200).json({
-    //        status:Status.SUCCESS,
-    //         message:'Chat created Successfully',
-    //         result
-    //     }
-    // })
     const createChat = asyncHandler(async (req: CustomRequest, res: Response) => {
         const senderId: string | undefined = req.user?.Id;
         const receiverId = req.params.receiverId;
@@ -54,19 +46,6 @@ const chatController = (
         });
     });
 
-    // const chatHistory=asyncHandler(async(req:CustomRequest,res:Response)=>{
-    //     const participantId=req.params.participantId;
-    //     const userId=req.user?.Id as string;
-    //      const result = await getChatHistoryUseCase(userId,participantId,dbRepositoryChat,dbRepositoryUser);
-    //      if(result){
-    //         const {chatHistory:messages,participant}=result;
-    //         res.status(200).json({
-    //             status:Status.SUCCESS,
-    //             message:'Chat History retrieve successfully',
-    //             history:{messages,participant}
-    //         })
-    //      }
-    // })
     return{
         createChat,
         getAllChats

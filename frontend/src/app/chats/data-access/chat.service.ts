@@ -40,12 +40,10 @@ export class ChatService {
     });
     this.socket.on(ISocketEvents.CONNECTED_EVENT, () => this.connect());
     this.socket.on(ISocketEvents.DISCONNECT_EVENT, () => this.disconnect());
-    this.socket.on(ISocketEvents.MESSAGE_RECEIVED_EVENT, (data: any) =>
-    {
-      console.log(data)
-      this.setMessages.next(data)});
+    this.socket.on(ISocketEvents.MESSAGE_RECEIVED_EVENT, (data) => {
+      this.setMessages.next(data);
+    });
   }
-
   connect() {
     this.socket.connect();
   }
@@ -71,12 +69,12 @@ export class ChatService {
   getChatHistory(): Observable<any> {
     return this.chatHistory.asObservable();
   }
-  getNewMessages() {
+  getNewMessage() {
     return this.setMessages.asObservable();
   }
-  updatedMessage(message:ChatMessageInterface){
-    console.log(message)
-    this.setMessages.next(message)
+  updatedMessage(message: ChatMessageInterface) {
+    console.log(message);
+    this.setMessages.next(message);
   }
   setChatHistory(data: any) {
     this.chatHistory.next(data);
@@ -104,8 +102,8 @@ export class ChatService {
   setChatRoom(chatId: string) {
     this.socket.emit(ISocketEvents.JOIN_CHAT_EVENT, chatId);
   }
-  UnreadMessages(){
-    return this.setUnreadMessages.asObservable()
+  UnreadMessages() {
+    return this.setUnreadMessages.asObservable();
   }
   getParticipants() {
     this.socket.emit(ISocketEvents.NEW_CHAT_EVENT);

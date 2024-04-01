@@ -8,6 +8,7 @@ import {
   ViewChild,
 } from '@angular/core';
 import { ChatMessageInterface } from 'src/app/shared/types/chat.Interface';
+import { IUserDetails } from 'src/app/shared/types/user.Interface';
 
 @Component({
   selector: 'app-chat-detail',
@@ -17,21 +18,21 @@ import { ChatMessageInterface } from 'src/app/shared/types/chat.Interface';
 })
 export class ChatDetailComponent {
   @Input() messageRecieved!: boolean;
-  @Input() chatData: any;
+  @Input() participantData:IUserDetails|undefined;
   @Input()
-  getAllMsg!: ChatMessageInterface[];
+  CurrentChatMessages: ChatMessageInterface[]=[];
   @Output() messageSend: EventEmitter<string> = new EventEmitter<string>();
   @Input()
   isSendByUser!: Function;
-  message: string = '';
+  messageTyped: string = '';
   chatHistory: any;
   isCurrentUserSender(msg: any): boolean {
     return this.isSendByUser(msg);
   }
   sendMessage(): void {
-    if (this.message.trim()) {
-      this.messageSend.emit(this.message);
-      this.message = '';
+    if (this.messageTyped.trim()) {
+      this.messageSend.emit(this.messageTyped);
+      this.messageTyped = '';
     }
   }
 }

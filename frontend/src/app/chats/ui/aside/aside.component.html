@@ -1,14 +1,14 @@
-<div class="bg-gray-50 drop-shadow-xl rounded-lg" *ngIf="participants.length">
+<div class="bg-gray-50 drop-shadow-xl rounded-lg">
   <div
     class="flex flex-col gap-4 drop-shadow-xl p-4 max-h-screen overflow-y-auto"
   >
-    <ng-container *ngFor="let participant of participants">
+    <ng-container *ngFor="let chat of allChats">
       <div
-        class="flex flex-col leading-1.5 p-2 border-gray-200 bg-gray-100 rounded-e-xl rounded-es-xl dark:bg-gray-700 cursor-pointer hover:bg-gray-200"
-        (click)="onChatClick(participant)"
+        class="flex flex-col p-2 border-gray-200 bg-gray-100 rounded-e-xl rounded-es-xl dark:bg-gray-700 cursor-pointer hover:bg-gray-200"
+        (click)="onChatClick(chat.participants[0], chat._id)"
       >
         <div class="flex gap-4 justify-around items-center">
-          <div class="relative">
+          <div class="relative flex-shrink-0">
             <img
               class="w-10 h-10 p-1 rounded-full"
               src="/assets/images/icons/profile_avatar.svg"
@@ -16,20 +16,27 @@
             />
             <!-- <span class="top-0 start-7 absolute w-3.5 h-3.5 bg-green-500 border-2 border-white dark:border-gray-800 rounded-full"></span> -->
           </div>
-          <div>
+          <div class="flex flex-col flex-grow">
             <p class="text-sm text-gray-900 dark:text-white font-semibold">
-              {{ participant.firstName | uppercase }}
+              {{ chat.participants[0].firstName | uppercase }}
             </p>
-            <small *ngIf="lastMessage">{{ lastMessage.content }}</small><br>
+            <small *ngIf="chat.lastMessage" class="text-gray-600">{{
+              chat.lastMessage.content|slice:0:10
+            }}{{chat.lastMessage.content.length>10?'...':''}}</small
+            ><br />
+          </div>
+          <div class="flex flex-col items-end text-right">
+            <small class="text-gray-600 dark:text-gray-400">{{
+              chat.updatedAt | timeAgo
+            }}</small>
+            <div
+              *ngIf="lastMessage"
+              class="w-5 h-5 rounded-full bg-green-500 flex justify-center items-center p-2"
+            >
+              <p class="text-sm font-bold text-black">0</p>
+            </div>
+          </div>
         </div>
-        <div class="flex flex-col items-center">
-            <small>{{ lastMessageUpdatedTime | timeAgo }}</small>
-          <div 
-            class="w-5 h-5 rounded-full bg-green-500 flex justify-center items-center p-2">
-          <p class="text-sm font-bold text-black">0</p>
-        </div>
-    </div>
-    </div>
       </div>
     </ng-container>
   </div>
