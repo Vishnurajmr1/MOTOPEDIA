@@ -19,6 +19,10 @@ export const ChatEventEnum = Object.freeze({
     STOP_TYPING_EVENT: 'stopTyping',
     // ? when participant starts typing
     TYPING_EVENT: 'typing',
+    //?when user enable notification
+    JOIN_NOTIFICATION_EVENT:'joinNotifications',
+    //?When receive notification
+    NOTIFICATION_RECEIVED_EVENT:'sendNotifications'
 });
 
 export const AvailableChatEvents = Object.values(ChatEventEnum);

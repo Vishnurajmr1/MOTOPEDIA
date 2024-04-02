@@ -8,4 +8,6 @@ export enum ISocketEvents {
   MESSAGE_RECEIVED_EVENT = 'messageReceived',
   LEAVE_CHAT_EVENT = 'leaveChat',
   UPDATE_GROUP_NAME_EVENT = 'updateGroupName',
+  JOIN_NOTIFICATION_EVENT = 'joinNotifications',
+  NOTIFICATION_RECEIVED_EVENT = 'sendNotifications',
 }

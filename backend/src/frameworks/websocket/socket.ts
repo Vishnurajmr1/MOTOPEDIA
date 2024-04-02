@@ -36,12 +36,10 @@ type userArray = {
     socketId: string;
 };
 let users: userArray[] = [];
-// const controller=chatController(chatDbRepository,chatRepositoryMongoDB,userDbRepository,userRepositoryMongoDB);
 
 const addUser = (userId: string, socketId: string) => {
     // eslint-disable-next-line no-unused-expressions
-    !users.some((user) => user.userId === userId) &&
-        users.push({ userId, socketId });
+    !users.some((user) => user.userId === userId) && users.push({ userId, socketId });
 };
 
 const removeUser = (socketId: string) => {
@@ -75,9 +73,11 @@ const onSocketConnection = (io: Server, socket: Socket) => {
         socket.on('addUser', async (userId: string) => {
             console.log(userId, 'user added');
             addUser(userId, socket.id);
-            socket.join(userId.toString());
+            if (userId !== null) {
+                socket.join(userId.toString());
+                console.log('User Connected 🗼 .userId', userId);
+            }
             // socket.join(receiverId.toString());
-            console.log('User Connected 🗼 .userId', userId);
         });
         socket.emit(ChatEventEnum.CONNECTED_EVENT);
         mountJoinChatEvent(socket);

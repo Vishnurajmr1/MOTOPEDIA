@@ -1,5 +1,5 @@
 import { Component, Input, SimpleChanges, inject } from '@angular/core';
-import { ChatService } from '../../data-access/chat.service';
+import { SocketService } from '../../../shared/data-access/global/socket.service';
 import { Store } from '@ngrx/store';
 import { Observable, Subject, takeUntil } from 'rxjs';
 import {
@@ -21,7 +21,7 @@ import {
   styleUrls: ['./chat-container.component.css'],
 })
 export class ChatContainerComponent {
-  private chatService = inject(ChatService);
+  private chatService = inject(SocketService);
   private chatApiService = inject(ChatApiService);
   private userService = inject(UserService);
   currentUser$!: Observable<ICurrentUser>;
@@ -45,24 +45,35 @@ export class ChatContainerComponent {
     this.onMessageRecieved();
   }
   ngOnInit() {
-    this.chatService.connect();
-    this.chatService.setCurrentUser(this.currentUser);
-    this.chatService.addUser();
+    // this.chatService.connect();
+    // this.chatService.setCurrentUser(this.currentUser);
+    // this.chatService.addUser();
     this.userService.getConnection().subscribe((user) => {
       this.followers = user.connectionData[0].followers;
     });
+    const storedUnreadMessages = localStorage.getItem('unreadMessages');
+    if (storedUnreadMessages) {
+      this.unreadMessages = JSON.parse(storedUnreadMessages);
+    }
     this.getCurrentUserChat();
   }
   onChatSelected(value: { participant: IUserDetails; chatId: string }): void {
     this.selectedChat = value.chatId;
-    console.log(value);
     this.participantData = value.participant;
     this.messageRecieved = true;
     this.chatService.setCurrentParticipant(value.participant._id);
     this.chatService.setChatRoom(this.selectedChat);
-    this.unreadMessages = this.unreadMessages.filter(
-      (msg) => msg.chat !== this.selectedChat
-    );
+    const storedUnreadMessages = localStorage.getItem('unreadMessages');
+    if (storedUnreadMessages) {
+      this.unreadMessages = JSON.parse(storedUnreadMessages);
+      this.unreadMessages = this.unreadMessages.filter(
+        (msg) => msg.chat !== this.selectedChat
+      );
+      localStorage.setItem(
+        'unreadMessages',
+        JSON.stringify(this.unreadMessages)
+      );
+    }
     this.chatApiService
       .getChatMessages(this.selectedChat)
       .subscribe((response) => {
@@ -76,7 +87,6 @@ export class ChatContainerComponent {
     this.openCreateChatModal = false;
   }
   onMessageSend(message: string): void {
-    console.log('Message received:', message);
     let chatId = this.selectedChat;
     this.chatApiService.sendMessage(chatId, message).subscribe((res) => {
       console.log(res);
@@ -147,16 +157,18 @@ export class ChatContainerComponent {
 
   onMessageRecieved() {
     this.chatService.getNewMessage().subscribe((message) => {
-      console.log('new socket event emmited here ', message);
       if (message.chat !== this.selectedChat) {
-        console.log('hello how are yououuo');
         this.unreadMessages.push(message);
+        localStorage.setItem(
+          'unreadMessages',
+          JSON.stringify(this.unreadMessages)
+        );
       }
       this.updateLastChatMessage(message.chat || ' ', message);
       console.log(this.unreadMessages);
     });
   }
   ngOnDestroy() {
-    this.chatService.disconnect();
+    // this.chatService.disconnect();
   }
 }
