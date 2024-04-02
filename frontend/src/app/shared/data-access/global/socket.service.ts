@@ -1,17 +1,16 @@
 import { Injectable, inject } from '@angular/core';
 import { Socket, io } from 'socket.io-client';
 import { BehaviorSubject, Observable, Subject, sample } from 'rxjs';
-import { UserService } from '../../../app/riders/data-access/user.service';
-import { ISocketEvents } from 'src/app/shared/types/socket.Interface';
+import { ISocketEvents } from '../../types/socket.Interface';
 import {
   ChatListItemInterface,
   ChatMessageInterface,
 } from 'src/app/shared/types/chat.Interface';
-import { ICurrentUser } from 'src/app/auth/data-access/state/auth.reducer';
+import { ICurrentUser } from '../../../auth/data-access/state/auth.reducer';
 @Injectable({
   providedIn: 'root',
 })
-export class ChatService {
+export class SocketService {
   private socket: Socket;
   private participantId = new BehaviorSubject<string>('');
   private currentUser = new BehaviorSubject<ICurrentUser | null>(null);
@@ -40,7 +39,6 @@ export class ChatService {
     });
     this.socket.on(ISocketEvents.CONNECTED_EVENT, () => this.connect());
     this.socket.on(ISocketEvents.MESSAGE_RECEIVED_EVENT, (data) => {
-      console.log(data)
       this.setMessages.next(data);
     });
     this.socket.on(ISocketEvents.DISCONNECT_EVENT, () => this.disconnect());
@@ -49,11 +47,7 @@ export class ChatService {
     this.socket.connect();
   }
   addUser() {
-    this.socket.emit(
-      'addUser',
-      this.getCurrentUserId(),
-      // this.participantId.getValue()
-    );
+    this.socket.emit('addUser', this.getCurrentUserId());
   }
   setCurrentParticipant(participantId: string) {
     this.participantId.next(participantId);
