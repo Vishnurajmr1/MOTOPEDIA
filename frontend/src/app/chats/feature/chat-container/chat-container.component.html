@@ -10,6 +10,7 @@
                     </div>
                     <app-aside [allChats]="getChats"
                     (chatSelected)="onChatSelected($event)" 
+                    [unreadMessages]="unreadMessages"
                     ></app-aside>
                     </div>
             </div>

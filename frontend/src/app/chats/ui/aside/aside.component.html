@@ -20,9 +20,9 @@
             <p class="text-sm text-gray-900 dark:text-white font-semibold">
               {{ chat.participants[0].firstName | uppercase }}
             </p>
-            <small *ngIf="chat.lastMessage" class="text-gray-600">{{
-              chat.lastMessage.content|slice:0:10
-            }}{{chat.lastMessage.content.length>10?'...':''}}</small
+            <small *ngIf="chat.lastMessage" class="text-gray-600"
+              >{{ chat.lastMessage.content | slice : 0 : 10
+              }}{{ chat.lastMessage.content.length > 10 ? "..." : "" }}</small
             ><br />
           </div>
           <div class="flex flex-col items-end text-right">
@@ -30,10 +30,12 @@
               chat.updatedAt | timeAgo
             }}</small>
             <div
-              *ngIf="lastMessage"
+              *ngIf="getUnreadCount(chat._id) > 0"
               class="w-5 h-5 rounded-full bg-green-500 flex justify-center items-center p-2"
             >
-              <p class="text-sm font-bold text-black">0</p>
+              <p class="text-sm font-bold text-black">
+                {{ getUnreadCount(chat._id) }}
+              </p>
             </div>
           </div>
         </div>

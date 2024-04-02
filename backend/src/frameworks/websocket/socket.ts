@@ -33,15 +33,15 @@ export const setupSocketIO = async (app: Express, server: http.Server) => {
 
 type userArray = {
     userId: string;
-    receiverId:string;
     socketId: string;
 };
 let users: userArray[] = [];
 // const controller=chatController(chatDbRepository,chatRepositoryMongoDB,userDbRepository,userRepositoryMongoDB);
 
-const addUser = (userId: string,receiverId:string, socketId: string) => {
+const addUser = (userId: string, socketId: string) => {
     // eslint-disable-next-line no-unused-expressions
-    !users.some((user) => user.userId === userId||user.receiverId===receiverId) && users.push({ userId,receiverId, socketId });
+    !users.some((user) => user.userId === userId) &&
+        users.push({ userId, socketId });
 };
 
 const removeUser = (socketId: string) => {
@@ -72,10 +72,11 @@ const mountParticipantStopTypingEvent = (socket: Socket) => {
 const onSocketConnection = (io: Server, socket: Socket) => {
     console.log('User connected', socket.id);
     try {
-        socket.on('addUser', async (userId:string,receiverId:string) => {
-            console.log(userId,receiverId, 'user added');
-            addUser(userId,receiverId,socket.id);
+        socket.on('addUser', async (userId: string) => {
+            console.log(userId, 'user added');
+            addUser(userId, socket.id);
             socket.join(userId.toString());
+            // socket.join(receiverId.toString());
             console.log('User Connected 🗼 .userId', userId);
         });
         socket.emit(ChatEventEnum.CONNECTED_EVENT);

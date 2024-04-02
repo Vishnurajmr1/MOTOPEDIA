@@ -23,12 +23,17 @@ export class AsideComponent {
     chatId: string;
   }> = new EventEmitter<{ participant: IUserDetails; chatId: string }>();
   @Input() allChats: ChatListItemInterface[] = [];
+  @Input() unreadMessages: ChatMessageInterface[] = [];
   lastMessage: ChatMessageInterface | undefined;
   protected participants!: IUserDetails[];
   lastMessageUpdatedTime!: string;
   onChatClick(participant: IUserDetails, chatId: string): void {
     console.log(participant, chatId);
     this.chatSelected.emit({ participant, chatId });
+  }
+  getUnreadCount(chatId: string): number {
+    return this.unreadMessages.filter((message) => message.chat === chatId)
+      .length;
   }
 
   ngOnChanges(): void {

@@ -39,11 +39,11 @@ export class TimeAgoPipe implements PipeTransform {
     interval = Math.floor(seconds / 60);
     if (interval >= 1) {
       return interval === 1
-        ? interval + ' minute ago'
-        : interval + ' minutes ago';
+        ? interval + ' min ago'
+        : interval + ' min ago';
     }
 
-    return 'just now';
+    return 'now';
   }
   private padZero(num: number): string {
     return num < 10 ? '0' + num : num.toString();

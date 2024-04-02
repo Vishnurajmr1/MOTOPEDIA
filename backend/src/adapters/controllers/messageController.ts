@@ -27,10 +27,10 @@ const messageController = (
     const cloudService = cloudServiceInterface(cloudServiceImpl());
 
     const sendMessage = asyncHandler(async (req: CustomRequest, res: Response) => {
-        console.log("hello")
-        const chatId  = req.params.chatId;
+        console.log('hello');
+        const chatId = req.params.chatId;
         const content: IaddMessage = req.body;
-        const file: Express.Multer.File= req.file as Express.Multer.File;
+        const file: Express.Multer.File = req.file as Express.Multer.File;
         const userId = req.user?.Id;
         const { receivedMessage, chat } = await createChatMessageUseCase(
             chatId,
@@ -41,9 +41,9 @@ const messageController = (
             dbRepositoryChatMessage,
             dbRepositoryChat,
         );
-        chat?.participants.forEach((participantObjectId) => {
+        chat!.participants.forEach((participantObjectId) => {
             if (participantObjectId.toString() === userId) return;
-            emitSocketEvent(req,participantObjectId.toString(), ChatEventEnum.MESSAGE_RECEIVED_EVENT, receivedMessage);
+            emitSocketEvent(req, participantObjectId.toString(), ChatEventEnum.MESSAGE_RECEIVED_EVENT, receivedMessage);
         });
         res.json({
             status: Status.SUCCESS,
