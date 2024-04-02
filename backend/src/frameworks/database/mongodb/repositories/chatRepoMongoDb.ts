@@ -175,7 +175,7 @@ export const chatRepositoryMongoDB = () => {
             },
             {
                 $sort:{
-                    updatedAt:-1
+                    updatedAt:1
                 }
             },
             ...chatCommonAggregation()

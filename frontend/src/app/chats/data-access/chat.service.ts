@@ -39,10 +39,11 @@ export class ChatService {
       autoConnect: false,
     });
     this.socket.on(ISocketEvents.CONNECTED_EVENT, () => this.connect());
-    this.socket.on(ISocketEvents.DISCONNECT_EVENT, () => this.disconnect());
     this.socket.on(ISocketEvents.MESSAGE_RECEIVED_EVENT, (data) => {
+      console.log(data)
       this.setMessages.next(data);
     });
+    this.socket.on(ISocketEvents.DISCONNECT_EVENT, () => this.disconnect());
   }
   connect() {
     this.socket.connect();
@@ -51,7 +52,7 @@ export class ChatService {
     this.socket.emit(
       'addUser',
       this.getCurrentUserId(),
-      this.participantId.getValue()
+      // this.participantId.getValue()
     );
   }
   setCurrentParticipant(participantId: string) {

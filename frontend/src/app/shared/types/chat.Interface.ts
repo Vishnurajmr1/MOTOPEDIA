@@ -9,6 +9,7 @@ export interface ChatListItemInterface {
   participants: IUserDetails[];
   updatedAt: string;
   _id: string;
+  unreadCount?:number;
 }
 
 export interface ChatMessageInterface {

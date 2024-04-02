@@ -1,4 +1,4 @@
-import { Component, Input, inject } from '@angular/core';
+import { Component, Input, SimpleChanges, inject } from '@angular/core';
 import { ChatService } from '../../data-access/chat.service';
 import { Store } from '@ngrx/store';
 import { Observable, Subject, takeUntil } from 'rxjs';
@@ -34,6 +34,7 @@ export class ChatContainerComponent {
   messageRecieved = false;
   selectedChat: string = '';
   protected chatMessages: ChatMessageInterface[] = [];
+  protected unreadMessages: ChatMessageInterface[] = [];
   protected currentUser!: ICurrentUser;
   private ngUnsubscribe$ = new Subject<void>();
   constructor(private store: Store<State>) {
@@ -41,10 +42,12 @@ export class ChatContainerComponent {
     this.currentUser$.pipe(takeUntil(this.ngUnsubscribe$)).subscribe((res) => {
       this.currentUser = res;
     });
+    this.onMessageRecieved();
   }
   ngOnInit() {
     this.chatService.connect();
     this.chatService.setCurrentUser(this.currentUser);
+    this.chatService.addUser();
     this.userService.getConnection().subscribe((user) => {
       this.followers = user.connectionData[0].followers;
     });
@@ -56,8 +59,10 @@ export class ChatContainerComponent {
     this.participantData = value.participant;
     this.messageRecieved = true;
     this.chatService.setCurrentParticipant(value.participant._id);
-    this.chatService.addUser();
     this.chatService.setChatRoom(this.selectedChat);
+    this.unreadMessages = this.unreadMessages.filter(
+      (msg) => msg.chat !== this.selectedChat
+    );
     this.chatApiService
       .getChatMessages(this.selectedChat)
       .subscribe((response) => {
@@ -75,13 +80,8 @@ export class ChatContainerComponent {
     let chatId = this.selectedChat;
     this.chatApiService.sendMessage(chatId, message).subscribe((res) => {
       console.log(res);
-      this.chatMessages.push(res.data);
-      this.updateLastChatMessage(chatId, res.data);
+      this.updateLastChatMessage(res.data.chat, res.data);
     });
-    // this.chatService.getNewMessages().subscribe((res) => {
-    //   console.log(res);
-    //   this.chatMessages.push(res);
-    // });
   }
 
   isSendByUser(msg: any) {
@@ -118,33 +118,44 @@ export class ChatContainerComponent {
     const participants = chat.participants.filter(
       (partcipant) => partcipant._id.toString() !== this.currentUser.userId
     );
-    console.log(participants);
     const updatedData: ChatListItemInterface = {
       ...chat,
       participants: participants,
     };
     this.getChats = [updatedData, ...this.getChats];
-    console.log('Here something wrong happens');
-    console.log(this.getChats);
-    console.log('Here is the end of that wrong thing');
   }
   private updateLastChatMessage(
     chatToUpdateId: string,
     message: ChatMessageInterface
   ) {
-    const chatToUpdate = this.getChats.find(
+    const chatToUpdateIndex = this.getChats.findIndex(
       (chat) => chat._id === chatToUpdateId
     )!;
-    chatToUpdate.lastMessage = message;
-    chatToUpdate.updatedAt = message.updatedAt;
-    chatToUpdate.participants.filter((partcipant) => partcipant._id.toString() !== this.currentUser.userId)
-    this.getChats = [
-      chatToUpdate,
-      ...this.getChats.filter((chat) => chat._id !== chatToUpdateId),
-    ];
-    console.log(this.getChats);
+    if (chatToUpdateIndex !== -1) {
+      const chatToUpdate = this.getChats[chatToUpdateIndex];
+      chatToUpdate.lastMessage = message;
+      chatToUpdate.updatedAt = message.updatedAt;
+      this.getChats = [
+        chatToUpdate,
+        ...this.getChats.filter((chat) => chat._id !== chatToUpdateId),
+      ];
+      if (this.selectedChat == chatToUpdateId) {
+        this.chatMessages.push(message);
+      }
+    }
   }
 
+  onMessageRecieved() {
+    this.chatService.getNewMessage().subscribe((message) => {
+      console.log('new socket event emmited here ', message);
+      if (message.chat !== this.selectedChat) {
+        console.log('hello how are yououuo');
+        this.unreadMessages.push(message);
+      }
+      this.updateLastChatMessage(message.chat || ' ', message);
+      console.log(this.unreadMessages);
+    });
+  }
   ngOnDestroy() {
     this.chatService.disconnect();
   }
