@@ -4,8 +4,8 @@ import { subscriptionRepositoryMongoDb } from '../../../frameworks/database/mong
 import express from 'express';
 import roleCheckMiddleware from '../middlewares/roleCheckMiddleware';
 import jwtAuthMiddleware from '../middlewares/userAuthMiddleware';
-import { paymentService } from '@src/frameworks/services/paymentService';
-import { paymentServiceInterface } from '@src/application/services/paymentServiceInterface';
+import { paymentService } from '../../../frameworks/services/paymentService';
+import { paymentServiceInterface } from '../../../application/services/paymentServiceInterface';
 
 const subscriptionRouter = () => {
     const router = express.Router();

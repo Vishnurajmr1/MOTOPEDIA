@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { NavbarComponent } from './navbar.component';
 import {RouterModule} from '@angular/router'
 import { SearchContainerModule } from 'src/app/riders/feature/search-container/search-container.module';
+import { NotificationModule } from '../notification/notification.module';
 
 
 
@@ -13,7 +14,8 @@ import { SearchContainerModule } from 'src/app/riders/feature/search-container/s
   imports: [
     CommonModule,
     RouterModule,
-    SearchContainerModule
+    SearchContainerModule,
+    NotificationModule
   ],
   exports:[
     NavbarComponent

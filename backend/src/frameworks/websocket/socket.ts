@@ -14,6 +14,7 @@ import { ChatEventEnum } from '../../constants/chatEventEnum';
 import { AuthService } from '../services/authService';
 import { customSocket } from '@src/types/socket.Interfact';
 import { CustomRequest } from '@src/types/customRequest';
+import { IAddNotification } from '@src/types/notification.interface';
 
 export const setupSocketIO = async (app: Express, server: http.Server) => {
     const io = new Server(server, {
@@ -66,6 +67,11 @@ const mountParticipantStopTypingEvent = (socket: Socket) => {
         socket.in(chatId).emit(ChatEventEnum.STOP_TYPING_EVENT, chatId);
     });
 };
+const receivenewNotificationEvent = (socket: Socket) => {
+    socket.on(ChatEventEnum.NOTIFICATION_RECEIVED_EVENT, (notification: IAddNotification) => {
+        socket.in(notification.recipient).emit(ChatEventEnum.NOTIFICATION_RECEIVED_EVENT, notification);
+    });
+};
 
 const onSocketConnection = (io: Server, socket: Socket) => {
     console.log('User connected', socket.id);
@@ -77,12 +83,12 @@ const onSocketConnection = (io: Server, socket: Socket) => {
                 socket.join(userId.toString());
                 console.log('User Connected 🗼 .userId', userId);
             }
-            // socket.join(receiverId.toString());
         });
         socket.emit(ChatEventEnum.CONNECTED_EVENT);
         mountJoinChatEvent(socket);
         mountTypingChatEvent(socket);
         mountParticipantStopTypingEvent(socket);
+        receivenewNotificationEvent(socket);
         console.log('Successfull');
         socket.on(ChatEventEnum.DISCONNECT_EVENT, () => {
             console.log(`User has disconnected🚫.userId`, socket.id);
@@ -101,3 +107,7 @@ const onSocketConnection = (io: Server, socket: Socket) => {
 export const emitSocketEvent = (req: CustomRequest, roomId: string, event: any, payload: any) => {
     req.app.get('io').in(roomId).emit(event, payload);
 };
+
+// export const emitSocketToEvent = (req: CustomRequest, userId: string, event: any, payload: any) => {
+//     req.app.get('io').to(userId).emit(event, payload);
+// };

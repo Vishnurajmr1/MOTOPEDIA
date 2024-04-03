@@ -47,3 +47,9 @@ export enum SubscriptionInterval{
     DAY='DAY',
     WEEK='WEEK'
 }
+
+export enum NotificationActionType{
+    LIKE='like_post',
+    COMMENT='post_comment',
+    NEWPOST='new_post'
+}

@@ -5,8 +5,9 @@ import { ISocketEvents } from '../../types/socket.Interface';
 import {
   ChatListItemInterface,
   ChatMessageInterface,
-} from 'src/app/shared/types/chat.Interface';
+} from '../../../../app/shared/types/chat.Interface';
 import { ICurrentUser } from '../../../auth/data-access/state/auth.reducer';
+import { NotificationInterface } from '../../types/notification.interface';
 @Injectable({
   providedIn: 'root',
 })
@@ -30,6 +31,7 @@ export class SocketService {
     File[]
   >([]);
   private chatHistory = new BehaviorSubject<any>([]);
+  private getNotification = new Subject<NotificationInterface>();
   constructor() {
     this.socket = io('http://localhost:3000', {
       path: '/api/chat/socket.io',
@@ -40,6 +42,10 @@ export class SocketService {
     this.socket.on(ISocketEvents.CONNECTED_EVENT, () => this.connect());
     this.socket.on(ISocketEvents.MESSAGE_RECEIVED_EVENT, (data) => {
       this.setMessages.next(data);
+    });
+    this.socket.on(ISocketEvents.NOTIFICATION_RECEIVED_EVENT, (data) => {
+      console.log(data);
+      this.getNotification.next(data);
     });
     this.socket.on(ISocketEvents.DISCONNECT_EVENT, () => this.disconnect());
   }
@@ -73,6 +79,9 @@ export class SocketService {
   }
   setChatHistory(data: any) {
     this.chatHistory.next(data);
+  }
+  getNotifications(){
+    return this.getNotification.asObservable()
   }
   disconnect = () => {
     this.socket.disconnect();
