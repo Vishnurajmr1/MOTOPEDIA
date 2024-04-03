@@ -8,7 +8,7 @@ export interface IAddNotification {
 
 export interface NotificationInterface {
   sender: string;
-  _id: string;
+  id: string;
   recipient: string;
   postId: string;
   message: string;
@@ -16,4 +16,10 @@ export interface NotificationInterface {
   actionType: NotificationActionType;
   createdAt: string;
   updatedAt: string;
+}
+
+export interface getAllNotificationsInterface{
+    data:NotificationInterface[];
+    status:string;
+    message:string;
 }

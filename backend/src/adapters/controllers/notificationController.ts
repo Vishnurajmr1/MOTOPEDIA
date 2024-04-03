@@ -57,6 +57,14 @@ const notificationController = (
             data: result,
         });
     });
+    const updateNotification = asyncHandler(async (req: CustomRequest, res: Response) => {
+        const recipientId = req.user?.Id as string;
+        res.status(200).json({
+            status: Status.SUCCESS,
+            message: 'Successfully updated the notification',
+            data: null,
+        });
+    });
     return {
         createNotification,
         getAllNotifications,

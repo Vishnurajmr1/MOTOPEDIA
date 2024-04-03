@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { BehaviorSubject, Observable, Subscription } from 'rxjs';
@@ -10,6 +10,8 @@ import {
 import { unSetCurrentUser } from 'src/app/auth/data-access/state/actions/auth-page.actions';
 import { ICurrentUser } from 'src/app/auth/data-access/state/auth.reducer';
 import { SocketService } from '../../data-access/global/socket.service';
+import { notificationService } from '../../data-access/global/notification.service';
+import { NotificationInterface } from '../../types/notification.interface';
 
 @Component({
   selector: 'app-navbar',
@@ -23,6 +25,8 @@ export class NavbarComponent {
   showNotification: boolean = false;
   showNotificationCount: number = 0;
   private notificationSubscription: Subscription = new Subscription();
+  private notificationService = inject(notificationService);
+  getAllNotifications: NotificationInterface[] = [];
   constructor(
     private store: Store<State>,
     private router: Router,
@@ -30,16 +34,32 @@ export class NavbarComponent {
   ) {
     this.currentUser$ = this.store.select(getCurrentUserData);
     this.isUserLoggedIn$ = this.store.select(isUserLoggedIn);
-    this.showUnreadNotificationCount()
+    this.notificationSubscription = this.socket
+      .getNotifications()
+      .subscribe((res) => {
+        this.showNotificationCount++;
+      });
+  }
+  ngOnInit(): void {
+    this.isUserLoggedIn$.subscribe((isLoggedIn) => {
+      if (isLoggedIn) {
+        this.showUnreadNotificationCount();
+      } else {
+        this.showNotificationCount = 0;
+      }
+    });
   }
   showUnreadNotificationCount(): void {
     // Subscribe to changes in the unread notification count
-    this.notificationSubscription = this.socket
-      .getNotifications()
+    this.notificationSubscription = this.notificationService
+      .getAllNotifications()
       .subscribe((notifications) => {
-        this.showNotificationCount = this.showNotificationCount++;
+        console.log(notifications);
+        this.showNotificationCount += notifications.data.filter(
+          (notification: NotificationInterface) => !notification.readBy
+        ).length;
       });
-      console.log(this.showNotificationCount)
+    console.log(this.showNotificationCount);
   }
 
   isDropDownMenu = false;
@@ -57,6 +77,13 @@ export class NavbarComponent {
 
   showNotificationComponent() {
     this.showNotification = !this.showNotification;
+    if (this.showNotification) {
+      this.notificationSubscription = this.notificationService
+        .getAllNotifications()
+        .subscribe((notifications) => {
+          this.getAllNotifications = notifications.data;
+        });
+    }
   }
 
   ngOnDestroy(): void {

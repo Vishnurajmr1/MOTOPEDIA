@@ -8,3 +8,8 @@ export interface IAddNotification {
     read: boolean;
     actionType: NotificationActionType;
 }
+
+export interface IEditNotification {
+    message?: string;
+    read?: boolean;
+}
