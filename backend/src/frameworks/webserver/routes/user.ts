@@ -1,15 +1,15 @@
-import userController from '@src/adapters/controllers/userController';
-import { userDbRepository } from '@src/application/repositories/userDBRepository';
-import { authService } from '@src/frameworks/services/authService';
+import userController from '../../../adapters/controllers/userController';
+import { userDbRepository } from '../../../application/repositories/userDBRepository';
+import { authService } from '../../../frameworks/services/authService';
 import express from 'express';
 import jwtAuthMiddleware from '../middlewares/userAuthMiddleware';
-import { authServiceInterface } from '@src/application/services/authServicesInterface';
-import { userRepositoryMongoDB } from '@src/frameworks/database/mongodb/repositories/UserRepoMongoDb';
+import { authServiceInterface } from '../../../application/services/authServicesInterface';
+import { userRepositoryMongoDB } from '../../../frameworks/database/mongodb/repositories/UserRepoMongoDb';
 import roleCheckMiddleware from '../middlewares/roleCheckMiddleware';
-import { connectionDbRepository } from '@src/application/repositories/connectionDBRepository';
-import { connectionRepositoryMongoDB } from '@src/frameworks/database/mongodb/repositories/connectionRepoMongoDb';
-import { cloudServiceInterface } from '@src/application/services/cloudServiceInterface';
-import { s3Service } from '@src/frameworks/services/s3Service';
+import { connectionDbRepository } from '../../../application/repositories/connectionDBRepository';
+import { connectionRepositoryMongoDB } from '../../../frameworks/database/mongodb/repositories/connectionRepoMongoDb';
+import { cloudServiceInterface } from '../../../application/services/cloudServiceInterface';
+import { s3Service } from '../../../frameworks/services/s3Service';
 import upload from '../middlewares/multer';
 
 const userRouter = () => {

@@ -4,17 +4,16 @@ export enum Tab {
   Verify = 'verify',
   VerifyOtp = 'verify-otp',
   Reset = 'reset-password',
-  Followers='followers',
-  Following='following'
+  Followers = 'followers',
+  Following = 'following',
 }
 
 export enum ProfileTab {
   EditProfile = 'EditProfile',
   EditPost = 'EditPost',
   EditSavedPost = 'EditSavedPost',
-  NothingSelected='nothingselected'
+  NothingSelected = 'nothingselected',
 }
-
 
 export enum PlanType {
   BASIC = 'BASIC',
@@ -22,10 +21,15 @@ export enum PlanType {
   PREMIUM = 'PREMIUM',
 }
 
+export enum SubscriptionType {
+  day = 'DAY',
+  month = 'MONTHLY',
+  year = 'YEARLY',
+  week = 'WEEK',
+}
 
-export enum SubscriptionType{
-  day='DAY',
-  month='MONTHLY',
-  year='YEARLY',
-  week='WEEK'
+export enum NotificationActionType {
+  LIKE = 'like_post',
+  COMMENT = 'post_comment',
+  NEWPOST = 'new_post',
 }

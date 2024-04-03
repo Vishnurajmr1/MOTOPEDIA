@@ -4,13 +4,15 @@ import {
   IPost,
   IReportPost,
   IpostInterface,
-} from 'src/app/shared/types/post.Interface';
+} from '../../../../app/shared/types/post.Interface';
 import { PostService } from '../../data-access/post.service';
 import { Observable } from 'rxjs';
-import { UserService } from 'src/app/riders/data-access/user.service';
-import { initFlowbite } from 'flowbite';
-import { SnackbarService } from 'src/app/shared/data-access/global/snackbar.service';
-import { CommentInterface } from 'src/app/shared/types/comment.interface';
+import { UserService } from '../../../../app/riders/data-access/user.service';
+import { SnackbarService } from '../../../../app/shared/data-access/global/snackbar.service';
+import { CommentInterface } from '../../../../app/shared/types/comment.interface';
+import { notificationService } from '../../../../app/shared/data-access/global/notification.service';
+import { IAddNotification } from 'src/app/shared/types/notification.interface';
+import { NotificationActionType } from 'src/app/shared/types';
 @Component({
   selector: 'app-post-list',
   templateUrl: './post-list.component.html',
@@ -21,6 +23,7 @@ export class PostListComponent {
   private postService = inject(PostService);
   private userService = inject(UserService);
   private snackbar = inject(SnackbarService);
+  private notificationService = inject(notificationService);
   posts: IpostInterface[] = [];
   isCreatePostVisible = false;
   selectedPostId: string | null = null;
@@ -39,6 +42,7 @@ export class PostListComponent {
     this.isCreatePostVisible = !this.isCreatePostVisible;
   }
   like(data: { postId: string; reactionType: string }) {
+    let notificationData: IAddNotification;
     this.postService.likeThePost(data).subscribe((res) => {
       const postId = data.postId;
       const updatedLikeCount = res.data.likes.like;
@@ -46,6 +50,16 @@ export class PostListComponent {
       const postIndex = this.posts.findIndex((post) => post._id === postId);
       if (postIndex !== -1) {
         this.posts[postIndex].likes.like = updatedLikeCount;
+        const notificationData: IAddNotification = {
+          postId: postId,
+          recipient: this.posts[postIndex].authorId._id,
+          actionType: NotificationActionType.LIKE,
+        };
+        this.notificationService
+          .createNotification(notificationData)
+          .subscribe((res) => {
+            console.log(res);
+          });
       }
     });
   }
