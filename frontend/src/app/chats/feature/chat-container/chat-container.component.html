@@ -22,7 +22,8 @@
                 (messageSend)="onMessageSend($event)"
                 [isSendByUser]="isSendByUser.bind(this)"
                 [CurrentChatMessages]="chatMessages"
-                ></app-chat-detail>
+                (makeVideoCallClicked)="makeVideCall($event)"
+                #chatDetail></app-chat-detail>
             </div>
         </div>
     </div>

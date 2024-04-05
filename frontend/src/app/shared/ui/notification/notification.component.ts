@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { NotificationInterface } from '../../types/notification.interface';
 
 @Component({
@@ -11,7 +11,11 @@ export class NotificationComponent {
   openNotificationBar!: boolean;
   @Input()
   getAllNotifications: NotificationInterface[] = [];
+  @Output() markAsRead: EventEmitter<boolean> = new EventEmitter<boolean>();
   closeModal() {
     this.openNotificationBar = !this.openNotificationBar;
+  }
+  updateNotificationsAsRead() {
+    this.markAsRead.emit(true);
   }
 }

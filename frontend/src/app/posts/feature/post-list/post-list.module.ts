@@ -7,6 +7,7 @@ import { PostCardModule } from '../../ui/post-card/post-card.module';
 import { CreatePostModule } from '../../ui/create-post/create-post.module';
 import { PostCommentsModule } from '../../ui/post-comments/post-comments.module';
 import { PostFeaturesModule } from '../../ui/post-features/post-features.module';
+import { SharePostModule } from '../../ui/share-post/share-post.module';
 
 
 @NgModule({
@@ -19,7 +20,8 @@ import { PostFeaturesModule } from '../../ui/post-features/post-features.module'
     PostCardModule,
     CreatePostModule,
     PostCommentsModule,
-    PostFeaturesModule
+    PostFeaturesModule,
+    SharePostModule
   ],
   exports:[PostListComponent]
 })

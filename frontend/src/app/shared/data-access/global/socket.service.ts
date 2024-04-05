@@ -32,6 +32,7 @@ export class SocketService {
   >([]);
   private chatHistory = new BehaviorSubject<any>([]);
   private getNotification = new Subject<NotificationInterface>();
+  private getVideoMessages = new Subject<any>();
   constructor() {
     this.socket = io('http://localhost:3000', {
       path: '/api/chat/socket.io',
@@ -46,6 +47,9 @@ export class SocketService {
     this.socket.on(ISocketEvents.NOTIFICATION_RECEIVED_EVENT, (data) => {
       console.log(data);
       this.getNotification.next(data);
+    });
+    this.socket.on(ISocketEvents.VIDEO_CALL_RECEIVED_EVENT, (data) => {
+      this.getVideoMessages.next(data);
     });
     this.socket.on(ISocketEvents.DISCONNECT_EVENT, () => this.disconnect());
   }
@@ -73,6 +77,9 @@ export class SocketService {
   getNewMessage() {
     return this.setMessages.asObservable();
   }
+  getNewVideoMessages(): Observable<any> {
+    return this.getVideoMessages.asObservable();
+  }
   updatedMessage(message: ChatMessageInterface) {
     console.log(message);
     this.setMessages.next(message);
@@ -80,8 +87,11 @@ export class SocketService {
   setChatHistory(data: any) {
     this.chatHistory.next(data);
   }
-  getNotifications(){
-    return this.getNotification.asObservable()
+  getNotifications() {
+    return this.getNotification.asObservable();
+  }
+  sendVideoMessages(payload: any): void {
+    this.socket.emit(ISocketEvents.CREATE_VIDEO_CALL, payload);
   }
   disconnect = () => {
     this.socket.disconnect();

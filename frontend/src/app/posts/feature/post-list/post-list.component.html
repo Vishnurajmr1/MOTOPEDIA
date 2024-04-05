@@ -1,22 +1,60 @@
-<app-create-post (createPostForm)="createPost($event)" *ngIf="isCreatePostVisible"></app-create-post>
+<app-create-post
+  (createPostForm)="createPost($event)"
+  *ngIf="isCreatePostVisible"
+></app-create-post>
 
-<div *ngIf="posts" class="flex gap-2 flex-col items-center ">
-  <ng-container *ngFor="let post of posts ">
-    <div 
-    class="p-4 max-w-sm md:max-w-screen-md bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-      <app-post-card [post]="post" (like)="like($event)" (follow)="follow($event)" (comment)="showComment(post._id)" [currentUser]="currentUser">
-        <app-post-features (save)="savePost(post._id)" (reportPost)="handleReport($event,post._id)"></app-post-features>
+<div *ngIf="posts" class="flex gap-2 flex-col items-center">
+  <ng-container *ngFor="let post of posts">
+    <div
+      class="p-4 max-w-sm md:max-w-screen-md bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700"
+    >
+      <app-post-card
+        [post]="post"
+        (like)="like($event)"
+        (follow)="follow($event)"
+        (comment)="showComment(post._id)"
+        [currentUser]="currentUser"
+        (share)="getSharePost(post)"
+      >
+        <app-post-features
+          (save)="savePost(post._id)"
+          (reportPost)="handleReport($event, post._id)"
+        ></app-post-features>
       </app-post-card>
-      <app-post-comments *ngIf="selectedPostId===post._id" [comments]="selectedPostComments" [currentUserId]="currentUser" (addCommentEvent)="onAddComment($event)"></app-post-comments>
+      <app-post-comments
+        *ngIf="selectedPostId === post._id"
+        [comments]="selectedPostComments"
+        [currentUserId]="currentUser"
+        (addCommentEvent)="onAddComment($event)"
+      ></app-post-comments>
+      <share-post [Post]="Post" *ngIf="sharePostId === post._id"></share-post>
     </div>
   </ng-container>
 </div>
 <div data-dial-init class="fixed end-6 bottom-6 group">
-  <button type="button" (click)="showCreatePost()" data-dial-toggle="speed-dial-menu-default" aria-controls="speed-dial-menu-default" aria-expanded="false" class="flex items-center justify-center text-white bg-green-400 rounded-full w-14 h-14 hover:bg-blue-800 dark:bg-blue-600 dark:hover:bg-blue-700 focus:ring-0 focus:outline-none dark:focus:ring-blue-800" title="create_post">
-      <svg class="w-5 h-5 transition-transform group-hover:rotate-0" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
-          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 1v16M1 9h16"/>
-      </svg>
+  <button
+    type="button"
+    (click)="showCreatePost()"
+    data-dial-toggle="speed-dial-menu-default"
+    aria-controls="speed-dial-menu-default"
+    aria-expanded="false"
+    class="flex items-center justify-center text-white bg-green-400 rounded-full w-14 h-14 hover:bg-blue-800 dark:bg-blue-600 dark:hover:bg-blue-700 focus:ring-0 focus:outline-none dark:focus:ring-blue-800"
+    title="create_post"
+  >
+    <svg
+      class="w-5 h-5 transition-transform group-hover:rotate-0"
+      aria-hidden="true"
+      xmlns="http://www.w3.org/2000/svg"
+      fill="none"
+      viewBox="0 0 18 18"
+    >
+      <path
+        stroke="currentColor"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="2"
+        d="M9 1v16M1 9h16"
+      />
+    </svg>
   </button>
 </div>
-
-

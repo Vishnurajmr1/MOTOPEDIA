@@ -85,6 +85,11 @@ export class NavbarComponent {
         });
     }
   }
+  handleAsRead() {
+    this.notificationService.markAllNotificationAsRead().subscribe((res) => {
+      this.showNotificationCount = 0;
+    });
+  }
 
   ngOnDestroy(): void {
     this.notificationSubscription.unsubscribe();

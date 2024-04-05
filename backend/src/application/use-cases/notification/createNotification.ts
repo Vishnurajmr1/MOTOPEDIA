@@ -1,11 +1,11 @@
-import { notificationDbRepositoryInterface } from '@src/application/repositories/notificationDBRepository';
+import { notificationDbRepositoryInterface } from '../../../application/repositories/notificationDBRepository';
 import HttpStatusCodes from '../../../constants/HttpStatusCodes';
 import AppError from '../../../utils/appError';
-import { usersDbInterface } from '@src/application/repositories/userDBRepository';
-import { PostDbRepositoryInterface } from '@src/application/repositories/postDBRepository';
-import { IAddNotification } from '@src/types/notification.interface';
-import { NotificationActionType } from '@src/types/common';
-import { postInterface } from '@src/types/postInterface';
+import { usersDbInterface } from '../../../application/repositories/userDBRepository';
+import { PostDbRepositoryInterface } from '../../../application/repositories/postDBRepository';
+import { IAddNotification } from '../../../types/notification.interface';
+import { NotificationActionType } from '../../../types/common';
+import { postInterface } from '../../../types/postInterface';
 
 export const createNotificationUseCase = async (
     senderId: string,
@@ -24,23 +24,35 @@ export const createNotificationUseCase = async (
         const { postId, actionType } = notificationData;
         if (notificationData.postId) {
             post = await postDbRepository.getPostById(postId);
+            notificationData.recipient = post?.authorId as string;
         }
-        switch (actionType) {
-            case NotificationActionType.LIKE:
-                if (post) {
-                    notificationData.recipient = post?.authorId || '';
-                    notificationData.message = `${user?.firstName} Liked your "${post?.title}" post.`;
-                }
-                break;
-            case NotificationActionType.COMMENT:
-                if (post) {
-                    notificationData.recipient = post.authorId;
-                    notificationData.message = `${user?.firstName} commented  on your "${post.title}".`;
-                }
-                break;
-            default:
-                throw new AppError('Unsupported action type', HttpStatusCodes.BAD_REQUEST);
+        console.log('It is the notification data');
+        console.log(notificationData);
+        console.log('It is the notification data output');
+        const existingNotification = await notificationDbRepository.checkExisitingNotification(notificationData);
+        console.log(existingNotification);
+        if (existingNotification) {
+            console.log('hello');
+            console.log(existingNotification);
+            if (actionType == NotificationActionType.LIKE) {
+            }
+        } else {
+            switch (actionType) {
+                case NotificationActionType.LIKE:
+                    if (post) {
+                        notificationData.message = `${user?.firstName} Liked your "${post?.title}" post.`;
+                    }
+                    break;
+                case NotificationActionType.COMMENT:
+                    if (post) {
+                        notificationData.message = `${user?.firstName} commented  on your "${post.title}".`;
+                    }
+                    break;
+                default:
+                    throw new AppError('Unsupported action type', HttpStatusCodes.BAD_REQUEST);
+            }
         }
+
         const payload = await notificationDbRepository.addNotification(notificationData);
         console.log(payload);
         return payload;

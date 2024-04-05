@@ -1,20 +1,21 @@
 import { CustomRequest } from '../../types/customRequest';
 import asyncHandler from 'express-async-handler';
 import { Request, Response } from 'express';
-import Status from '@src/constants/HttResponseStatus';
-import { usersDbInterface } from '@src/application/repositories/userDBRepository';
-import { UserRepositoryMongoDB } from '@src/frameworks/database/mongodb/repositories/UserRepoMongoDb';
-import { ConnectionDbRepositoryInterface } from '@src/application/repositories/connectionDBRepository';
-import { ConnectionRepositoryMongoDB } from '@src/frameworks/database/mongodb/repositories/connectionRepoMongoDb';
-import { PostDbRepositoryInterface } from '@src/application/repositories/postDBRepository';
-import { PostRepositoryMongoDbInterface } from '@src/frameworks/database/mongodb/repositories/postRepoMongoDb';
-import { notificationDbRepositoryInterface } from '@src/application/repositories/notificationDBRepository';
-import { NotificationRepositoryMongoDb } from '@src/frameworks/database/mongodb/repositories/notificationRepoMongoDb';
-import { IAddNotification } from '@src/types/notification.interface';
-import { createNotificationUseCase } from '@src/application/use-cases/notification/createNotification';
-import { emitSocketEvent } from '@src/frameworks/websocket/socket';
-import { ChatEventEnum } from '@src/constants/chatEventEnum';
-import { getAllNotificationsUseCase } from '@src/application/use-cases/notification/getAllNotification';
+import Status from '../../constants/HttResponseStatus';
+import { usersDbInterface } from '../../application/repositories/userDBRepository';
+import { UserRepositoryMongoDB } from '../../frameworks/database/mongodb/repositories/UserRepoMongoDb';
+import { ConnectionDbRepositoryInterface } from '../../application/repositories/connectionDBRepository';
+import { ConnectionRepositoryMongoDB } from '../../frameworks/database/mongodb/repositories/connectionRepoMongoDb';
+import { PostDbRepositoryInterface } from '../../application/repositories/postDBRepository';
+import { PostRepositoryMongoDbInterface } from '../../frameworks/database/mongodb/repositories/postRepoMongoDb';
+import { notificationDbRepositoryInterface } from '../../application/repositories/notificationDBRepository';
+import { NotificationRepositoryMongoDb } from '../../frameworks/database/mongodb/repositories/notificationRepoMongoDb';
+import { IAddNotification } from '../../types/notification.interface';
+import { createNotificationUseCase } from '../../application/use-cases/notification/createNotification';
+import { emitSocketEvent } from '../../frameworks/websocket/socket';
+import { ChatEventEnum } from '../../constants/chatEventEnum';
+import { getAllNotificationsUseCase } from '../../application/use-cases/notification/getAllNotification';
+import { updateNotificationUseCase } from '@src/application/use-cases/notification/updateNotification';
 const notificationController = (
     userDbRepository: usersDbInterface,
     userDbRepositoryImplementation: UserRepositoryMongoDB,
@@ -57,17 +58,19 @@ const notificationController = (
             data: result,
         });
     });
-    const updateNotification = asyncHandler(async (req: CustomRequest, res: Response) => {
+    const updateAllNotification = asyncHandler(async (req: CustomRequest, res: Response) => {
         const recipientId = req.user?.Id as string;
+        const result = await updateNotificationUseCase(recipientId, dbRepositoryNotification);
         res.status(200).json({
             status: Status.SUCCESS,
             message: 'Successfully updated the notification',
-            data: null,
+            data: result,
         });
     });
     return {
         createNotification,
         getAllNotifications,
+        updateAllNotification,
     };
 };
 

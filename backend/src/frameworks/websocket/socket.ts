@@ -72,7 +72,11 @@ const receivenewNotificationEvent = (socket: Socket) => {
         socket.in(notification.recipient).emit(ChatEventEnum.NOTIFICATION_RECEIVED_EVENT, notification);
     });
 };
-
+const sendVideoMessages = (socket: Socket) => {
+    socket.on(ChatEventEnum.CREATE_VIDEO_CALL, (payload: any) => {
+        socket.broadcast.emit(ChatEventEnum.VIDEO_CALL_RECEIVED_EVENT, payload);
+    });
+};
 const onSocketConnection = (io: Server, socket: Socket) => {
     console.log('User connected', socket.id);
     try {
@@ -89,6 +93,7 @@ const onSocketConnection = (io: Server, socket: Socket) => {
         mountTypingChatEvent(socket);
         mountParticipantStopTypingEvent(socket);
         receivenewNotificationEvent(socket);
+        sendVideoMessages(socket);
         console.log('Successfull');
         socket.on(ChatEventEnum.DISCONNECT_EVENT, () => {
             console.log(`User has disconnected🚫.userId`, socket.id);

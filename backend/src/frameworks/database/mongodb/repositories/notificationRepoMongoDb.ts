@@ -1,3 +1,4 @@
+import mongoose from 'mongoose';
 import { IAddNotification, IEditNotification } from '../../../../types/notification.interface';
 import Notification from '../models/notification.Model';
 
@@ -5,7 +6,7 @@ export const notificationRepositoryMongoDb = () => {
     const addNotification = async (addNotification: IAddNotification) => {
         const newNotification = new Notification(addNotification);
         const notification = await newNotification.save();
-        return notification[0];
+        return notification;
     };
 
     const getAllNotifications = async (recipientId: string) => {
@@ -18,19 +19,26 @@ export const notificationRepositoryMongoDb = () => {
         const existingNotification = await Notification.aggregate([
             {
                 $match: {
-                    sender: notification.sender,
+                    sender: new mongoose.Types.ObjectId(notification.sender),
                     recipient: notification.recipient,
-                    postId: notification.postId,
+                    postId: new mongoose.Types.ObjectId(notification.postId),
                     actionType: notification.actionType,
                 },
             },
         ]);
         if (existingNotification.length) {
-            return existingNotification;
+            return existingNotification[0];
         }
     };
-    const updateNotification = async (recipiendId: string, data: IEditNotification) => {
-        const response = await Notification.updateMany({ recipient: recipiendId }, { ...data }, { new: true });
+    const updateNotification = async (notificationId: string, data: IEditNotification) => {
+        const response = await Notification.findByIdAndUpdate({ _id: notificationId }, { ...data }, { new: true });
+        return response;
+    };
+    const updateNotificationAsRead = async (recipient: string) => {
+        const response = await Notification.updateMany(
+            { recipient: recipient, readBy: false },
+            { $set: { readBy: true } },
+        );
         return response;
     };
 
@@ -39,6 +47,7 @@ export const notificationRepositoryMongoDb = () => {
         getAllNotifications,
         checkExisitingNotification,
         updateNotification,
+        updateNotificationAsRead,
     };
 };
 
