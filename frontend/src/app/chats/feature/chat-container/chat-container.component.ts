@@ -1,4 +1,12 @@
-import { Component, Input, SimpleChanges, inject } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  Input,
+  SimpleChanges,
+  ViewChild,
+  ViewChildren,
+  inject,
+} from '@angular/core';
 import { SocketService } from '../../../shared/data-access/global/socket.service';
 import { Store } from '@ngrx/store';
 import { Observable, Subject, takeUntil } from 'rxjs';
@@ -14,6 +22,8 @@ import {
   ChatListItemInterface,
   ChatMessageInterface,
 } from 'src/app/shared/types/chat.Interface';
+import { ChatDetailComponent } from '../../ui/chat-detail/chat-detail.component';
+import { CallService } from '../../data-access/call.service';
 
 @Component({
   selector: 'app-chat-container',
@@ -24,6 +34,7 @@ export class ChatContainerComponent {
   private chatService = inject(SocketService);
   private chatApiService = inject(ChatApiService);
   private userService = inject(UserService);
+  private callService = inject(CallService);
   currentUser$!: Observable<ICurrentUser>;
   openCreateChatModal: boolean = false;
   protected users = [];
@@ -36,7 +47,10 @@ export class ChatContainerComponent {
   protected chatMessages: ChatMessageInterface[] = [];
   protected unreadMessages: ChatMessageInterface[] = [];
   protected currentUser!: ICurrentUser;
+  remoteVideoElement!: ElementRef;
   private ngUnsubscribe$ = new Subject<void>();
+  @ViewChildren("chatDetail")
+  chatDetailComponent!: ChatDetailComponent;
   constructor(private store: Store<State>) {
     this.currentUser$ = this.store.select(getCurrentUserData);
     this.currentUser$.pipe(takeUntil(this.ngUnsubscribe$)).subscribe((res) => {
@@ -45,9 +59,6 @@ export class ChatContainerComponent {
     this.onMessageRecieved();
   }
   ngOnInit() {
-    // this.chatService.connect();
-    // this.chatService.setCurrentUser(this.currentUser);
-    // this.chatService.addUser();
     this.userService.getConnection().subscribe((user) => {
       this.followers = user.connectionData[0].followers;
     });
@@ -79,6 +90,7 @@ export class ChatContainerComponent {
       .subscribe((response) => {
         this.chatMessages = response.data;
       });
+    this.createVideoContainer()
   }
   CallCreateUserModal() {
     this.openCreateChatModal = true;
@@ -154,7 +166,6 @@ export class ChatContainerComponent {
       }
     }
   }
-
   onMessageRecieved() {
     this.chatService.getNewMessage().subscribe((message) => {
       if (message.chat !== this.selectedChat) {
@@ -168,6 +179,50 @@ export class ChatContainerComponent {
       console.log(this.unreadMessages);
     });
   }
+  ngAfterViewInit(): void {
+    console.log(this.chatDetailComponent.remoteVideoRef)
+  }
+
+  makeVideCall(data: string): void {
+    console.log('hello particular chat is clicked', data);
+    this.makeCall();
+  }
+
+  public async makeCall(): Promise<void> {
+    if(this.remoteVideoElement!==undefined){
+      await this.callService.makeCall(this.remoteVideoElement);
+    }else{
+      console.log("error found haaaa")
+    }
+  }
+
+  private async _handleMessage(data: any): Promise<void> {
+    switch (data.type) {
+      case 'offer':
+        await this.callService.handleOffer(data.offer, this.remoteVideoElement);
+        break;
+      case 'answer':
+        await this.callService.handleAnswer(data.answer);
+        break;
+      case 'candidate':
+        await this.callService.handleCandidate(data.candidate);
+        break;
+      default:
+        break;
+    }
+  }
+
+  createVideoContainer(): void {
+    this.remoteVideoElement = this.chatDetailComponent.remoteVideoElement;
+    console.log(this.remoteVideoElement);
+    this.chatService
+      .getNewVideoMessages()
+      .subscribe((payload) => {
+        console.log(payload)
+        this._handleMessage(payload);
+      })
+  }
+
   ngOnDestroy() {
     // this.chatService.disconnect();
   }

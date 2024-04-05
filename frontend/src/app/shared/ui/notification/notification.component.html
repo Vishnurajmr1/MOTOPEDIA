@@ -1,10 +1,20 @@
-<div id="" class="z-20  fixed right-4 w-full max-w-sm bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-800 dark:divide-gray-700" aria-labelledby="dropdownNotificationButton">
-    <div class="block px-4 py-2 font-medium text-center text-gray-700 rounded-t-lg bg-gray-50 dark:bg-gray-800 dark:text-white">
-        Notifications
-    </div>
-    <div class="divide-y divide-gray-100 dark:divide-gray-700">
-      <a href="#" class="flex px-4 py-3 hover:bg-gray-100 dark:hover:bg-gray-700" *ngFor="let notification of getAllNotifications">
-        <!-- <div class="flex-shrink-0">
+<div
+  id=""
+  class="z-20 fixed right-4 w-full max-w-sm bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-800 dark:divide-gray-700"
+  aria-labelledby="dropdownNotificationButton"
+>
+  <div
+    class="block px-4 py-2 font-medium text-center text-gray-700 rounded-t-lg bg-gray-50 dark:bg-gray-800 dark:text-white"
+  >
+    Notifications
+  </div>
+  <div class="divide-y divide-gray-100 dark:divide-gray-700">
+    <a
+      href="#"
+      class="flex px-4 py-3 hover:bg-gray-100 dark:hover:bg-gray-700"
+      *ngFor="let notification of getAllNotifications"
+    >
+      <!-- <div class="flex-shrink-0">
           <img class="rounded-full w-11 h-11" src="" alt="Jese image">
           <div class="absolute flex items-center justify-center w-5 h-5 ms-6 -mt-5 bg-blue-600 border border-white rounded-full dark:border-gray-800">
             <svg class="w-2 h-2 text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 18 18">
@@ -13,19 +23,54 @@
             </svg>
           </div>
         </div> -->
-        <div class="w-full ps-3">
-            <div class="text-gray-500 text-sm mb-1.5 dark:text-gray-400 font-semibold">{{notification.message}}</div>
-            <div class="text-xs text-blue-600 dark:text-blue-500">{{notification.createdAt |timeAgo}}</div>
+      <div class="w-full ps-3">
+        <div
+          class="text-gray-500 text-sm mb-1.5 dark:text-gray-400 font-semibold"
+        >
+          {{ notification.message }}
         </div>
-      </a>
-     
-    </div>
-    <!-- <a href="#" class="block py-2 text-sm font-medium text-center text-gray-900 rounded-b-lg bg-gray-50 hover:bg-gray-100 dark:bg-gray-800 dark:hover:bg-gray-700 dark:text-white">
-      <div class="inline-flex items-center ">
-        <svg class="w-4 h-4 me-2 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 14">
-          <path d="M10 0C4.612 0 0 5.336 0 7c0 1.742 3.546 7 10 7 6.454 0 10-5.258 10-7 0-1.664-4.612-7-10-7Zm0 10a3 3 0 1 1 0-6 3 3 0 0 1 0 6Z"/>
-        </svg>
-          View all
+        <div class="text-xs text-blue-600 dark:text-blue-500">
+          {{ notification.createdAt | timeAgo }}
+        </div>
       </div>
-    </a> -->
+    </a>
   </div>
+  <!-- <a href="#" class="block py-2 text-sm font-medium text-center text-gray-900 rounded-b-lg bg-gray-50 hover:bg-gray-100 dark:bg-gray-800 dark:hover:bg-gray-700 dark:text-white"> -->
+  <div class="inline-flex items-center p-2">
+    <button
+      type="button"
+      (click)="updateNotificationsAsRead()"
+      class="text-gray-900 bg-gray-100 hover:bg-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:focus:ring-gray-500 me-2 mb-2"
+    >
+      <svg
+        width="30px"
+        height="30px"
+        viewBox="0 0 16.00 16.00"
+        xmlns="http://www.w3.org/2000/svg"
+        version="1.1"
+        fill="none"
+        stroke="#828282"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="1.5"
+        transform="rotate(0)matrix(1, 0, 0, 1, 0, 0)"
+      >
+        <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+        <g
+          id="SVGRepo_tracerCarrier"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke="#CCCCCC"
+          stroke-width="0.032"
+        ></g>
+        <g id="SVGRepo_iconCarrier">
+          <path
+            d="m1.75 9.75 2.5 2.5m3.5-4 2.5-2.5m-4.5 4 2.5 2.5 6-6.5"
+          ></path>
+        </g>
+      </svg>
+      Mark all as read
+    </button>
+  </div>
+  <!-- </a> -->
+</div>

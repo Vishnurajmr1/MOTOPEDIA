@@ -10,4 +10,6 @@ export enum ISocketEvents {
   UPDATE_GROUP_NAME_EVENT = 'updateGroupName',
   JOIN_NOTIFICATION_EVENT = 'joinNotifications',
   NOTIFICATION_RECEIVED_EVENT = 'sendNotifications',
+  CREATE_VIDEO_CALL = 'createVideoCall',
+  VIDEO_CALL_RECEIVED_EVENT = 'getVideoCall',
 }

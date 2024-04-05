@@ -20,9 +20,13 @@ export const ChatEventEnum = Object.freeze({
     // ? when participant starts typing
     TYPING_EVENT: 'typing',
     //?when user enable notification
-    JOIN_NOTIFICATION_EVENT:'joinNotifications',
+    JOIN_NOTIFICATION_EVENT: 'joinNotifications',
     //?When receive notification
-    NOTIFICATION_RECEIVED_EVENT:'sendNotifications'
+    NOTIFICATION_RECEIVED_EVENT: 'sendNotifications',
+    //?wHEN user need to make a video call
+    CREATE_VIDEO_CALL: 'createVideoCall',
+    //?Recieve video call on the recipiend
+    VIDEO_CALL_RECEIVED_EVENT:'getVideoCall'
 });
 
 export const AvailableChatEvents = Object.values(ChatEventEnum);

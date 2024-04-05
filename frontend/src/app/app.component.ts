@@ -13,6 +13,7 @@ import { SocketService } from './shared/data-access/global/socket.service';
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent {
+  title = 'MOTOPEDIA';
   private store = inject(Store<State>);
   private router = inject(Router);
   private activatedRoute = inject(ActivatedRoute);
@@ -62,11 +63,11 @@ export class AppComponent {
     this.socket.disconnect();
   }
 
-  private initSocket():void{
-    if(this.currentUser){
+  private initSocket(): void {
+    if (this.currentUser) {
       this.socket.connect();
       this.socket.setCurrentUser(this.currentUser);
-      this.socket.addUser()
+      this.socket.addUser();
     }
   }
 }

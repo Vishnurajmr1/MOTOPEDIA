@@ -25,8 +25,10 @@ export class PostListComponent {
   private snackbar = inject(SnackbarService);
   private notificationService = inject(notificationService);
   posts: IpostInterface[] = [];
+  Post: IpostInterface | undefined;
   isCreatePostVisible = false;
   selectedPostId: string | null = null;
+  sharePostId: string | null = null;
   selectedPostComments: CommentInterface[] = [];
   currentUser: string | undefined;
   isUserFollowed: boolean = false;
@@ -85,13 +87,17 @@ export class PostListComponent {
   savePost(postId: string) {
     this.postService.savePostByUser(postId).subscribe({
       next: (res) => this.snackbar.showSuccess('Item saved'),
-      error: (err) => this.snackbar.showError(`something went wrong`),
+      error: (err) =>
+        this.snackbar.showError(`something went wrong while saving..`),
     });
   }
   handleReport(reportData: IReportPost, postId: string) {
     this.postService.reportPostByUser(postId, reportData).subscribe({
       next: (res) => this.snackbar.showSuccess('Post reported successfully'),
-      error: (err) => this.snackbar.showError('Something went wrong'),
+      error: (err) =>
+        this.snackbar.showError(
+          'Something went wrong while reporting the post'
+        ),
     });
   }
 
@@ -114,5 +120,10 @@ export class PostListComponent {
           createComment.comments,
         ];
       });
+  }
+  getSharePost(post: IpostInterface) {
+    this.sharePostId = post._id;
+    this.Post = post;
+    console.log(this.Post);
   }
 }

@@ -24,7 +24,7 @@ const notificationRouter = () => {
     );
     router.use(jwtAuthMiddleware);
     router.route('/create').post(controller.createNotification);
-    router.route('/').get(controller.getAllNotifications);
+    router.route('/').get(controller.getAllNotifications).put(controller.updateAllNotification);
     return router;
 };
 export default notificationRouter;
