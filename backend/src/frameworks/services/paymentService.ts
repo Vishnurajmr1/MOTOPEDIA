@@ -7,11 +7,24 @@ const stripe = new Stripe(configKeys.STRIPE_SECRET_KEY || '', {
 });
 
 export const paymentService = () => {
-    const stripeProduct = async (name: string) => {
+    const stripeProduct = async (name: string, description: string, amount: number, recurring: string) => {
         const product = await stripe.products.create({
             name: name,
+            description: description,
         });
-        return product;
+        const price = await stripe.prices.create({
+            unit_amount: amount*100,
+            currency: 'inr',
+            recurring: {
+                interval: recurring as Interval,
+            },
+            product: product.id,
+        });
+        console.log(product, price);
+        return {
+            product,
+            price,
+        };
     };
     const getStripeProduct = async (id: string) => {
         const product = await stripe.products.retrieve(id);
@@ -48,15 +61,15 @@ export const paymentService = () => {
         });
         return customer;
     };
-    const createSessions = async (priceId: string) => {
+    const createSessions = async (priceId: string, customerId: string) => {
         const sessions = await stripe.checkout.sessions.create({
             payment_method_types: ['card'],
             line_items: [{ price: priceId, quantity: 1 }],
             currency: 'INR',
-            mode: 'payment',
+            mode: 'subscription',
             success_url: 'http://localhost:4200/pricing/checkout-success',
             cancel_url: 'http://localhost:4200/pricing',
-            customer_creation: 'always',
+            customer: customerId,
             billing_address_collection: 'required',
         });
         return sessions.id;
@@ -75,7 +88,7 @@ export const paymentService = () => {
         stripeCustomer,
         getStripeProduct,
         createSessions,
-        getSessionDetails
+        getSessionDetails,
     };
 };
 

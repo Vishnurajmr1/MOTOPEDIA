@@ -55,18 +55,18 @@ const paymentSchema = new Schema(
         paymentId: {
             type: String,
         },
-        amount:{
-            type:Number
+        amount: {
+            type: Number,
         },
-        currency:{
-            type:String
+        currency: {
+            type: String,
         },
-        payment_method:{
-            type:String
+        payment_method: {
+            type: String,
         },
-        status:{
-            type:String
-        }
+        status: {
+            type: String,
+        },
     },
     { timestamps: true },
 );

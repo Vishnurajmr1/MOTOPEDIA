@@ -33,6 +33,12 @@ const subscriptionPlanSchema = new mongoose.Schema(
             type: Boolean,
             default: true,
         },
+        stripeProductId:{
+            type:String
+        },
+        stripePriceId:{
+            type:String
+        }
     },
     { timestamps: true },
 );

@@ -4,8 +4,8 @@ import { PaymentImplInterface } from '@src/frameworks/database/mongodb/repositor
 import { IPaymentInfo } from '@src/types/paymentInterface';
 
 export const getConfigUseCase = (service: ReturnType<PaymentServiceInterface>) => service.getConfig();
-export const createSessionsUseCase = (priceId: string, service: ReturnType<PaymentServiceInterface>) =>
-    service.createSessions(priceId);
+export const createSessionsUseCase = (priceId: string,customerId:string, service: ReturnType<PaymentServiceInterface>) =>
+    service.createSessions(priceId,customerId);
 export const createCustomerUseCase = (userEmail: string, service: ReturnType<PaymentServiceInterface>) =>
     service.createCustomer(userEmail);
 export const createPaymentUseCase = (
