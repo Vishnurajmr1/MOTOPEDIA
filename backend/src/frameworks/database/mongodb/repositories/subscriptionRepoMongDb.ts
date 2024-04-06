@@ -1,8 +1,8 @@
-import { ISubscriptionInfo } from '@src/types/paymentInterface';
+import { AddSubscription, ISubscriptionInfo } from '@src/types/paymentInterface';
 import SubscriptionPlan from '../models/subscriptionPlan.Model';
 
 export const subscriptionRepositoryMongoDb = () => {
-    const saveSubscription = async (subscriptionInfo: ISubscriptionInfo) => {
+    const saveSubscription = async (subscriptionInfo: AddSubscription) => {
         const newSubscription = new SubscriptionPlan(subscriptionInfo);
         const response = newSubscription.save();
         return response;

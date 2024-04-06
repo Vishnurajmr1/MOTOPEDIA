@@ -15,7 +15,10 @@ import {
   StripeElementsOptions,
 } from '@stripe/stripe-js';
 import { SubscriptionService } from '../../../../app/shared/data-access/global/subscription.service';
-import { ISubscription } from 'src/app/shared/types/subscriptionInterface';
+import {
+  IGetSubscription,
+  ISubscription,
+} from 'src/app/shared/types/subscriptionInterface';
 import { PaymentService } from '../../data-access/payment.service';
 import { environment } from '../../../../environments/environment';
 import { StripeService } from '../../data-access/stripe.service';
@@ -34,7 +37,7 @@ export class PricingContainerComponent {
   private stripeService = inject(StripeService);
   private paymentService = inject(PaymentService);
   stripePromise: Promise<Stripe> | undefined;
-  subscriptionData: ISubscription[] = [];
+  subscriptionData: IGetSubscription[] = [];
   customerID: string = '';
   stripeBox: boolean = false;
   constructor() {}
@@ -44,7 +47,7 @@ export class PricingContainerComponent {
     });
     this.subService.getSubscriptionList().subscribe((result) => {
       this.subscriptionData = result.data.filter(
-        (item: ISubscription) => item.isActive === true
+        (item: IGetSubscription) => item.isActive === true
       );
     });
   }
@@ -66,27 +69,29 @@ export class PricingContainerComponent {
   elementOptions: StripeElementsOptions = {
     locale: 'en',
   };
-  async payNow(plan: ISubscription) {
+  async payNow(plan: IGetSubscription) {
     console.log(plan);
     if (!this.isLoggedIn) {
       this.router.navigateByUrl('/auth/login');
       this.snackbar.showError('Please login');
       return;
-    }else{
+    } else {
       this.store.select(getCurrentUserData).subscribe((result) => {
+        console.log(result)
         this.customerID = result.userId;
       });
       this.stripeBox = true;
-      this.redirectToCheckout();
+      this.redirectToCheckout(plan.stripePriceId);
     }
-
   }
 
-  async redirectToCheckout() {
-    console.log(environment.priceId)
+  async redirectToCheckout(priceId: string) {
+    console.log(priceId);
     let model = {
-      priceId: environment.priceId,
+      priceId: priceId,
     };
+    console.log(model);
+
     await this.stripeService.redirectToCheckout(model);
   }
 }

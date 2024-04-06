@@ -3,7 +3,6 @@ import { Stripe } from '@stripe/stripe-js';
 import { environment } from 'src/environments/environment';
 import { PaymentService } from './payment.service';
 import { switchMap } from 'rxjs';
-import { IStripeSubscription } from 'src/app/shared/types/subscriptionInterface';
 
 @Injectable({
   providedIn: 'root',

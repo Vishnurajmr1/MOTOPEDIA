@@ -13,17 +13,14 @@ export class SubscriptionContainerComponent {
   private snackbar = inject(SnackbarService);
   subscriptionData: ISubscription[] = [];
   handleSubscriptionForm(subscripiton: ISubscription) {
-    console.log(subscripiton);
     this.subService.createSubscription(subscripiton).subscribe((res) => {
-      console.log(res);
       this.snackbar.showSuccess('Subscripiton created successfully', '✅');
+      this.subscriptionData=this.subscriptionData.concat(res.data);
     });
   }
   getSubscriptionData() {
     this.subService.getSubscriptionList().subscribe((result) => {
-      console.log(result);
       this.subscriptionData = result.data;
-      console.log(this.subscriptionData);
     });
   }
   ngOnInit() {

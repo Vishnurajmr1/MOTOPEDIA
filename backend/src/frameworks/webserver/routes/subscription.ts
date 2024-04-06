@@ -17,7 +17,7 @@ const subscriptionRouter = () => {
     );
     router
         .route('/')
-        .post(roleCheckMiddleware('admin'), jwtAuthMiddleware, controller.createSubscription)
+        .post(jwtAuthMiddleware, roleCheckMiddleware('admin'), controller.createSubscription)
         .get(controller.SubscriptionList);
     router.route('/:id').get(controller.getSubscriptionById);
     return router;

@@ -53,7 +53,8 @@ const paymentController = (
     });
     const createPaymentSession = asyncHandler(async (req: CustomRequest, res: Response) => {
         const priceId = req.body.priceId;
-        const paymentSessionId = await createSessionsUseCase(priceId, paymentService);
+        const customerId = (await createCustomerUseCase(req.user?.email as string, paymentService)).id;
+        const paymentSessionId = await createSessionsUseCase(priceId, customerId, paymentService);
         const userId: string = req.user?.Id || '';
         const sessionDetails = await retrievePaymentDetails(paymentSessionId);
         const paymentInfo = extractPaymentInfo(sessionDetails, userId);
@@ -88,9 +89,9 @@ const paymentController = (
         return payment;
     };
     const extractPaymentInfo = (sessionDetails: any, userId: string): IPaymentInfo => {
-        console.log('Herre comes the sesison details from the stripe')
+        console.log('Herre comes the sesison details from the stripe');
         console.log(sessionDetails);
-        console.log('Herre comes the sesison details from the stripe complete')
+        console.log('Herre comes the sesison details from the stripe complete');
         return {
             userId: userId,
             paymentId: sessionDetails.payment_intent,
