@@ -11,8 +11,11 @@ import { UserService } from '../../../../app/riders/data-access/user.service';
 import { SnackbarService } from '../../../../app/shared/data-access/global/snackbar.service';
 import { CommentInterface } from '../../../../app/shared/types/comment.interface';
 import { notificationService } from '../../../../app/shared/data-access/global/notification.service';
-import { IAddNotification } from 'src/app/shared/types/notification.interface';
-import { NotificationActionType } from 'src/app/shared/types';
+import { IAddNotification } from '../../../../app/shared/types/notification.interface';
+import { NotificationActionType } from '../../../../app/shared/types';
+import { ChatApiService } from 'src/app/chats/data-access/chatApi.service';
+import { IUserDetails } from 'src/app/shared/types/user.Interface';
+import { ChatListItemInterface } from 'src/app/shared/types/chat.Interface';
 @Component({
   selector: 'app-post-list',
   templateUrl: './post-list.component.html',
@@ -23,6 +26,7 @@ export class PostListComponent {
   private postService = inject(PostService);
   private userService = inject(UserService);
   private snackbar = inject(SnackbarService);
+  private chatService = inject(ChatApiService);
   private notificationService = inject(notificationService);
   posts: IpostInterface[] = [];
   Post: IpostInterface | undefined;
@@ -30,14 +34,24 @@ export class PostListComponent {
   selectedPostId: string | null = null;
   sharePostId: string | null = null;
   selectedPostComments: CommentInterface[] = [];
+  CurrentUserChats: IUserDetails[] = [];
   currentUser: string | undefined;
   isUserFollowed: boolean = false;
+  openShareModal: boolean = false;
   ngOnInit(): void {
     this.postService.getPostByFollowers().subscribe((data: any) => {
       this.posts = data.data;
     });
     this.postService.currentUser$.subscribe((user) => {
       this.currentUser = user.userId;
+    });
+    this.chatService.getUserChats().subscribe((res) => {
+      console.log(res);
+      this.CurrentUserChats = res.data.map((item:ChatListItemInterface)=>item.participants.filter(
+        (participent: IUserDetails) =>
+          participent._id.toString() !== this.currentUser
+      ));
+      console.log(this.CurrentUserChats)
     });
   }
   showCreatePost(): void {
@@ -122,8 +136,11 @@ export class PostListComponent {
       });
   }
   getSharePost(post: IpostInterface) {
-    this.sharePostId = post._id;
+    console.log(post);
     this.Post = post;
-    console.log(this.Post);
+    this.sharePostId = this.Post._id;
+    this.openShareModal = true;
+
+    console.log(this.Post, this.sharePostId);
   }
 }

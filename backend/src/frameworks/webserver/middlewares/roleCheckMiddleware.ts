@@ -1,10 +1,9 @@
 import { NextFunction, Response } from 'express';
-import { CustomRequest } from '@src/types/customRequest';
-import AppError from '@src/utils/appError';
-import HttpStatusCodes from '@src/constants/HttpStatusCodes';
+import { CustomRequest } from '../../../types/customRequest';
+import AppError from '../../../utils/appError';
+import HttpStatusCodes from '../../../constants/HttpStatusCodes';
 
 const roleCheckMiddleware = (roleToCheck: string) => {
-    console.log(roleToCheck)
     return (req: CustomRequest, res: Response, next: NextFunction) => {
         const role = req.user?.role;
         console.log(role)

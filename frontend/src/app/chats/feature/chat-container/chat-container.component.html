@@ -1,13 +1,14 @@
 <div class="bg-gray-100 m-2 rounded-lg">
     <div class="mx-auto py-8">
+        <div class="flex gap-2">
+            <app-search-user></app-search-user>
+            <button (click)="CallCreateUserModal()" class="bg-gray-500 text-white p-4 rounded-md hover:bg-gray-300 hover:text-black hover:font-medium disabled:bg-gray-50">+ Add Chat</button>
+        </div>
         <div class="grid grid-cols-4 sm:grid-cols-12 gap-6 px-4">
             <!-- Sidebar div -->
             <div class="col-span-6 sm:col-span-3">
                 <div class="flex flex-col gap-2">
-                    <div class="flex gap-2">
-                        <app-search-user></app-search-user>
-                        <button (click)="CallCreateUserModal()" class="bg-gray-500 text-white p-4 rounded-md hover:bg-gray-300 hover:text-black hover:font-medium disabled:bg-gray-50">+ Add Chat</button>
-                    </div>
+                   
                     <app-aside [allChats]="getChats"
                     (chatSelected)="onChatSelected($event)" 
                     [unreadMessages]="unreadMessages"

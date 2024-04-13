@@ -6,7 +6,7 @@
 <div *ngIf="posts" class="flex gap-2 flex-col items-center">
   <ng-container *ngFor="let post of posts">
     <div
-      class="p-4 max-w-sm md:max-w-screen-md bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700"
+      class="relative p-4 max-w-sm md:max-w-screen-md bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700"
     >
       <app-post-card
         [post]="post"
@@ -27,7 +27,15 @@
         [currentUserId]="currentUser"
         (addCommentEvent)="onAddComment($event)"
       ></app-post-comments>
-      <share-post [Post]="Post" *ngIf="sharePostId === post._id"></share-post>
+      <div class="absolute bottom-0 right-0">
+        <share-post
+          *ngIf="sharePostId === post._id"
+          [Post]="Post"
+          [sharePostId]="sharePostId"
+          [openModal]="openShareModal"
+          [ChatMembers]="CurrentUserChats"
+        ></share-post>
+      </div>
     </div>
   </ng-container>
 </div>
