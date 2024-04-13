@@ -15,11 +15,11 @@ import { AppRoutingModule } from './app.routing.module';
 import { NavbarModule } from './shared/ui/navbar/navbar.module';
 import { EffectsModule } from '@ngrx/effects';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import {
-  SocialLoginModule,
-  SocialAuthServiceConfig,
-  GoogleLoginProvider,
-} from '@abacritt/angularx-social-login';
+// import {
+//   SocialLoginModule,
+//   SocialAuthServiceConfig,
+//   GoogleLoginProvider,
+// } from '@abacritt/angularx-social-login';
 import { AuthInterceptor } from './core/interceptors/auth.interceptor';
 import { authReducer } from './auth/data-access/state/auth.reducer';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
@@ -36,7 +36,7 @@ import { MAT_DIALOG_DEFAULT_OPTIONS } from '@angular/material/dialog';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    SocialLoginModule,
+    // SocialLoginModule,
     FooterModule,
     NavbarModule,
     HttpClientModule,
@@ -77,20 +77,20 @@ import { MAT_DIALOG_DEFAULT_OPTIONS } from '@angular/material/dialog';
       provide: MAT_DIALOG_DEFAULT_OPTIONS,
       useValue: { hasBackdrop: false },
     },
-    {
-      provide: 'SocialAuthServiceConfig',
-      useValue: {
-        autoLogin: false,
-        providers: [
-          {
-            id: GoogleLoginProvider.PROVIDER_ID,
-            provider: new GoogleLoginProvider(
-              '598989226384-9lq5ksdpkj645lpvq16030911hc584rm.apps.googleusercontent.com'
-            ),
-          },
-        ],
-      } as SocialAuthServiceConfig,
-    },
+    // {
+    //   provide: 'SocialAuthServiceConfig',
+    //   useValue: {
+    //     autoLogin: false,
+    //     providers: [
+    //       {
+    //         id: GoogleLoginProvider.PROVIDER_ID,
+    //         provider: new GoogleLoginProvider(
+    //           '598989226384-9lq5ksdpkj645lpvq16030911hc584rm.apps.googleusercontent.com'
+    //         ),
+    //       },
+    //     ],
+    //   } as SocialAuthServiceConfig,
+    // },
   ],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],

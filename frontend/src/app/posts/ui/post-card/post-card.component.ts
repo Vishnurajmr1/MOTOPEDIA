@@ -22,6 +22,7 @@ export class PostCardComponent {
   @Output() follow = new EventEmitter<string>();
   @Output() comment = new EventEmitter<string>();
   @Output() showComments: boolean = false;
+  // showSharePost: boolean = false;
   currentUserLiked: boolean = false;
   currentUserFollowing: boolean = false;
   followButton: boolean = true;
@@ -29,8 +30,8 @@ export class PostCardComponent {
     post: IpostInterface;
     actionType: string;
   }>();
-  @Output() share: EventEmitter<IpostInterface> =
-    new EventEmitter<IpostInterface>();
+  @Output() share: EventEmitter<string> =
+    new EventEmitter<string>();
   showAuthorActions: boolean = false;
   showAuthorFunc() {
     if (this.isProfilePage) {
@@ -68,7 +69,10 @@ export class PostCardComponent {
       this.comment.emit(postId);
     }
   }
-  sharePost(post: IpostInterface) {
-    this.share.emit(post);
+  sharePost(postId: string) {
+    // this.showSharePost = !this.showSharePost;
+    // if (this.showSharePost) {
+      this.share.emit(postId);
+    // }
   }
 }

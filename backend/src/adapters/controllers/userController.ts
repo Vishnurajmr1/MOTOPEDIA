@@ -114,7 +114,7 @@ const userController = (
         const connectionData = await getConnectionData(userId,dbRepositoryConnection);
         res.status(200).json({
             status: Status.SUCCESS,
-            message: 'Successfully retrieved user connection list',
+            message: 'Successfully fetched user connection list',
             connectionData,
         });
     });
@@ -123,7 +123,7 @@ const userController = (
         const userDetails=await getUserDetailUseCase(userId,dbRepositoryUser);
         res.status(200).json({
             status:Status.SUCCESS,
-            message:"Successfully retrieved other user details",
+            message:"Successfully fetched other user details",
             userDetails
         })
     })
@@ -136,7 +136,7 @@ const userController = (
         )
         res.status(200).json({
             status:Status.SUCCESS,
-            message:'Successfully retrieved users based on the search query',
+            message:'Successfully fetched users based on the search query',
             data:searchResult
         })
     })
@@ -145,7 +145,7 @@ const userController = (
         const users = await getAvailableUsersUsingSearch(userId,dbRepositoryUser);
         res.status(200).json({
             status: Status.SUCCESS,
-            message: 'Successfully retrieved user connection list',
+            message: 'Successfully fetched user connection list',
             data:users,
         });
     })
