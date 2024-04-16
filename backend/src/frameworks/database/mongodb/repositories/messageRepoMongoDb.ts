@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 import { ChatMessage } from '../models/message';
-import { IaddMessage } from '@src/types/messageInterface';
+import { IaddMessage } from '../../../../types/messageInterface';
 
 const chatMessageCommonAggregation = () => {
     return [

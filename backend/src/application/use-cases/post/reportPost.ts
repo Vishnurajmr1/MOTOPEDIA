@@ -1,9 +1,9 @@
-import { IAddReport } from '@src/types/reportInterface';
+import { IAddReport } from '../../../types/reportInterface';
 import AppError from '../../../utils/appError';
-import { ReportDbRepositoryInterface } from '@src/application/repositories/reportDBRepoistory';
-import HttpStatusCodes from '@src/constants/HttpStatusCodes';
-import { PostDbRepositoryInterface } from '@src/application/repositories/postDBRepository';
-import { CloudServiceInterface } from '@src/application/services/cloudServiceInterface';
+import { ReportDbRepositoryInterface } from '../../../application/repositories/reportDBRepoistory';
+import HttpStatusCodes from '../../../constants/HttpStatusCodes';
+import { PostDbRepositoryInterface } from '../../../application/repositories/postDBRepository';
+import { CloudServiceInterface } from '../../../application/services/cloudServiceInterface';
 
 export const reportPost = async (
     reportData: IAddReport,

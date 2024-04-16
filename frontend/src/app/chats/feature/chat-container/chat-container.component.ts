@@ -21,6 +21,7 @@ import { IUserDetails, IUserInfo } from 'src/app/shared/types/user.Interface';
 import {
   ChatListItemInterface,
   ChatMessageInterface,
+  VideoCallEvent,
 } from 'src/app/shared/types/chat.Interface';
 import { ChatDetailComponent } from '../../ui/chat-detail/chat-detail.component';
 import { CallService } from '../../data-access/call.service';
@@ -47,9 +48,9 @@ export class ChatContainerComponent {
   protected chatMessages: ChatMessageInterface[] = [];
   protected unreadMessages: ChatMessageInterface[] = [];
   protected currentUser!: ICurrentUser;
-  remoteVideoElement!: ElementRef;
+  remoteVideoElement!: ElementRef<any>;
   private ngUnsubscribe$ = new Subject<void>();
-  @ViewChildren("chatDetail")
+  @ViewChildren('chatDetail')
   chatDetailComponent!: ChatDetailComponent;
   constructor(private store: Store<State>) {
     this.currentUser$ = this.store.select(getCurrentUserData);
@@ -60,7 +61,8 @@ export class ChatContainerComponent {
   }
   ngOnInit() {
     this.userService.getConnection().subscribe((user) => {
-      this.followers = user.connectionData[0].followers;
+      console.log(user)
+      this.followers = user.data[0].followers;
     });
     const storedUnreadMessages = localStorage.getItem('unreadMessages');
     if (storedUnreadMessages) {
@@ -90,7 +92,6 @@ export class ChatContainerComponent {
       .subscribe((response) => {
         this.chatMessages = response.data;
       });
-    this.createVideoContainer()
   }
   CallCreateUserModal() {
     this.openCreateChatModal = true;
@@ -179,20 +180,20 @@ export class ChatContainerComponent {
       console.log(this.unreadMessages);
     });
   }
-  ngAfterViewInit(): void {
-    console.log(this.chatDetailComponent.remoteVideoRef)
-  }
 
-  makeVideCall(data: string): void {
-    console.log('hello particular chat is clicked', data);
+  makeVideoCall(data: VideoCallEvent): void {
+    console.log('hello particular chat is clicked', data.chatId);
+    this.remoteVideoElement = data.remoteVideoRef;
     this.makeCall();
+    this.createVideoContainer();
   }
 
   public async makeCall(): Promise<void> {
-    if(this.remoteVideoElement!==undefined){
+    if (this.remoteVideoElement !== undefined) {
+      console.log(this.remoteVideoElement);
       await this.callService.makeCall(this.remoteVideoElement);
-    }else{
-      console.log("error found haaaa")
+    } else {
+      console.log('error found haaaa');
     }
   }
 
@@ -213,14 +214,13 @@ export class ChatContainerComponent {
   }
 
   createVideoContainer(): void {
-    this.remoteVideoElement = this.chatDetailComponent.remoteVideoElement;
+    console.log(this.chatDetailComponent.remoteVideoRef);
+    this.remoteVideoElement = this.chatDetailComponent.remoteVideoRef;
     console.log(this.remoteVideoElement);
-    this.chatService
-      .getNewVideoMessages()
-      .subscribe((payload) => {
-        console.log(payload)
-        this._handleMessage(payload);
-      })
+    this.chatService.getNewVideoMessages().subscribe((payload) => {
+      console.log(payload);
+      this._handleMessage(payload);
+    });
   }
 
   ngOnDestroy() {

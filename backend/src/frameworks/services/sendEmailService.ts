@@ -1,6 +1,6 @@
 import nodemailer, { Transporter } from 'nodemailer';
 import configKeys from '../../config';
-import { MailInterface } from '@src/types/mailInterface';
+import { MailInterface } from '../../types/mailInterface';
 
 export const sendEmailService = () => {
     const transporter: Transporter = nodemailer.createTransport({

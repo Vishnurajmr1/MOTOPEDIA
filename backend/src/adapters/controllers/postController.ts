@@ -24,8 +24,8 @@ import { CustomRequest } from '../../types/customRequest';
 import { AddPostInterface, EditPostInterface } from '../../types/postInterface';
 import { Request, Response, NextFunction } from 'express';
 import asyncHandler from 'express-async-handler';
-import { ConnectionRepositoryMongoDB } from '@src/frameworks/database/mongodb/repositories/connectionRepoMongoDb';
-import { ConnectionDbRepositoryInterface } from '@src/application/repositories/connectionDBRepository';
+import { ConnectionRepositoryMongoDB } from '../../frameworks/database/mongodb/repositories/connectionRepoMongoDb';
+import { ConnectionDbRepositoryInterface } from '../../application/repositories/connectionDBRepository';
 
 const postController = (
     cloudServiceInterface: CloudServiceInterface,
@@ -77,6 +77,7 @@ const postController = (
         res.status(200).json({
             status: 'success',
             message: 'Successfully deleted the post',
+            data:null
         });
     });
     const getAllPosts = asyncHandler(async (req: Request, res: Response) => {
@@ -103,8 +104,7 @@ const postController = (
         res.status(200).json({
             status: Status.SUCCESS,
             message: 'Successfully modified  the post',
-            data: post,
-            userId,
+            data: {post,userId},
         });
     });
     const addCommentByPostId = asyncHandler(async (req: CustomRequest, res: Response) => {
@@ -115,7 +115,7 @@ const postController = (
         res.status(201).json({
             status: Status.SUCCESS,
             message: 'comment added successfully',
-            comments,
+            data:comments,
         });
     });
     const fetchCommentByPostId = asyncHandler(async (req: Request, res: Response) => {
@@ -124,7 +124,7 @@ const postController = (
         res.status(200).json({
             status: Status.SUCCESS,
             message: 'Fetched all comments by postId',
-            comments,
+            data:comments,
         });
     });
     const reportPostById = asyncHandler(async (req: CustomRequest, res: Response) => {

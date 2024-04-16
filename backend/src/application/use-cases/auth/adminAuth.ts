@@ -1,10 +1,10 @@
-import { AdminDbInterface } from '@src/application/repositories/adminDBRepository';
-import { RefreshTokenDbInterface } from '@src/application/repositories/refreshTokenDBRepository';
-import { AuthServiceInterface } from '@src/application/services/authServicesInterface';
-import HttpStatusCodes from '@src/constants/HttpStatusCodes';
-import { AdminSavedDbInterface } from '@src/types/adminAuthInterface';
-import { JwtPayload } from '@src/types/common';
-import AppError from '@src/utils/appError';
+import { AdminDbInterface } from '../../../application/repositories/adminDBRepository';
+import { RefreshTokenDbInterface } from '../../../application/repositories/refreshTokenDBRepository';
+import { AuthServiceInterface } from '../../../application/services/authServicesInterface';
+import HttpStatusCodes from '../../../constants/HttpStatusCodes';
+import { AdminSavedDbInterface } from '../../../types/adminAuthInterface';
+import { JwtPayload } from '../../../types/common';
+import AppError from '../../../utils/appError';
 
 export const adminLogin = async (
     email: string,

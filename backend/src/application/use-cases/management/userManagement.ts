@@ -1,7 +1,7 @@
-import { usersDbInterface } from '@src/application/repositories/userDBRepository';
-import HttpStatusCodes from '@src/constants/HttpStatusCodes';
-import { UserInterface } from '@src/types/userInterface';
-import AppError from '@src/utils/appError';
+import { usersDbInterface } from '../../../application/repositories/userDBRepository';
+import HttpStatusCodes from '../../../constants/HttpStatusCodes';
+import { UserInterface } from '../../../types/userInterface';
+import AppError from '../../../utils/appError';
 
 export const getAllUsersUseCase = async (userRepository: ReturnType<usersDbInterface>) => {
     const users: UserInterface[] | null = await userRepository.getAllUsers();

@@ -1,7 +1,7 @@
 import HttpStatusCodes from '../../../constants/HttpStatusCodes';
 import AppError from '../../../utils/appError';
 import { RefreshTokenDbInterface } from '../../repositories/refreshTokenDBRepository';
-import { AuthServiceInterface } from '@src/application/services/authServicesInterface';
+import { AuthServiceInterface } from '../../../application/services/authServicesInterface';
 export const refreshTokenUseCase = async (
     refreshToken: string,
     refreshDbRepository: ReturnType<RefreshTokenDbInterface>,

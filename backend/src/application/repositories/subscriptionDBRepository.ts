@@ -1,5 +1,5 @@
-import { SubscriptionRepositoryMongoDb } from '@src/frameworks/database/mongodb/repositories/subscriptionRepoMongDb';
-import { AddSubscription, ISubscriptionInfo } from '@src/types/paymentInterface';
+import { SubscriptionRepositoryMongoDb } from '../../frameworks/database/mongodb/repositories/subscriptionRepoMongDb';
+import { AddSubscription, ISubscriptionInfo } from '../../types/paymentInterface';
 
 export const subscriptionDbRepository = (repository: ReturnType<SubscriptionRepositoryMongoDb>) => {
     const addSubscription = async (SubInfo: AddSubscription) => await repository.saveSubscription(SubInfo);

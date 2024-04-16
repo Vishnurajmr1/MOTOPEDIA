@@ -1,5 +1,5 @@
 import Admin from '../models/admin';
-import { AdminSavedDbInterface } from '@src/types/adminAuthInterface';
+import { AdminSavedDbInterface } from '../../../../types/adminAuthInterface';
 
 export const adminRepoMongodb = () => {
     const getAdminByEmail = async (email: string) => {

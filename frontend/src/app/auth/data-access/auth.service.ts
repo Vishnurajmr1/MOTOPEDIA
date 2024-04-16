@@ -7,6 +7,7 @@ import {
   IverifyOtp,
   IConfirmPass,
 } from '../../shared/types/user.Interface';
+import { IApiResponse } from '../../../app/shared/types/response.interface';
 @Injectable({
   providedIn: 'root',
 })
@@ -14,33 +15,47 @@ export class AuthService {
   private http: HttpClient = inject(HttpClient);
   private authApi = '/api/auth';
   sendGoogleToken(data: string): Observable<any> {
-    return this.http.post(`${this.authApi}/googleauth`, { googleToken: data });
+    return this.http.post<any>(`${this.authApi}/googleauth`, {
+      googleToken: data,
+    });
   }
-  signup(signupData: ISignUp): Observable<any> {
-    return this.http.post(`${this.authApi}/signup`, signupData);
+  signup(signupData: ISignUp): Observable<IApiResponse> {
+    return this.http.post<IApiResponse>(`${this.authApi}/signup`, signupData);
   }
-  login(loginData: ILogin): Observable<any> {
-    return this.http.post(`${this.authApi}/user-login`, loginData);
+  login(loginData: ILogin): Observable<IApiResponse> {
+    return this.http.post<IApiResponse>(
+      `${this.authApi}/user-login`,
+      loginData
+    );
   }
-  forgotPass(email: { email: string }): Observable<any> {
-    return this.http.post(`${this.authApi}/forgot-password`, email);
+  forgotPass(email: { email: string }): Observable<IApiResponse> {
+    return this.http.post<IApiResponse>(
+      `${this.authApi}/forgot-password`,
+      email
+    );
   }
-  verifyOtp(otpData: IverifyOtp): Observable<any> {
-    return this.http.post(`${this.authApi}/verify-otp`, otpData);
+  verifyOtp(otpData: IverifyOtp): Observable<IApiResponse> {
+    return this.http.post<IApiResponse>(`${this.authApi}/verify-otp`, otpData);
   }
-  adminLogin(adminData: ILogin): Observable<any> {
-    return this.http.post(`${this.authApi}/admin-login`, adminData);
+  adminLogin(adminData: ILogin): Observable<IApiResponse> {
+    return this.http.post<IApiResponse>(
+      `${this.authApi}/admin-login`,
+      adminData
+    );
   }
-  resentOtp(data: { email: string }): Observable<any> {
-    return this.http.post(`${this.authApi}/resent-otp`, data);
+  resentOtp(data: { email: string }): Observable<IApiResponse> {
+    return this.http.post<IApiResponse>(`${this.authApi}/resent-otp`, data);
   }
-  logout(): Observable<any> {
-    return this.http.post(`${this.authApi}/user-logout`, {});
+  logout(): Observable<IApiResponse> {
+    return this.http.post<IApiResponse>(`${this.authApi}/user-logout`, {});
   }
   checkTokenValidation(token: string): Observable<any> {
     return this.http.post(`${this.authApi}/reset-password`, { token });
   }
-  confirmPassword(data:IConfirmPass):Observable<any>{
-    return this.http.put(`${this.authApi}/confirm-password`,data);
+  confirmPassword(data: IConfirmPass): Observable<IApiResponse> {
+    return this.http.put<IApiResponse>(
+      `${this.authApi}/confirm-password`,
+      data
+    );
   }
 }

@@ -1,16 +1,16 @@
-import { RefreshTokenDbInterface } from '@src/application/repositories/refreshTokenDBRepository';
-import { usersDbInterface } from '@src/application/repositories/userDBRepository';
-import { AuthServiceInterface } from '@src/application/services/authServicesInterface';
-import { GoogleAuthServiceInterface } from '@src/application/services/googleAuthServicesInterface';
-import { SendEmailServiceInterface } from '@src/application/services/sendEmailInterface';
-import HttpStatusCodes from '@src/constants/HttpStatusCodes';
-import { JwtPayload } from '@src/types/common';
-import { UserInterface } from '@src/types/userInterface';
-import { UserRegisterInterface } from '@src/types/userRegisterInterface';
-import AppError from '@src/utils/appError';
-import generateOtp from '@src/utils/generateOtp';
-import { resetPassEmailTemplate } from '@src/utils/templates/resetPassword';
-import { verifyEmailTemplate } from '@src/utils/templates/verifyEmail';
+import { RefreshTokenDbInterface } from '../../../application/repositories/refreshTokenDBRepository';
+import { usersDbInterface } from '../../../application/repositories/userDBRepository';
+import { AuthServiceInterface } from '../../../application/services/authServicesInterface';
+import { GoogleAuthServiceInterface } from '../../../application/services/googleAuthServicesInterface';
+import { SendEmailServiceInterface } from '../../../application/services/sendEmailInterface';
+import HttpStatusCodes from '../../../constants/HttpStatusCodes';
+import { JwtPayload } from '../../../types/common';
+import { UserInterface } from '../../../types/userInterface';
+import { UserRegisterInterface } from '../../../types/userRegisterInterface';
+import AppError from '../../../utils/appError';
+import generateOtp from '../../../utils/generateOtp';
+import { resetPassEmailTemplate } from '../../../utils/templates/resetPassword';
+import { verifyEmailTemplate } from '../../../utils/templates/verifyEmail';
 
 export const userRegister = async (
     user: UserRegisterInterface,

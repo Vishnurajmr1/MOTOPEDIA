@@ -1,4 +1,4 @@
-import { CloudServiceImpl } from '@src/frameworks/services/s3Service';
+import { CloudServiceImpl } from '../../frameworks/services/s3Service';
 
 export const cloudServiceInterface = (service: ReturnType<CloudServiceImpl>) => {
     const upload = async (file: Express.Multer.File,contentType:string) => await service.uploadFile(file,contentType);

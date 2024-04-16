@@ -1,4 +1,4 @@
-import { Interval, stripeCard } from '@src/types/common';
+import { Interval, stripeCard } from '../../types/common';
 import configKeys from '../../config';
 import Stripe from 'stripe';
 

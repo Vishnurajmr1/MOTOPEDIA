@@ -1,7 +1,7 @@
-import { UserRegisterInterface } from '@src/types/userRegisterInterface';
+import { UserRegisterInterface } from '../../../../types/userRegisterInterface';
 import mongoose from 'mongoose';
 import User from '../models/userModel';
-import { UserInterface, UserUpdateInfo } from '@src/types/userInterface';
+import { UserInterface, UserUpdateInfo } from '../../../../types/userInterface';
 
 export const userRepositoryMongoDB = () => {
     const addUser = async (user: UserRegisterInterface) => {

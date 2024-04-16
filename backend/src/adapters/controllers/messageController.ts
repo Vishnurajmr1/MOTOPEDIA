@@ -7,12 +7,12 @@ import { ChatRepositoryMongoDB } from '../../frameworks/database/mongodb/reposit
 import { ChatMessageRepositoryMongoDB } from '../../frameworks/database/mongodb/repositories/messageRepoMongoDb';
 import { CloudServiceImpl } from '../../frameworks/services/s3Service';
 import { CustomRequest } from '../../types/customRequest';
-import { getAllMessagesUseCase } from '@src/application/use-cases/messages/getAllMessages';
-import Status from '@src/constants/HttResponseStatus';
-import { createChatMessageUseCase } from '@src/application/use-cases/messages/createMessage';
-import { IaddMessage } from '@src/types/messageInterface';
-import { emitSocketEvent } from '@src/frameworks/websocket/socket';
-import { ChatEventEnum } from '@src/constants/chatEventEnum';
+import { getAllMessagesUseCase } from '../../application/use-cases/messages/getAllMessages';
+import Status from '../../constants/HttResponseStatus';
+import { createChatMessageUseCase } from '../../application/use-cases/messages/createMessage';
+import { IaddMessage } from '../../types/messageInterface';
+import { emitSocketEvent } from '../../frameworks/websocket/socket';
+import { ChatEventEnum } from '../../constants/chatEventEnum';
 
 const messageController = (
     cloudServiceInterface: CloudServiceInterface,

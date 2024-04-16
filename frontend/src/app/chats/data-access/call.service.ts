@@ -17,8 +17,10 @@ export class CallService {
   connection!: RTCPeerConnection;
 
   private async _initConnection(remoteVideo: ElementRef): Promise<void> {
+    console.log('...........remote video comes here .......');
+    console.log(remoteVideo)
     this.connection = new RTCPeerConnection(this.configuration);
-
+    console.log(`................connection`,this.connection)
     await this._getStreams(remoteVideo);
     this._registerConnectionListeners();
   }

@@ -1,24 +1,24 @@
-import { usersDbInterface } from '@src/application/repositories/userDBRepository';
-import { AuthServiceInterface } from '@src/application/services/authServicesInterface';
-import { UserRepositoryMongoDB } from '@src/frameworks/database/mongodb/repositories/UserRepoMongoDb';
-import { AuthService, authService } from '@src/frameworks/services/authService';
-import asyncHandler from 'express-async-handler';
 import { Request, Response } from 'express';
+import asyncHandler from 'express-async-handler';
+import { usersDbInterface } from '../../application/repositories/userDBRepository';
+import { AuthServiceInterface } from '../../application/services/authServicesInterface';
+import { UserRepositoryMongoDB } from '../../frameworks/database/mongodb/repositories/UserRepoMongoDb';
+import { AuthService } from '../../frameworks/services/authService';
 import {
     blockUserUseCase,
     getAllUsersUseCase,
     unblockUserUseCase,
-} from '@src/application/use-cases/management/userManagement';
-import { CustomRequest } from '@src/types/customRequest';
-import { editUserDetailsUseCase, getUserDetailUseCase } from '@src/application/use-cases/user/user';
-import { followUserUseCase, getConnectionData, unfollowUserUseCase } from '@src/application/use-cases/user/followUser';
-import Status from '@src/constants/HttResponseStatus';
-import { ConnectionDbRepositoryInterface } from '@src/application/repositories/connectionDBRepository';
-import { ConnectionRepositoryMongoDB } from '@src/frameworks/database/mongodb/repositories/connectionRepoMongoDb';
-import { UserUpdateInfo } from '@src/types/userInterface';
-import { CloudServiceInterface } from '@src/application/services/cloudServiceInterface';
-import { CloudServiceImpl } from '@src/frameworks/services/s3Service';
-import { getAvailableUsersUsingSearch, searchUserUseCase } from '@src/application/use-cases/user/search';
+} from '../../application/use-cases/management/userManagement';
+import { CustomRequest } from '../../types/customRequest';
+import { editUserDetailsUseCase, getUserDetailUseCase } from '../../application/use-cases/user/user';
+import { followUserUseCase, getConnectionData, unfollowUserUseCase } from '../../application/use-cases/user/followUser';
+import Status from '../../constants/HttResponseStatus';
+import { ConnectionDbRepositoryInterface } from '../../application/repositories/connectionDBRepository';
+import { ConnectionRepositoryMongoDB } from '../../frameworks/database/mongodb/repositories/connectionRepoMongoDb';
+import { UserUpdateInfo } from '../../types/userInterface';
+import { CloudServiceInterface } from '../../application/services/cloudServiceInterface';
+import { CloudServiceImpl } from '../../frameworks/services/s3Service';
+import { getAvailableUsersUsingSearch, searchUserUseCase } from '../../application/use-cases/user/search';
 
 const userController = (
     authServiceInterface: AuthServiceInterface,
@@ -67,7 +67,7 @@ const userController = (
         res.status(200).json({
             status: 'success',
             message: 'Successfully retrieved user details',
-            userDetails,
+            data:userDetails,
         });
     });
 
@@ -96,7 +96,7 @@ const userController = (
         res.status(200).json({
             status: Status.SUCCESS,
             message: 'Successfully followed the user',
-            followUserDetails,
+            data:followUserDetails,
         });
     });
     const unfollowUser = asyncHandler(async (req: CustomRequest, res: Response) => {
@@ -106,7 +106,7 @@ const userController = (
         res.status(200).json({
             status: Status.SUCCESS,
             message: 'Successfully unfollowed the user',
-            followUserDetails,
+            data:followUserDetails,
         });
     });
     const getConnections = asyncHandler(async (req: CustomRequest, res: Response) => {
@@ -115,7 +115,7 @@ const userController = (
         res.status(200).json({
             status: Status.SUCCESS,
             message: 'Successfully fetched user connection list',
-            connectionData,
+            data:connectionData,
         });
     });
     const getOtherUserDetails=asyncHandler(async(req:Request,res:Response)=>{
@@ -124,7 +124,7 @@ const userController = (
         res.status(200).json({
             status:Status.SUCCESS,
             message:"Successfully fetched other user details",
-            userDetails
+            data:userDetails
         })
     })
     const searchUser=asyncHandler(async(req:Request,res:Response)=>{

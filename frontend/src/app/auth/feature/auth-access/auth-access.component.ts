@@ -8,15 +8,15 @@ import {
   ISignUp,
   IverifyOtp,
   UserDoc,
-} from 'src/app/shared/types/user.Interface';
+} from '../../../../app/shared/types/user.Interface';
 import { Store } from '@ngrx/store';
 import { State } from '../../data-access/state';
 import { AuthService } from '../../data-access/auth.service';
-import { SnackbarService } from 'src/app/shared/data-access/global/snackbar.service';
+import { SnackbarService } from '../../../../app/shared/data-access/global/snackbar.service';
 import { LocalStorageService } from 'src/app/shared/data-access/global/local-storage.service';
 import { AuthPageActions } from '../../data-access/state/actions';
 import { ICurrentUser } from '../../data-access/state/auth.reducer';
-import { userAccess, userRefresh } from 'src/const';
+import { userAccess, userRefresh } from '../../../../const';
 @Component({
   selector: 'app-auth-access',
   templateUrl: './auth-access.component.html',
@@ -85,14 +85,7 @@ export class AuthAccessComponent {
       AuthPageActions.toggleCurrentTab({ currentAuthTab: this.currentTab })
     );
   }
-  ngOnDestory(): void {
-    if (this.routeSubscription) {
-      this.routeSubscription.unsubscribe();
-    }
-    if (this.socialAuthSubscription) {
-      this.socialAuthSubscription.unsubscribe();
-    }
-  }
+
 
   loginFormSubmit(formData: ILogin) {
     this.authService.login(formData).subscribe({
@@ -100,22 +93,22 @@ export class AuthAccessComponent {
         console.log(res);
         this.snackbar.showSuccess('Login Successfull');
         let currentUser: ICurrentUser = {
-          userId:res.user._id,
-          firstName: res.user.firstName,
-          lastName: res.user.lastName,
-          email: res.user.email,
-          isVerifiedEmail: res.user.isVerifiedEmail,
-          mobile: res.user.mobile,
+          userId:res.data.user._id,
+          firstName: res.data.user.firstName,
+          lastName: res.data.user.lastName,
+          email: res.data.user.email,
+          isVerifiedEmail: res.data.user.isVerifiedEmail,
+          mobile: res.data.user.mobile,
           isBlocked: false,
         };
 
         this.store.dispatch(
           AuthPageActions.setAccessToken({
-            accessToken: res.accessToken,
+            accessToken: res.data.accessToken,
             tokenType: 'access_token',
           })
         );
-        localStorage.setItem(userAccess, res.accessToken);
+        localStorage.setItem(userAccess, res.data.accessToken);
         this.store.dispatch(AuthPageActions.setCurrentUser({ currentUser }));
       },
     });
@@ -125,13 +118,13 @@ export class AuthAccessComponent {
       next: (res) => {
         console.log(res);
         const currentUser = {
-          firstName: res.userData.firstName,
-          email: res.userData.email,
-          lastName: res.userData.lastName,
-          mobile: res.userData.mobile,
-          isVerifiedEmail: res.userData.isVerifiedEmail,
-          isBlocked: res.userData.isBlocked,
-          userId:res.userData._id
+          firstName: res.data.userData.firstName,
+          email: res.data.userData.email,
+          lastName: res.data.userData.lastName,
+          mobile: res.data.userData.mobile,
+          isVerifiedEmail: res.data.userData.isVerifiedEmail,
+          isBlocked: res.data.userData.isBlocked,
+          userId:res.data.userData._id
         };
         this.store.dispatch(AuthPageActions.setCurrentUser({ currentUser }));
         this.snackbar.showSuccess(res.message);
@@ -150,19 +143,19 @@ export class AuthAccessComponent {
         console.log(res);
         this.store.dispatch(
           AuthPageActions.setAccessToken({
-            accessToken: res.accessToken,
+            accessToken: res.data.accessToken,
             tokenType: 'access_token',
           })
         );
         this.snackbar.showSuccess('Login Successfully');
         const currentUser: ICurrentUser = {
-          firstName: res.user.firstName,
-          email: res.user.email,
-          lastName: res.user.lastName,
-          isVerifiedEmail: res.user.isVerifiedEmail,
-          mobile: res.user.mobile,
-          isBlocked: res.user.isBlocked,
-          userId:res.user._id
+          firstName: res.data.user.firstName,
+          email: res.data.user.email,
+          lastName: res.data.user.lastName,
+          isVerifiedEmail: res.data.user.isVerifiedEmail,
+          mobile: res.data.user.mobile,
+          isBlocked: res.data.user.isBlocked,
+          userId:res.data.user._id
         };
         this.store.dispatch(AuthPageActions.setCurrentUser({ currentUser }));
         this.router.navigateByUrl('home');
@@ -195,12 +188,21 @@ export class AuthAccessComponent {
 
   verifyForgotFormSubmit(data: IConfirmPass) {
     this.authService.confirmPassword(data).subscribe({
-      next: (res) => {
+      next: () => {
         this.snackbar.showSuccess(
           'Password reset successfully,Please login again'
         );
         this.router.navigateByUrl('/auth/login');
       },
     });
+  }
+
+  ngOnDestory(): void {
+    if (this.routeSubscription) {
+      this.routeSubscription.unsubscribe();
+    }
+    if (this.socialAuthSubscription) {
+      this.socialAuthSubscription.unsubscribe();
+    }
   }
 }

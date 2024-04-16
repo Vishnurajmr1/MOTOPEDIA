@@ -1,9 +1,9 @@
-import { ChatDbRepositoryInterface } from '@src/application/repositories/chatDBRepository';
-import { ChatMessageDbRepositoryInterface } from '@src/application/repositories/messageDBRepository';
-import { CloudServiceInterface } from '@src/application/services/cloudServiceInterface';
-import HttpStatusCodes from '@src/constants/HttpStatusCodes';
-import { IaddMessage } from '@src/types/messageInterface';
-import AppError from '@src/utils/appError';
+import { ChatDbRepositoryInterface } from '../../../application/repositories/chatDBRepository';
+import { ChatMessageDbRepositoryInterface } from '../../../application/repositories/messageDBRepository';
+import { CloudServiceInterface } from '../../../application/services/cloudServiceInterface';
+import HttpStatusCodes from '../../../constants/HttpStatusCodes';
+import { IaddMessage } from '../../../types/messageInterface';
+import AppError from '../../../utils/appError';
 
 export const createChatMessageUseCase = async (
     chatId: string,
@@ -25,17 +25,17 @@ export const createChatMessageUseCase = async (
     if (!selectedChat) {
         throw new AppError('Chat does not exist', HttpStatusCodes.NOT_FOUND);
     }
-    let messageFiles:any[]=[];
+    let messageFiles: any[] = [];
     if (file) {
         let response: any;
-        let responseUrl:string='';
+        let responseUrl: string = '';
         if (file.mimetype.includes('image')) {
             response = await cloudService.upload(file, 'Chats/photo');
-            responseUrl= await cloudService.getFile(response.key)
+            responseUrl = await cloudService.getFile(response.key);
         } else if (file.mimetype.includes('pdf')) {
             response = await cloudService.upload(file, 'Chats/pdf');
         }
-        console.log(response,responseUrl);
+        console.log(response, responseUrl);
         if (file) {
             messageFiles.push({
                 file: response,
@@ -45,7 +45,7 @@ export const createChatMessageUseCase = async (
     }
     content.sender = userId;
     content.chat = chatId;
-    content.attachments=messageFiles;
+    content.attachments = messageFiles;
     const message = await chatMessageDbRepository.sendMessage(content);
     const chat = await chatDbRepository.updateLastMessageChat(chatId, message._id.toString());
     const messages = await chatMessageDbRepository.maintainMessage(message._id.toString());

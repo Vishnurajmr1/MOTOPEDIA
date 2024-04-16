@@ -39,7 +39,7 @@ export class PostListComponent {
   isUserFollowed: boolean = false;
   openShareModal: boolean = false;
   ngOnInit(): void {
-    this.postService.getPostByFollowers().subscribe((data: any) => {
+    this.postService.getPostByFollowers().subscribe((data) => {
       this.posts = data.data;
     });
     this.postService.currentUser$.subscribe((user) => {
@@ -60,9 +60,10 @@ export class PostListComponent {
   like(data: { postId: string; reactionType: string }) {
     let notificationData: IAddNotification;
     this.postService.likeThePost(data).subscribe((res) => {
+      console.log(res)
       const postId = data.postId;
-      const updatedLikeCount = res.data.likes.like;
-      const currentUser = res.userId;
+      const updatedLikeCount = res.data.post.likes.like;
+      const currentUser = res.data.userId;
       const postIndex = this.posts.findIndex((post) => post._id === postId);
       if (postIndex !== -1) {
         this.posts[postIndex].likes.like = updatedLikeCount;
@@ -84,6 +85,7 @@ export class PostListComponent {
       next: (res) => {
         console.log(res);
         this.snackbar.showSuccess('Post created Successfully');
+        // this.posts=[...res.data,this.posts]
         window.location.reload();
       },
     });
@@ -118,7 +120,7 @@ export class PostListComponent {
   showComment(postId: string) {
     this.selectedPostId = postId;
     this.postService.getComments(postId).subscribe((res) => {
-      this.selectedPostComments = res.comments;
+      this.selectedPostComments = res.data;
     });
   }
   onAddComment(commentData: {
@@ -130,8 +132,8 @@ export class PostListComponent {
       .createComment(postId, commentData)
       .subscribe((createComment) => {
         this.selectedPostComments = [
+          createComment.data,
           ...this.selectedPostComments,
-          createComment.comments,
         ];
       });
   }
@@ -140,7 +142,6 @@ export class PostListComponent {
     this.Post = post;
     this.sharePostId = this.Post._id;
     this.openShareModal = true;
-
     console.log(this.Post, this.sharePostId);
   }
 }

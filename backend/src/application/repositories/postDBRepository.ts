@@ -1,5 +1,5 @@
-import { PostRepositoryMongoDbInterface } from '@src/frameworks/database/mongodb/repositories/postRepoMongoDb';
-import { AddPostInterface, EditPostInterface } from '@src/types/postInterface';
+import { PostRepositoryMongoDbInterface } from '../../frameworks/database/mongodb/repositories/postRepoMongoDb';
+import { AddPostInterface, EditPostInterface } from '../../types/postInterface';
 
 export const postDbRepository = (repository: ReturnType<PostRepositoryMongoDbInterface>) => {
     const addPost = async (postInfo: AddPostInterface) => await repository.addPost(postInfo);

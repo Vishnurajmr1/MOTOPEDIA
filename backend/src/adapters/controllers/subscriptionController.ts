@@ -1,16 +1,16 @@
-import { subscriptionDbInterface } from '@src/application/repositories/subscriptionDBRepository';
-import { SubscriptionRepositoryMongoDb } from '@src/frameworks/database/mongodb/repositories/subscriptionRepoMongDb';
 import asyncHandler from 'express-async-handler';
 import { Request, Response } from 'express';
-import { ISubscriptionInfo, IUpdateSubscription } from '@src/types/paymentInterface';
-import { createSubscriptionUseCase } from '@src/application/use-cases/subscription/createSubscription';
-import Status from '@src/constants/HttResponseStatus';
+import { subscriptionDbInterface } from '../../application/repositories/subscriptionDBRepository';
+import { SubscriptionRepositoryMongoDb } from '../../frameworks/database/mongodb/repositories/subscriptionRepoMongDb';
+import { ISubscriptionInfo, IUpdateSubscription } from '../../types/paymentInterface';
+import { createSubscriptionUseCase } from '../../application/use-cases/subscription/createSubscription';
+import Status from '../../constants/HttResponseStatus';
 import {
     getSubscriptionByIdUseCase,
     subscriptionListUseCase,
-} from '@src/application/use-cases/subscription/getSubscription';
-import { PaymentServiceInterface } from '@src/application/services/paymentServiceInterface';
-import { PaymentServiceImpl } from '@src/frameworks/services/paymentService';
+} from '../../application/use-cases/subscription/getSubscription';
+import { PaymentServiceInterface } from '../../application/services/paymentServiceInterface';
+import { PaymentServiceImpl } from '../../frameworks/services/paymentService';
 const subscriptionController = (
     subscriptionDbRepository: subscriptionDbInterface,
     subscriptionDbRepositoryImplementation: SubscriptionRepositoryMongoDb,

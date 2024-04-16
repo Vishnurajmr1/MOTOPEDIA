@@ -49,7 +49,7 @@ export interface userResponse {
 export interface IFollowersDetails {
   status: string;
   message: string;
-  connectionData: [
+  data: [
     {
       _id: string;
       userId: string;

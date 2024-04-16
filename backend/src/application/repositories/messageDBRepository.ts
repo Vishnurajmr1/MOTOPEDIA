@@ -1,4 +1,4 @@
-import { IaddMessage } from '@src/types/messageInterface';
+import { IaddMessage } from '../../types/messageInterface';
 import { ChatMessageRepositoryMongoDB } from '../../frameworks/database/mongodb/repositories/messageRepoMongoDb';
 
 export const chatMessageDbRepository = (repository: ReturnType<ChatMessageRepositoryMongoDB>) => {

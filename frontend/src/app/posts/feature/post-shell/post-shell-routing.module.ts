@@ -8,6 +8,10 @@ const routes: Routes = [
       import('../post-list/post-list.module').then(
         (m) => m.PostListModule
       ),
+  },
+  {
+    path:':id',
+    loadChildren:()=>import('../post-detail/post-detail.module').then((m)=>m.PostDetailModule)
   }
 ];
 

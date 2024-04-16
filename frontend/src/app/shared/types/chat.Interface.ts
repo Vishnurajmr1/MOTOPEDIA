@@ -1,3 +1,4 @@
+import { ElementRef } from '@angular/core';
 import { IUserDetails } from './user.Interface';
 
 export interface ChatListItemInterface {
@@ -31,4 +32,10 @@ export interface ChatMessageInterface {
   };
   createdAt: string;
   updatedAt: string;
+}
+
+
+export interface VideoCallEvent{
+  chatId:string;
+  remoteVideoRef:ElementRef<HTMLVideoElement>
 }

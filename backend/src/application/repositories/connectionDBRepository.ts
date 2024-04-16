@@ -1,4 +1,4 @@
-import { ConnectionRepositoryMongoDB } from '@src/frameworks/database/mongodb/repositories/connectionRepoMongoDb';
+import { ConnectionRepositoryMongoDB } from '../../frameworks/database/mongodb/repositories/connectionRepoMongoDb';
 
 export const connectionDbRepository = (repository: ReturnType<ConnectionRepositoryMongoDB>) => {
     const followUser = async (userId: string, followeeUserId: string) =>

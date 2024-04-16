@@ -1,4 +1,4 @@
-import { subscriptionDbInterface } from '@src/application/repositories/subscriptionDBRepository';
+import { subscriptionDbInterface } from '../../../application/repositories/subscriptionDBRepository';
 
 export const subscriptionListUseCase = async (subscriptionDbRepository: ReturnType<subscriptionDbInterface>) => {
     const subscriptionList = await subscriptionDbRepository.getSubscriptionList();

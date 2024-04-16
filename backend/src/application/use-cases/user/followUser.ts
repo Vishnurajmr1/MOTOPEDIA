@@ -1,7 +1,7 @@
-import { ConnectionDbRepositoryInterface } from '@src/application/repositories/connectionDBRepository';
-import { usersDbInterface } from '@src/application/repositories/userDBRepository';
-import HttpStatusCodes from '@src/constants/HttpStatusCodes';
-import { UserUpdateInfo } from '@src/types/userInterface';
+import { ConnectionDbRepositoryInterface } from '../../../application/repositories/connectionDBRepository';
+import { usersDbInterface } from '../../../application/repositories/userDBRepository';
+import HttpStatusCodes from '../../../constants/HttpStatusCodes';
+import { UserUpdateInfo } from '../../../types/userInterface';
 import AppError from '../../../utils/appError';
 
 export const followUserUseCase = async (

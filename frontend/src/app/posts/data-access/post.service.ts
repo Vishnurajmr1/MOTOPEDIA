@@ -7,6 +7,7 @@ import {State, getCurrentUserData, isUserLoggedIn } from '../../auth/data-access
 import { ICurrentUser } from '../../auth/data-access/state/auth.reducer';
 import { CommentInterface } from '../../shared/types/comment.interface';
 import { IEditPost, IPost, IPostList, IReportPost, IpostInterface } from '../../shared/types/post.Interface';
+import { IApiResponse } from 'src/app/shared/types/response.interface';
 
 interface comments {
   status: string;
@@ -26,43 +27,43 @@ export class PostService {
     this.isUserLoggedIn$ = this.store.select(isUserLoggedIn);
   }
   private postApi = '/api/posts';
-  getAllPost(): Observable<any> {
-    return this.http.get(`${this.postApi}/get-all-posts`);
+  getAllPost(): Observable<IApiResponse> {
+    return this.http.get<IApiResponse>(`${this.postApi}/get-all-posts`);
   }
-  getPostByFollowers():Observable<IpostInterface[]>{
-    return this.http.get<IpostInterface[]>(`${this.postApi}/get-followers-post`)
+  getPostByFollowers():Observable<IApiResponse>{
+    return this.http.get<IApiResponse>(`${this.postApi}/get-followers-post`)
   }
-  likeThePost(data: any): Observable<any> {
-    return this.http.put(`${this.postApi}/like-post`, data);
+  likeThePost(data: any): Observable<IApiResponse> {
+    return this.http.put<IApiResponse>(`${this.postApi}/like-post`, data);
   }
-  createPost(postData: IPost) {
+  createPost(postData: IPost):Observable<IApiResponse> {
     const formData: FormData = new FormData();
     formData.append('title', postData.title);
     formData.append('description', postData.description);
     formData.append('files', postData.image);
-    return this.http.post(`${this.postApi}/`, formData);
+    return this.http.post<IApiResponse>(`${this.postApi}/`, formData);
   }
-  getComments(postId: string): Observable<comments> {
-    return this.http.get<comments>(
+  getComments(postId: string): Observable<IApiResponse> {
+    return this.http.get<IApiResponse>(
       `${this.postApi}/get-all-comments/${postId}`
     );
   }
-  createComment(postId:string|null,commentDate:{content:string,parentId:string|null}):Observable<CommentInterface>{
-    return this.http.post<CommentInterface>(`${this.postApi}/add-comment`,{postId,...commentDate})
+  createComment(postId:string|null,commentDate:{content:string,parentId:string|null}):Observable<IApiResponse>{
+    return this.http.post<IApiResponse>(`${this.postApi}/add-comment`,{postId,...commentDate})
   }
-  getPostByUser(userId: string | null = null):Observable<IPostList>{
-    return this.http.get<IPostList>(`${this.postApi}/get-post-by-user?Id=${userId || ''}`)
+  getPostByUser(userId: string | null = null):Observable<IApiResponse>{
+    return this.http.get<IApiResponse>(`${this.postApi}/get-post-by-user?Id=${userId || ''}`)
   }
-  deletePostByUser(postId:string):Observable<any>{
-    return this.http.delete<any>(`${this.postApi}/delete-post/${postId}`)
+  deletePostByUser(postId:string):Observable<IApiResponse>{
+    return this.http.delete<IApiResponse>(`${this.postApi}/delete-post/${postId}`)
   }
-  updatePostByUser(post:IEditPost):Observable<any>{
-    return this.http.put(`${this.postApi}/edit-post/${post._id}`,post)
+  updatePostByUser(post:IEditPost):Observable<IApiResponse>{
+    return this.http.put<IApiResponse>(`${this.postApi}/edit-post/${post._id}`,post)
   }
-  reportPostByUser(postId:string,post:IReportPost):Observable<any>{
-    return this.http.post(`${this.postApi}/report/${postId}`,post)
+  reportPostByUser(postId:string,post:IReportPost):Observable<IApiResponse>{
+    return this.http.post<IApiResponse>(`${this.postApi}/report/${postId}`,post)
   }
-  savePostByUser(postId:string):Observable<any>{
-    return this.http.patch(`${this.postApi}/save-post/${postId}`,{});
+  savePostByUser(postId:string):Observable<IApiResponse>{
+    return this.http.patch<IApiResponse>(`${this.postApi}/save-post/${postId}`,{});
   }
 }

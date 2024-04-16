@@ -7,7 +7,7 @@ import {
   Output,
   ViewChild,
 } from '@angular/core';
-import { ChatMessageInterface } from 'src/app/shared/types/chat.Interface';
+import { ChatMessageInterface, VideoCallEvent } from 'src/app/shared/types/chat.Interface';
 import { IUserDetails } from 'src/app/shared/types/user.Interface';
 
 @Component({
@@ -21,11 +21,12 @@ export class ChatDetailComponent {
   @Input()
   CurrentChatMessages: ChatMessageInterface[] = [];
   @Output() messageSend: EventEmitter<string> = new EventEmitter<string>();
-  @Output() makeVideoCallClicked: EventEmitter<string> =
-    new EventEmitter<string>();
+  @Output() makeVideoCallClicked: EventEmitter<VideoCallEvent> =
+    new EventEmitter<VideoCallEvent>();
   @Input()
   isSendByUser!: Function;
-  @ViewChild('remoteVideo') remoteVideoRef!: ElementRef;
+  // @ViewChild('remoteVideo') remoteVideoRef!: ElementRef;
+  remoteVideoRef!: ElementRef;
   @ViewChild('myVideo') myVideoRef!: ElementRef;
   messageTyped: string = '';
   chatHistory: any;
@@ -39,16 +40,18 @@ export class ChatDetailComponent {
     }
   }
   onMakeVideCall(chatId: string): void {
-    this.makeVideoCallClicked.emit(chatId);
-  }
-  ngAfterViewInit(): void {
-    //Called after ngAfterContentInit when the component's view has been initialized. Applies to components only.
-    //Add 'implements AfterViewInit' to the class.
+    const remoteVideoRef = new ElementRef(
+      document.getElementById('remoteVideo') as HTMLVideoElement
+    );
+    this.makeVideoCallClicked.emit({chatId,remoteVideoRef});
+    // const event:VideoCallEvent={chatId,remoteVideoRef}
+    
     console.log(this.remoteVideoRef);
   }
-  get remoteVideoElement(): ElementRef {
+  get remoteVideoElement(): ElementRef<any> {
     console.log(this.remoteVideoRef);
-    return this.remoteVideoRef;
+    // return this.remoteVideoRef;
+    return { nativeElement: this.remoteVideoRef };
   }
   get myVideoElement(): ElementRef {
     return this.myVideoRef;

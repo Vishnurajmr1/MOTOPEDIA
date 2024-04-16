@@ -1,4 +1,4 @@
-import { PaymentServiceImpl } from '@src/frameworks/services/paymentService';
+import { PaymentServiceImpl } from '../../frameworks/services/paymentService';
 
 export const paymentServiceInterface = (service: ReturnType<PaymentServiceImpl>) => {
     const getConfig = () => service.getConfig();

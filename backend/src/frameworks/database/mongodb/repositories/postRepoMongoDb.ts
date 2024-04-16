@@ -1,4 +1,4 @@
-import { AddPostInterface, EditPostInterface, postInterface } from '@src/types/postInterface';
+import { AddPostInterface, EditPostInterface, postInterface } from '../../../../types/postInterface';
 import Post from '../models/post';
 import mongoose from 'mongoose';
 

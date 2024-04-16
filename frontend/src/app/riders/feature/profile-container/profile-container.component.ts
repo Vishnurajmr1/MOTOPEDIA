@@ -57,7 +57,7 @@ export class ProfileContainerComponent {
       this.id = this.router.snapshot.params['id'] || state?.userId;
       this.userService.getAUser(this.id).subscribe({
         next: (res) => {
-          this.profile = res.userDetails;
+          this.profile = res.data;
           if (state.userId === this.profile?._id) {
             this.owner = true;
           }
@@ -68,11 +68,11 @@ export class ProfileContainerComponent {
       next: (res) => {
         this.followersDetails = res;
         this.followersLength =
-          this.followersDetails?.connectionData[0].followers.length;
-          this.followers=this.followersDetails?.connectionData[0].followers;
+          this.followersDetails?.data[0].followers.length;
+          this.followers=this.followersDetails?.data[0].followers;
         this.followingLength =
-          this.followersDetails?.connectionData[0].following.length;
-          this.following=this.followersDetails?.connectionData[0].following;
+          this.followersDetails?.data[0].following.length;
+          this.following=this.followersDetails?.data[0].following;
       },
     });
     this.postService.getPostByUser(this.id).subscribe({
@@ -84,6 +84,7 @@ export class ProfileContainerComponent {
   profileUpdateForm(formData: IUpdateProfile) {
     this.userService.updateProfile(formData).subscribe({
       next: (res) => {
+        console.log(res)
         window.location.reload();
         this.snakbarService.showSuccess('Profile updated Successfully');
       },

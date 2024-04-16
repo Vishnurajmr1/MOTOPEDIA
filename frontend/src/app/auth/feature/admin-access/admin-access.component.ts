@@ -1,9 +1,9 @@
 import { Component, inject } from '@angular/core';
 import { Router } from '@angular/router';
-import { ILogin } from 'src/app/shared/types/user.Interface';
+import { ILogin } from '../../../../app/shared/types/user.Interface';
 import { AuthService } from '../../data-access/auth.service';
-import { SnackbarService } from 'src/app/shared/data-access/global/snackbar.service';
-import { LocalStorageService } from 'src/app/shared/data-access/global/local-storage.service';
+import { SnackbarService } from '../../../../app/shared/data-access/global/snackbar.service';
+import { LocalStorageService } from '../../../../app/shared/data-access/global/local-storage.service';
 
 @Component({
   selector: 'app-admin-access',
@@ -19,8 +19,8 @@ export class AdminAccessComponent {
     this.authService.adminLogin(data).subscribe({
       next: (res) => {
         console.log(res);
-        this.localStorage.save('access_token', res.accessToken);
-        this.localStorage.save('refresh_token', res.refreshToken);
+        this.localStorage.save('access_token', res.data.accessToken);
+        this.localStorage.save('refresh_token', res.data.refreshToken);
         this.snackBar.showSuccess('MOTOPEDIA ADMIN LOGIN SUCCESSFULL');
         this.router.navigateByUrl('/admin/dashboard');
       },

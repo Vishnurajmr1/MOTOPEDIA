@@ -1,16 +1,16 @@
-import authController from '@src/adapters/controllers/authController';
-import { adminDbRepostiory } from '@src/application/repositories/adminDBRepository';
-import { refreshTokenDbRepository } from '@src/application/repositories/refreshTokenDBRepository';
-import { userDbRepository } from '@src/application/repositories/userDBRepository';
-import { authServiceInterface } from '@src/application/services/authServicesInterface';
-import { googleAuthServiceInterface } from '@src/application/services/googleAuthServicesInterface';
-import { sendEmailServiceInterface } from '@src/application/services/sendEmailInterface';
-import { userRepositoryMongoDB } from '@src/frameworks/database/mongodb/repositories/UserRepoMongoDb';
-import { adminRepoMongodb } from '@src/frameworks/database/mongodb/repositories/adminRepoMongoDb';
-import { refreshTokenRepositoryMongoDB } from '@src/frameworks/database/mongodb/repositories/refreshTokenRepoMongoDb';
-import { authService } from '@src/frameworks/services/authService';
-import { googleAuthService } from '@src/frameworks/services/googleAuthService';
-import { sendEmailService } from '@src/frameworks/services/sendEmailService';
+import authController from '../../../adapters/controllers/authController';
+import { adminDbRepostiory } from '../../../application/repositories/adminDBRepository';
+import { refreshTokenDbRepository } from '../../../application/repositories/refreshTokenDBRepository';
+import { userDbRepository } from '../../../application/repositories/userDBRepository';
+import { authServiceInterface } from '../../../application/services/authServicesInterface';
+import { googleAuthServiceInterface } from '../../../application/services/googleAuthServicesInterface';
+import { sendEmailServiceInterface } from '../../../application/services/sendEmailInterface';
+import { userRepositoryMongoDB } from '../../../frameworks/database/mongodb/repositories/UserRepoMongoDb';
+import { adminRepoMongodb } from '../../../frameworks/database/mongodb/repositories/adminRepoMongoDb';
+import { refreshTokenRepositoryMongoDB } from '../../../frameworks/database/mongodb/repositories/refreshTokenRepoMongoDb';
+import { authService } from '../../../frameworks/services/authService';
+import { googleAuthService } from '../../../frameworks/services/googleAuthService';
+import { sendEmailService } from '../../../frameworks/services/sendEmailService';
 import express from 'express';
 
 const authRouter = () => {

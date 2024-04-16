@@ -1,7 +1,7 @@
-import { PaymentDbInterface } from '@src/application/repositories/paymentDBRepository';
-import { PaymentServiceInterface } from '@src/application/services/paymentServiceInterface';
-import { PaymentImplInterface } from '@src/frameworks/database/mongodb/repositories/paymentRepoMongoDb';
-import { IPaymentInfo } from '@src/types/paymentInterface';
+import { PaymentDbInterface } from '../../../application/repositories/paymentDBRepository';
+import { PaymentServiceInterface } from '../../../application/services/paymentServiceInterface';
+import { PaymentImplInterface } from '../../../frameworks/database/mongodb/repositories/paymentRepoMongoDb';
+import { IPaymentInfo } from '../../../types/paymentInterface';
 
 export const getConfigUseCase = (service: ReturnType<PaymentServiceInterface>) => service.getConfig();
 export const createSessionsUseCase = (priceId: string,customerId:string, service: ReturnType<PaymentServiceInterface>) =>
