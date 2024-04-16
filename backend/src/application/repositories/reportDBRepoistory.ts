@@ -1,5 +1,5 @@
-import { ReportRepositoryMongoDbInterface } from '@src/frameworks/database/mongodb/repositories/reportRepoMongoDb';
-import { IAddReport, IgetReportByPost } from '@src/types/reportInterface';
+import { ReportRepositoryMongoDbInterface } from '../../frameworks/database/mongodb/repositories/reportRepoMongoDb';
+import { IAddReport, IgetReportByPost } from '../../types/reportInterface';
 
 export const reportDbRepository = (repository: ReturnType<ReportRepositoryMongoDbInterface>) => {
     const reportPost = async (reportData: IAddReport) => await repository.addReport(reportData);

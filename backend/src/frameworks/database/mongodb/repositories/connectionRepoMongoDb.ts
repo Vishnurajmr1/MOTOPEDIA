@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 import Connection from '../models/connection';
-import { ConnectionInterface } from '@src/types/connectionInterface';
+import { ConnectionInterface } from '../../../../types/connectionInterface';
 
 export const connectionRepositoryMongoDB = () => {
     const followUser = async (userId: string, followeeUserId: string) => {

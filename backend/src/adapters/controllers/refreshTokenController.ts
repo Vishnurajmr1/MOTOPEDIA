@@ -1,10 +1,10 @@
 import { Request, Response } from 'express';
 import asyncHandler from 'express-async-handler';
-import { RefreshTokenDbInterface } from '@src/application/repositories/refreshTokenDBRepository';
-import { AuthServiceInterface } from '@src/application/services/authServicesInterface';
-import { RefreshTokenRepositoryMongoDB } from '@src/frameworks/database/mongodb/repositories/refreshTokenRepoMongoDb';
-import { AuthService } from '@src/frameworks/services/authService';
-import { refreshTokenUseCase } from '@src/application/use-cases/auth/refreshToken';
+import { RefreshTokenDbInterface } from '../../application/repositories/refreshTokenDBRepository';
+import { AuthServiceInterface } from '../../application/services/authServicesInterface';
+import { RefreshTokenRepositoryMongoDB } from '../../frameworks/database/mongodb/repositories/refreshTokenRepoMongoDb';
+import { AuthService } from '../../frameworks/services/authService';
+import { refreshTokenUseCase } from '../../application/use-cases/auth/refreshToken';
 
 const refreshTokenController = (
     authServiceInterface: AuthServiceInterface,

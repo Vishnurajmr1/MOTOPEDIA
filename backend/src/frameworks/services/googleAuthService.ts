@@ -1,5 +1,5 @@
 import { OAuth2Client } from 'google-auth-library';
-import configKeys from '@src/config';
+import configKeys from '../../config';
 const client = new OAuth2Client(configKeys.GOOGLE_CLIENT_ID);
 
 export const googleAuthService = () => {

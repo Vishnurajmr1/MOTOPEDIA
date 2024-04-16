@@ -1,4 +1,4 @@
-import { RefreshTokenRepositoryMongoDB } from '@src/frameworks/database/mongodb/repositories/refreshTokenRepoMongoDb';
+import { RefreshTokenRepositoryMongoDB } from '../../frameworks/database/mongodb/repositories/refreshTokenRepoMongoDb';
 
 export const refreshTokenDbRepository = (repository: ReturnType<RefreshTokenRepositoryMongoDB>) => {
     const saveRefreshToken = async (userId: string, token: string, expirestAt: number) =>

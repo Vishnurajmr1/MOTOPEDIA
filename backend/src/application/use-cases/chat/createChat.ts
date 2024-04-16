@@ -3,7 +3,6 @@ import { ChatDbRepositoryInterface } from '../../../application/repositories/cha
 import HttpStatusCodes from '../../../constants/HttpStatusCodes';
 import { usersDbInterface } from '../../../application/repositories/userDBRepository';
 
-
 export const createOneToOneChatUseCase = async (
     userId: string | undefined,
     recieverId: string,

@@ -13,6 +13,7 @@ import {
   IFollowersDetails,
   IUpdateProfile,
 } from 'src/app/shared/types/user.Interface';
+import { IApiResponse } from 'src/app/shared/types/response.interface';
 @Injectable({
   providedIn: 'root',
 })
@@ -29,11 +30,11 @@ export class UserService {
     });
   }
 
-  getUserById(): Observable<any> {
-    return this.http.get(`${this.userApi}/get-user-details`);
+  getUserById(): Observable<IApiResponse> {
+    return this.http.get<IApiResponse>(`${this.userApi}/get-user-details`);
   }
-  getAUser(userId: string): Observable<any> {
-    return this.http.get(`${this.userApi}/get-user/${userId}`);
+  getAUser(userId: string): Observable<IApiResponse> {
+    return this.http.get<IApiResponse>(`${this.userApi}/get-user/${userId}`);
   }
   followUser(authorId: string): Observable<string> {
     return this.http.post<string>(`${this.userApi}/follow/${authorId}`, {});
@@ -49,8 +50,8 @@ export class UserService {
       formData
     );
   }
-  searchUserDetails(searchData: string): Observable<any> {
-    return this.http.get(`${this.userApi}/search-user?search=${searchData}`);
+  searchUserDetails(searchData: string): Observable<IApiResponse> {
+    return this.http.get<IApiResponse>(`${this.userApi}/search-user?search=${searchData}`);
   }
   getAvailableSearchUserDetails(): Observable<any> {
     return this.http.get(`${this.userApi}/users`);

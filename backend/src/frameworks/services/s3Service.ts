@@ -1,6 +1,6 @@
 import { CloudFrontClient } from '@aws-sdk/client-cloudfront';
 import { S3Client, PutObjectCommand, GetObjectCommand, DeleteObjectCommand, ObjectCannedACL } from '@aws-sdk/client-s3';
-import configKeys from '@src/config';
+import configKeys from '../../config';
 import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
 import crypto from 'crypto';
 const s3 = new S3Client({

@@ -15,7 +15,7 @@ import { createNotificationUseCase } from '../../application/use-cases/notificat
 import { emitSocketEvent } from '../../frameworks/websocket/socket';
 import { ChatEventEnum } from '../../constants/chatEventEnum';
 import { getAllNotificationsUseCase } from '../../application/use-cases/notification/getAllNotification';
-import { updateNotificationUseCase } from '@src/application/use-cases/notification/updateNotification';
+import { updateNotificationUseCase } from '../../application/use-cases/notification/updateNotification';
 const notificationController = (
     userDbRepository: usersDbInterface,
     userDbRepositoryImplementation: UserRepositoryMongoDB,

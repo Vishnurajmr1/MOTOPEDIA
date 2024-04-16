@@ -1,9 +1,9 @@
 import { Request, Response, response } from 'express';
 import asyncHandler from 'express-async-handler';
-import { AuthService } from '@src/frameworks/services/authService';
-import { AuthServiceInterface } from '@src/application/services/authServicesInterface';
-import { AdminDbInterface } from '@src/application/repositories/adminDBRepository';
-import { usersDbInterface } from '@src/application/repositories/userDBRepository';
+import { AuthService } from '../../frameworks/services/authService';
+import { AuthServiceInterface } from '../../application/services/authServicesInterface';
+import { AdminDbInterface } from '../../application/repositories/adminDBRepository';
+import { usersDbInterface } from '../../application/repositories/userDBRepository';
 import {
     ResetPasswordToken,
     confirmNewPassword,
@@ -13,18 +13,18 @@ import {
     userLogin,
     userRegister,
     verifyOtp,
-} from '@src/application/use-cases/auth/userAuth';
-import { UserRepositoryMongoDB } from '@src/frameworks/database/mongodb/repositories/UserRepoMongoDb';
-import { AdminRepositoryMongoDb } from '@src/frameworks/database/mongodb/repositories/adminRepoMongoDb';
-import { RefreshTokenDbInterface } from '@src/application/repositories/refreshTokenDBRepository';
-import { RefreshTokenRepositoryMongoDB } from '@src/frameworks/database/mongodb/repositories/refreshTokenRepoMongoDb';
-import { UserRegisterInterface } from '@src/types/userRegisterInterface';
-import { adminLogin } from '@src/application/use-cases/auth/adminAuth';
-import { SendEmailServiceInterface } from '@src/application/services/sendEmailInterface';
-import { SendEmailService } from '@src/frameworks/services/sendEmailService';
-import { GoogleAuthServiceInterface } from '@src/application/services/googleAuthServicesInterface';
-import { GoogleAuthService } from '@src/frameworks/services/googleAuthService';
-import Status from '@src/constants/HttResponseStatus';
+} from '../../application/use-cases/auth/userAuth';
+import { UserRepositoryMongoDB } from '../../frameworks/database/mongodb/repositories/UserRepoMongoDb';
+import { AdminRepositoryMongoDb } from '../../frameworks/database/mongodb/repositories/adminRepoMongoDb';
+import { RefreshTokenDbInterface } from '../../application/repositories/refreshTokenDBRepository';
+import { RefreshTokenRepositoryMongoDB } from '../../frameworks/database/mongodb/repositories/refreshTokenRepoMongoDb';
+import { UserRegisterInterface } from '../../types/userRegisterInterface';
+import { adminLogin } from '../../application/use-cases/auth/adminAuth';
+import { SendEmailServiceInterface } from '../../application/services/sendEmailInterface';
+import { SendEmailService } from '../../frameworks/services/sendEmailService';
+import { GoogleAuthServiceInterface } from '../../application/services/googleAuthServicesInterface';
+import { GoogleAuthService } from '../../frameworks/services/googleAuthService';
+import Status from '../../constants/HttResponseStatus';
 const authController = (
     authServiceInterface: AuthServiceInterface,
     authServiceImplementation: AuthService,
@@ -57,7 +57,7 @@ const authController = (
         res.status(200).json({
             status: 'success',
             message: `Email verification otp send successfully to ${userData.email}`,
-            userData,
+            data:userData,
         });
     });
 
@@ -73,9 +73,7 @@ const authController = (
         res.status(200).json({
             status: 'success',
             message: 'User logged in successfully',
-            accessToken,
-            refreshToken,
-            user,
+            data:{accessToken,refreshToken,user}
         });
     });
     const loginAdmin = asyncHandler(async (req: Request, res: Response) => {
@@ -90,8 +88,7 @@ const authController = (
         res.status(200).json({
             status: 'success',
             message: 'Successfully logged in',
-            accessToken,
-            refreshToken,
+            data:{accessToken,refreshToken}
         });
     });
     const loginWithGoogle = asyncHandler(async (req: Request, res: Response) => {
@@ -106,8 +103,7 @@ const authController = (
         res.status(200).json({
             status: 'success',
             message: 'Successfully logged in with google',
-            accessToken,
-            refreshToken,
+           data:{accessToken,refreshToken}
         });
     });
     const verifyUserEmail = asyncHandler(async (req: Request, res: Response) => {
@@ -122,9 +118,7 @@ const authController = (
         res.status(200).json({
             status: 'success',
             message: 'OTP verified successfully',
-            accessToken,
-            refreshToken,
-            user,
+            data:{accessToken,refreshToken,user}
         });
     });
     const resendOtpverify = asyncHandler(async (req: Request, res: Response) => {
@@ -133,6 +127,7 @@ const authController = (
         res.status(200).json({
             status: 'success',
             message: `Email verification otp send successfully to ${email}`,
+            data:null
         });
     });
 
@@ -142,6 +137,7 @@ const authController = (
         res.status(200).json({
             status: 'success',
             message: `Please reset new Password using the link provied to ${email}`,
+            data:null
         });
     });
     const resetPasswordByEmail = asyncHandler(async (req: Request, res: Response) => {
@@ -150,6 +146,7 @@ const authController = (
         res.status(200).json({
             status: 'success',
             message: 'Please reset the password',
+            data:null
         });
     });
     const confirmPassword = asyncHandler(async (req: Request, res: Response) => {
@@ -158,6 +155,7 @@ const authController = (
         res.status(200).json({
             status: Status.SUCCESS,
             message: 'Password reset successfully completed',
+            data:null
         });
     });
 
@@ -165,6 +163,7 @@ const authController = (
         res.status(200).json({
             status: 'success',
             message: `Logout successfully`,
+            data:null
         });
     });
     return {

@@ -1,6 +1,6 @@
-import { UserRepositoryMongoDB } from '@src/frameworks/database/mongodb/repositories/UserRepoMongoDb';
-import { UserUpdateInfo } from '@src/types/userInterface';
-import { UserRegisterInterface } from '@src/types/userRegisterInterface';
+import { UserRepositoryMongoDB } from '../../frameworks/database/mongodb/repositories/UserRepoMongoDb';
+import { UserUpdateInfo } from '../../types/userInterface';
+import { UserRegisterInterface } from '../../types/userRegisterInterface';
 
 export const userDbRepository = (repository: ReturnType<UserRepositoryMongoDB>) => {
     const addUser = async (user: UserRegisterInterface) => await repository.addUser(user);

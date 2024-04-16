@@ -32,7 +32,6 @@ export const editUserDetailsUseCase = async (
         throw new AppError('Please provide a valid user id', HttpStatusCodes.BAD_REQUEST);
     }
     const userDetails: UserInterface | null = await userDbRepository.getUserById(id);
-    console.log(userData);
     
     let query: object = {};
     if (profilePic) {
@@ -48,13 +47,11 @@ export const editUserDetailsUseCase = async (
             email: userData.email,
             mobile: userData.mobile,
         };
-        console.log(query);
         if (Object.keys(userData).length === 0) {
             throw new AppError('At least update a single field', HttpStatusCodes.BAD_REQUEST);
         }
         if (userData && userDetails) {
             const checkPassword = await authService.comparePassword(userData.currentPassword, userDetails.password);
-            console.log(checkPassword);
             if (!checkPassword) {
                 throw new AppError('Current Password is incorrect', HttpStatusCodes.BAD_REQUEST);
             }

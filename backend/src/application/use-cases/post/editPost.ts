@@ -1,9 +1,8 @@
-import { PostDbRepositoryInterface } from '@src/application/repositories/postDBRepository';
-import { CloudServiceInterface } from '@src/application/services/cloudServiceInterface';
-import HttpStatusCodes from '@src/constants/HttpStatusCodes';
-import { CloudServiceImpl } from '@src/frameworks/services/s3Service';
-import { EditPostInterface } from '@src/types/postInterface';
-import AppError from '@src/utils/appError';
+import { PostDbRepositoryInterface } from '../../../application/repositories/postDBRepository';
+import { CloudServiceInterface } from '../../../application/services/cloudServiceInterface';
+import HttpStatusCodes from '../../../constants/HttpStatusCodes';
+import { EditPostInterface } from '../../../types/postInterface';
+import AppError from '../../../utils/appError';
 
 export const editPostUseCase = async (
     userId: string | undefined,

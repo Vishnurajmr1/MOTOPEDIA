@@ -5,7 +5,10 @@ import { PostListComponent } from './post-list.component';
 const routes: Routes = [{
   path:'',
   component:PostListComponent
-}];
+}]
+
+
+
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],

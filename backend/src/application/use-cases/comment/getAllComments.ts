@@ -1,6 +1,6 @@
-import { CommentDbRepositoryInterface } from '@src/application/repositories/commentDBRepository';
-import HttpStatusCodes from '@src/constants/HttpStatusCodes';
-import AppError from '@src/utils/appError';
+import { CommentDbRepositoryInterface } from '../../../application/repositories/commentDBRepository';
+import HttpStatusCodes from '../../../constants/HttpStatusCodes';
+import AppError from '../../../utils/appError';
 
 export const getAllComments = async (postId: string, commentDbRepository: ReturnType<CommentDbRepositoryInterface>) => {
     if (!postId) {

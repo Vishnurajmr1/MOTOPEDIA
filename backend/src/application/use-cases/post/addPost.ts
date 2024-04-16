@@ -1,8 +1,8 @@
-import { PostDbRepositoryInterface } from '@src/application/repositories/postDBRepository';
-import { CloudServiceInterface } from '@src/application/services/cloudServiceInterface';
-import HttpStatusCodes from '@src/constants/HttpStatusCodes';
-import { AddPostInterface } from '@src/types/postInterface';
-import AppError from '@src/utils/appError';
+import { PostDbRepositoryInterface } from '../../../application/repositories/postDBRepository';
+import { CloudServiceInterface } from '../../../application/services/cloudServiceInterface';
+import HttpStatusCodes from '../../../constants/HttpStatusCodes';
+import { AddPostInterface } from '../../../types/postInterface';
+import AppError from '../../../utils/appError';
 
 export const addPosts = async (
     userId: string | undefined,
@@ -17,11 +17,11 @@ export const addPosts = async (
     const uploadPromises = files.map(async (file) => {
         let uploadedFile: any;
         if (file.mimetype.includes('image')) {
-            uploadedFile = await cloudService.upload(file,'Posts/photo');
+            uploadedFile = await cloudService.upload(file, 'Posts/photo');
             postInfo.image = uploadedFile;
         }
-        if(file.mimetype.includes('video')){
-            uploadedFile=await cloudService.upload(file,'Posts/video')
+        if (file.mimetype.includes('video')) {
+            uploadedFile = await cloudService.upload(file, 'Posts/video');
         }
     });
     await Promise.all(uploadPromises);

@@ -1,7 +1,7 @@
-import { PostDbRepositoryInterface } from '@src/application/repositories/postDBRepository';
-import { CloudServiceInterface } from '@src/application/services/cloudServiceInterface';
-import HttpStatusCodes from '@src/constants/HttpStatusCodes';
-import AppError from '@src/utils/appError';
+import { PostDbRepositoryInterface } from '../../../application/repositories/postDBRepository';
+import { CloudServiceInterface } from '../../../application/services/cloudServiceInterface';
+import HttpStatusCodes from '../../../constants/HttpStatusCodes';
+import AppError from '../../../utils/appError';
 
 export const deletePostById = async (
     userId: string | undefined,
@@ -16,7 +16,7 @@ export const deletePostById = async (
         throw new AppError('Please provide a user id', HttpStatusCodes.BAD_REQUEST);
     }
     const post = await postDbRepository.getPostById(postId);
-    console.log(post)
+    console.log(post);
     if (post?.authorId.toString() !== userId) {
         throw new AppError('You cannot delete this post', HttpStatusCodes.BAD_REQUEST);
     }

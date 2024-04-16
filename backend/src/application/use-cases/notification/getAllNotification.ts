@@ -1,4 +1,4 @@
-import { notificationDbRepositoryInterface } from '@src/application/repositories/notificationDBRepository';
+import { notificationDbRepositoryInterface } from '../../../application/repositories/notificationDBRepository';
 import HttpStatusCodes from '../../../constants/HttpStatusCodes';
 import AppError from '../../../utils/appError';
 

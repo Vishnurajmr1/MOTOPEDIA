@@ -1,23 +1,23 @@
 import { v4 as uuidv4 } from 'uuid';
 import { Request, Response } from 'express';
-import { PaymentServiceInterface } from '@src/application/services/paymentServiceInterface';
-import { PaymentServiceImpl } from '@src/frameworks/services/paymentService';
+import { PaymentServiceInterface } from '../../application/services/paymentServiceInterface';
+import { PaymentServiceImpl } from '../../frameworks/services/paymentService';
 import asyncHandler from 'express-async-handler';
 import {
     createCustomerUseCase,
     createPaymentUseCase,
     createSessionsUseCase,
     getConfigUseCase,
-} from '@src/application/use-cases/payment/createPayment';
-import Status from '@src/constants/HttResponseStatus';
-import { CustomRequest } from '@src/types/customRequest';
-import { subscriptionDbInterface } from '@src/application/repositories/subscriptionDBRepository';
-import { SubscriptionRepositoryMongoDb } from '@src/frameworks/database/mongodb/repositories/subscriptionRepoMongDb';
-import { usersDbInterface } from '@src/application/repositories/userDBRepository';
-import { UserRepositoryMongoDB } from '@src/frameworks/database/mongodb/repositories/UserRepoMongoDb';
-import { IPaymentInfo } from '@src/types/paymentInterface';
-import { PaymentDbInterface } from '@src/application/repositories/paymentDBRepository';
-import { PaymentImplInterface } from '@src/frameworks/database/mongodb/repositories/paymentRepoMongoDb';
+} from '../../application/use-cases/payment/createPayment';
+import Status from '../../constants/HttResponseStatus';
+import { CustomRequest } from '../../types/customRequest';
+import { subscriptionDbInterface } from '../../application/repositories/subscriptionDBRepository';
+import { SubscriptionRepositoryMongoDb } from '../../frameworks/database/mongodb/repositories/subscriptionRepoMongDb';
+import { usersDbInterface } from '../../application/repositories/userDBRepository';
+import { UserRepositoryMongoDB } from '../../frameworks/database/mongodb/repositories/UserRepoMongoDb';
+import { IPaymentInfo } from '../../types/paymentInterface';
+import { PaymentDbInterface } from '../../application/repositories/paymentDBRepository';
+import { PaymentImplInterface } from '../../frameworks/database/mongodb/repositories/paymentRepoMongoDb';
 
 const paymentController = (
     paymentServiceInterface: PaymentServiceInterface,

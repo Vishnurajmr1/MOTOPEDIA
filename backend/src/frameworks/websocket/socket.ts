@@ -1,20 +1,10 @@
 //Socket config
 import http from 'http';
 import { Express } from 'express';
-import cookie from 'cookie';
 import { Server, Socket } from 'socket.io';
-// import chatController from '../../adapters/controllers/chatController';
-import AppError from '../../utils/appError';
-import HttpStatusCodes from '../../constants/HttpStatusCodes';
-import { chatDbRepository } from '../../application/repositories/chatDBRepository';
-import { chatRepositoryMongoDB } from '../database/mongodb/repositories/chatRepoMongoDb';
-import { userDbRepository } from '../../application/repositories/userDBRepository';
-import { userRepositoryMongoDB } from '../database/mongodb/repositories/UserRepoMongoDb';
 import { ChatEventEnum } from '../../constants/chatEventEnum';
-import { AuthService } from '../services/authService';
-import { customSocket } from '@src/types/socket.Interfact';
-import { CustomRequest } from '@src/types/customRequest';
-import { IAddNotification } from '@src/types/notification.interface';
+import { CustomRequest } from '../../types/customRequest';
+import { IAddNotification } from '../../types/notification.interface';
 
 export const setupSocketIO = async (app: Express, server: http.Server) => {
     const io = new Server(server, {

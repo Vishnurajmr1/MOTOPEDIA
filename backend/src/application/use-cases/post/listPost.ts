@@ -29,14 +29,16 @@ export const getPostByUserUseCase = async (
         throw new AppError('Invalid user Id', HttpStatusCodes.BAD_REQUEST);
     }
     const posts = await postDbRepository.getPostByUser(userId);
+    if (posts !== null) {
+        await Promise.all(
+            posts.map(async (post) => {
+                if (post.image) {
+                    post.imageUrl = await cloudService.getFile(post.image.key);
+                }
+            }),
+        );
+    }
 
-    await Promise.all(
-        posts.map(async (post) => {
-            if (post.image) {
-                post.imageUrl = await cloudService.getFile(post.image.key);
-            }
-        }),
-    );
     return posts;
 };
 
@@ -58,18 +60,16 @@ export const getPostsByFollowersUseCase = async (
         }),
     );
 
-    const currentUserPosts=await postDbRepository.getPostByUser(userId);
-    const allPosts=postsByFollowers.flat().concat(currentUserPosts);
-    const unblockedPosts=allPosts.filter((post)=>!post.blocked);
-    await Promise.all(unblockedPosts.map(async(post)=>{
-        if(post && post.image){
-            post.imageUrl=await cloudService.getFile(post.image.key)
-        }
-    }))
+    const currentUserPosts = await postDbRepository.getPostByUser(userId);
+    const allPosts = postsByFollowers.flat().concat(currentUserPosts);
+    const unblockedPosts = allPosts.filter((post) => !post?.blocked);
+    await Promise.all(
+        unblockedPosts.map(async (post) => {
+            if (post && post.image) {
+                post.imageUrl = await cloudService.getFile(post.image.key);
+            }
+        }),
+    );
 
     return unblockedPosts;
 };
-
-// const followers=connectionData.map((user)=>{
-//     user.followers
-// })

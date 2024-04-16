@@ -1,4 +1,4 @@
-import { addCommentInterface } from "@src/types/commentInterface";
+import { addCommentInterface } from "../../../../types/commentInterface";
 import { comment } from "../models/comment";
 
 export const commentRepositoryMongoDb=()=>{

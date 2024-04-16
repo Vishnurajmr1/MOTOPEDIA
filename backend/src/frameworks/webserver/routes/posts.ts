@@ -10,8 +10,8 @@ import { commentDbRepository } from '../../../application/repositories/commentDB
 import { commentRepositoryMongoDb } from '../../../frameworks/database/mongodb/repositories/commentRepoMongoDb';
 import { reportDbRepository } from '../../../application/repositories/reportDBRepoistory';
 import { reportRepositoryMongoDb } from '../../../frameworks/database/mongodb/repositories/reportRepoMongoDb';
-import { connectionDbRepository } from '@src/application/repositories/connectionDBRepository';
-import { connectionRepositoryMongoDB } from '@src/frameworks/database/mongodb/repositories/connectionRepoMongoDb';
+import { connectionDbRepository } from '../../../application/repositories/connectionDBRepository';
+import { connectionRepositoryMongoDB } from '../../../frameworks/database/mongodb/repositories/connectionRepoMongoDb';
 import roleCheckMiddleware from '../middlewares/roleCheckMiddleware';
 
 const postRouter = () => {

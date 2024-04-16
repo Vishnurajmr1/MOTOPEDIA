@@ -1,6 +1,6 @@
 import { AddSubscription, ISubscriptionInfo } from '../../../types/paymentInterface';
 import { subscriptionDbInterface } from '../../../application/repositories/subscriptionDBRepository';
-import { PaymentServiceInterface } from '@src/application/services/paymentServiceInterface';
+import { PaymentServiceInterface } from '../../../application/services/paymentServiceInterface';
 
 export const createSubscriptionUseCase = async (
     subscriptionData: ISubscriptionInfo,

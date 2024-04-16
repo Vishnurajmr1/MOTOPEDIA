@@ -1,8 +1,8 @@
-import { PostDbRepositoryInterface } from '@src/application/repositories/postDBRepository';
-import { CloudServiceInterface } from '@src/application/services/cloudServiceInterface';
-import HttpStatusCodes from '@src/constants/HttpStatusCodes';
-import { EditPostInterface } from '@src/types/postInterface';
-import AppError from '@src/utils/appError';
+import { PostDbRepositoryInterface } from '../../../application/repositories/postDBRepository';
+import { CloudServiceInterface } from '../../../application/services/cloudServiceInterface';
+import HttpStatusCodes from '../../../constants/HttpStatusCodes';
+import { EditPostInterface } from '../../../types/postInterface';
+import AppError from '../../../utils/appError';
 
 export const savePostUseCase = async (
     userId: string | undefined,
@@ -29,21 +29,25 @@ export const savePostUseCase = async (
     }
 };
 
-export const getSavedPostsUseCase=async(userId:string|undefined,postDbRepository:ReturnType<PostDbRepositoryInterface>,
+export const getSavedPostsUseCase = async (
+    userId: string | undefined,
+    postDbRepository: ReturnType<PostDbRepositoryInterface>,
     cloudService: ReturnType<CloudServiceInterface>,
-    )=>{
-    if(!userId){
+) => {
+    if (!userId) {
         throw new AppError('unable to get userId', HttpStatusCodes.FORBIDDEN);
     }
 
-    const posts=await postDbRepository.getSavedPosts(userId);
-    await Promise.all(
-        posts.map(async (post) => {
-            if (post.image) {
-                post.imageUrl = await cloudService.getFile(post.image.key);
-            }
-        }),
-    );
-    return posts;
+    const posts = await postDbRepository.getSavedPosts(userId);
+    if (posts !== null) {
+        await Promise.all(
+            posts.map(async (post) => {
+                if (post.image) {
+                    post.imageUrl = await cloudService.getFile(post.image.key);
+                }
+            }),
+        );
+    }
 
-}
+    return posts;
+};

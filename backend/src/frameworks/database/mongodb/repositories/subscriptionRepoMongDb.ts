@@ -1,4 +1,4 @@
-import { AddSubscription, ISubscriptionInfo } from '@src/types/paymentInterface';
+import { AddSubscription, ISubscriptionInfo } from '../../../../types/paymentInterface';
 import SubscriptionPlan from '../models/subscriptionPlan.Model';
 
 export const subscriptionRepositoryMongoDb = () => {
