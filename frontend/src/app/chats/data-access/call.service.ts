@@ -100,13 +100,14 @@ export class CallService {
   }
 
   private async _getStreams(remoteVideo: ElementRef): Promise<void> {
+    console.log(remoteVideo)
     const stream = await navigator.mediaDevices.getUserMedia({
       video: true,
       audio: true,
     });
     const remoteStream = new MediaStream();
     console.log('remoteStream', remoteStream);
-    remoteVideo.nativeElement.srcObject = remoteStream;
+    remoteVideo.nativeElement.srcObject = stream;
 
     this.connection.ontrack = (event) => {
       console.log(event);

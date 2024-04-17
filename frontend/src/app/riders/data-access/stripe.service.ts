@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Stripe } from '@stripe/stripe-js';
-import { environment } from 'src/environments/environment';
+import { environment } from '../../../environments/environment';
 import { PaymentService } from './payment.service';
 import { switchMap } from 'rxjs';
 

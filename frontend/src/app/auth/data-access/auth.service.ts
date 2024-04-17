@@ -8,12 +8,13 @@ import {
   IConfirmPass,
 } from '../../shared/types/user.Interface';
 import { IApiResponse } from '../../../app/shared/types/response.interface';
+import { environment } from 'src/environments/environment';
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
   private http: HttpClient = inject(HttpClient);
-  private authApi = '/api/auth';
+  private authApi = `${environment.apiUrl}/auth`;
   sendGoogleToken(data: string): Observable<any> {
     return this.http.post<any>(`${this.authApi}/googleauth`, {
       googleToken: data,

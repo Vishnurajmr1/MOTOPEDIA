@@ -14,7 +14,7 @@ import {
 } from '../../application/use-cases/post/listPost';
 import { reportPost, reportPostUseCase } from '../../application/use-cases/post/reportPost';
 import { getSavedPostsUseCase, savePostUseCase } from '../../application/use-cases/post/savePost';
-import Status from '@src/constants/HttResponseStatus';
+import Status from '../../constants/HttResponseStatus';
 import { CommentRepositoryMongoDbInterface } from '../../frameworks/database/mongodb/repositories/commentRepoMongoDb';
 import { PostRepositoryMongoDbInterface } from '../../frameworks/database/mongodb/repositories/postRepoMongoDb';
 import { ReportRepositoryMongoDbInterface } from '../../frameworks/database/mongodb/repositories/reportRepoMongoDb';
