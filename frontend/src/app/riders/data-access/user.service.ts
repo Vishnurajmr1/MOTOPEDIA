@@ -12,14 +12,16 @@ import { ICurrentUser } from '../../auth/data-access/state/auth.reducer';
 import {
   IFollowersDetails,
   IUpdateProfile,
-} from 'src/app/shared/types/user.Interface';
-import { IApiResponse } from 'src/app/shared/types/response.interface';
+} from '../../../app/shared/types/user.Interface';
+import { IApiResponse } from '../../../app/shared/types/response.interface';
+import { environment } from '../../../environments/environment';
 @Injectable({
   providedIn: 'root',
 })
 export class UserService {
   private http: HttpClient = inject(HttpClient);
-  private userApi = '/api/user';
+  // private userApi = '/api/user';
+  private userApi = `${environment.apiUrl}/user`;
   currentUser$!: Observable<ICurrentUser>;
   userId: string = '';
   private ngUnsubscribe$ = new Subject<void>();

@@ -1,14 +1,15 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
-import { IApiResponse } from 'src/app/shared/types/response.interface';
+import { IApiResponse } from '../../../app/shared/types/response.interface';
+import { environment } from '../../../environments/environment';
 @Injectable({
   providedIn: 'root',
 })
 export class ChatApiService {
   private http = inject(HttpClient);
-  private chatApi = '/api/chat/';
-  private chatMessageApi = '/api/messages/';
+  private chatApi = `${environment.apiUrl}/chat/`;
+  private chatMessageApi = `${environment.apiUrl}/messages/`;
   getUserChats(): Observable<IApiResponse> {
     return this.http.get<IApiResponse>(`${this.chatApi}`);
   }

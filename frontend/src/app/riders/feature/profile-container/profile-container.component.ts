@@ -127,4 +127,8 @@ export class ProfileContainerComponent {
   showFollowersList() {
     this.openFollowersModal=!this.openFollowersModal;
   }
+  ngOnDestroy(): void {
+    
+  }
 }
+

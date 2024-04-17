@@ -5,9 +5,9 @@ import { Store } from '@ngrx/store';
 import { Observable, BehaviorSubject } from 'rxjs';
 import {State, getCurrentUserData, isUserLoggedIn } from '../../auth/data-access/state';
 import { ICurrentUser } from '../../auth/data-access/state/auth.reducer';
-import { CommentInterface } from '../../shared/types/comment.interface';
 import { IEditPost, IPost, IPostList, IReportPost, IpostInterface } from '../../shared/types/post.Interface';
-import { IApiResponse } from 'src/app/shared/types/response.interface';
+import { IApiResponse } from '../../../app/shared/types/response.interface';
+import { environment } from '../../../environments/environment';
 
 interface comments {
   status: string;
@@ -26,7 +26,7 @@ export class PostService {
     this.currentUser$ = this.store.select(getCurrentUserData);
     this.isUserLoggedIn$ = this.store.select(isUserLoggedIn);
   }
-  private postApi = '/api/posts';
+  private postApi = `${environment.apiUrl}/posts`;
   getAllPost(): Observable<IApiResponse> {
     return this.http.get<IApiResponse>(`${this.postApi}/get-all-posts`);
   }

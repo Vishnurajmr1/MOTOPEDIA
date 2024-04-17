@@ -5,13 +5,15 @@ import {
   IAddNotification,
   getAllNotificationsInterface,
 } from '../../types/notification.interface';
+import { environment } from '../../../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class notificationService {
   private http: HttpClient = inject(HttpClient);
-  private notificationApi = '/api/notification';
+  // private notificationApi = '/api/notification';
+  private notificationApi =`${environment.apiUrl}/notification`;
 
   createNotification(notification: IAddNotification): Observable<any> {
     return this.http.post(`${this.notificationApi}/create`, notification);
