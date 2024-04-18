@@ -120,7 +120,7 @@ export class PostListComponent {
   showComment(postId: string) {
     this.selectedPostId = postId;
     this.postService.getComments(postId).subscribe((res) => {
-      this.selectedPostComments = res.data;
+      this.selectedPostComments = res.data
     });
   }
   onAddComment(commentData: {
@@ -128,6 +128,7 @@ export class PostListComponent {
     parentId: string | null;
   }): void {
     const postId = this.selectedPostId;
+    console.log(postId,commentData)
     this.postService
       .createComment(postId, commentData)
       .subscribe((createComment) => {

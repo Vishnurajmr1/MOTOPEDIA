@@ -5,8 +5,8 @@ import {
   Input,
   Output,
 } from '@angular/core';
-import { ActiveCommentInterface } from 'src/app/shared/types/activeComment.interface';
-import { CommentInterface } from 'src/app/shared/types/comment.interface';
+import { ActiveCommentInterface } from '../../../../app/shared/types/activeComment.interface';
+import { CommentInterface } from '../../../../app/shared/types/comment.interface';
 @Component({
   selector: 'app-post-comments',
   templateUrl: './post-comments.component.html',
@@ -21,7 +21,11 @@ export class PostCommentsComponent {
     parentId: string | null;
   }>();
   activeComment: ActiveCommentInterface | null = null;
-  ngOnInit() {}
+  ngOnInit() {
+  }
+  getRootComments():CommentInterface[]{
+    return this.comments.filter((comment)=>comment.parentId===null);
+  }
   addComment({
     content,
     parentId,
@@ -40,6 +44,9 @@ export class PostCommentsComponent {
       );
   }
   setActiveComment(activeComment: ActiveCommentInterface | null): void {
+    console.log('activeComment')
+    console.log(activeComment)
+    console.log('activeComment')
     this.activeComment = activeComment;
   }
 }
