@@ -2,7 +2,7 @@
   <div class="mr-3">
     <img
       class="rounded-sm"
-      src="/assets/images/icons/user.png"
+      src="/assets/images/icons/profile_avatar.svg"
       width="20"
       height="20"
     />
@@ -14,37 +14,50 @@
       </div>
     </div>
     <div class="text-lg">{{ comment.content }}</div>
-    <div class="comment-actions">
+    <div class="comment-actions flex gap-2">
       <div
         *ngIf="canReply"
-        class="flex text-xs cursor-pointer mt-2 hover"
+        class="text-xs cursor-pointer mt-2"
         (click)="
           setActiveComment.emit({
-            id: comment.id,
+            id: comment._id,
             type: activeCommentType.replying
           })
         "
       >
         Reply
       </div>
-      <div
+      <!-- <div
         *ngIf="canEdit"
-        class="comment-action"
+        class="text-xs cursor-pointer mt-2"
         (click)="
           setActiveComment.emit({
-            id: comment.id,
+            id: comment._id,
             type: activeCommentType.editing
           })
         "
       >
         Edit
-      </div>
-      <div *ngIf="canDelete">Delete</div>
+      </div> -->
+      <!-- <div *ngIf="canDelete"
+      class="text-xs cursor-pointer mt-2">Delete</div> -->
     </div>
     <app-comment-form
-      *ngIf="isReplying()"
-      sumbitLabel="Reply"
-      (handleSubmit)="addComment.emit({ content: $event, parentId: replyId })"
+    *ngIf="isReplying()"
+    [submitLabel]="'Reply'"
+    (handleSubmit)="addComment.emit({ content: $event, parentId: replyId });closeCommentForm()"
     ></app-comment-form>
   </div>
 </div>
+  <div class="ml-8" *ngIf="replies.length > 0">
+    <app-post-comment
+      *ngFor="let reply of replies"
+      [comment]="reply"
+      (setActiveComment)="setActiveComment.emit($event)"
+      [activeComment]="activeComment"
+      (addComment)="addComment.emit($event)"
+      [parentId]="comment._id"
+      [replies]="[]"
+      [currentUserId]="currentUserId"
+    ></app-post-comment>
+  </div>

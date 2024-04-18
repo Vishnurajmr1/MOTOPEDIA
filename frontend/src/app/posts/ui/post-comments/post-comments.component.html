@@ -2,12 +2,13 @@
 (handleSubmit)="addComment({content:$event,parentId:null})"></app-comment-form>
 <div *ngIf="comments.length > 0; else noComments">
     <app-post-comment
-    *ngFor="let comment of comments"
-    [comment]="comment"
+    *ngFor="let rootcomment of getRootComments()"
+    [comment]="rootcomment"
     [currentUserId]="currentUserId"
-    [replies]="getReplies(comment.id)"
+    [replies]="getReplies(rootcomment._id)"
     (setActiveComment)="setActiveComment($event)"
     (addComment)="addComment($event)"
+    [activeComment]="activeComment"
     ></app-post-comment>
   </div>
   <ng-template #noComments>

@@ -109,8 +109,8 @@ const postController = (
     });
     const addCommentByPostId = asyncHandler(async (req: CustomRequest, res: Response) => {
         const userId: string | undefined = req.user?.Id;
-        const { postId, content } = req.body;
-        const commentInfo: addCommentInterface = { postId, userId, content };
+        const { postId, content,parentId } = req.body;
+        const commentInfo: addCommentInterface = { postId, userId, content,parentId };
         const comments = await addComment(userId, postId, commentInfo, dbRepositoryComment);
         res.status(201).json({
             status: Status.SUCCESS,

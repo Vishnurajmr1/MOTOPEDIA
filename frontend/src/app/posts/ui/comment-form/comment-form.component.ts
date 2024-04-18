@@ -32,6 +32,7 @@ export class CommentFormComponent {
   }
 
   onSubmit(): void {
+    console.log(this.form.value)
     this.handleSubmit.emit(this.form.value.title);
     this.form.reset();
   }

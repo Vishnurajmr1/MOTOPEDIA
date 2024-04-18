@@ -35,23 +35,33 @@ export class PostCommentComponent {
   replyId: string | null = null;
 
   ngOnInit(): void {
-    const fiveMinutes = 300000;
-    const timePassed =
-      new Date().getMilliseconds() -
-        new Date(this.comment.createdAt).getMilliseconds() >
-      fiveMinutes;
+    console.log(this.replies)
+    const fiveMinutes = 5*60*1000;
+    const currentTime=new Date().getTime();
+    const commentTime=new Date(this.comment.createdAt).getTime()
+    const timePassed=currentTime-commentTime>fiveMinutes
+      console.log(this.currentUserId)
     this.canReply = Boolean(this.currentUserId);
-    this.canEdit = this.currentUserId === this.comment.userId.id && !timePassed;
+    this.canEdit = this.currentUserId === this.comment.userId._id && !timePassed;
     this.canDelete =
-      this.currentUserId === this.comment.userId.id &&
+      this.currentUserId === this.comment.userId._id &&
       this.replies.length === 0 &&
       !timePassed;
-    this.replyId = this.parentId ? this.parentId : this.comment.id;
-  }
-  isReplying(): boolean {
+    }
+    isReplying(): boolean {
+    this.replyId = this.parentId ? this.parentId : this.comment._id;
+    console.log(this.activeComment)
     if (!this.activeComment) {
       return false;
     }
-    return false;
+    // return false
+    return (
+      this.activeComment.id===this.comment._id 
+      &&
+      this.activeComment.type===this.activeCommentType.replying
+    );
+  }
+  closeCommentForm(){
+    this.activeComment=null;
   }
 }

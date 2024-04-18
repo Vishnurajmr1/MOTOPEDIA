@@ -20,6 +20,7 @@ const commentSchema = new Schema(
         parentId: {
             type: Schema.Types.ObjectId,
             ref: 'comment',
+            default:null
         },
         deleted: {
             type: Boolean,
