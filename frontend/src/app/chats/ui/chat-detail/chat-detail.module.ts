@@ -4,6 +4,7 @@ import { ChatDetailComponent } from './chat-detail.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HideScrollbarDirective } from 'src/app/shared/directives/hideScrollbar.directive';
 import { TimeAgoModule } from 'src/app/shared/pipes/time-ago.module';
+import { VideoCallModule } from '../video-call/video-call.module';
 
 
 
@@ -15,7 +16,7 @@ import { TimeAgoModule } from 'src/app/shared/pipes/time-ago.module';
   imports: [
     CommonModule,
     FormsModule,
-    TimeAgoModule
+    TimeAgoModule,
     
   ],
   exports:[
