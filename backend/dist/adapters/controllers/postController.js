@@ -98,8 +98,8 @@ const postController = (cloudServiceInterface, cloudServiceImpl, postDbRepositor
     const addCommentByPostId = (0, express_async_handler_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
         var _g;
         const userId = (_g = req.user) === null || _g === void 0 ? void 0 : _g.Id;
-        const { postId, content } = req.body;
-        const commentInfo = { postId, userId, content };
+        const { postId, content, parentId } = req.body;
+        const commentInfo = { postId, userId, content, parentId };
         const comments = yield (0, addComment_1.addComment)(userId, postId, commentInfo, dbRepositoryComment);
         res.status(201).json({
             status: HttResponseStatus_1.default.SUCCESS,

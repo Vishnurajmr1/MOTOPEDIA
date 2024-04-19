@@ -21,13 +21,10 @@ export class ChatDetailComponent {
   @Input()
   CurrentChatMessages: ChatMessageInterface[] = [];
   @Output() messageSend: EventEmitter<string> = new EventEmitter<string>();
-  @Output() makeVideoCallClicked: EventEmitter<VideoCallEvent> =
-    new EventEmitter<VideoCallEvent>();
+  @Output() makeVideoCallClicked: EventEmitter<string> =
+    new EventEmitter<string>();
   @Input()
   isSendByUser!: Function;
-  // @ViewChild('remoteVideo') remoteVideoRef!: ElementRef;
-  remoteVideoRef!: ElementRef;
-  @ViewChild('myVideo') myVideoRef!: ElementRef;
   messageTyped: string = '';
   chatHistory: any;
   isCurrentUserSender(msg: any): boolean {
@@ -39,21 +36,7 @@ export class ChatDetailComponent {
       this.messageTyped = '';
     }
   }
-  onMakeVideCall(chatId: string): void {
-    const remoteVideoRef = new ElementRef(
-      document.getElementById('remoteVideo') as HTMLVideoElement
-    );
-    this.makeVideoCallClicked.emit({chatId,remoteVideoRef});
-    // const event:VideoCallEvent={chatId,remoteVideoRef}
-    
-    console.log(this.remoteVideoRef);
-  }
-  get remoteVideoElement(): ElementRef<any> {
-    console.log(this.remoteVideoRef);
-    // return this.remoteVideoRef;
-    return { nativeElement: this.remoteVideoRef };
-  }
-  get myVideoElement(): ElementRef {
-    return this.myVideoRef;
+  onMakeVideoCall(chatId: string): void {
+    this.makeVideoCallClicked.emit(chatId);
   }
 }

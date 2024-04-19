@@ -9,7 +9,7 @@
     <button
       type="button"
       class="inline-block fixed right-8"
-      (click)="onMakeVideCall(CurrentChatMessages[0].chat)"
+      (click)="onMakeVideoCall(CurrentChatMessages[0].chat)"
     >
       <img
         class="w-8 h-8"
@@ -17,9 +17,6 @@
         alt=""
       />
     </button>
-    <!-- <video autoplay playsinline controls="false" #myVideo  ></video> -->
-    <video  autoplay playsinline controls="false" #remoteVideo id="remoteVideo"></video>
-
   </div>
   <div class="flex flex-col flex-auto" #scrollMe HideScrollbar>
     <div class="flex flex-col flex-auto flex-shrink-0 rounded-2xl h-full">
@@ -132,3 +129,4 @@
     <h1>No Messages</h1>
   </div>
 </ng-template>
+

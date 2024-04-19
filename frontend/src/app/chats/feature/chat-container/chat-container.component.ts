@@ -17,14 +17,15 @@ import {
 import { ICurrentUser } from '../../../../app/auth/data-access/state/auth.reducer';
 import { UserService } from '../../../../app/riders/data-access/user.service';
 import { ChatApiService } from '../../data-access/chatApi.service';
-import { IUserDetails, IUserInfo } from 'src/app/shared/types/user.Interface';
+import { IUserDetails, IUserInfo } from '../../../../app/shared/types/user.Interface';
 import {
   ChatListItemInterface,
   ChatMessageInterface,
   VideoCallEvent,
-} from 'src/app/shared/types/chat.Interface';
+} from '../../../../app/shared/types/chat.Interface';
 import { ChatDetailComponent } from '../../ui/chat-detail/chat-detail.component';
 import { CallService } from '../../data-access/call.service';
+import { VideoCallComponent } from '../../ui/video-call/video-call.component';
 
 @Component({
   selector: 'app-chat-container',
@@ -45,13 +46,14 @@ export class ChatContainerComponent {
   protected participantData: IUserDetails | undefined;
   messageRecieved = false;
   selectedChat: string = '';
+  openVideoCall:boolean=false;
   protected chatMessages: ChatMessageInterface[] = [];
   protected unreadMessages: ChatMessageInterface[] = [];
   protected currentUser!: ICurrentUser;
-  remoteVideoElement!: ElementRef<any>;
   private ngUnsubscribe$ = new Subject<void>();
   @ViewChildren('chatDetail')
   chatDetailComponent!: ChatDetailComponent;
+  @ViewChildren(VideoCallComponent)videoCallComponent!:VideoCallComponent;
   constructor(private store: Store<State>) {
     this.currentUser$ = this.store.select(getCurrentUserData);
     this.currentUser$.pipe(takeUntil(this.ngUnsubscribe$)).subscribe((res) => {
@@ -59,6 +61,8 @@ export class ChatContainerComponent {
     });
     this.onMessageRecieved();
   }
+  remoteVideoElement!:ElementRef<any>
+  localVideoElement!:ElementRef<HTMLVideoElement>
   ngOnInit() {
     this.userService.getConnection().subscribe((user) => {
       console.log(user)
@@ -70,6 +74,7 @@ export class ChatContainerComponent {
     }
     this.getCurrentUserChat();
   }
+ 
   onChatSelected(value: { participant: IUserDetails; chatId: string }): void {
     this.selectedChat = value.chatId;
     this.participantData = value.participant;
@@ -181,11 +186,16 @@ export class ChatContainerComponent {
     });
   }
 
-  makeVideoCall(data: VideoCallEvent): void {
-    console.log('hello particular chat is clicked', data.chatId);
-    this.remoteVideoElement = data.remoteVideoRef;
+  receiveRemoteVideo(remoteVideoElement:ElementRef<any>){
+    console.log(remoteVideoElement)
+    this.remoteVideoElement=remoteVideoElement
     this.makeCall();
-    this.createVideoContainer();
+  }
+  makeVideoCall(chatId:string): void {
+    this.openVideoCall=!this.openVideoCall;
+    console.log('hello particular chat is clicked',chatId);
+    console.log(this.remoteVideoElement)
+    // this.createVideoContainer();
   }
 
   public async makeCall(): Promise<void> {
@@ -214,9 +224,9 @@ export class ChatContainerComponent {
   }
 
   createVideoContainer(): void {
-    console.log(this.chatDetailComponent.remoteVideoRef);
-    this.remoteVideoElement = this.chatDetailComponent.remoteVideoRef;
-    console.log(this.remoteVideoElement);
+    console.log(this.chatDetailComponent);
+    // this.remoteVideoElement = this.chatDetailCompone;
+    // console.log(this.remoteVideoElement);
     this.chatService.getNewVideoMessages().subscribe((payload) => {
       console.log(payload);
       this._handleMessage(payload);

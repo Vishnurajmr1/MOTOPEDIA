@@ -105,6 +105,7 @@ export class CallService {
       video: true,
       audio: true,
     });
+    console.log(stream)
     const remoteStream = new MediaStream();
     console.log('remoteStream', remoteStream);
     remoteVideo.nativeElement.srcObject = stream;
