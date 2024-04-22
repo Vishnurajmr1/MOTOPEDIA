@@ -12,7 +12,7 @@
                         <input type="text" placeholder="Select a user to chat..." [value]="followerName" class="block w-full rounded-xl border-0 py-4 px-5 bg-gray-300 outline outline-[1px] text-black font-light placeholder:text-black/50 focus:ring-[1px]">
                     </button>
                 </div>
-                <ng-container *ngIf="showFollowers" >
+                <ng-container *ngIf="showFollowers;else noFollowers" >
                         <div class="w-full">
                             <div class="relative mt-2">
                                 <ul class="grid grid-cols-4 gap-2">
@@ -31,3 +31,8 @@
         </div>
     </div>
 </app-modal>
+<ng-template #noFollowers>
+    <div>
+        <h1>No Followers for you</h1>
+    </div>
+</ng-template>

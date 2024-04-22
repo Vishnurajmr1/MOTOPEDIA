@@ -6,7 +6,7 @@ import {
   IpostInterface,
 } from '../../../../app/shared/types/post.Interface';
 import { PostService } from '../../data-access/post.service';
-import { Observable } from 'rxjs';
+import { Observable, of, switchMap } from 'rxjs';
 import { UserService } from '../../../../app/riders/data-access/user.service';
 import { SnackbarService } from '../../../../app/shared/data-access/global/snackbar.service';
 import { CommentInterface } from '../../../../app/shared/types/comment.interface';
@@ -39,8 +39,19 @@ export class PostListComponent {
   isUserFollowed: boolean = false;
   openShareModal: boolean = false;
   ngOnInit(): void {
-    this.postService.getPostByFollowers().subscribe((data) => {
-      this.posts = data.data;
+    this.postService.getPostByFollowers().pipe(switchMap((data)=>{
+      if(data.data.length===0){
+        return this.postService.getAllPost()
+      }else{
+        return of(data.data)
+      }
+    })).
+    subscribe((posts) => {
+      if(Array.isArray(posts)){
+        this.posts = posts;
+      }else if(posts.data && Array.isArray(posts.data)){
+        this.posts=posts.data;
+      }
     });
     this.postService.currentUser$.subscribe((user) => {
       this.currentUser = user.userId;

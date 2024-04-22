@@ -11,14 +11,14 @@
         {{ post.authorId.firstName }} {{ post.authorId.lastName }}
       </h1>
     </div>
-    <div class="flex gap-2 items-center">
-      <!-- <button  class="flex items-center gap-2 text-blue-600" (click)="followUser(post.authorId._id)" *ngIf="followButton">
+    <div class="flex gap-2 items-center" >
+      <button  class="flex items-center gap-2 text-blue-600" (click)="followUser(post.authorId._id)" *ngIf="followButton">
         <label class="relative inline-flex items-center cursor-pointer">
           <div
             class="peer ring-0 bg-green-400 rounded-full outline-none duration-300 after:duration-500 w-12 h-12 shadow-md peer-checked:bg-emerald-500 peer-focus:outline-none after:content-['➕'] after:rounded-full after:absolute after:outline-none after:h-10 after:w-10 after:bg-gray-50 after:top-1 after:left-1 after:flex after:justify-center after:items-center peer-hover:after:scale-75 peer-checked:after:content-['✔️'] after:-rotate-180 peer-checked:after:rotate-0"
           ></div></label>
           <span class="font-medium">{{ currentUserFollowing ? 'Unfollow' : 'Follow' }}</span>
-      </button> -->
+      </button>
       <ng-content></ng-content>
     </div>
  
