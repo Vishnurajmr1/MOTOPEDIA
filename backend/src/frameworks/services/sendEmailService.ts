@@ -7,7 +7,7 @@ export const sendEmailService = () => {
         service: 'gmail',
         host: 'smtp.gmail.com',
         port: 587,
-        secure: false,
+        secure: true,
         auth: {
             user: configKeys.EMAIL_NODE_MAILER as string,
             pass: configKeys.PASSWORD_NODE_MAILER as string,

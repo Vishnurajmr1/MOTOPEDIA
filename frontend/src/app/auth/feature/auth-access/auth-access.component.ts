@@ -118,13 +118,13 @@ export class AuthAccessComponent {
       next: (res) => {
         console.log(res);
         const currentUser = {
-          firstName: res.data.userData.firstName,
-          email: res.data.userData.email,
-          lastName: res.data.userData.lastName,
-          mobile: res.data.userData.mobile,
-          isVerifiedEmail: res.data.userData.isVerifiedEmail,
-          isBlocked: res.data.userData.isBlocked,
-          userId:res.data.userData._id
+          firstName: res.data.firstName,
+          email: res.data.email,
+          lastName: res.data.lastName,
+          mobile: res.data.mobile,
+          isVerifiedEmail: res.data.isVerifiedEmail,
+          isBlocked: res.data.isBlocked,
+          userId:res.data._id
         };
         this.store.dispatch(AuthPageActions.setCurrentUser({ currentUser }));
         this.snackbar.showSuccess(res.message);
