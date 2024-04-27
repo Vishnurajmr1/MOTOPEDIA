@@ -6,9 +6,9 @@ import {
   State,
   getCurrentUserData,
   isUserLoggedIn,
-} from 'src/app/auth/data-access/state';
-import { unSetCurrentUser } from 'src/app/auth/data-access/state/actions/auth-page.actions';
-import { ICurrentUser } from 'src/app/auth/data-access/state/auth.reducer';
+} from '../../../../app/auth/data-access/state';
+import { unSetCurrentUser } from '../../../../app/auth/data-access/state/actions/auth-page.actions';
+import { ICurrentUser } from '../../../../app/auth/data-access/state/auth.reducer';
 import { SocketService } from '../../data-access/global/socket.service';
 import { notificationService } from '../../data-access/global/notification.service';
 import { NotificationInterface } from '../../types/notification.interface';
@@ -61,7 +61,9 @@ export class NavbarComponent {
       });
     console.log(this.showNotificationCount);
   }
-
+  isLoginPage():boolean{
+    return this.router.url==='/auth/login';
+  }
   isDropDownMenu = false;
   toggleProfileDropDown() {
     this.isDropDownMenu = !this.isDropDownMenu;

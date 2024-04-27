@@ -39,3 +39,7 @@ export interface VideoCallEvent{
   chatId:string;
   remoteVideoRef:ElementRef<HTMLVideoElement>
 }
+export interface VideoMessage{
+  type:string;
+  data:any;
+}

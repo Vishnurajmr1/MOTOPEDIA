@@ -1,12 +1,4 @@
-import {
-  Component,
-  ElementRef,
-  Input,
-  SimpleChanges,
-  ViewChild,
-  ViewChildren,
-  inject,
-} from '@angular/core';
+import { Component, ElementRef, inject } from '@angular/core';
 import { SocketService } from '../../../shared/data-access/global/socket.service';
 import { Store } from '@ngrx/store';
 import { Observable, Subject, takeUntil } from 'rxjs';
@@ -17,15 +9,15 @@ import {
 import { ICurrentUser } from '../../../../app/auth/data-access/state/auth.reducer';
 import { UserService } from '../../../../app/riders/data-access/user.service';
 import { ChatApiService } from '../../data-access/chatApi.service';
-import { IUserDetails, IUserInfo } from '../../../../app/shared/types/user.Interface';
+import {
+  IUserDetails,
+  IUserInfo,
+} from '../../../../app/shared/types/user.Interface';
 import {
   ChatListItemInterface,
   ChatMessageInterface,
-  VideoCallEvent,
 } from '../../../../app/shared/types/chat.Interface';
-import { ChatDetailComponent } from '../../ui/chat-detail/chat-detail.component';
 import { CallService } from '../../data-access/call.service';
-import { VideoCallComponent } from '../../ui/video-call/video-call.component';
 
 @Component({
   selector: 'app-chat-container',
@@ -46,14 +38,19 @@ export class ChatContainerComponent {
   protected participantData: IUserDetails | undefined;
   messageRecieved = false;
   selectedChat: string = '';
-  openVideoCall:boolean=false;
+  openVideoCall: boolean = false;
   protected chatMessages: ChatMessageInterface[] = [];
   protected unreadMessages: ChatMessageInterface[] = [];
   protected currentUser!: ICurrentUser;
   private ngUnsubscribe$ = new Subject<void>();
-  @ViewChildren('chatDetail')
-  chatDetailComponent!: ChatDetailComponent;
-  @ViewChildren(VideoCallComponent)videoCallComponent!:VideoCallComponent;
+  // @ViewChildren('chatDetail')
+  // chatDetailComponent!: ChatDetailComponent;
+  // @ViewChildren(VideoCallComponent) videoCallComponent!: VideoCallComponent;
+  remoteVideoElement!: ElementRef<any>;
+  localVideoElement!: ElementRef<any>;
+  videoCallChatId: string = '';
+  private videoChatData: any;
+  openReciverVideoModal!: boolean;
   constructor(private store: Store<State>) {
     this.currentUser$ = this.store.select(getCurrentUserData);
     this.currentUser$.pipe(takeUntil(this.ngUnsubscribe$)).subscribe((res) => {
@@ -61,11 +58,10 @@ export class ChatContainerComponent {
     });
     this.onMessageRecieved();
   }
-  remoteVideoElement!:ElementRef<any>
-  localVideoElement!:ElementRef<HTMLVideoElement>
+
   ngOnInit() {
     this.userService.getConnection().subscribe((user) => {
-      console.log(user)
+      console.log(user);
       this.followers = user.data[0].followers;
     });
     const storedUnreadMessages = localStorage.getItem('unreadMessages');
@@ -73,8 +69,9 @@ export class ChatContainerComponent {
       this.unreadMessages = JSON.parse(storedUnreadMessages);
     }
     this.getCurrentUserChat();
+    this.addIncomingMessageHandler();
   }
- 
+
   onChatSelected(value: { participant: IUserDetails; chatId: string }): void {
     this.selectedChat = value.chatId;
     this.participantData = value.participant;
@@ -186,50 +183,40 @@ export class ChatContainerComponent {
     });
   }
 
-  receiveRemoteVideo(remoteVideoElement:ElementRef<any>){
-    console.log(remoteVideoElement)
-    this.remoteVideoElement=remoteVideoElement
-    this.makeCall();
+  makeVideoCall(chatId: string): void {
+    this.openVideoCall = true;
+    console.log('hello particular chat is clicked', chatId);
+    this.videoCallChatId = chatId;
   }
-  makeVideoCall(chatId:string): void {
-    this.openVideoCall=!this.openVideoCall;
-    console.log('hello particular chat is clicked',chatId);
-    console.log(this.remoteVideoElement)
-    // this.createVideoContainer();
+  closeModal(val:boolean){
+    this.openVideoCall=val;
   }
 
-  public async makeCall(): Promise<void> {
-    if (this.remoteVideoElement !== undefined) {
-      console.log(this.remoteVideoElement);
-      await this.callService.makeCall(this.remoteVideoElement);
-    } else {
-      console.log('error found haaaa');
-    }
-  }
-
-  private async _handleMessage(data: any): Promise<void> {
-    switch (data.type) {
-      case 'offer':
-        await this.callService.handleOffer(data.offer, this.remoteVideoElement);
-        break;
-      case 'answer':
-        await this.callService.handleAnswer(data.answer);
-        break;
-      case 'candidate':
-        await this.callService.handleCandidate(data.candidate);
-        break;
-      default:
-        break;
-    }
-  }
-
-  createVideoContainer(): void {
-    console.log(this.chatDetailComponent);
-    // this.remoteVideoElement = this.chatDetailCompone;
-    // console.log(this.remoteVideoElement);
-    this.chatService.getNewVideoMessages().subscribe((payload) => {
-      console.log(payload);
-      this._handleMessage(payload);
+  private async addIncomingMessageHandler(): Promise<void> {
+    this.chatService.getNewVideoMessages().subscribe(async (res) => {
+      console.log('here comes the addincominghandler message');
+      console.log(res);
+      this.videoChatData = res.payload;
+      switch (this.videoChatData.type) {
+        case 'offer':
+        if(res.participant===this.currentUser.userId){
+          this.openVideoCall=true;
+        }
+        await this.callService.handleOffer(this.videoChatData.data);
+          break;
+        case 'answer':
+          await this.callService.handleAnswer(this.videoChatData.data);
+          break;
+        case 'hangup':
+          await this.callService.handleHangupMessage(this.videoChatData);
+          break;
+        case 'candidate':
+            await this.callService.handleCandidate(this.videoChatData.data);
+          break;
+        default:
+          console.log('unknow message  of type' + this.videoChatData.type);
+          break;
+      }
     });
   }
 

@@ -1,44 +1,50 @@
-<section class="flex items-center justify-center mt-5 md:p-5">
-    <div class="background-form drop-shadow-2xl rounded-2xl  max-w-5xl items-center flex">
-        <div class="w-full md:w-1/2 sm:pl-20 sm:pr-20 p-3 relative">
-            <h1 class="font-black text-black underline text-center mt-5">MOTOPEDIA</h1>
+<section class="flex items-center justify-center p-2 mt-10 md:p-5">
+    <div class="bg-[#fed4d6] drop-shadow-2xl rounded-2xl  max-w-5xl  flex" [ngClass]="{'items-center':currentTab===TabType.Login}">
+        <div class="w-full md:w-1/2 p-4">
+            <h1 class="font-black text-[#f5683c] underline text-center mt-5">MOTOPEDIA</h1>
             <h3 *ngIf="currentTab!==TabType.Signup" class="font-semibold mt-5">Welcome Back!</h3>
             <h2 *ngIf="currentTab===TabType.Signup" class="font-black mt-5">Hello<span class="flex">Please signup to continue!</span></h2>
-            <div class="submit_btn shadow-2xl drop-shadow-lg border border-transparent  rounded-lg text-lg font-black flex gap-2 justify-around p-3 md:w-80 w-64 text-black mt-5 sm:ml-9 md:ml-0">
+            <div class="bg-[#fea1a7] shadow-2xl drop-shadow-lg border m-5 border-transparent rounded-lg text-lg font-black flex gap-2 justify-around p-3  w-64 text-black mt-5">
                 <button class="uppercase" [ngClass]="{
-                    'bg-white': currentTab!==TabType.Signup,
+                    'bg-[#f5683c]': currentTab!==TabType.Signup,
+                    'text-white': currentTab!==TabType.Signup,
                     'text-black':currentTab===TabType.Signup,
-                    'hover:bg-slate-300': currentTab === TabType.Signup 
+                    'hover:bg-gray-100': currentTab === TabType.Signup, 
+                    'hover:text-black': currentTab === TabType.Signup, 
                 }"
                     (click)="selectTab(TabType.Login)"
-                    class="rounded-lg py-1 px-7 md:px-10"
+                    class="rounded-lg py-1 px-7 md:px-10 "
                 >Login</button>
                 <button class="uppercase"
                 [ngClass]="{
-                    'bg-white': currentTab===TabType.Signup,
+                    'bg-[#f5683c]': currentTab===TabType.Signup,
+                    'text-white': currentTab===TabType.Signup,
                     'text-black':currentTab!==TabType.Signup, 
-                    'hover:bg-slate-100': currentTab !== TabType.Signup
+                    'hover:bg-gray-100': currentTab !== TabType.Signup,
+                    'hover:text-black': currentTab !== TabType.Signup,
                 }"
                     (click)="selectTab(TabType.Signup)"
                     class="rounded-lg py-1 px-7 md:px-5"
                 >Signup</button>
             </div>
+            <div class="relative">
                 <ng-content></ng-content>
                 <div
                 *ngIf="currentTab === TabType.Login"
-                class="flex justify-center items-center absolute bottom-14 right-4 md:right-14"
+                class="flex  absolute top-32 right-4"
               >
-                <button (click)="selectTab(TabType.Verify)" class="text-white my-4 hover:text-blue-500">
+                <button (click)="selectTab(TabType.Verify)" class="text-black font-thin hover:text-blue-500">
                   forgot password?
                 </button>
               </div>
+            </div>
               <!-- <div class="m-5 flex items-center flex-col">
                 <h1>---------------------- Or signup with ----------------------</h1>
               <button  mat-raised-button class="" ><img src="/assets/images/icons/google.png" alt="" width="50" height="50"></button>
               
               </div> -->
         </div>
-        <div class="hidden sm:block w-1/2 ">
+        <div class="hidden md:block md:w-1/2  object-fill">
             <img src="/assets/images/background/login_page02.jpg" alt="" class="rounded-r-lg object-cover h-full">
         </div>
     </div>

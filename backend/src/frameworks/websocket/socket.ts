@@ -63,8 +63,10 @@ const receivenewNotificationEvent = (socket: Socket) => {
     });
 };
 const sendVideoMessages = (socket: Socket) => {
-    socket.on(ChatEventEnum.CREATE_VIDEO_CALL, (payload: any) => {
-        socket.broadcast.emit(ChatEventEnum.VIDEO_CALL_RECEIVED_EVENT, payload);
+    socket.on(ChatEventEnum.CREATE_VIDEO_CALL, (payload: any,participant:string) => {
+        console.log(payload,participant)
+        const data={payload,participant}
+        socket.in(participant).emit(ChatEventEnum.VIDEO_CALL_RECEIVED_EVENT,data);
     });
 };
 const onSocketConnection = (io: Server, socket: Socket) => {
