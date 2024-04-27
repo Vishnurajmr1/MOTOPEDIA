@@ -7,8 +7,8 @@ import {
   Output,
   ViewChild,
 } from '@angular/core';
-import { ChatMessageInterface, VideoCallEvent } from 'src/app/shared/types/chat.Interface';
-import { IUserDetails } from 'src/app/shared/types/user.Interface';
+import { ChatMessageInterface, VideoCallEvent } from '../../../../app/shared/types/chat.Interface';
+import { IUserDetails } from '../../../../app/shared/types/user.Interface';
 
 @Component({
   selector: 'app-chat-detail',

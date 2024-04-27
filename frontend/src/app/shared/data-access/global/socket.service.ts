@@ -5,6 +5,7 @@ import { ISocketEvents } from '../../types/socket.Interface';
 import {
   ChatListItemInterface,
   ChatMessageInterface,
+  VideoMessage,
 } from '../../../../app/shared/types/chat.Interface';
 import { ICurrentUser } from '../../../auth/data-access/state/auth.reducer';
 import { NotificationInterface } from '../../types/notification.interface';
@@ -33,6 +34,8 @@ export class SocketService {
   private chatHistory = new BehaviorSubject<any>([]);
   private getNotification = new Subject<NotificationInterface>();
   private getVideoMessages = new Subject<any>();
+  private messagesSubject = new Subject<VideoMessage>();
+  public messages$ = this.messagesSubject.asObservable();
   constructor() {
     this.socket = io('http://localhost:3000', {
       path: '/api/chat/socket.io',
@@ -49,7 +52,9 @@ export class SocketService {
       this.getNotification.next(data);
     });
     this.socket.on(ISocketEvents.VIDEO_CALL_RECEIVED_EVENT, (data) => {
+      console.log('received message from the socket' + data);
       this.getVideoMessages.next(data);
+      // this.messagesSubject.next(data);
     });
     this.socket.on(ISocketEvents.DISCONNECT_EVENT, () => this.disconnect());
   }
@@ -121,5 +126,11 @@ export class SocketService {
   }
   getParticipants() {
     this.socket.emit(ISocketEvents.NEW_CHAT_EVENT);
+  }
+  sendVideoMessage(msg: VideoMessage) {
+    const participant=this.getParticipantId()
+    console.log('sending Video message' + msg.type);
+    console.log(this.getParticipantId.toString(),msg)
+    this.socket.emit(ISocketEvents.CREATE_VIDEO_CALL,msg,participant);
   }
 }

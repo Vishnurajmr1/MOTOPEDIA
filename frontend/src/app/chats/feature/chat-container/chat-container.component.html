@@ -33,5 +33,5 @@
 <create-chat *ngIf="openCreateChatModal" [modalOpen]="openCreateChatModal" (closeCreateChatComponent)="closeCreateChatModal()" [followers]="followers" (followerSelected)="handleFollowerSelected($event)"></create-chat>
 
 
-<video-call *ngIf="openVideoCall" [openVideoCall]="openVideoCall" (remoteVideoRef)="receiveRemoteVideo($event)"></video-call>
+<video-call *ngIf="openVideoCall" [openVideoCall]="openVideoCall"  [participantData]="participantData" [currentUser]="currentUser"  (close)="closeModal($event)"></video-call>
 
