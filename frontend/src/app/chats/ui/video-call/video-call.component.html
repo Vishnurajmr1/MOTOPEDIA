@@ -1,6 +1,6 @@
 <!-- Main modal -->
-<div id="static-modal" data-modal-backdrop="static" tabindex="-1" aria-hidden="true" class="overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
-  <div class="relative p-4 w-full max-h-full">
+<div id="static-modal" data-modal-backdrop="static" tabindex="-1" aria-hidden="true" class="overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)]">
+  <div class="relative p-4 w-full">
       <!-- Modal content -->
       <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
           <!-- Modal header -->
@@ -16,22 +16,22 @@
               </button>
           </div>
           <!-- Modal body -->
-          <div class="p-4 md:p-5 space-y-4">
-              <div class="sm:flex gap-2 relative">
-                <video class="w-full h-auto max-w-full transform scale-x-[-1]" [autoplay]="true" [muted]="true" #remoteVideo></video>
-                <video class="w-1/4 h-auto max-w-full absolute top-0 right-0 z-10 transform scale-75" [autoplay]="true" [muted]="true" #localVideo>
+          <div class="p-4">
+              <div class="sm:flex  relative">
+                <video class="w-full sm:max-w-screen-md max-w-full transform scale-x-[-1]" [autoplay]="true" [muted]="true" #remoteVideo></video>
+                <video class="w-1/4 max-w-full absolute top-0 right-0 z-10 transform scale-x-[-1]" [autoplay]="true" [muted]="true" #localVideo>
                 </video>
               </div>
    
           </div>
           <!-- Modal footer -->
-          <div class="flex items-center justify-center p-4 md:p-5 border-t border-gray-200 rounded-b">
-              <button  type="button" class="border-solid border-black p-8 w-16" (click)="startLocalVideo()"><i class="fa-solid fa-video"></i></button>
-              <button  type="button" class="border-solid border-black p-8 w-16" (click)="enableAudio()"><i class="fa-solid fa-microphone"></i></button>
-              <button  type="button" class="border-solid border-black p-8 w-16" (click)="pauseLocalAudio()"><i class="fa-solid fa-microphone-slash"></i></button>
-              <button  type="button" class="border-solid border-black p-8 w-16" (click)="pauseLocalVideo()"><i class="fa-solid fa-video-slash"></i></button>
-              <button  type="button" class="border-solid border-black p-8 w-16" (click)="call()"><i class="fa-solid fa-phone"></i></button>
-              <button  type="button" class="border-solid border-black p-8 w-16" (click)="hangUp()"><i class="fa-solid fa-phone-hangup"></i></button>
+          <div class="flex items-center justify-center p-4 border-t border-gray-200 rounded-b">
+              <button  type="button" class="border-solid border-black w-16" (click)="startLocalVideo()"><i class="fa-solid fa-video"></i></button>
+              <button  type="button" class="border-solid border-black w-16" (click)="enableAudio()"><i class="fa-solid fa-microphone"></i></button>
+              <button  type="button" class="border-solid border-black w-16" (click)="pauseLocalAudio()"><i class="fa-solid fa-microphone-slash"></i></button>
+              <button  type="button" class="border-solid border-black w-16" (click)="pauseLocalVideo()"><i class="fa-solid fa-video-slash"></i></button>
+              <button  type="button" class="border-solid border-black w-16" (click)="call()"><i class="fa-solid fa-phone"></i></button>
+              <button  type="button" class="border-solid border-black w-16 text-red-600" (click)="hangUp()"><svg class="w-8" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="none"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><path fill="#e61919" d="M23 12.5 20.5 15l-3-2V8.842C15.976 8.337 14.146 8 12 8c-2.145 0-3.976.337-5.5.842V13l-3 2L1 12.5c.665-.997 2.479-2.657 5.5-3.658C8.024 8.337 9.855 8 12 8c2.146 0 3.976.337 5.5.842 3.021 1 4.835 2.66 5.5 3.658z"></path><path stroke="#e61919" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.5 8.842C15.976 8.337 14.146 8 12 8c-2.145 0-3.976.337-5.5.842m11 0c3.021 1 4.835 2.66 5.5 3.658L20.5 15l-3-2V8.842zm-11 0c-3.021 1-4.835 2.66-5.5 3.658L3.5 15l3-2V8.842z"></path></g></svg></button>
               <!-- <button  type="button" class="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">Hangup</button> -->
           </div>
       </div>

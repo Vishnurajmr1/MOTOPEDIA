@@ -4,6 +4,7 @@
   >
     <ng-container *ngFor="let chat of allChats">
       <div
+      [ngClass]="{'selected':selectedChatId===chat._id}"
         class="flex flex-col p-2 border-gray-200 bg-gray-100 rounded-e-xl rounded-es-xl dark:bg-gray-700 cursor-pointer hover:bg-gray-200"
         (click)="onChatClick(chat.participants[0], chat._id)"
       >

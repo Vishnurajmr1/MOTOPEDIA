@@ -24,12 +24,14 @@ export class AsideComponent {
   }> = new EventEmitter<{ participant: IUserDetails; chatId: string }>();
   @Input() allChats: ChatListItemInterface[] = [];
   @Input() unreadMessages: ChatMessageInterface[] = [];
+  selectedChatId:string=''
   lastMessage: ChatMessageInterface | undefined;
   protected participants!: IUserDetails[];
   lastMessageUpdatedTime!: string;
   onChatClick(participant: IUserDetails, chatId: string): void {
     console.log(participant, chatId);
     this.chatSelected.emit({ participant, chatId });
+    this.selectedChatId=chatId
   }
   getUnreadCount(chatId: string): number {
     return this.unreadMessages.filter((message) => message.chat === chatId)
