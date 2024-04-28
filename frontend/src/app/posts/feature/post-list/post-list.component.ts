@@ -14,7 +14,7 @@ import { notificationService } from '../../../../app/shared/data-access/global/n
 import { IAddNotification } from '../../../../app/shared/types/notification.interface';
 import { NotificationActionType } from '../../../../app/shared/types';
 import { ChatApiService } from 'src/app/chats/data-access/chatApi.service';
-import { IUserDetails } from 'src/app/shared/types/user.Interface';
+import { IFollowersDetails, IUserDetails, IUserInfo } from 'src/app/shared/types/user.Interface';
 import { ChatListItemInterface } from 'src/app/shared/types/chat.Interface';
 @Component({
   selector: 'app-post-list',
@@ -38,7 +38,11 @@ export class PostListComponent {
   currentUser: string | undefined;
   isUserFollowed: boolean = false;
   openShareModal: boolean = false;
+  followers:[IUserInfo]|undefined
   ngOnInit(): void {
+    this.userService.getConnection().subscribe((res)=>{
+     this.followers=res.data[0].followers
+    })
     this.postService.getPostByFollowers().pipe(switchMap((data)=>{
       if(data.data.length===0){
         return this.postService.getAllPost()

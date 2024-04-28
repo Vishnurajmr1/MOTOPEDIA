@@ -70,7 +70,7 @@ export class CallService {
   ): Promise<void> {
     console.log('handle incoming offer✅✅✅✅✅✅🚀')
     if(!this.connection){
-      await this._initConnection();
+      this._initConnection();
     }
     if(!this.localStream){
       this.startLocalVideo()
@@ -122,7 +122,8 @@ export class CallService {
       this.localStream=await navigator.mediaDevices.getUserMedia(mediaConstraints);
       console.log(this.localStream)
       this.pauseLocalVideo()
-      this.pauseLocalAudio()
+      this.toggleMuteMic()
+      // this.pauseLocalAudio()
     } catch (error:any) {
       console.log(error);
       alert('getUserMedia() error'+error)
@@ -133,7 +134,9 @@ export class CallService {
     this.localStream.getVideoTracks().forEach(track=>{
       console.log(track)
       track.enabled=false})
-    this.localVideo.nativeElement.srcObject=undefined;
+      if(this.localVideo){
+        this.localVideo.nativeElement.srcObject=undefined;
+      }
   }
   pauseLocalAudio():void{
     console.log('pause local audio');
@@ -150,8 +153,11 @@ export class CallService {
   }
   startLocalVideo():void{
     console.log('starting local stream');
-    this.localStream.getTracks().forEach(track=>track.enabled=true);
-    this.localVideo.nativeElement.srcObject=this.localStream;
+      console.log('local stream in startLocalVideo')
+      this.localStream.getTracks().forEach(track=>track.enabled=true);
+      if(this.localVideo!==undefined){
+        this.localVideo.nativeElement.srcObject=this.localStream;
+      }
   }
 
   private _registerConnectionListeners(): void {
@@ -182,11 +188,20 @@ export class CallService {
       this.connection.onsignalingstatechange=null;
       // Stop all transceivers on the connection
       this.connection.getTransceivers().forEach(transceiver=>{
-        transceiver.stop()
+        console.log(transceiver)
+        if(transceiver.direction!=='inactive'){
+          transceiver.stop()
+        }
       })
       this.connection.close();
-      // this.connection=null;
+      this.connection=undefined as any;
       // make inCall to false
+      if(this.localStream){
+        this.localStream.getTracks().forEach(track=>{
+          track.stop()
+        })
+        this.localStream=undefined as any;
+      }
     }
   }
 
@@ -207,34 +222,34 @@ export class CallService {
     }
     this.closeVideoCall()
   }
-  private reportError = (e: Error) => {
-    console.log('got Error: ' + e.name);
-    console.log(e);
-  }
+  // private reportError = (e: Error) => {
+  //   console.log('got Error: ' + e.name);
+  //   console.log(e);
+  // }
 
-  private async _getStreams(remoteVideo: ElementRef): Promise<void> {
-    console.log(remoteVideo);
-    const stream = await navigator.mediaDevices.getUserMedia({
-      video: true,
-      audio: true,
-    });
-    console.log(stream);
-    const remoteStream = new MediaStream();
-    console.log('remoteStream', remoteStream);
-    remoteVideo.nativeElement.srcObject = stream;
+  // private async _getStreams(remoteVideo: ElementRef): Promise<void> {
+  //   console.log(remoteVideo);
+  //   const stream = await navigator.mediaDevices.getUserMedia({
+  //     video: true,
+  //     audio: true,
+  //   });
+  //   console.log(stream);
+  //   const remoteStream = new MediaStream();
+  //   console.log('remoteStream', remoteStream);
+  //   remoteVideo.nativeElement.srcObject = stream;
 
-    this.connection.ontrack = (event) => {
-      console.log(event);
-      event.streams[0].getTracks().forEach((track) => {
-        remoteStream.addTrack(track);
-      });
-    };
-    stream.getTracks().forEach((track) => {
-      console.log(track);
-      console.log('track');
-      this.connection.addTrack(track, stream);
-    });
-  }
+  //   this.connection.ontrack = (event) => {
+  //     console.log(event);
+  //     event.streams[0].getTracks().forEach((track) => {
+  //       remoteStream.addTrack(track);
+  //     });
+  //   };
+  //   stream.getTracks().forEach((track) => {
+  //     console.log(track);
+  //     console.log('track');
+  //     this.connection.addTrack(track, stream);
+  //   });
+  // }
 
   /* #######################Event Handler #########################3 */
   private handleIceCandidateEvent = (event: RTCPeerConnectionIceEvent) => {

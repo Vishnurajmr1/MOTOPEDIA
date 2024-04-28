@@ -5,7 +5,8 @@ import {
   Input,
   Output,
 } from '@angular/core';
-import { IpostInterface } from 'src/app/shared/types/post.Interface';
+import { IpostInterface } from '../../../../app/shared/types/post.Interface';
+import { IUserDetails, IUserInfo } from '../../../../app/shared/types/user.Interface';
 
 @Component({
   selector: 'app-post-card',
@@ -18,6 +19,7 @@ export class PostCardComponent {
   @Input() showAuthorDetails = true;
   @Input() showActions = true;
   @Input() isProfilePage: boolean = false;
+  @Input() followers:[IUserInfo]|undefined
   @Output() like = new EventEmitter<{ postId: string; reactionType: string }>();
   @Output() follow = new EventEmitter<string>();
   @Output() comment = new EventEmitter<string>();
@@ -48,6 +50,9 @@ export class PostCardComponent {
   ngOnInit() {
     if (this.post.authorId._id == this.currentUser) {
       this.followButton = false;
+    }
+    if(this.followers&& this.currentUser){
+      this.currentUserFollowing=this.followers.some((follower:any)=>follower._id===this.post.authorId._id)
     }
     if (this.currentUser !== undefined) {
       this.currentUserLiked = this.post.likedBy.some(
