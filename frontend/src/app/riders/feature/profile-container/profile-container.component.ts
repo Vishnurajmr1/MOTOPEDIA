@@ -13,9 +13,10 @@ import {
   IpostInterface,
 } from '../../../shared/types/post.Interface';
 import { SnackbarService } from '../../../shared/data-access/global/snackbar.service';
-import { State, getCurrentUserData } from 'src/app/auth/data-access/state';
+import { State, getCurrentUserData } from '../../../../app/auth/data-access/state';
 import { Store } from '@ngrx/store';
 import { ActivatedRoute } from '@angular/router';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-profile-container',
@@ -51,9 +52,12 @@ export class ProfileContainerComponent {
   }
   modalOpen: boolean = false;
   openFollowersModal:boolean=false;
+  currentUserSubscription!:Subscription
+  userServiceSubscription!:Subscription
+  postServiceSubscription!:Subscription
   ngOnInit(): void {
     this.currentUser = this.store.select(getCurrentUserData);
-    this.currentUser.subscribe((state: any) => {
+   this.currentUserSubscription=this.currentUser.subscribe((state: any) => {
       this.id = this.router.snapshot.params['id'] || state?.userId;
       this.userService.getAUser(this.id).subscribe({
         next: (res) => {
@@ -64,25 +68,25 @@ export class ProfileContainerComponent {
         },
       });
     });
-    this.userService.getConnection(this.id).subscribe({
+    this.userServiceSubscription=this.userService.getConnection(this.id).subscribe({
       next: (res) => {
         this.followersDetails = res;
         this.followersLength =
-          this.followersDetails?.data[0].followers.length;
-          this.followers=this.followersDetails?.data[0].followers;
+          this.followersDetails?.data[0].followers.length||0;
+          this.followers=this.followersDetails?.data[0].followers||[];
         this.followingLength =
-          this.followersDetails?.data[0].following.length;
-          this.following=this.followersDetails?.data[0].following;
+          this.followersDetails?.data[0].following.length||0;
+          this.following=this.followersDetails?.data[0].following||[];
       },
     });
-    this.postService.getPostByUser(this.id).subscribe({
+    this.postServiceSubscription=this.postService.getPostByUser(this.id).subscribe({
       next: (res) => {
         this.posts = res.data;
       },
     });
   }
   profileUpdateForm(formData: IUpdateProfile) {
-    this.userService.updateProfile(formData).subscribe({
+    this.userServiceSubscription=this.userService.updateProfile(formData).subscribe({
       next: (res) => {
         console.log(res)
         window.location.reload();
@@ -92,7 +96,7 @@ export class ProfileContainerComponent {
   }
   // delete post
   deletePostById(postId: string) {
-    this.postService.deletePostByUser(postId).subscribe({
+   this.postServiceSubscription= this.postService.deletePostByUser(postId).subscribe({
       next: (res) => {
         console.log(res);
         this.closeModal();
@@ -103,8 +107,7 @@ export class ProfileContainerComponent {
   }
   //update post
   handleUpdatePost(post: IEditPost) {
-    console.log(post);
-    this.postService.updatePostByUser(post).subscribe({
+   this.postServiceSubscription= this.postService.updatePostByUser(post).subscribe({
       next: (res) => {
         {
           console.log(res);
@@ -128,7 +131,15 @@ export class ProfileContainerComponent {
     this.openFollowersModal=!this.openFollowersModal;
   }
   ngOnDestroy(): void {
-    
+    if(this.userServiceSubscription){
+      this.userServiceSubscription.unsubscribe()
+    }
+    if(this.postServiceSubscription){
+      this.postServiceSubscription.unsubscribe()
+    }
+    if(this.currentUserSubscription){
+      this.currentUserSubscription.unsubscribe()
+    }
   }
 }
 

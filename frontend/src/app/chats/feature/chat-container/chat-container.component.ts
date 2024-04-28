@@ -1,7 +1,7 @@
 import { Component, ElementRef, inject } from '@angular/core';
 import { SocketService } from '../../../shared/data-access/global/socket.service';
 import { Store } from '@ngrx/store';
-import { Observable, Subject, takeUntil } from 'rxjs';
+import { Observable, Subject, Subscription, takeUntil } from 'rxjs';
 import {
   State,
   getCurrentUserData,
@@ -43,9 +43,6 @@ export class ChatContainerComponent {
   protected unreadMessages: ChatMessageInterface[] = [];
   protected currentUser!: ICurrentUser;
   private ngUnsubscribe$ = new Subject<void>();
-  // @ViewChildren('chatDetail')
-  // chatDetailComponent!: ChatDetailComponent;
-  // @ViewChildren(VideoCallComponent) videoCallComponent!: VideoCallComponent;
   remoteVideoElement!: ElementRef<any>;
   localVideoElement!: ElementRef<any>;
   videoCallChatId: string = '';
@@ -62,7 +59,7 @@ export class ChatContainerComponent {
   ngOnInit() {
     this.userService.getConnection().subscribe((user) => {
       console.log(user);
-      this.followers = user.data[0].followers;
+      this.followers = user.data[0].followers||[];
     });
     const storedUnreadMessages = localStorage.getItem('unreadMessages');
     if (storedUnreadMessages) {
