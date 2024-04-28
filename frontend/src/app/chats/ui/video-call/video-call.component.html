@@ -22,16 +22,17 @@
                 <video class="w-1/4 h-auto max-w-full absolute top-0 right-0 z-10 transform scale-75" [autoplay]="true" [muted]="true" #localVideo>
                 </video>
               </div>
+   
           </div>
           <!-- Modal footer -->
-          <div class="flex items-center p-4 md:p-5 border-t border-gray-200 rounded-b dark:border-gray-600">
-              <button data-modal-hide="static-modal" type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" (click)="startLocalVideo()">Start LocalVideo</button>
-              <button data-modal-hide="static-modal" type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" (click)="pauseLocalAudio()">Start LocalAudio</button>
-              <button data-modal-hide="static-modal" type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" (click)="pauseLocalAudio()">Stop LocalAudio</button>
-              <button data-modal-hide="static-modal" type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" (click)="pauseLocalVideo()">Stop LocalVideo</button>
-              <button data-modal-hide="static-modal" type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" (click)="call()">Start Call</button>
-              <button data-modal-hide="static-modal" type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" (click)="hangUp()">Hang Up</button>
-              <!-- <button data-modal-hide="static-modal" type="button" class="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">Hangup</button> -->
+          <div class="flex items-center justify-center p-4 md:p-5 border-t border-gray-200 rounded-b">
+              <button  type="button" class="border-solid border-black p-8 w-16" (click)="startLocalVideo()"><i class="fa-solid fa-video"></i></button>
+              <button  type="button" class="border-solid border-black p-8 w-16" (click)="enableAudio()"><i class="fa-solid fa-microphone"></i></button>
+              <button  type="button" class="border-solid border-black p-8 w-16" (click)="pauseLocalAudio()"><i class="fa-solid fa-microphone-slash"></i></button>
+              <button  type="button" class="border-solid border-black p-8 w-16" (click)="pauseLocalVideo()"><i class="fa-solid fa-video-slash"></i></button>
+              <button  type="button" class="border-solid border-black p-8 w-16" (click)="call()"><i class="fa-solid fa-phone"></i></button>
+              <button  type="button" class="border-solid border-black p-8 w-16" (click)="hangUp()"><i class="fa-solid fa-phone-hangup"></i></button>
+              <!-- <button  type="button" class="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">Hangup</button> -->
           </div>
       </div>
   </div>

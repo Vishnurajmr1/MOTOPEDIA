@@ -15,6 +15,7 @@
         (comment)="showComment(post._id)"
         [currentUser]="currentUser"
         (share)="getSharePost(post)"
+        [followers]="followers"
       >
         <app-post-features
           (save)="savePost(post._id)"

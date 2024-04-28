@@ -26,15 +26,17 @@ export class VideoCallComponent {
   }
   ngAfterViewInit(): void {
     this.callService.getVideoElements(this.remoteVideo,this.localVideo);
-    this.callService.requestMediaDevices()
+    // this.callService.requestMediaDevices()
   }
   startLocalVideo(){
     console.log('starting local stream');
     this.callService.startLocalVideo()
+    this.localVideoActive=true;
   }
   pauseLocalVideo(){
     console.log('Pause local video');
     this.callService.pauseLocalVideo()
+    this.localVideoActive=false;
   }
   enableAudio(){
     console.log('Enable audio call');
@@ -48,9 +50,12 @@ export class VideoCallComponent {
   call(){
     console.log('make a video call to another socket event');
     this.callService.makeCall()
+    this.inCall=true;
   }
   hangUp(){
     console.log('hangup video call');
     this.callService.hangup()
+    this.inCall=false;
+    this.close.emit(false)
   }
 }

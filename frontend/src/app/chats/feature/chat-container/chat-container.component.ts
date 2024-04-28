@@ -69,6 +69,7 @@ export class ChatContainerComponent {
       this.unreadMessages = JSON.parse(storedUnreadMessages);
     }
     this.getCurrentUserChat();
+    this.callService.requestMediaDevices()
     this.addIncomingMessageHandler();
   }
 
