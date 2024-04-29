@@ -1,4 +1,4 @@
-    <div class="container fixed top-16 right-24 w-40" *ngIf="openSearchBar">
+    <div class="container fixed top-16 right-24 w-40 z-50" *ngIf="openSearchBar">
         <search-field (sendSearchValue)="getSearchValue($event)"></search-field>
         <search-user-list [userData]="searchResult"></search-user-list>
     </div>

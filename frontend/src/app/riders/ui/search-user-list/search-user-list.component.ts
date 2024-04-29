@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, Output } from '@angular/core';
 import { UserDoc } from 'src/app/shared/types/user.Interface';
 
 @Component({
@@ -8,4 +8,9 @@ import { UserDoc } from 'src/app/shared/types/user.Interface';
 })
 export class SearchUserListComponent {
 @Input()userData:UserDoc[]=[];
+@Output()followerId:EventEmitter<string>=new EventEmitter<string>()
+followUser(userId:string){
+  console.log(userId)
+  this.followerId.emit(userId)
+}
 }

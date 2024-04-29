@@ -196,12 +196,12 @@ export class CallService {
       this.connection.close();
       this.connection=undefined as any;
       // make inCall to false
-      if(this.localStream){
-        this.localStream.getTracks().forEach(track=>{
-          track.stop()
-        })
-        this.localStream=undefined as any;
-      }
+      // if(this.localStream){
+      //   this.localStream.getTracks().forEach(track=>{
+      //     track.stop()
+      //   })
+      //   this.localStream=undefined as any;
+      // }
     }
   }
 
