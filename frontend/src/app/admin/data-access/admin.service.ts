@@ -5,7 +5,7 @@ import {
   IEditPost,
   IPostList,
   IpostInterface,
-} from 'src/app/shared/types/post.Interface';
+} from '../../../app/shared/types/post.Interface';
 
 @Injectable({
   providedIn: 'root',

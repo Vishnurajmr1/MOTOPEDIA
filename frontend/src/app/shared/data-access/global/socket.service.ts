@@ -9,6 +9,7 @@ import {
 } from '../../../../app/shared/types/chat.Interface';
 import { ICurrentUser } from '../../../auth/data-access/state/auth.reducer';
 import { NotificationInterface } from '../../types/notification.interface';
+import { environment } from '../../../../environments/environment';
 @Injectable({
   providedIn: 'root',
 })
@@ -37,7 +38,7 @@ export class SocketService {
   private messagesSubject = new Subject<VideoMessage>();
   public messages$ = this.messagesSubject.asObservable();
   constructor() {
-    this.socket = io('http://localhost:3000', {
+    this.socket = io(environment.socketUrl, {
       path: '/api/chat/socket.io',
       transports: ['websocket'],
       withCredentials: true,

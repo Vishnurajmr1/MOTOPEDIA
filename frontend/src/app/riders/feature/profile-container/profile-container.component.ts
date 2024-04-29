@@ -31,7 +31,7 @@ export class ProfileContainerComponent {
   }
 
   profile?: UserDoc;
-  followersDetails: IFollowersDetails | undefined;
+  followersDetails: IFollowersDetails|undefined;
   followersLength: number | undefined;
   followingLength: number | undefined;
   posts!: IpostInterface[];
@@ -72,10 +72,10 @@ export class ProfileContainerComponent {
       next: (res) => {
         this.followersDetails = res;
         this.followersLength =
-          this.followersDetails?.data[0].followers.length||0;
+          (this.followersDetails.data)?this.followersDetails?.data[0].followers.length:0;
           this.followers=this.followersDetails?.data[0].followers||[];
         this.followingLength =
-          this.followersDetails?.data[0].following.length||0;
+         (this.followersDetails.data)? this.followersDetails?.data[0].following.length:0;
           this.following=this.followersDetails?.data[0].following||[];
       },
     });

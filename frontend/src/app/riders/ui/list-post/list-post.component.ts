@@ -5,7 +5,7 @@ import {
   Input,
   Output,
 } from '@angular/core';
-import { IpostInterface } from 'src/app/shared/types/post.Interface';
+import { IpostInterface } from '../../../../app/shared/types/post.Interface';
 
 @Component({
   selector: 'app-list-post',
